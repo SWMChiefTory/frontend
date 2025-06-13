@@ -18,7 +18,7 @@ describe('RecipeSummary 클래스', () => {
             expect(summary.title).toBe(apiResponse.title);
             expect(summary.youtubeId).toBe(apiResponse.youtubeId);
             expect(summary.count).toBe(apiResponse.count);
-            expect(summary.createdAt.getTime()).toBe(new Date(apiResponse.createdAt).getTime());;
+            expect(summary.createdAt.getTime()).toBe(new Date(apiResponse.createdAt).getTime());
         });
 
         it('createdAt이 잘못된 날짜일 경우 Invalid Date가 되어야 한다', () => {
