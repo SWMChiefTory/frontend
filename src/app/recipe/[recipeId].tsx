@@ -15,22 +15,6 @@ export default function RecipeDetailScreen() {
     const [mode, setMode] = React.useState<RecipeMode>(RecipeMode.Detail);
     const playerRef = useRef<YoutubeIframeRef>(null);
 
-    const screens = {
-        [RecipeMode.Detail]: (
-            <RecipeOverview
-                recipe={recipe}
-                onStart={() => setMode(RecipeMode.Cook)}
-            />
-        ),
-        [RecipeMode.Cook]: (
-            <CookStepsCarousel
-                recipe={recipe}
-                playerRef={playerRef}
-                onExit={() => setMode(RecipeMode.Detail)}
-            />
-        ),
-    };
-
 
     return (
         <>
@@ -41,11 +25,23 @@ export default function RecipeDetailScreen() {
                     ref={playerRef}
                 />
                 <LoadingView loading={loading}>
-                    {screens[mode]}
+                    {mode === RecipeMode.Detail ? (
+                        <RecipeOverview
+                            recipe={recipe}
+                            onStart={() => setMode(RecipeMode.Cook)}
+                        />
+                    ) : mode === RecipeMode.Cook ? (
+                        <CookStepsCarousel
+                            recipe={recipe}
+                            playerRef={playerRef}
+                            onExit={() => setMode(RecipeMode.Detail)}
+                        />
+                    ) : null}
                 </LoadingView>
             </View>
         </>
     );
+
 }
 
 const styles = StyleSheet.create({
