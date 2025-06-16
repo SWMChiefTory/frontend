@@ -25,6 +25,12 @@ export class RecipeSummary {
     static create(
         apiResponse: RecipeSummaryApiResponse
     ): RecipeSummary {
-        return new RecipeSummary(apiResponse.recipeId, apiResponse.title , apiResponse.youtubeId,apiResponse.count,new Date(apiResponse.createdAt));
+        return new RecipeSummary(
+            apiResponse.recipeId,
+            apiResponse.title,
+            apiResponse.youtubeId,
+            apiResponse.count,
+            new Date(apiResponse.createdAt)
+        );
     }
 }
