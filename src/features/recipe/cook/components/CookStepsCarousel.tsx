@@ -67,7 +67,7 @@ export function CookStepsCarousel({ recipe, playerRef, onExit }: Props) {
             />
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     wrapper: {flex: 1, backgroundColor: "#fff"},
