@@ -1,13 +1,14 @@
 import { PopularRecipeCard } from "@/src/features/recipe/components/PopularRecipeCard";
 import { recipeSummariesMock } from "@/src/features/recipe/__mocks__/fetchRecipe.mock";
 import { fireEvent, render, screen } from "@testing-library/react-native";
+import { PopularRecipe } from "@/src/features/recipe/types/PopularRecipe";
+import { RecentRecipe } from "@/src/features/recipe/types/RecentRecipe";
 
 jest.mock("@/src/features/recipe/hooks/useRecipeMeta", () => ({
-  useRecipeMeta: (youtubeId: string) => ({
-    thumbnail: `https://mocked-thumbnail.com/${youtubeId}`,
+  useRecipeMeta: (recipe: PopularRecipe | RecentRecipe) => ({
+    thumbnail: `https://mocked-thumbnail.com/${recipe.youtubeId}`,
   }),
 }));
-
 describe("RecipeCard 가 주어졌을 때", () => {
   const sampleRecipes = Object.values(recipeSummariesMock);
 
