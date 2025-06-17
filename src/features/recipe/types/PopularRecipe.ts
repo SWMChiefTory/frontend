@@ -1,6 +1,6 @@
-import { RecipeSummaryApiResponse } from "@/src/features/recipe/api/recipe";
+import { PopularRecipeApiResponse } from "@/src/features/recipe/api/recipe";
 
-export class RecipeSummary {
+export class PopularRecipe {
   recipeId: string;
   title: string;
   youtubeId: string;
@@ -24,8 +24,8 @@ export class RecipeSummary {
     this.thumbnailUrl = thumbnailUrl;
   }
 
-  static create(apiResponse: RecipeSummaryApiResponse): RecipeSummary {
-    return new RecipeSummary(
+  static create(apiResponse: PopularRecipeApiResponse): PopularRecipe {
+    return new PopularRecipe(
       apiResponse.recipeId,
       apiResponse.title,
       apiResponse.youtubeId,
