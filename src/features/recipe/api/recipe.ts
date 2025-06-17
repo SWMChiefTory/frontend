@@ -1,6 +1,7 @@
 import {
   recipeDetailApiMock,
-  recipeSummariesApiMock,
+  popularRecipesApiMock,
+  recentRecipesApiMock,
 } from "@/src/features/recipe/__mocks__/fetchRecipe.mock";
 
 export interface RecipeDetailApiResponse {
@@ -20,13 +21,28 @@ export interface CookStepApiResponse {
   endTime: number;
 }
 
-export interface RecipeSummaryApiResponse {
+export interface PopularRecipeApiResponse {
   recipeId: string;
   title: string;
   youtubeId: string;
   count: number;
   createdAt: string;
   thumbnailUrl: string;
+}
+
+export interface RecentRecipeApiResponse {
+  recipeId: string;
+  title: string;
+  youtubeId: string;
+  createdAt: string;
+  thumbnailUrl: string;
+  progress: number;
+  watchedTime: string;
+}
+
+export interface RecipeSummaryResponse {
+  recent: RecentRecipeApiResponse[];
+  popular: PopularRecipeApiResponse[];
 }
 
 export async function fetchRecipeDetail(
@@ -44,13 +60,13 @@ export async function fetchRecipeDetail(
   });
 }
 
-export async function fetchRecipeSummary(): Promise<
-  RecipeSummaryApiResponse[]
-> {
+export async function fetchRecipeSummary(): Promise<RecipeSummaryResponse> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const recipes = Object.values(recipeSummariesApiMock);
-      resolve(recipes);
+      resolve({
+        recent: Object.values(recentRecipesApiMock),
+        popular: Object.values(popularRecipesApiMock),
+      });
     }, 1000);
   });
 }

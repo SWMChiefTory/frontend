@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { getYoutubeMeta } from "react-native-youtube-iframe";
+import { PopularRecipe } from "@/src/features/recipe/types/PopularRecipe";
+import { RecentRecipe } from "@/src/features/recipe/types/RecentRecipe";
 
-export function useRecipeMeta(youtubeId: string) {
-  const [thumbnail, setThumbnail] = useState(
-    `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`,
-  );
+export function useRecipeMeta(recipe: PopularRecipe | RecentRecipe) {
+  const [thumbnail, setThumbnail] = useState(recipe.thumbnailUrl);
 
   useEffect(() => {
-    getYoutubeMeta(youtubeId).then((meta) => {
+    getYoutubeMeta(recipe.youtubeId).then((meta) => {
       if (meta.thumbnail_url) setThumbnail(meta.thumbnail_url);
     });
-  }, [youtubeId]);
+  }, [recipe.youtubeId]);
 
   return { thumbnail };
 }
