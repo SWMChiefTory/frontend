@@ -1,4 +1,4 @@
 export enum RecipeMode {
-    Detail = 'detail',
-    Cook = 'cook',
+  Detail = "detail",
+  Cook = "cook",
 }
