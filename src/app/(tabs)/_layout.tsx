@@ -1,12 +1,18 @@
 import { Tabs } from "expo-router";
+import { MainHeaderLogo } from "@/src/shared/components/MainHeaderLogo";
 
 export default function TabLayout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        sceneStyle: { backgroundColor: "#fff" },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          headerTitle: "쉐프토리",
+          headerTitle: () => <MainHeaderLogo />,
+          headerTitleAlign: "left",
           tabBarLabel: "홈",
         }}
       />
