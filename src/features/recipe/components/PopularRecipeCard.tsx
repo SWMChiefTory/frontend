@@ -1,15 +1,15 @@
 import React from "react";
 import { Image, Pressable, StyleSheet, Text } from "react-native";
-import { RecipeSummary } from "@/src/features/recipe/types/RecipeSummary";
+import { PopularRecipe } from "@/src/features/recipe/types/PopularRecipe";
 import { useRecipeMeta } from "@/src/features/recipe/hooks/useRecipeMeta";
 
 type Props = {
-  recipe: RecipeSummary;
-  onPress: (recipe: RecipeSummary) => void;
+  recipe: PopularRecipe;
+  onPress: (recipe: PopularRecipe) => void;
 };
 
-export function RecipeCard({ recipe, onPress }: Props) {
-  const { thumbnail } = useRecipeMeta(recipe.youtubeId);
+export function PopularRecipeCard({ recipe, onPress }: Props) {
+  const { thumbnail } = useRecipeMeta(recipe);
 
   return (
     <Pressable
