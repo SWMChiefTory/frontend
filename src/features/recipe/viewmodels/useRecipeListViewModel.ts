@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { RecipeSummary } from "@/src/features/recipe/types/RecipeSummary";
+import { PopularRecipe } from "@/src/features/recipe/types/PopularRecipe";
 import { fetchRecipeSummary } from "@/src/features/recipe/api/recipe";
+import { RecentRecipe } from "@/src/features/recipe/types/RecentRecipe";
 
 export function useRecipeListViewModel(): {
-  recipes: RecipeSummary[];
+  popularRecipes: PopularRecipe[];
+  recentRecipes: RecentRecipe[];
   loading: boolean;
   error: Error | null;
 } {
-  const [recipes, setRecipes] = useState<RecipeSummary[]>([]);
+  const [popularRecipes, setPopularRecipes] = useState<PopularRecipe[]>([]);
+  const [recentRecipes, setRecentRecipes] = useState<RecentRecipe[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -15,10 +18,15 @@ export function useRecipeListViewModel(): {
     const fetchRecipes = async () => {
       try {
         const data = await fetchRecipeSummary();
-        setRecipes(data.map((recipe) => RecipeSummary.create(recipe)));
+        setPopularRecipes(
+          data.popular.map((recipe) => PopularRecipe.create(recipe)),
+        );
+        setRecentRecipes(
+          data.recent.map((recipe) => RecentRecipe.create(recipe)),
+        );
       } catch (error) {
         setError(error as Error);
-        setRecipes([]);
+        setPopularRecipes([]);
       } finally {
         setLoading(false);
       }
@@ -27,5 +35,10 @@ export function useRecipeListViewModel(): {
     void fetchRecipes();
   }, []);
 
-  return { recipes, loading, error };
+  return {
+    popularRecipes: popularRecipes,
+    recentRecipes: recentRecipes,
+    loading,
+    error,
+  };
 }
