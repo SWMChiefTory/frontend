@@ -1,44 +1,56 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import React, { useRef } from "react";
-import { useRecipeDetailViewModel } from "@/src/features/recipe/viewmodels/useRecipeDetailViewModel";
-import { LoadingView } from "@/src/shared/components/LoadingView";
-import { RecipeVideo } from "@/src/features/recipe/components/RecipeVideo";
-import { RecipeOverview } from "@/src/features/recipe/components/RecipeOverview";
-import { CookStepsCarousel } from "@/src/features/recipe/cook/components/CookStepsCarousel";
+import { useRecipeFlowViewModel } from "@/src/modules/recipeFlow/viewmodels/useRecipeFlowViewModel";
+import { LoadingView } from "@/src/modules/shared/components/layout/LoadingView";
+import { YoutubeVideoPlayer } from "@/src/modules/shared/components/video/YoutubeVideoPlayer";
+import { RecipeDetailView } from "@/src/modules/recipe/detail/components/RecipeDetailView";
+import { CookStepsView } from "@/src/modules/cook/components/CookStepsView";
 import { YoutubeIframeRef } from "react-native-youtube-iframe";
-import { RecipeMode } from "@/src/features/recipe/types/RecipeMode";
+import { RecipeFlowMode } from "@/src/modules/recipeFlow/types/RecipeFlowMode";
+import { RecipeFlowHeader } from "@/src/modules/recipeFlow/components/RecipeFlowHeader";
 
-export default function RecipeDetailScreen() {
+export default function RecipeFlowScreen() {
   const { recipeId, youtubeId, title } = useLocalSearchParams<{
     recipeId: string;
     youtubeId?: string;
     title?: string;
   }>();
-  const { recipe, loading } = useRecipeDetailViewModel(
+  const { recipe, loading } = useRecipeFlowViewModel(
     recipeId,
     youtubeId,
     title,
   );
-  const [mode, setMode] = React.useState<RecipeMode>(RecipeMode.Detail);
+  const [mode, setMode] = React.useState<RecipeFlowMode>(RecipeFlowMode.Detail);
   const playerRef = useRef<YoutubeIframeRef>(null);
 
   return (
     <>
-      <Stack.Screen options={{ title: recipe.title }} />
-      <View style={styles.wrapper}>
-        <RecipeVideo videoId={recipe.youtubeId} ref={playerRef} />
-        <LoadingView loading={loading}>
-          {mode === RecipeMode.Detail ? (
-            <RecipeOverview
-              recipe={recipe}
-              onStart={() => setMode(RecipeMode.Cook)}
+      <Stack.Screen
+        options={{
+          title: recipe.title,
+          headerLeft: () => (
+            <RecipeFlowHeader
+              mode={mode}
+              onBack={() => setMode(RecipeFlowMode.Detail)}
             />
-          ) : mode === RecipeMode.Cook ? (
-            <CookStepsCarousel
+          ),
+        }}
+      />
+
+      <View style={styles.wrapper}>
+        <YoutubeVideoPlayer videoId={recipe.youtubeId} ref={playerRef} />
+        <LoadingView loading={loading}>
+          {mode === RecipeFlowMode.Detail ? (
+            <RecipeDetailView
+              recipe={recipe}
+              onStart={() => setMode(RecipeFlowMode.Cook)}
+            />
+          ) : mode === RecipeFlowMode.Cook ? (
+            <CookStepsView
               recipe={recipe}
               playerRef={playerRef}
-              onExit={() => setMode(RecipeMode.Detail)}
+              onExit={() => setMode(RecipeFlowMode.Detail)}
             />
           ) : null}
         </LoadingView>

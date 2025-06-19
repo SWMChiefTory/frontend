@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { MainHeaderLogo } from "@/src/shared/components/MainHeaderLogo";
+import { HomeHeader } from "@/src/modules/shared/components/layout/HomeHeader";
 
 export default function TabLayout() {
   return (
@@ -11,7 +11,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          headerTitle: () => <MainHeaderLogo />,
+          headerTitle: () => <HomeHeader />,
           headerTitleAlign: "left",
           tabBarLabel: "홈",
         }}

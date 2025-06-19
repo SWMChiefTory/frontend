@@ -1,12 +1,12 @@
 import { renderHook, waitFor } from "@testing-library/react-native";
-import * as api from "@/src/features/recipe/api/recipe";
+import * as api from "@/src/modules/recipe/summary/api/recipeSummaryApi";
 import {
   PopularRecipeApiResponse,
   RecentRecipeApiResponse,
   RecipeSummaryResponse,
-} from "@/src/features/recipe/api/recipe";
-import { useRecipeListViewModel } from "@/src/features/recipe/viewmodels/useRecipeListViewModel";
-jest.mock("@/src/features/recipe/api/recipe");
+} from "@/src/modules/recipe/summary/api/recipeSummaryApi";
+import { useRecipeSummaryViewModel } from "@/src/modules/recipe/summary/viewmodels/useRecipeSummaryViewModel";
+jest.mock("@/src/modules/recipe/summary/api/recipeSummaryApi");
 
 const popularRecipeApiResponses: PopularRecipeApiResponse[] = [
   {
@@ -51,7 +51,7 @@ describe("레시피 리스트 ViewModel을 사용할 때", () => {
 
   describe("초기 렌더링이 되면", () => {
     it("인기 게시물과 최근 시청 게시물은 빈 배열이고, loading은 true이며 error는 null이어야 한다", () => {
-      const { result } = renderHook(() => useRecipeListViewModel());
+      const { result } = renderHook(() => useRecipeSummaryViewModel());
 
       const { popularRecipes, recentRecipes, loading, error } = result.current;
 
@@ -66,7 +66,7 @@ describe("레시피 리스트 ViewModel을 사용할 때", () => {
     it("loading은 false가 되어야 하고, error는 null이어야 한다", async () => {
       (api.fetchRecipeSummary as jest.Mock).mockResolvedValue(summary);
 
-      const { result } = renderHook(() => useRecipeListViewModel());
+      const { result } = renderHook(() => useRecipeSummaryViewModel());
 
       await waitFor(() => expect(result.current.loading).toBe(false));
 
@@ -78,7 +78,7 @@ describe("레시피 리스트 ViewModel을 사용할 때", () => {
     it("인기 레시피를 받아오면 레시피에 대한 정보가 채워져야 한다", async () => {
       (api.fetchRecipeSummary as jest.Mock).mockResolvedValue(summary);
 
-      const { result } = renderHook(() => useRecipeListViewModel());
+      const { result } = renderHook(() => useRecipeSummaryViewModel());
 
       await waitFor(() => expect(result.current.loading).toBe(false));
 
@@ -102,7 +102,7 @@ describe("레시피 리스트 ViewModel을 사용할 때", () => {
     it("최근 시청 레시피를 받아오면 레시피에 대한 정보가 채워져야 한다", async () => {
       (api.fetchRecipeSummary as jest.Mock).mockResolvedValue(summary);
 
-      const { result } = renderHook(() => useRecipeListViewModel());
+      const { result } = renderHook(() => useRecipeSummaryViewModel());
 
       await waitFor(() => expect(result.current.loading).toBe(false));
 
@@ -131,7 +131,7 @@ describe("레시피 리스트 ViewModel을 사용할 때", () => {
       const mockError = new Error("API 실패");
       (api.fetchRecipeSummary as jest.Mock).mockRejectedValue(mockError);
 
-      const { result } = renderHook(() => useRecipeListViewModel());
+      const { result } = renderHook(() => useRecipeSummaryViewModel());
 
       await waitFor(() => expect(result.current.loading).toBe(false));
 

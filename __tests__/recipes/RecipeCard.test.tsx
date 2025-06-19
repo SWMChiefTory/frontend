@@ -1,11 +1,11 @@
-import { PopularRecipeCard } from "@/src/features/recipe/components/PopularRecipeCard";
-import { recipeSummariesMock } from "@/src/features/recipe/__mocks__/fetchRecipe.mock";
+import { PopularRecipeSummaryCard } from "@/src/modules/recipe/summary/popular/components/PopularRecipeSummaryCard";
+import { recipeSummariesMock } from "@/src/modules/recipe/summary/api/__mocks__/fetchRecipeSummary.mock";
 import { fireEvent, render, screen } from "@testing-library/react-native";
-import { PopularRecipe } from "@/src/features/recipe/types/PopularRecipe";
-import { RecentRecipe } from "@/src/features/recipe/types/RecentRecipe";
+import { PopularRecipeSummary } from "@/src/modules/recipe/summary/popular/types/PopularRecipeSummary";
+import { RecentSummaryRecipe } from "@/src/modules/recipe/summary/recent/types/RecentSummaryRecipe";
 
-jest.mock("@/src/features/recipe/hooks/useRecipeMeta", () => ({
-  useRecipeMeta: (recipe: PopularRecipe | RecentRecipe) => ({
+jest.mock("@/src/modules/recipe/summary/hooks/useRecipeThumbnail", () => ({
+  useRecipeThumbnail: (recipe: PopularRecipeSummary | RecentSummaryRecipe) => ({
     thumbnail: `https://mocked-thumbnail.com/${recipe.youtubeId}`,
   }),
 }));
@@ -15,7 +15,7 @@ describe("RecipeCard 가 주어졌을 때", () => {
   describe("레시피 정보를 렌더링하는 경우", () => {
     sampleRecipes.forEach((recipe) => {
       it("썸네일 이미지를 표시해야 한다", () => {
-        render(<PopularRecipeCard recipe={recipe} onPress={() => {}} />);
+        render(<PopularRecipeSummaryCard recipe={recipe} onPress={() => {}} />);
         const image = screen.getByTestId("recipe-image");
         expect(image.props.source.uri).toBe(
           `https://mocked-thumbnail.com/${recipe.youtubeId}`,
@@ -23,7 +23,7 @@ describe("RecipeCard 가 주어졌을 때", () => {
       });
 
       it("제목 텍스트를 화면에 표시해야 한다", () => {
-        render(<PopularRecipeCard recipe={recipe} onPress={() => {}} />);
+        render(<PopularRecipeSummaryCard recipe={recipe} onPress={() => {}} />);
         expect(screen.getByText(recipe.title)).toBeTruthy();
       });
     });
@@ -33,7 +33,9 @@ describe("RecipeCard 가 주어졌을 때", () => {
     sampleRecipes.forEach((recipe) => {
       it(`onPress 콜백이 ${recipe.title} 레시피로 호출되어야 한다`, () => {
         const mockPress = jest.fn();
-        render(<PopularRecipeCard recipe={recipe} onPress={mockPress} />);
+        render(
+          <PopularRecipeSummaryCard recipe={recipe} onPress={mockPress} />,
+        );
         fireEvent.press(screen.getByTestId(`recipe-card-${recipe.recipeId}`));
         expect(mockPress).toHaveBeenCalledWith(recipe);
       });

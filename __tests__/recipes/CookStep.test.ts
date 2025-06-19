@@ -1,5 +1,5 @@
-import { CookStepApiResponse } from "@/src/features/recipe/api/recipe";
-import { CookStep } from "@/src/features/recipe/cook/types/CookStep";
+import { CookStep } from "@/src/modules/cook/types/CookStep";
+import { CookStepApiResponse } from "@/src/modules/recipeFlow/api/RecipeFlowApi";
 
 describe("CookStep 클래스는", () => {
   describe("of 메소드는", () => {
