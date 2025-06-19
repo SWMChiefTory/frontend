@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { CustomBackButton } from "@/src/shared/components/CustomBackButton";
+import { CustomBackButton } from "@/src/modules/shared/components/layout/CustomBackButton";
 
 export default function RootLayout() {
   return (

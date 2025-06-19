@@ -1,5 +1,5 @@
-import { RecentRecipeApiResponse } from "@/src/features/recipe/api/recipe";
-import { RecentRecipe } from "@/src/features/recipe/types/RecentRecipe";
+import { RecentRecipeApiResponse } from "@/src/modules/recipe/summary/api/recipeSummaryApi";
+import { RecentSummaryRecipe } from "@/src/modules/recipe/summary/recent/types/RecentSummaryRecipe";
 
 describe("최근 시청 레시피 클래스", () => {
   describe("create 메서드는", () => {
@@ -14,7 +14,7 @@ describe("최근 시청 레시피 클래스", () => {
     };
 
     it("API 응답을 기반으로 최근 시청 레시피 인스턴스를 생성해야 한다", () => {
-      const popularRecipe = RecentRecipe.create(apiResponse);
+      const popularRecipe = RecentSummaryRecipe.create(apiResponse);
 
       expect(popularRecipe.recipeId).toBe(apiResponse.recipeId);
       expect(popularRecipe.title).toBe(apiResponse.title);
@@ -32,7 +32,7 @@ describe("최근 시청 레시피 클래스", () => {
         createdAt: "invalid-date",
       };
 
-      const popularRecipe = RecentRecipe.create(invalidApiResponse);
+      const popularRecipe = RecentSummaryRecipe.create(invalidApiResponse);
 
       expect(isNaN(popularRecipe.createdAt.getTime())).toBe(true);
     });

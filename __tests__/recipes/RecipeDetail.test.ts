@@ -1,5 +1,5 @@
-import { RecipeDetail } from "@/src/features/recipe/types/RecipeDetail";
-import { recipeDetailApiMock } from "@/src/features/recipe/__mocks__/fetchRecipe.mock";
+import { RecipeFlow } from "@/src/modules/recipeFlow/types/RecipeFlow";
+import { recipeDetailApiMock } from "@/src/modules/recipe/detail/api/__mocks__/fetchRecipeDetail.mock";
 
 describe("RecipeDetail 클래스를 사용 할때", () => {
   const defaultParams = {
@@ -19,14 +19,14 @@ describe("RecipeDetail 클래스를 사용 할때", () => {
     ])(
       '총 소요시간이 %i분일 때 "%s"을(를) 반환해야 한다',
       (input, expected) => {
-        expect(RecipeDetail.formatTime(input)).toBe(expected);
+        expect(RecipeFlow.formatTime(input)).toBe(expected);
       },
     );
   });
 
   describe("create 메서드는", () => {
     it("초기 값들을 갖는 RecipeDetail 인스턴스를 생성해야 한다", () => {
-      const recipe = RecipeDetail.create(
+      const recipe = RecipeFlow.create(
         defaultParams.initialRecipeId,
         defaultParams.initialTitle,
         defaultParams.initialYoutubeId,
@@ -42,7 +42,7 @@ describe("RecipeDetail 클래스를 사용 할때", () => {
     });
 
     it("title과 youtubeId가 없으면 빈 문자열로 설정되어야 한다", () => {
-      const recipe = RecipeDetail.create(defaultParams.initialRecipeId);
+      const recipe = RecipeFlow.create(defaultParams.initialRecipeId);
 
       expect(recipe.title).toBe("");
       expect(recipe.youtubeId).toBe("");
@@ -51,7 +51,7 @@ describe("RecipeDetail 클래스를 사용 할때", () => {
 
   describe("updateDetails 메서드는", () => {
     it("API 응답 값을 기반으로 새로운 RecipeDetail 인스턴스를 반환해야 한다", () => {
-      const initial = RecipeDetail.create(
+      const initial = RecipeFlow.create(
         defaultParams.initialRecipeId,
         defaultParams.initialTitle,
         defaultParams.initialYoutubeId,
@@ -64,7 +64,7 @@ describe("RecipeDetail 클래스를 사용 할때", () => {
       expect(updated.youtubeId).toBe(recipeDetailApiMock.youtubeId);
       expect(updated.summary).toBe(recipeDetailApiMock.summary);
       expect(updated.totalTime).toBe(
-        RecipeDetail.formatTime(recipeDetailApiMock.totalTime),
+        RecipeFlow.formatTime(recipeDetailApiMock.totalTime),
       );
       expect(updated.ingredients).toEqual(recipeDetailApiMock.ingredients);
       updated.steps.forEach((step, index) => {
@@ -74,7 +74,7 @@ describe("RecipeDetail 클래스를 사용 할때", () => {
     });
 
     it("기존 인스턴스와는 다른 객체를 반환해야 한다", () => {
-      const recipe = RecipeDetail.create(
+      const recipe = RecipeFlow.create(
         defaultParams.initialRecipeId,
         defaultParams.initialTitle,
         defaultParams.initialYoutubeId,
