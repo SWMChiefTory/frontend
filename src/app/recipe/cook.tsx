@@ -1,14 +1,11 @@
-import { Stack, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { StyleSheet, View } from "react-native";
-import React, { useRef } from "react";
+import React from "react";
 import { useRecipeFlowViewModel } from "@/src/modules/recipeFlow/viewmodels/useRecipeFlowViewModel";
 import { LoadingView } from "@/src/modules/shared/components/layout/LoadingView";
 import { YoutubeVideoPlayer } from "@/src/modules/shared/components/video/YoutubeVideoPlayer";
-import { RecipeDetailView } from "@/src/modules/recipe/detail/components/RecipeDetailView";
-import { CookStepsView } from "@/src/modules/cook/components/CookStepsView";
-import { YoutubeIframeRef } from "react-native-youtube-iframe";
-import { RecipeFlowMode } from "@/src/modules/recipeFlow/types/RecipeFlowMode";
-import { RecipeFlowHeader } from "@/src/modules/recipeFlow/components/RecipeFlowHeader";
+import { CookStepsView2 } from "@/src/modules/cook/components/CookStepsView2";
+import { useYoutubePlayerStore } from "@/src/modules/shared/components/video/youtubePlayerStore";
 
 export default function RecipeFlowScreen() {
   const { recipeId, youtubeId, title } = useLocalSearchParams<{
@@ -21,38 +18,24 @@ export default function RecipeFlowScreen() {
     youtubeId,
     title,
   );
-  const [mode, setMode] = React.useState<RecipeFlowMode>(RecipeFlowMode.Detail);
-  const playerRef = useRef<YoutubeIframeRef>(null);
+  const { playerRef } = useYoutubePlayerStore();
 
   return (
     <>
       <Stack.Screen
         options={{
           title: recipe.title,
-          headerLeft: () => (
-            <RecipeFlowHeader
-              mode={mode}
-              onBack={() => setMode(RecipeFlowMode.Detail)}
-            />
-          ),
         }}
       />
 
       <View style={styles.wrapper}>
         <YoutubeVideoPlayer videoId={recipe.youtubeId} ref={playerRef} />
         <LoadingView loading={loading}>
-          {mode === RecipeFlowMode.Detail ? (
-            <RecipeDetailView
-              recipe={recipe}
-              onStart={() => setMode(RecipeFlowMode.Cook)}
-            />
-          ) : mode === RecipeFlowMode.Cook ? (
-            <CookStepsView
-              recipe={recipe}
-              playerRef={playerRef}
-              onExit={() => setMode(RecipeFlowMode.Detail)}
-            />
-          ) : null}
+          <CookStepsView2
+            recipe={recipe}
+            playerRef={playerRef}
+            onExit={() => router.back()}
+          />
         </LoadingView>
       </View>
     </>

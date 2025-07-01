@@ -7,5 +7,5 @@ type Props = {
 };
 
 export function YoutubeVideoPlayer({ videoId, ref }: Props) {
-  return <YoutubePlayer height={230} ref={ref} play={true} videoId={videoId} />;
+  return <YoutubePlayer height={250} ref={ref} play={true} videoId={videoId} />;
 }

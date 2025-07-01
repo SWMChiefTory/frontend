@@ -26,5 +26,5 @@ export default function RecentRecipeSummaryList({ recipes, onPress }: Props) {
 
 const styles = StyleSheet.create({
   gap: { width: 12 },
-  container: { height: "25%" },
+  container: { height: "15%" },
 });
