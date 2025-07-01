@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
   },
 
   stepTitle: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 10,
   },
 
   stepDescription: {
-    fontSize: 18,
+    fontSize: 25,
     textAlign: "center",
   },
 

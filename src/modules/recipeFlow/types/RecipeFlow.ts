@@ -28,6 +28,10 @@ export class RecipeFlow {
     this.steps = steps;
   }
 
+  static initialize(): RecipeFlow {
+    return new RecipeFlow("", "", "", "", "", [], []);
+  }
+
   static create(
     recipeId: string,
     title?: string,

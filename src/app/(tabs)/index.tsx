@@ -21,7 +21,7 @@ export default function HomeScreen() {
     title,
   }: PopularRecipeSummary | RecentSummaryRecipe) => {
     router.push({
-      pathname: "/recipe/[recipeId]",
+      pathname: "/recipeFlow/detail",
       params: { recipeId, youtubeId, title },
     });
   };
