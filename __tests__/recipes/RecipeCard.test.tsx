@@ -1,11 +1,11 @@
-import { PopularRecipeSummaryCard } from "@/src/modules/recipe/summary/popular/components/PopularRecipeSummaryCard";
-import { recipeSummariesMock } from "@/src/modules/recipe/summary/api/__mocks__/fetchRecipeSummary.mock";
+import { PopularRecipeSummaryCard } from "@/src/modules/recipe/summary/popular/components/Card";
+import { recipeSummariesMock } from "@/src/modules/recipe/summary/api/__mocks__/api.mock";
 import { fireEvent, render, screen } from "@testing-library/react-native";
-import { PopularRecipeSummary } from "@/src/modules/recipe/summary/popular/types/PopularRecipeSummary";
-import { RecentSummaryRecipe } from "@/src/modules/recipe/summary/recent/types/RecentSummaryRecipe";
+import { PopularSummaryRecipe } from "@/src/modules/recipe/summary/popular/types/PopularSummaryRecipe";
+import { RecentSummaryRecipe } from "@/src/modules/recipe/summary/recent/types/RecentRecipe";
 
 jest.mock("@/src/modules/recipe/summary/hooks/useRecipeThumbnail", () => ({
-  useRecipeThumbnail: (recipe: PopularRecipeSummary | RecentSummaryRecipe) => ({
+  useRecipeThumbnail: (recipe: PopularSummaryRecipe | RecentSummaryRecipe) => ({
     thumbnail: `https://mocked-thumbnail.com/${recipe.youtubeId}`,
   }),
 }));

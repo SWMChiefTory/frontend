@@ -1,60 +1,72 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import { PopularRecipeSummaryList } from "@/src/modules/recipe/summary/popular/components/PopularRecipeSummaryList";
-import { useRecipeSummaryViewModel } from "@/src/modules/recipe/summary/viewmodels/useRecipeSummaryViewModel";
-import { RecipeSectionHeader } from "@/src/modules/recipe/summary/shared/components/RecipeSectionHeader";
+import { StyleSheet, View, ScrollView } from "react-native";
+import { useRecipeSummaryViewModel } from "@/src/modules/recipe/summary/viewmodels/useViewModel";
 import { useRouter } from "expo-router";
-import { PopularRecipeSummary } from "@/src/modules/recipe/summary/popular/types/PopularRecipeSummary";
 import { LoadingView } from "@/src/modules/shared/components/layout/LoadingView";
-import RecentRecipeSummaryList from "@/src/modules/recipe/summary/recent/components/RecentRecipeSummaryList";
-import { RecentSummaryRecipe } from "@/src/modules/recipe/summary/recent/types/RecentSummaryRecipe";
-import { RecipeLinkInput } from "@/src/modules/recipe/link/components/RecipeLinkInput";
+import { HomeSectionHeader } from "@/src/modules/shared/components/layout/HomeSectionHeader";
+import { RecentRecipeSection } from "@/src/modules/recipe/summary/recent/components/Section";
+import { RecentSummaryRecipe } from "@/src/modules/recipe/summary/recent/types/Recipe";
+import { PopularSummaryRecipe } from "@/src/modules/recipe/summary/popular/types/Recipe";
+import { PopularRecipeSection } from "@/src/modules/recipe/summary/popular/components/Secition";
 
 export default function HomeScreen() {
   const { popularRecipes, recentRecipes, loading } =
     useRecipeSummaryViewModel();
   const router = useRouter();
 
-  const handleRecipePress = ({
-    recipeId,
-    youtubeId,
-    title,
-  }: PopularRecipeSummary | RecentSummaryRecipe) => {
-    router.push({
-      pathname: "/recipeFlow/detail",
-      params: { recipeId, youtubeId, title },
-    });
+  const handleRecipePress = (
+    recipe: PopularSummaryRecipe | RecentSummaryRecipe,
+  ) => {
+    if (recipe instanceof PopularSummaryRecipe) {
+      router.push({
+        pathname: "/recipe/create",
+        params: { recipeId: recipe.recipeId },
+      });
+    } else if (recipe instanceof RecentSummaryRecipe) {
+      router.push({
+        pathname: "/recipe/detail",
+        params: {
+          recipeId: recipe.recipeId,
+          youtubeId: recipe.youtubeId,
+          title: recipe.title,
+        },
+      });
+    }
   };
 
   return (
     <LoadingView loading={loading}>
-      <View style={styles.wrapper}>
-        <Text style={styles.title}>레시피를 요약하고, 저장하세요</Text>
-        <RecipeLinkInput
-          placeholder={"링크를 입력하세요... youtube, 블로그 etc"}
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <HomeSectionHeader
+          title="맛있는 요리의 시작"
+          subtitle="영상 링크로 간편하게 레시피를 만들어보세요"
         />
-        <RecipeSectionHeader title="최근 시청한 레시피" onPress={() => {}} />
-        <RecentRecipeSummaryList
-          recipes={recentRecipes}
-          onPress={handleRecipePress}
-        />
-        <RecipeSectionHeader title="추천 레시피" onPress={() => {}} />
-        <PopularRecipeSummaryList
-          recipes={popularRecipes}
-          onPress={handleRecipePress}
-        />
-      </View>
+        <View style={styles.contentWrapper}>
+          <RecentRecipeSection
+            recipes={recentRecipes}
+            onRecipePress={handleRecipePress}
+            onViewAllPress={() => {}}
+          />
+          <PopularRecipeSection
+            recipes={popularRecipes}
+            onRecipePress={handleRecipePress}
+            onViewAllPress={() => {}}
+          />
+          <View style={styles.bottomSpacer} />
+        </View>
+      </ScrollView>
     </LoadingView>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+  container: {
     flex: 1,
+    backgroundColor: "#F8FAFC",
+  },
+  contentWrapper: {
     padding: 20,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "600",
+  bottomSpacer: {
+    height: 100,
   },
 });
