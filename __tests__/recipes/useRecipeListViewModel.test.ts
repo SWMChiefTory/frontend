@@ -1,11 +1,11 @@
 import { renderHook, waitFor } from "@testing-library/react-native";
-import * as api from "@/src/modules/recipe/summary/api/recipeSummaryApi";
+import * as api from "@/src/modules/recipe/summary/api/Api";
 import {
   PopularRecipeApiResponse,
   RecentRecipeApiResponse,
   RecipeSummaryResponse,
-} from "@/src/modules/recipe/summary/api/recipeSummaryApi";
-import { useRecipeSummaryViewModel } from "@/src/modules/recipe/summary/viewmodels/useRecipeSummaryViewModel";
+} from "@/src/modules/recipe/summary/api/Api";
+import { useRecipeSummaryViewModel } from "@/src/modules/recipe/summary/viewmodels/useViewModel";
 jest.mock("@/src/modules/recipe/summary/api/recipeSummaryApi");
 
 const popularRecipeApiResponses: PopularRecipeApiResponse[] = [

@@ -1,5 +1,5 @@
-import { RecentRecipeApiResponse } from "@/src/modules/recipe/summary/api/recipeSummaryApi";
-import { RecentSummaryRecipe } from "@/src/modules/recipe/summary/recent/types/RecentSummaryRecipe";
+import { RecentRecipeApiResponse } from "@/src/modules/recipe/summary/api/Api";
+import { RecentSummaryRecipe } from "@/src/modules/recipe/summary/recent/types/RecentRecipe";
 
 describe("최근 시청 레시피 클래스", () => {
   describe("create 메서드는", () => {

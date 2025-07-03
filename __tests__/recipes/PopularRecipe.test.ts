@@ -1,5 +1,5 @@
-import { PopularRecipeSummary } from "@/src/modules/recipe/summary/popular/types/PopularRecipeSummary";
-import { PopularRecipeApiResponse } from "@/src/modules/recipe/summary/api/recipeSummaryApi";
+import { PopularSummaryRecipe } from "@/src/modules/recipe/summary/popular/types/PopularSummaryRecipe";
+import { PopularRecipeApiResponse } from "@/src/modules/recipe/summary/api/Api";
 
 describe("인기 레시피 클래스", () => {
   describe("create 메서드는", () => {
@@ -13,7 +13,7 @@ describe("인기 레시피 클래스", () => {
     };
 
     it("API 응답을 기반으로 인기 레시피 인스턴스를 생성해야 한다", () => {
-      const popularRecipe = PopularRecipeSummary.create(apiResponse);
+      const popularRecipe = PopularSummaryRecipe.create(apiResponse);
 
       expect(popularRecipe.recipeId).toBe(apiResponse.recipeId);
       expect(popularRecipe.title).toBe(apiResponse.title);
@@ -31,7 +31,7 @@ describe("인기 레시피 클래스", () => {
         createdAt: "invalid-date",
       };
 
-      const popularRecipe = PopularRecipeSummary.create(invalidApiResponse);
+      const popularRecipe = PopularSummaryRecipe.create(invalidApiResponse);
 
       expect(isNaN(popularRecipe.createdAt.getTime())).toBe(true);
     });
