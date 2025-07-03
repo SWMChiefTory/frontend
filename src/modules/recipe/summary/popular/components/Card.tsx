@@ -1,5 +1,4 @@
 import { Image, Pressable, StyleSheet, Text } from "react-native";
-import { useRecipeThumbnail } from "@/src/modules/recipe/summary/hooks/useThumbnail";
 import { PopularSummaryRecipe } from "../types/Recipe";
 
 type Props = {
@@ -8,8 +7,6 @@ type Props = {
 };
 
 export function PopularRecipeSummaryCard({ recipe, onPress }: Props) {
-  const { thumbnail } = useRecipeThumbnail(recipe);
-
   return (
     <Pressable
       testID={`recipe-card-${recipe.recipeId}`}
@@ -18,7 +15,7 @@ export function PopularRecipeSummaryCard({ recipe, onPress }: Props) {
     >
       <Image
         testID="recipe-image"
-        source={{ uri: thumbnail }}
+        source={{ uri: recipe.thumbnailUrl }}
         style={styles.image}
       />
       <Text numberOfLines={2} style={styles.cardText}>

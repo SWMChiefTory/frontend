@@ -1,5 +1,4 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { useRecipeThumbnail } from "@/src/modules/recipe/summary/hooks/useThumbnail";
 import { RecentSummaryRecipe } from "../types/Recipe";
 
 type Props = {
@@ -8,12 +7,10 @@ type Props = {
 };
 
 export function RecentRecipeSummaryCard({ recipe, onPress }: Props) {
-  const { thumbnail } = useRecipeThumbnail(recipe);
-
   return (
     <Pressable style={styles.card} onPress={() => onPress(recipe)}>
       <View style={styles.imageWrapper}>
-        <Image source={{ uri: thumbnail }} style={styles.image} />
+        <Image source={{ uri: recipe.thumbnailUrl }} style={styles.image} />
         <View style={styles.overlay} />
       </View>
       <View style={styles.body}>
