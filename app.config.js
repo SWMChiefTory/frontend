@@ -10,7 +10,7 @@ export default {
     newArchEnabled: true,
     owner: "cheftory",
     ios: {
-      buildNumber: "4",
+      buildNumber: "1",
       entitlements: {
         "com.apple.security.application-groups": [
           "group.com.cheftory.cheftory",
@@ -27,6 +27,7 @@ export default {
       infoPlist: {
         CFBundleDevelopmentRegion: "ko",
         ITSAppUsesNonExemptEncryption: false,
+        LSApplicationQueriesSchemes: ["kakaotalk"],
         UIBackgroundModes: ["fetch", "remote-notification"],
         NSUserNotificationUsageDescription:
           "타이머 종료 시 알림을 보내기 위해 필요합니다.",
@@ -57,7 +58,7 @@ export default {
       },
     },
     android: {
-      versionCode: 43,
+      versionCode: 44,
       googleServicesFile:
         process.env.GOOGLE_SERVICES_JSON || "./firebase/google-services.json",
       permissions: [
@@ -96,6 +97,7 @@ export default {
       "@react-native-firebase/app",
       "./plugins/android-share",
       "./plugins/android-keystore",
+      "./plugins/android-kakaotalk-queries",
       [
         "expo-build-properties",
         {
