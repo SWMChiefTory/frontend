@@ -2,7 +2,7 @@ export default {
   expo: {
     name: "쉐프토리",
     slug: "cheftory",
-    version: "1.0.11",
+    version: "1.0.12",
     orientation: "portrait",
     icon: "./assets/images/mainCharacter.png",
     scheme: "cheftory",
