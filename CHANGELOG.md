@@ -17,6 +17,22 @@
 
 ---
 
+## [1.0.12] - 2026-02-08
+
+### 추가
+
+- **카카오톡 연동**: 카카오톡 앱 열기 기능 지원
+- **오픈채팅 지원**: 오픈채팅 링크를 통한 카카오톡 오픈채팅방 연동
+  - iOS: LSApplicationQueriesSchemes에 kakaotalk 스킴 추가
+  - Android: kakaotalk queries 설정 추가
+
+### 배포 정보
+
+- **iOS**: v1.0.12 (빌드 2) - 심사중
+- **Android**: v1.0.12 (versionCode 44) - 배포 준비 중
+
+---
+
 ## [1.0.11] - 2025-12-29
 
 ### 추가
@@ -54,6 +70,14 @@
 
 ## Release Notes (앱 스토어/플레이 스토어용)
 
+### v1.0.12
+
+**🗣️ 카카오톡 오픈채팅 지원**
+- 카카오톡 앱에서 바로 오픈채팅방으로 이동 가능
+- 더 원활한 커뮤니티 소통 경로 제공
+
+---
+
 ### v1.0.11
 
 **🌍 글로벌 지원 강화**
@@ -67,6 +91,20 @@
 ---
 
 ## Technical Details (개발팀용)
+
+### v1.0.12 - 상세 변경사항
+
+#### iOS Native
+- **Info.plist 설정**:
+  - `LSApplicationQueriesSchemes`에 `kakaotalk` 스킴 추가
+  - 카카오톡 앱 외부 호출을 위한 쿼리 스킴 설정
+
+#### Android Native
+- **KakaoTalk Queries Plugin**:
+  - `./plugins/android-kakaotalk-queries` 플러그인 추가
+  - AndroidManifest.xml에 kakaotalk queries 설정 자동 추가
+
+---
 
 ### v1.0.11 - 상세 변경사항
 
