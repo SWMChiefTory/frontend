@@ -81,6 +81,7 @@ enum payloadType {
   LOCK_ORIENTATION = "LOCK_ORIENTATION",
   UNLOCK_ORIENTATION = "UNLOCK_ORIENTATION",
   OPEN_YOUTUBE = "OPEN_YOUTUBE",
+  OPEN_KAKAO = "OPEN_KAKAO",
   OPEN_EXTERNAL_URL = "OPEN_EXTERNAL_URL",
   SAFE_AREA = "SAFE_AREA",
   SYSTEM_VOLUME = "SYSTEM_VOLUME",
@@ -205,18 +206,52 @@ export function useHandleMessage({
               }
               break;
             }
+            case payloadType.OPEN_KAKAO: {
+              const kakaoAppUrl = Platform.select({
+                ios: "kakaotalk://",
+                android: "kakaotalk://launch",
+              }) as string;
+
+              try {
+                const canOpen = await Linking.canOpenURL(kakaoAppUrl);
+                if (canOpen) {
+                  await Linking.openURL(kakaoAppUrl);
+                } else {
+                  // 카카오톡 미설치 시 스토어로 이동
+                  const storeUrl = Platform.select({
+                    ios: "https://apps.apple.com/app/kakaotalk/id362057947",
+                    android: "market://details?id=com.kakao.talk",
+                  }) as string;
+                  await Linking.openURL(storeUrl);
+                }
+              } catch (error) {
+                const fallbackStoreUrl = Platform.select({
+                  ios: "https://apps.apple.com/app/kakaotalk/id362057947",
+                  android:
+                    "https://play.google.com/store/apps/details?id=com.kakao.talk",
+                }) as string;
+                await Linking.openURL(fallbackStoreUrl);
+              }
+              break;
+            }
             case payloadType.OPEN_EXTERNAL_URL: {
-              const { url } = req.payload;
+              const { url, fallbackUrl } = req.payload;
               if (url) {
                 try {
                   const canOpen = await Linking.canOpenURL(url);
                   if (canOpen) {
                     await Linking.openURL(url);
+                  } else if (fallbackUrl) {
+                    await Linking.openURL(fallbackUrl);
                   } else {
                     console.warn("[OPEN_EXTERNAL_URL] URL을 열 수 없음:", url);
                   }
                 } catch (error) {
-                  console.error("[OPEN_EXTERNAL_URL] 실패:", error);
+                  if (fallbackUrl) {
+                    await Linking.openURL(fallbackUrl);
+                  } else {
+                    console.error("[OPEN_EXTERNAL_URL] 실패:", error);
+                  }
                 }
               }
               break;
