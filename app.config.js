@@ -27,7 +27,7 @@ export default {
       infoPlist: {
         CFBundleDevelopmentRegion: "ko",
         ITSAppUsesNonExemptEncryption: false,
-        LSApplicationQueriesSchemes: ["kakaotalk"],
+        LSApplicationQueriesSchemes: ["kakaotalk", "youtube"],
         UIBackgroundModes: ["fetch", "remote-notification"],
         NSUserNotificationUsageDescription:
           "타이머 종료 시 알림을 보내기 위해 필요합니다.",
@@ -98,6 +98,7 @@ export default {
       "./plugins/android-share",
       "./plugins/android-keystore",
       "./plugins/android-kakaotalk-queries",
+      "./plugins/android-youtube-queries",
       [
         "expo-build-properties",
         {
