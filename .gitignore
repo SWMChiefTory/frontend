@@ -49,3 +49,12 @@ app-example
 
 ios/
 android/
+
+
+.agents/
+.claude/
+.cursor/
+.cursor/
+.omc/
+.serena/
+.vscode/
