@@ -1,5 +1,6 @@
 import { refreshToken } from "@/src/modules/shared/api/client";
 import { Action, WebViewMessageType } from "@/src/shared/webview/messageType";
+import Constants from "expo-constants";
 import { useCreatingCategoryViewStore } from "@/src/widgets/create-category-view/store/creatingCategoryView";
 import {
   useLogoutViewModel,
@@ -85,6 +86,7 @@ enum payloadType {
   OPEN_EXTERNAL_URL = "OPEN_EXTERNAL_URL",
   SAFE_AREA = "SAFE_AREA",
   SYSTEM_VOLUME = "SYSTEM_VOLUME",
+  GET_APP_VERSION = "GET_APP_VERSION",
 }
 
 class InvalidJsonError extends Error {
@@ -161,6 +163,15 @@ export function useHandleMessage({
                   "messagesConsumed",
                   JSON.stringify(messagesConsumed),
                 );
+              } catch (e: any) {
+                fail(req.id, e?.message ?? "Unhandled error");
+              }
+              break;
+            }
+            case payloadType.GET_APP_VERSION: {
+              try {
+                const appVersion = Constants.expoConfig?.version ?? "1.0.0";
+                reply(req.id, { appVersion });
               } catch (e: any) {
                 fail(req.id, e?.message ?? "Unhandled error");
               }
