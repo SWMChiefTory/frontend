@@ -2,7 +2,7 @@ export default {
   expo: {
     name: "쉐프토리",
     slug: "cheftory",
-    version: "1.0.13",
+    version: "1.0.12",
     orientation: "portrait",
     icon: "./assets/images/mainCharacter.png",
     scheme: "cheftory",
@@ -58,7 +58,7 @@ export default {
       },
     },
     android: {
-      versionCode: 45,
+      versionCode: 44,
       googleServicesFile:
         process.env.GOOGLE_SERVICES_JSON || "./firebase/google-services.json",
       permissions: [
