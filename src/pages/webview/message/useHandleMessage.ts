@@ -170,8 +170,11 @@ export function useHandleMessage({
             }
             case payloadType.GET_APP_VERSION: {
               try {
-                const appVersion = Constants.expoConfig?.version ?? "1.0.0";
-                reply(req.id, { appVersion });
+                const appVersion = Constants.expoConfig?.version;
+                if (!appVersion) {
+                  console.warn("[GET_APP_VERSION] expoConfig.version is undefined");
+                }
+                reply(req.id, { appVersion: appVersion ?? "unknown" });
               } catch (e: any) {
                 fail(req.id, e?.message ?? "Unhandled error");
               }
