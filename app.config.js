@@ -15,6 +15,7 @@ export default {
         "com.apple.security.application-groups": [
           "group.com.cheftory.cheftory",
         ],
+        "aps-environment": "production",
       },
       googleServicesFile:
         process.env.GOOGLE_SERVICES_PLIST ||
