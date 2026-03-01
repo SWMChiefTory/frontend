@@ -21,19 +21,28 @@
 
 ### 추가
 
-- **유튜브 연동**: 카카오톡 앱 열기 기능 지원
-- **오픈채팅 지원**: 오픈채팅 링크를 통한 카카오톡 오픈채팅방 연동
+- **푸시 알림 시스템**: Expo Push Notification 기반 원격 푸시 알림 구현
+  - 토큰 발급 및 서버 등록/삭제 (`/users/me/pushToken` API 연동)
+  - 알림 탭 시 라우팅 지원 (레시피, 공지, 홈, 프로필 등)
+  - 로그인/로그아웃 시 토큰 자동 등록/해제
+  - Android 알림 채널 설정 (timer-alarms, default)
+- **유튜브 연동**: 유튜브 앱 열기 기능 지원
   - iOS: LSApplicationQueriesSchemes에 youtube 스킴 추가
-  - Android: youtube queries 설정 추가
+  - Android: youtube queries 플러그인 추가
+- **네이티브 버전정보 전달**: WebView에 앱 버전 정보를 전달하는 handleMessage 추가
+
+### 변경
+
+- **EAS 프로젝트 재설정**: 기존 EAS 프로젝트 삭제 후 새 프로젝트로 재연결
+  - 새 projectId: `f02c958a-c473-4a51-829c-3ff1ad8fd256`
+  - `eas.json` 빌드 프로파일 초기화 (development, preview, production)
 
 ### 제거
 
-- **EAS 설정 제거**: EAS Build/Update 관련 설정 전면 제거
-  - `app.config.js`: `owner`, `extra.eas` (projectId), `updates`, `runtimeVersion` 제거
+- **EAS Update 제거**: OTA 업데이트 관련 설정 전면 제거
+  - `app.config.js`: `updates`, `runtimeVersion` 제거
   - `expo-updates` 패키지 제거
-  - `eas.json` 삭제
   - `codepush.ts` (OTA 업데이트 유틸) 삭제
-  - `eas-cli` 글로벌 삭제
 
 ### 배포 정보
 
