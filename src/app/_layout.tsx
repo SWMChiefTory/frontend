@@ -28,6 +28,7 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { initAmplitude, trackNative } from "../modules/shared/analytics";
 import { AmplitudeEvent } from "../modules/shared/analytics/amplitudeEvents";
+import { initExpoPush, syncExpoPushRegistration } from "../modules/notifications/expo-push";
 
 ExpoSplashScreen.preventAutoHideAsync();
 
@@ -129,6 +130,45 @@ export default function RootLayout() {
       trackNative(AmplitudeEvent.APP_LAUNCHED);
     })();
   }, []);
+
+  useEffect(() => {
+    if (!isReady || !isLoggedIn) {
+      return;
+    }
+
+    let cleanup: (() => void) | undefined;
+    let isMounted = true;
+
+    (async () => {
+      cleanup = await initExpoPush({ isLoggedIn });
+      if (!isMounted) {
+        cleanup?.();
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+      cleanup?.();
+    };
+  }, [isReady, isLoggedIn]);
+
+  useEffect(() => {
+    if (!isReady || !isLoggedIn) {
+      return;
+    }
+
+    const subscription = AppState.addEventListener("change", (status) => {
+      if (status !== "active") {
+        return;
+      }
+
+      void syncExpoPushRegistration({ isLoggedIn: true });
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [isReady, isLoggedIn]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

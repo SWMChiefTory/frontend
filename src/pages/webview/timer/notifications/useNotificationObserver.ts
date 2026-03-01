@@ -1,26 +1,23 @@
 import { useEffect } from "react";
 import * as Notifications from "expo-notifications";
 import { sendMessage } from "@/src/shared/webview/sendMessage";
-import * as Linking from "expo-linking";
+import { getRouteFromNotificationData } from "@/src/modules/notifications/expo-push/router";
 
 export function useNotificationObserver() {
   useEffect(() => {
     function redirect(notification: Notifications.Notification) {
-      const url = notification.request.content.data?.url;
-      if (url && typeof url === "string") {
+      const route = getRouteFromNotificationData(notification.request.content.data);
+      if (route) {
         setTimeout(() => {
           sendMessage({
             type: "ROUTE",
             data: {
-              route:
-                "/recipe/" +
-                Linking.parse(url).queryParams?.["recipeId"] +
-                "/detail",
+              route,
             },
           });
         }, 100);
       } else {
-        console.log("이동 할 딥링크가 없습니다.");
+        console.log("이동할 알림 라우트를 찾지 못했습니다.");
       }
     }
 

@@ -21,6 +21,7 @@ import {
   setAmplitudeUserId,
   resetAmplitudeUser,
 } from "@/src/modules/shared/analytics/amplitude";
+import { unregisterExpoPushOnLogout } from "@/src/modules/notifications/expo-push";
 
 export function useLoginViewModel() {
   const { setUser } = useUserStore();
@@ -48,11 +49,11 @@ export function useLoginViewModel() {
         provider_sub: data.user_info.provider_sub,
       };
     },
-    onSuccess: (data, variables) => {
+    onSuccess: async (data, variables) => {
       console.log("login success", data);
       console.log("user", JSON.stringify(data.user));
+      await storeAuthToken(data.access_token, data.refresh_token);
       setUser(data.user);
-      storeAuthToken(data.access_token, data.refresh_token);
       setAmplitudeUserId(data.provider_sub);
       trackNative(AmplitudeEvent.LOGIN_SUCCESS, {
         provider: variables.provider.toLowerCase(),
@@ -110,18 +111,20 @@ export function useLogoutViewModel() {
     mutationFn: async () => {
       const refreshToken = await findRefreshToken();
       if (refreshToken) {
-        logoutUser(refreshToken);
+        await logoutUser(refreshToken);
       }
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       trackNative(AmplitudeEvent.LOGOUT);
       resetAmplitudeUser();
+      await unregisterExpoPushOnLogout();
       removeAuthToken();
       removeUser();
     },
-    onError: (error) => {
+    onError: async (error) => {
       trackNative(AmplitudeEvent.LOGOUT);
       resetAmplitudeUser();
+      await unregisterExpoPushOnLogout();
       removeAuthToken();
       removeUser();
     },
@@ -144,8 +147,9 @@ export function useDeleteUserViewModel() {
         return deleteAccount(refreshToken);
       }
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       resetAmplitudeUser();
+      await unregisterExpoPushOnLogout();
       removeUser();
       removeAuthToken();
     },
