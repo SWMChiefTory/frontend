@@ -48,7 +48,7 @@ export async function scheduleTimerAlarm(
   remainingSeconds: number,
   market: Market | null,
 ) {
-  if (!tryGrantPermission()) {
+  if (!(await tryGrantPermission())) {
     return;
   }
   const currentMarket = market === "GLOBAL" ? "GLOBAL" : "KOREA";
