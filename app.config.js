@@ -2,7 +2,7 @@ export default {
   expo: {
     name: "쉐프토리",
     slug: "cheftory",
-    version: "1.0.12",
+    version: "1.0.13",
     orientation: "portrait",
     icon: "./assets/images/mainCharacter.png",
     scheme: "cheftory",
@@ -10,7 +10,7 @@ export default {
     newArchEnabled: true,
     owner: "cheftory",
     ios: {
-      buildNumber: "3",
+      buildNumber: "1",
       entitlements: {
         "com.apple.security.application-groups": [
           "group.com.cheftory.cheftory",
@@ -58,7 +58,7 @@ export default {
       },
     },
     android: {
-      versionCode: 44,
+      versionCode: 45,
       googleServicesFile:
         process.env.GOOGLE_SERVICES_JSON || "./firebase/google-services.json",
       permissions: [
