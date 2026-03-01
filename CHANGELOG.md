@@ -26,10 +26,19 @@
   - iOS: LSApplicationQueriesSchemes에 youtube 스킴 추가
   - Android: youtube queries 설정 추가
 
+### 제거
+
+- **EAS 설정 제거**: EAS Build/Update 관련 설정 전면 제거
+  - `app.config.js`: `owner`, `extra.eas` (projectId), `updates`, `runtimeVersion` 제거
+  - `expo-updates` 패키지 제거
+  - `eas.json` 삭제
+  - `codepush.ts` (OTA 업데이트 유틸) 삭제
+  - `eas-cli` 글로벌 삭제
+
 ### 배포 정보
 
-- **iOS**: v1.0.13 (빌드 1) - 내부테스트
-- **Android**: v1.0.13 (versionCode 45) - 내부테스트
+- **iOS**: v1.0.13 (빌드 1) - 진행아직안함
+- **Android**: v1.0.13 (versionCode 45) - 진행아직안함
 
 ---
 
