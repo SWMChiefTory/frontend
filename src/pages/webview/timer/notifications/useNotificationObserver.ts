@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import * as Notifications from "expo-notifications";
-import { sendMessage } from "@/src/shared/webview/sendMessage";
+import { reserveMessage } from "@/src/shared/webview/sendMessage";
 import { getRouteFromNotificationData } from "@/src/modules/notifications/expo-push/router";
 
 export function useNotificationObserver() {
@@ -8,14 +8,12 @@ export function useNotificationObserver() {
     function redirect(notification: Notifications.Notification) {
       const route = getRouteFromNotificationData(notification.request.content.data);
       if (route) {
-        setTimeout(() => {
-          sendMessage({
-            type: "ROUTE",
-            data: {
-              route,
-            },
-          });
-        }, 100);
+        reserveMessage({
+          type: "ROUTE",
+          data: {
+            route,
+          },
+        });
       } else {
         console.log("이동할 알림 라우트를 찾지 못했습니다.");
       }
