@@ -31,6 +31,12 @@
   - Android: youtube queries 플러그인 추가
 - **네이티브 버전정보 전달**: WebView에 앱 버전 정보를 전달하는 handleMessage 추가
 
+### 수정
+
+- **푸시 알림 안정성 개선**
+  - cold start 시 알림 탭 라우팅 유실 방지 (`sendMessage` → `reserveMessage`)
+  - 로그아웃 시 인메모리 토큰 없을 경우 Expo SDK fallback으로 서버 토큰 삭제 보장
+
 ### 변경
 
 - **EAS 프로젝트 재설정**: 기존 EAS 프로젝트 삭제 후 새 프로젝트로 재연결
@@ -46,8 +52,8 @@
 
 ### 배포 정보
 
-- **iOS**: v1.0.13 (빌드 2) - 내부테스트까지 배포 완료
-- **Android**: v1.0.13 (versionCode 45) - 진행아직안함
+- **iOS**: v1.0.13 (빌드 3) - 내부테스트 배포 완료
+- **Android**: v1.0.13 (versionCode 45) - 빌드완료
 
 ---
 
