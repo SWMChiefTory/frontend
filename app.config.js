@@ -10,7 +10,7 @@ export default {
     newArchEnabled: true,
     owner: "cheftory",
     ios: {
-      buildNumber: "3",
+      buildNumber: "4",
       entitlements: {
         "com.apple.security.application-groups": [
           "group.com.cheftory.cheftory",
@@ -59,7 +59,7 @@ export default {
       },
     },
     android: {
-      versionCode: 45,
+      versionCode: 46,
       googleServicesFile:
         process.env.GOOGLE_SERVICES_JSON || "./firebase/google-services.json",
       permissions: [
