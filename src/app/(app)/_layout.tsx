@@ -30,6 +30,7 @@ export default function AppLayout() {
         />
         <Stack.Screen name="settings/settings" />
         <Stack.Screen name="recipe/create" />
+        <Stack.Screen name="native-step/[id]" options={{ headerShown: false }} />
       </Stack>
     </KeyboardProvider>
   );

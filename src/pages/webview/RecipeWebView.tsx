@@ -99,7 +99,6 @@ export function RecipeWebViewContent() {
   const webviewUrl = getWebViewUrl(market);
 
   if (error) {
-    console.log("이 에러냐??")
     throw error;
   }
 
@@ -183,10 +182,9 @@ export function RecipeWebViewContent() {
           backgroundColor: safeArea.bottom.color,
         }}
       />
-      <WebviewLoadingView/>
+      {/* <WebviewLoadingView/> */}
     </View>
   );
-  // Android 하드웨어 뒤로가기 버튼 처리: 웹뷰로 BACK_PRESSED 전송
 }
 
 
