@@ -1,0 +1,48 @@
+diff --git a/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift b/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift
+index e333bc5..df9754d 100644
+--- a/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift
++++ b/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift
+@@ -9,6 +9,7 @@ public class ExpoSpeechTranscriberModule: Module {
+     private var recognitionTask: SFSpeechRecognitionTask?
+     private var bufferRecognitionTask: SFSpeechRecognitionTask?
+     private var startedListening = false
++    private var storedContextualStrings: [String] = []
+     
+     public func definition() -> ModuleDefinition {
+         Name("ExpoSpeechTranscriber")
+@@ -84,6 +85,10 @@ public class ExpoSpeechTranscriberModule: Module {
+         Function("stopBufferTranscription") { () -> Void in
+             return self.stopBufferTranscription()
+         }
++
++        Function("setContextualStrings") { (strings: [String]) -> Void in
++            self.storedContextualStrings = strings
++        }
+     }
+     
+     // MARK: - Private Implementation Methods
+@@ -98,6 +103,9 @@ public class ExpoSpeechTranscriberModule: Module {
+                 return
+             }
+             recognitionRequest.shouldReportPartialResults = true
++            if !self.storedContextualStrings.isEmpty {
++                recognitionRequest.contextualStrings = self.storedContextualStrings
++            }
+ 
+             bufferRecognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
+                 if let error = error {
+diff --git a/node_modules/expo-speech-transcriber/src/index.ts b/node_modules/expo-speech-transcriber/src/index.ts
+index d5731e3..e23b266 100644
+--- a/node_modules/expo-speech-transcriber/src/index.ts
++++ b/node_modules/expo-speech-transcriber/src/index.ts
+@@ -59,6 +59,10 @@ export function stopBufferTranscription(): void {
+   return ExpoSpeechTranscriberModule.stopBufferTranscription();
+ }
+ 
++export function setContextualStrings(strings: string[]): void {
++  return ExpoSpeechTranscriberModule.setContextualStrings(strings);
++}
++
+ export function useRealTimeTranscription() {
+   const [text, setText] = useState('');
+   const [isFinal, setIsFinal] = useState(false);

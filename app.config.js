@@ -112,6 +112,8 @@ export default {
       ],
       ["expo-screen-orientation", { initialOrientation: "PORTRAIT_UP" }],
       "./plugins/app-localization",
+      "expo-speech-transcriber",
+      "onnxruntime-react-native",
     ],
     experiments: {
       typedRoutes: true,

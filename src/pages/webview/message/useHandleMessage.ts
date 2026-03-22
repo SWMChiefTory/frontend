@@ -24,6 +24,7 @@ import { comsumeReservedMessage } from "@/src/shared/webview/sendMessage";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { SafeArea } from "../RecipeWebView";
 import { useIsLoadingViewOpen } from "../load/LoadingViewStore";
+import { router } from "expo-router";
 //webview입장에서 요청
 type RequestMsgBlockingFromWebView = {
   intended: true;
@@ -127,6 +128,31 @@ export function useHandleMessage({
   const {closeLoadingView} = useIsLoadingViewOpen();
 
   const handleMessage = async (event: any) => {
+    const rawData = event.nativeEvent.data;
+
+    // console.log transport: __NATIVE_MSG__ 접두사로 전송된 메시지 처리
+    if (typeof rawData === 'string' && rawData.startsWith('__NATIVE_MSG__')) {
+      try {
+        const jsonStr = rawData.slice('__NATIVE_MSG__'.length);
+        const msg = JSON.parse(jsonStr);
+        console.log('[Native] __NATIVE_MSG__ 수신:', msg.type);
+        if (msg.type === 'START_COOKING') {
+          const { recipeId, videoId, recipe } = msg.payload;
+          router.push({
+            pathname: "/(app)/native-step/[id]" as any,
+            params: {
+              id: recipeId,
+              videoId,
+              recipe: JSON.stringify(recipe),
+            },
+          });
+        }
+      } catch (e: any) {
+        console.error('[Native] __NATIVE_MSG__ 파싱 에러:', e.message);
+      }
+      return;
+    }
+
     try {
       const req = (() => {
         try {
