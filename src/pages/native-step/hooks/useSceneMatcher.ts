@@ -23,10 +23,9 @@ export function useSceneMatcher(sceneLabels: string[]) {
   const embeddingRef = useRef<EmbeddingInstance | null>(null);
   const labelsKey = sceneLabels.join('|');
 
-  // 라벨이 바뀌면 임베딩 리셋
+  // 라벨이 바뀌면 ready만 false (이전 임베딩은 유지하다가 새 값 준비되면 교체)
   useEffect(() => {
     if (embeddedLabelsRef.current !== labelsKey) {
-      sceneEmbeddingsRef.current = null;
       setIsReady(false);
     }
   }, [labelsKey]);
