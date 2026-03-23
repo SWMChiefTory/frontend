@@ -1,29 +1,21 @@
 /**
- * useVoiceCommand – 웹뷰 AEC 기반 음성 명령
+ * useVoiceCommand – 음성 명령 (iOS + Android 통합)
  *
- * WebView getUserMedia(echoCancellation:true) → bridge PCM 청크
- *   → Silero VAD + expo-speech-transcriber
- *   → NLU(키워드 + ONNX) + 임베딩 장면 매칭
+ * 모드:
+ *   streaming (iOS, Android API33+ on-device): WebView 오디오 → VAD → 실시간 STT
+ *   batch (Android API33+ cloud): WebView 오디오 → VAD → 0.5초 침묵 → 일괄 STT
+ *   native (Android API<33): WebView 오디오 → VAD → WebView 녹음 중지 → 네이티브 SpeechRecognizer
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Platform } from 'react-native';
 import type { WebView } from 'react-native-webview';
-import { useWebAudioPipeline } from './useWebAudioPipeline';
+import { useWebAudioPipeline, type PipelineMode } from './useWebAudioPipeline';
 import { classifyLocal } from './useLocalNLU';
 import { createNLU, type IntentLabel } from './onnxNLU';
 import { useSceneMatcher } from './useSceneMatcher';
 
-const COMMAND_LABELS: Record<string, string> = {
-  NEXT_STEP: '다음 단계 →',
-  PREV_STEP: '← 이전 단계',
-  PLAY: '▶ 재생',
-  PAUSE: '⏸ 일시정지',
-  GO_TO_STEP: '단계 이동',
-  GO_TO_SCENE: '장면 이동',
-  EXTRA: '',
-};
 
-const DEBOUNCE_MS = 1500;
 const NLU_CONFIDENCE_THRESHOLD = 0.7;
 
 interface UseVoiceCommandOptions {
@@ -57,17 +49,21 @@ export function useVoiceCommand({
   const [intentFeedback, setIntentFeedback] = useState<string | null>(null);
   const [transcript, setTranscript] = useState('');
   const [sceneSearching, setSceneSearching] = useState(false);
-  const lastIntentTimeRef = useRef(0);
-  const lastIntentRef = useRef<string>('');
   const feedbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isListeningRef = useRef(false);
   const handledInInterimRef = useRef(false);
 
+  // ─── 모드 결정 ───
+  const [pipelineMode] = useState<PipelineMode>('streaming');
+
+  // ─── NLU 모델 로드 ───
   const nluReadyRef = useRef(false);
+  const nluRef = useRef<Awaited<ReturnType<typeof createNLU>> | null>(null);
 
   useEffect(() => {
     createNLU()
-      .then(() => {
+      .then((nlu) => {
+        nluRef.current = nlu;
         nluReadyRef.current = true;
         console.log('[VoiceCommand] NLU model ready');
       })
@@ -82,29 +78,17 @@ export function useVoiceCommand({
     feedbackTimerRef.current = setTimeout(() => setIntentFeedback(null), 1800);
   }, []);
 
-  const canExecute = useCallback((intent: string): boolean => {
-    const now = Date.now();
-    if (intent === lastIntentRef.current && now - lastIntentTimeRef.current < DEBOUNCE_MS) {
-      return false;
-    }
-    lastIntentRef.current = intent;
-    lastIntentTimeRef.current = now;
-    return true;
-  }, []);
-
   const executeIntent = useCallback(
     (intent: IntentLabel, stepNumber?: number) => {
       if (intent === 'EXTRA') return false;
-      if (!canExecute(intent + (stepNumber ?? ''))) return false;
-
       switch (intent) {
         case 'NEXT_STEP':
           if (isLastStep) { showFeedback('마지막 단계예요'); }
-          else { goToNextStep(); showFeedback(COMMAND_LABELS.NEXT_STEP); }
+          else { goToNextStep(); showFeedback('다음 단계 →'); }
           break;
         case 'PREV_STEP':
           if (isFirstStep) { showFeedback('첫 번째 단계예요'); }
-          else { goToPrevStep(); showFeedback(COMMAND_LABELS.PREV_STEP); }
+          else { goToPrevStep(); showFeedback('← 이전 단계'); }
           break;
         case 'GO_TO_STEP':
           if (stepNumber && stepNumber >= 1 && stepNumber <= totalSteps) {
@@ -112,17 +96,17 @@ export function useVoiceCommand({
           } else { showFeedback(`${stepNumber}단계는 없어요`); }
           break;
         case 'PLAY':
-          play(); showFeedback(COMMAND_LABELS.PLAY);
+          play(); showFeedback('▶ 재생');
           break;
         case 'PAUSE':
-          pause(); showFeedback(COMMAND_LABELS.PAUSE);
+          pause(); showFeedback('⏸ 일시정지');
           break;
         case 'GO_TO_SCENE':
           return false;
       }
       return true;
     },
-    [canExecute, isLastStep, isFirstStep, goToNextStep, goToPrevStep, goToStep, play, pause, totalSteps, showFeedback],
+    [isLastStep, isFirstStep, goToNextStep, goToPrevStep, goToStep, play, pause, totalSteps, showFeedback],
   );
 
   const extractStepNumber = useCallback((text: string): number | undefined => {
@@ -140,7 +124,6 @@ export function useVoiceCommand({
   }, []);
 
   // ─── interim/final handlers ───
-
   const resetTranscriptionRef = useRef<() => void>(() => {});
 
   const handleInterimResult = useCallback(
@@ -150,7 +133,6 @@ export function useVoiceCommand({
 
       const localResult = classifyLocal(text);
       if (localResult) {
-        console.log(`[Interim] Tier1 keyword: "${text}" → ${localResult.intent}`);
         const executed = executeIntent(localResult.intent, localResult.stepNumber);
         if (executed) {
           handledInInterimRef.current = true;
@@ -159,10 +141,9 @@ export function useVoiceCommand({
         }
       }
 
-      if (nluReadyRef.current) {
+      if (nluReadyRef.current && nluRef.current) {
         try {
-          const nlu = await createNLU();
-          const result = await nlu.classify(text);
+          const result = await nluRef.current.classify(text);
           if (result && result.confidence >= NLU_CONFIDENCE_THRESHOLD) {
             if (result.intent === 'GO_TO_SCENE') {
               setSceneSearching(true);
@@ -185,7 +166,7 @@ export function useVoiceCommand({
               }
             }
           }
-        } catch {}
+        } catch (e) { console.warn('[VoiceCommand] NLU interim error:', e); }
       }
     },
     [executeIntent, extractStepNumber, findBestScene, seekToScene, showFeedback],
@@ -206,10 +187,9 @@ export function useVoiceCommand({
         return;
       }
 
-      if (nluReadyRef.current) {
+      if (nluReadyRef.current && nluRef.current) {
         try {
-          const nlu = await createNLU();
-          const result = await nlu.classify(text);
+          const result = await nluRef.current.classify(text);
           if (result && result.confidence >= NLU_CONFIDENCE_THRESHOLD) {
             if (result.intent === 'GO_TO_SCENE') {
               setSceneSearching(true);
@@ -219,7 +199,7 @@ export function useVoiceCommand({
               return;
             }
           }
-        } catch {}
+        } catch (e) { console.warn('[VoiceCommand] NLU final error:', e); }
       }
 
       const sceneMatch = await findBestScene(text);
@@ -232,10 +212,14 @@ export function useVoiceCommand({
     [executeIntent, extractStepNumber, findBestScene, seekToScene, showFeedback],
   );
 
-  // ─── 장면 라벨 → boost words ───
+  // ─── boost words ───
   const boostWords = useMemo(() => {
     const words = new Set<string>([
       '다음', '이전', '재생', '정지', '멈춰', '넘어가', '뒤로', '단계', '플레이', '스탑',
+      '장면', '스텝',
+      '일', '이', '삼', '사', '오', '육', '칠', '팔', '구', '십',
+      '하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열',
+      '첫', '첫번째', '두번째', '세번째', '네번째', '다섯번째',
     ]);
     for (const label of sceneLabels) {
       for (const word of label.split(/\s+/)) {
@@ -260,9 +244,13 @@ export function useVoiceCommand({
     onFinalResult: handleFinalResult,
     boostWords,
     webViewRef,
+    mode: pipelineMode,
   });
 
-  resetTranscriptionRef.current = resetTranscription;
+  resetTranscriptionRef.current = () => {
+    handledInInterimRef.current = false;
+    resetTranscription();
+  };
 
   const startListening = useCallback(async () => {
     isListeningRef.current = true;
@@ -279,11 +267,8 @@ export function useVoiceCommand({
   }, [pipelineStop]);
 
   const toggleListening = useCallback(() => {
-    if (isListeningRef.current) {
-      stopListening();
-    } else {
-      startListening();
-    }
+    if (isListeningRef.current) stopListening();
+    else startListening();
   }, [startListening, stopListening]);
 
   return {
