@@ -10,7 +10,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import type { WebView } from 'react-native-webview';
-import { useWebAudioPipeline, type PipelineMode } from './useWebAudioPipeline';
+import { useWebAudioPipeline } from './useWebAudioPipeline';
 import { classifyLocal } from './useLocalNLU';
 import { createNLU, type IntentLabel } from './onnxNLU';
 import { useSceneMatcher } from './useSceneMatcher';
@@ -53,8 +53,6 @@ export function useVoiceCommand({
   const isListeningRef = useRef(false);
   const handledInInterimRef = useRef(false);
 
-  // ─── 모드 결정 ───
-  const [pipelineMode] = useState<PipelineMode>('streaming');
 
   // ─── NLU 모델 로드 ───
   const nluReadyRef = useRef(false);
@@ -244,7 +242,6 @@ export function useVoiceCommand({
     onFinalResult: handleFinalResult,
     boostWords,
     webViewRef,
-    mode: pipelineMode,
   });
 
   resetTranscriptionRef.current = () => {

@@ -77,7 +77,7 @@ export default function RecipeStepPage() {
   const scenes: Scene[] = currentStep?.scenes ?? [];
   const sceneLabels = useMemo(() => scenes.map((s: Scene) => s.label), [scenes]);
 
-  // ─── Wake Lock ───
+  // 앱이 꺼지지 않게 잠금 설정
   useEffect(() => {
     activateKeepAwakeAsync('native-step');
     return () => { deactivateKeepAwake('native-step'); };
@@ -96,6 +96,7 @@ export default function RecipeStepPage() {
   }, []);
 
   // ─── Step Navigation ───
+  // step 관리 훅은 별도로 관리 하는게 어떨까?
   const navigateStep = useCallback((i: number, sceneIdx: number = 0) => {
     if (i < 0 || i >= totalSteps) return;
     setCurrentStepIndex(i);
