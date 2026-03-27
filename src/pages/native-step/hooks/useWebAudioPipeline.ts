@@ -8,9 +8,10 @@
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, Linking } from 'react-native';
+import { Alert, Linking, Share, Platform } from 'react-native';
 import type { WebView, WebViewMessageEvent } from 'react-native-webview';
 import { Audio } from 'expo-av';
+import { File, Paths } from 'expo-file-system/next';
 
 let realtimeBufferTranscribe: any = () => {};
 let stopBufferTranscription: any = () => {};
@@ -33,9 +34,79 @@ import type { PipelineState, AudioPipelineResult } from './useAudioPipeline';
 const PRE_BUFFER_SAMPLES = SAMPLE_RATE * 0.5;
 const MAX_UTTERANCE_SAMPLES = SAMPLE_RATE * 10;
 
-const SPEECH_THRESHOLD = 0.5;
+const SPEECH_THRESHOLD = 0.7;
 const SPEECH_FRAMES_TO_ACTIVATE = 3;
 const SILENCE_FRAMES_FOR_BATCH = 16; // ~0.5s
+
+// ─── Debug: PCM → WAV 저장 + 공유 ───
+function float32ToInt16(float32: Float32Array): Int16Array {
+  const int16 = new Int16Array(float32.length);
+  for (let i = 0; i < float32.length; i++) {
+    const s = Math.max(-1, Math.min(1, float32[i]));
+    int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+  }
+  return int16;
+}
+
+function createWavHeader(dataLength: number, sampleRate: number): ArrayBuffer {
+  const header = new ArrayBuffer(44);
+  const view = new DataView(header);
+  const writeString = (offset: number, str: string) => {
+    for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+  };
+  writeString(0, 'RIFF');
+  view.setUint32(4, 36 + dataLength, true);
+  writeString(8, 'WAVE');
+  writeString(12, 'fmt ');
+  view.setUint32(16, 16, true); // chunk size
+  view.setUint16(20, 1, true); // PCM
+  view.setUint16(22, 1, true); // mono
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true); // byte rate
+  view.setUint16(32, 2, true); // block align
+  view.setUint16(34, 16, true); // bits per sample
+  writeString(36, 'data');
+  view.setUint32(40, dataLength, true);
+  return header;
+}
+
+async function saveAndShareWav(chunks: Float32Array[], sampleRate: number) {
+  if (chunks.length === 0) return;
+
+  // 전체 샘플 합치기
+  let totalLen = 0;
+  for (const c of chunks) totalLen += c.length;
+  const merged = new Float32Array(totalLen);
+  let offset = 0;
+  for (const c of chunks) { merged.set(c, offset); offset += c.length; }
+
+  const int16 = float32ToInt16(merged);
+  const dataBytes = int16.buffer as ArrayBuffer;
+  const header = createWavHeader(dataBytes.byteLength, sampleRate);
+
+  // WAV 바이너리 → base64
+  const wav = new Uint8Array(header.byteLength + dataBytes.byteLength);
+  wav.set(new Uint8Array(header), 0);
+  wav.set(new Uint8Array(dataBytes), header.byteLength);
+
+  // Uint8Array → base64 (chunk 방식)
+  let binary = '';
+  const chunkSize = 8192;
+  for (let i = 0; i < wav.length; i += chunkSize) {
+    const slice = wav.subarray(i, Math.min(i + chunkSize, wav.length));
+    binary += String.fromCharCode(...slice);
+  }
+  const base64 = btoa(binary);
+
+  const file = new File(Paths.cache, `debug_audio_${Date.now()}.wav`);
+  file.write(base64, { encoding: 'base64' });
+  const path = file.uri;
+
+  const duration = (totalLen / sampleRate).toFixed(1);
+  console.log(`[Debug] WAV saved: ${path} (${duration}s, ${totalLen} samples)`);
+
+  Alert.alert('녹음 저장 완료', `${duration}초 녹음\n${path}`);
+}
 
 // ─── Ring Buffer ───
 class RingBuffer {
@@ -143,6 +214,9 @@ export function useWebAudioPipeline({
   const silenceFrameCountRef = useRef(0);
   const batchFlushingRef = useRef(false); // flush 재진입 방지
 
+  // Debug: 전체 녹음 누적
+  const debugRecordingRef = useRef<Float32Array[]>([]);
+
   // STT results
   const { text, isFinal, error: sttError } = useRealTimeTranscription();
   const prevTextRef = useRef('');
@@ -180,6 +254,7 @@ export function useWebAudioPipeline({
   const vadSpeechStartRef = useRef(0);
   const firstSttResultRef = useRef(true);
 
+  //음성 데이터를 텍스트로 변환해주는 함수
   const startTranscribing = useCallback(() => {
     vadSpeechStartRef.current = performance.now();
     firstSttResultRef.current = true;
@@ -409,6 +484,9 @@ export function useWebAudioPipeline({
 
         const buffer = base64PcmToFloat32(msg.base64);
 
+        // Debug: 모든 청크 누적
+        debugRecordingRef.current.push(buffer);
+
         // Ring buffer — LISTENING일 때
         if (!transcribingRef.current) {
           ringBufferRef.current.write(buffer);
@@ -538,6 +616,7 @@ export function useWebAudioPipeline({
       speechBufferSamplesRef.current = 0;
       silenceFrameCountRef.current = 0;
       batchFlushingRef.current = false;
+      debugRecordingRef.current = [];
 
       if (boostWords && boostWords.length > 0) {
         setContextualStrings(boostWords);
@@ -573,6 +652,14 @@ export function useWebAudioPipeline({
       if (window.__stopRecording) window.__stopRecording();
       true;
     `);
+
+    // Debug: 녹음 저장 + 공유
+    const chunks = debugRecordingRef.current;
+    if (chunks.length > 0) {
+      console.log('[Debug] 녹음 청크 ' + chunks.length + '개, 저장 중...');
+      saveAndShareWav(chunks, SAMPLE_RATE).catch(e => console.warn('[Debug] WAV 저장 실패:', e));
+      debugRecordingRef.current = [];
+    }
 
     ringBufferRef.current.reset();
     consecutiveSpeechRef.current = 0;

@@ -52,6 +52,7 @@ export default function RecipeStepPage() {
   const insets = useSafeAreaInsets();
   const webviewRef = useRef<WebView>(null);
 
+  console.log('[StepPage] MOUNTED, params:', Object.keys(params));
   const videoId = (params.videoId as string) ?? '';
   const recipe = useMemo(() => {
     const raw = params.recipe as string | undefined;
