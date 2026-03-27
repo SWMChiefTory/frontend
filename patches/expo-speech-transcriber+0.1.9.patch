@@ -1,5 +1,1542 @@
+diff --git a/node_modules/expo-speech-transcriber/android/build.gradle b/node_modules/expo-speech-transcriber/android/build.gradle
+index ee23579..5a0ed91 100644
+--- a/node_modules/expo-speech-transcriber/android/build.gradle
++++ b/node_modules/expo-speech-transcriber/android/build.gradle
+@@ -31,6 +31,10 @@ if (useManagedAndroidSdkVersions) {
+   }
+ }
+ 
++dependencies {
++  implementation("com.google.mlkit:genai-speech-recognition:1.0.0-alpha1")
++}
++
+ android {
+   namespace "expo.modules.speechtranscriber"
+   defaultConfig {
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/results.bin b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/results.bin
+new file mode 100644
+index 0000000..7ed749e
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/results.bin
+@@ -0,0 +1 @@
++o/bundleLibRuntimeToDirDebug
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/BuildConfig.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/BuildConfig.dex
+new file mode 100644
+index 0000000..09e85bb
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/BuildConfig.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.dex
+new file mode 100644
+index 0000000..7e6f0df
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.dex
+new file mode 100644
+index 0000000..463dbfd
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer.dex
+new file mode 100644
+index 0000000..97b768d
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.dex
+new file mode 100644
+index 0000000..4c3468b
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.dex
+new file mode 100644
+index 0000000..ebce885
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.dex
+new file mode 100644
+index 0000000..46131a6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.dex
+new file mode 100644
+index 0000000..ea7d118
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.dex
+new file mode 100644
+index 0000000..231b61a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.dex
+new file mode 100644
+index 0000000..61f8035
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.dex
+new file mode 100644
+index 0000000..35ed0e0
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.dex
+new file mode 100644
+index 0000000..e3d8f07
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.dex
+new file mode 100644
+index 0000000..91d26c4
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.dex
+new file mode 100644
+index 0000000..df02f93
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.dex
+new file mode 100644
+index 0000000..067da0c
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.dex
+new file mode 100644
+index 0000000..e63140b
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.dex
+new file mode 100644
+index 0000000..0789d3e
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.dex
+new file mode 100644
+index 0000000..11d2f9a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.dex
+new file mode 100644
+index 0000000..be32423
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.dex
+new file mode 100644
+index 0000000..8083154
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.dex
+new file mode 100644
+index 0000000..87c545a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.dex
+new file mode 100644
+index 0000000..870d9de
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.dex
+new file mode 100644
+index 0000000..dc4a50c
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.dex
+new file mode 100644
+index 0000000..2f28a8e
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.dex
+new file mode 100644
+index 0000000..2a5f58d
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.dex
+new file mode 100644
+index 0000000..3a51aec
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.dex
+new file mode 100644
+index 0000000..e6944bd
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.dex
+new file mode 100644
+index 0000000..9f914a4
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.dex
+new file mode 100644
+index 0000000..1a7f0c0
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.dex
+new file mode 100644
+index 0000000..76bd276
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.dex
+new file mode 100644
+index 0000000..227eda5
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin
+new file mode 100644
+index 0000000..601f245
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/079604b515b33f44e3aaa976da9ce5f8/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/results.bin b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/results.bin
+new file mode 100644
+index 0000000..7ed749e
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/results.bin
+@@ -0,0 +1 @@
++o/bundleLibRuntimeToDirDebug
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/BuildConfig.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/BuildConfig.dex
+new file mode 100644
+index 0000000..0975a0a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/BuildConfig.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.dex
+new file mode 100644
+index 0000000..ab50b2f
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.dex
+new file mode 100644
+index 0000000..e53cc68
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer.dex
+new file mode 100644
+index 0000000..2fc4368
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/DelayedFileStreamer.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.dex
+new file mode 100644
+index 0000000..baf8b8d
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.dex
+new file mode 100644
+index 0000000..6615f38
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.dex
+new file mode 100644
+index 0000000..b2f8fbf
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.dex
+new file mode 100644
+index 0000000..589c06c
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.dex
+new file mode 100644
+index 0000000..0cedcd2
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.dex
+new file mode 100644
+index 0000000..86abff3
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.dex
+new file mode 100644
+index 0000000..4d68ec5
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.dex
+new file mode 100644
+index 0000000..ab3e507
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.dex
+new file mode 100644
+index 0000000..6cfd5ae
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.dex
+new file mode 100644
+index 0000000..079c06a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.dex
+new file mode 100644
+index 0000000..b7d61bd
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.dex
+new file mode 100644
+index 0000000..c5796df
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.dex
+new file mode 100644
+index 0000000..9ddc798
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.dex
+new file mode 100644
+index 0000000..3a9996d
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.dex
+new file mode 100644
+index 0000000..f7d55c9
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.dex
+new file mode 100644
+index 0000000..754a4e9
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.dex
+new file mode 100644
+index 0000000..e537780
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.dex
+new file mode 100644
+index 0000000..c085cc9
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.dex
+new file mode 100644
+index 0000000..20d655a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.dex
+new file mode 100644
+index 0000000..c06756e
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.dex
+new file mode 100644
+index 0000000..2e52aa2
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.dex
+new file mode 100644
+index 0000000..39b95fe
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.dex
+new file mode 100644
+index 0000000..7dde782
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.dex
+new file mode 100644
+index 0000000..672967a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.dex
+new file mode 100644
+index 0000000..f2fe51b
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.dex
+new file mode 100644
+index 0000000..cde2f79
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.dex
+new file mode 100644
+index 0000000..91977b6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin
+new file mode 100644
+index 0000000..601f245
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/c4ebe727f23bff6db83edbfb46dd136f/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/e48b47749c668df3cd92dfd189adc960/results.bin b/node_modules/expo-speech-transcriber/android/build/.transforms/e48b47749c668df3cd92dfd189adc960/results.bin
+new file mode 100644
+index 0000000..0d259dd
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/.transforms/e48b47749c668df3cd92dfd189adc960/results.bin
+@@ -0,0 +1 @@
++o/classes
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/e48b47749c668df3cd92dfd189adc960/transformed/classes/classes_dex/classes.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/e48b47749c668df3cd92dfd189adc960/transformed/classes/classes_dex/classes.dex
+new file mode 100644
+index 0000000..02f7aa7
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/e48b47749c668df3cd92dfd189adc960/transformed/classes/classes_dex/classes.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/e9a2bd5569cc93b8319f6964c893e0d7/results.bin b/node_modules/expo-speech-transcriber/android/build/.transforms/e9a2bd5569cc93b8319f6964c893e0d7/results.bin
+new file mode 100644
+index 0000000..0d259dd
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/.transforms/e9a2bd5569cc93b8319f6964c893e0d7/results.bin
+@@ -0,0 +1 @@
++o/classes
+diff --git a/node_modules/expo-speech-transcriber/android/build/.transforms/e9a2bd5569cc93b8319f6964c893e0d7/transformed/classes/classes_dex/classes.dex b/node_modules/expo-speech-transcriber/android/build/.transforms/e9a2bd5569cc93b8319f6964c893e0d7/transformed/classes/classes_dex/classes.dex
+new file mode 100644
+index 0000000..1f38050
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/.transforms/e9a2bd5569cc93b8319f6964c893e0d7/transformed/classes/classes_dex/classes.dex differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/generated/source/buildConfig/debug/expo/modules/speechtranscriber/BuildConfig.java b/node_modules/expo-speech-transcriber/android/build/generated/source/buildConfig/debug/expo/modules/speechtranscriber/BuildConfig.java
+new file mode 100644
+index 0000000..e2ee54e
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/generated/source/buildConfig/debug/expo/modules/speechtranscriber/BuildConfig.java
+@@ -0,0 +1,10 @@
++/**
++ * Automatically generated file. DO NOT MODIFY
++ */
++package expo.modules.speechtranscriber;
++
++public final class BuildConfig {
++  public static final boolean DEBUG = Boolean.parseBoolean("true");
++  public static final String LIBRARY_PACKAGE_NAME = "expo.modules.speechtranscriber";
++  public static final String BUILD_TYPE = "debug";
++}
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml b/node_modules/expo-speech-transcriber/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
+new file mode 100644
+index 0000000..2dd0830
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="expo.modules.speechtranscriber" >
++
++    <uses-sdk android:minSdkVersion="26" />
++
++    <uses-permission android:name="android.permission.RECORD_AUDIO" />
++
++    <queries>
++        <intent>
++            <action android:name="android.speech.RecognitionService" />
++        </intent>
++    </queries>
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json b/node_modules/expo-speech-transcriber/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json
+new file mode 100644
+index 0000000..08a9db4
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json
+@@ -0,0 +1,18 @@
++{
++  "version": 3,
++  "artifactType": {
++    "type": "AAPT_FRIENDLY_MERGED_MANIFESTS",
++    "kind": "Directory"
++  },
++  "applicationId": "expo.modules.speechtranscriber",
++  "variantName": "debug",
++  "elements": [
++    {
++      "type": "SINGLE",
++      "filters": [],
++      "attributes": [],
++      "outputFile": "AndroidManifest.xml"
++    }
++  ],
++  "elementType": "File"
++}
+\ No newline at end of file
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties b/node_modules/expo-speech-transcriber/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties
+new file mode 100644
+index 0000000..1211b1e
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties
+@@ -0,0 +1,6 @@
++aarFormatVersion=1.0
++aarMetadataVersion=1.0
++minCompileSdk=1
++minCompileSdkExtension=0
++minAndroidGradlePluginVersion=1.0.0
++coreLibraryDesugaringEnabled=false
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json b/node_modules/expo-speech-transcriber/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
+new file mode 100644
+index 0000000..9e26dfe
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
+@@ -0,0 +1 @@
++{}
+\ No newline at end of file
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar b/node_modules/expo-speech-transcriber/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar
+new file mode 100644
+index 0000000..7e11da7
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/expo-speech-transcriber/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar
+new file mode 100644
+index 0000000..4aa7b5e
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt b/node_modules/expo-speech-transcriber/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties b/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+new file mode 100644
+index 0000000..bf9d198
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+@@ -0,0 +1 @@
++#Thu Mar 26 19:13:16 KST 2026
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml b/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+new file mode 100644
+index 0000000..4b5fb3f
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/build/generated/res/resValues/debug"/></dataSet><mergedItems/></merger>
+\ No newline at end of file
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/mergeDebugAssets/merger.xml b/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/mergeDebugAssets/merger.xml
+new file mode 100644
+index 0000000..595f012
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/mergeDebugAssets/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/assets"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/debug/assets"/></dataSet><dataSet config="generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/build/intermediates/shader_assets/debug/compileDebugShaders/out"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
+new file mode 100644
+index 0000000..727495c
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/debug/jniLibs"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+new file mode 100644
+index 0000000..8e901f3
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/debug/shaders"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/java_res/debug/processDebugJavaRes/out/META-INF/expo-speech-transcriber_debug.kotlin_module b/node_modules/expo-speech-transcriber/android/build/intermediates/java_res/debug/processDebugJavaRes/out/META-INF/expo-speech-transcriber_debug.kotlin_module
+new file mode 100644
+index 0000000..9dbc290
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/java_res/debug/processDebugJavaRes/out/META-INF/expo-speech-transcriber_debug.kotlin_module differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/expo/modules/speechtranscriber/BuildConfig.class b/node_modules/expo-speech-transcriber/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/expo/modules/speechtranscriber/BuildConfig.class
+new file mode 100644
+index 0000000..f0574fa
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/expo/modules/speechtranscriber/BuildConfig.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt b/node_modules/expo-speech-transcriber/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt
+new file mode 100644
+index 0000000..78ac5b8
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt
+@@ -0,0 +1,2 @@
++R_DEF: Internal format may change without notice
++local
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt b/node_modules/expo-speech-transcriber/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt
+new file mode 100644
+index 0000000..51cebd8
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt
+@@ -0,0 +1,21 @@
++1<?xml version="1.0" encoding="utf-8"?>
++2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++3    package="expo.modules.speechtranscriber" >
++4
++5    <uses-sdk android:minSdkVersion="26" />
++6
++7    <uses-permission android:name="android.permission.RECORD_AUDIO" />
++7-->/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:2:3-69
++7-->/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:2:20-66
++8
++9    <queries>
++9-->/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:3:3-7:13
++10        <intent>
++10-->/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:4:5-6:14
++11            <action android:name="android.speech.RecognitionService" />
++11-->/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:5:7-66
++11-->/Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:5:15-63
++12        </intent>
++13    </queries>
++14
++15</manifest>
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml b/node_modules/expo-speech-transcriber/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
+new file mode 100644
+index 0000000..2dd0830
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="expo.modules.speechtranscriber" >
++
++    <uses-sdk android:minSdkVersion="26" />
++
++    <uses-permission android:name="android.permission.RECORD_AUDIO" />
++
++    <queries>
++        <intent>
++            <action android:name="android.speech.RecognitionService" />
++        </intent>
++    </queries>
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json b/node_modules/expo-speech-transcriber/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json
+new file mode 100644
+index 0000000..0637a08
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json
+@@ -0,0 +1 @@
++[]
+\ No newline at end of file
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt b/node_modules/expo-speech-transcriber/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
+new file mode 100644
+index 0000000..08f4ebe
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
+@@ -0,0 +1 @@
++0 Warning/Error
+\ No newline at end of file
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/META-INF/expo-speech-transcriber_debug.kotlin_module b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/META-INF/expo-speech-transcriber_debug.kotlin_module
+new file mode 100644
+index 0000000..9dbc290
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/META-INF/expo-speech-transcriber_debug.kotlin_module differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/BuildConfig.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/BuildConfig.class
+new file mode 100644
+index 0000000..f0574fa
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/BuildConfig.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.class
+new file mode 100644
+index 0000000..eb1a37f
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.class
+new file mode 100644
+index 0000000..1623dd1
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/DelayedFileStreamer.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/DelayedFileStreamer.class
+new file mode 100644
+index 0000000..b01ded6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/DelayedFileStreamer.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.class
+new file mode 100644
+index 0000000..af03668
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.class
+new file mode 100644
+index 0000000..b138600
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.class
+new file mode 100644
+index 0000000..716caf8
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.class
+new file mode 100644
+index 0000000..1609478
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.class
+new file mode 100644
+index 0000000..d935e1a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.class
+new file mode 100644
+index 0000000..058b906
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.class
+new file mode 100644
+index 0000000..df40f58
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.class
+new file mode 100644
+index 0000000..55481db
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.class
+new file mode 100644
+index 0000000..c4eb5e9
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.class
+new file mode 100644
+index 0000000..1ac44e1
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.class
+new file mode 100644
+index 0000000..e4186da
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.class
+new file mode 100644
+index 0000000..2423de5
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.class
+new file mode 100644
+index 0000000..b271bd6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.class
+new file mode 100644
+index 0000000..eac33f3
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.class
+new file mode 100644
+index 0000000..11ad0c3
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.class
+new file mode 100644
+index 0000000..f74b3c9
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.class
+new file mode 100644
+index 0000000..2251707
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.class
+new file mode 100644
+index 0000000..9087778
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.class
+new file mode 100644
+index 0000000..b236ef0
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.class
+new file mode 100644
+index 0000000..af39279
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.class
+new file mode 100644
+index 0000000..5616cee
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.class
+new file mode 100644
+index 0000000..1eb63c8
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.class
+new file mode 100644
+index 0000000..d3b0b16
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.class
+new file mode 100644
+index 0000000..1c99159
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.class
+new file mode 100644
+index 0000000..19d49a9
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.class
+new file mode 100644
+index 0000000..c199258
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.class b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.class
+new file mode 100644
+index 0000000..fa05408
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_jar/debug/bundleLibRuntimeToJarDebug/classes.jar b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_jar/debug/bundleLibRuntimeToJarDebug/classes.jar
+new file mode 100644
+index 0000000..6d10218
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/intermediates/runtime_library_classes_jar/debug/bundleLibRuntimeToJarDebug/classes.jar differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt b/node_modules/expo-speech-transcriber/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt
+new file mode 100644
+index 0000000..b19339e
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt
+@@ -0,0 +1 @@
++expo.modules.speechtranscriber
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab
+new file mode 100644
+index 0000000..1daa606
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream
+new file mode 100644
+index 0000000..711d307
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len
+new file mode 100644
+index 0000000..b03b5e6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len
+new file mode 100644
+index 0000000..01bdaa1
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at
+new file mode 100644
+index 0000000..7da1ae6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i
+new file mode 100644
+index 0000000..bd25845
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i.len
+new file mode 100644
+index 0000000..131e265
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab
+new file mode 100644
+index 0000000..de0cac0
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream
+new file mode 100644
+index 0000000..01a7a7e
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len
+new file mode 100644
+index 0000000..a363176
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len
+new file mode 100644
+index 0000000..01bdaa1
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at
+new file mode 100644
+index 0000000..fc0e221
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i
+new file mode 100644
+index 0000000..1130d1e
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i.len
+new file mode 100644
+index 0000000..131e265
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab
+new file mode 100644
+index 0000000..8aa3c31
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream
+new file mode 100644
+index 0000000..01a7a7e
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len
+new file mode 100644
+index 0000000..a363176
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len
+new file mode 100644
+index 0000000..01bdaa1
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at
+new file mode 100644
+index 0000000..021d5b6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i
+new file mode 100644
+index 0000000..1130d1e
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i.len
+new file mode 100644
+index 0000000..131e265
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab
+new file mode 100644
+index 0000000..d0dc387
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream
+new file mode 100644
+index 0000000..589d936
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len
+new file mode 100644
+index 0000000..fcdd9c0
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len
+new file mode 100644
+index 0000000..575d132
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at
+new file mode 100644
+index 0000000..57c2ce8
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i
+new file mode 100644
+index 0000000..3a4a93a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i.len
+new file mode 100644
+index 0000000..131e265
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab
+new file mode 100644
+index 0000000..d7b092c
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream
+new file mode 100644
+index 0000000..25ec1bb
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream.len
+new file mode 100644
+index 0000000..9911af5
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.len
+new file mode 100644
+index 0000000..a9f80ae
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at
+new file mode 100644
+index 0000000..d98e727
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i
+new file mode 100644
+index 0000000..1ebe8da
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i.len
+new file mode 100644
+index 0000000..131e265
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab
+new file mode 100644
+index 0000000..04af097
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream
+new file mode 100644
+index 0000000..711d307
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len
+new file mode 100644
+index 0000000..b03b5e6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len
+new file mode 100644
+index 0000000..01bdaa1
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at
+new file mode 100644
+index 0000000..0314bde
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i
+new file mode 100644
+index 0000000..bd25845
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i.len
+new file mode 100644
+index 0000000..131e265
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab
+new file mode 100644
+index 0000000..bdf584a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream
+new file mode 100644
+index 0000000..093092c
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream.len
+new file mode 100644
+index 0000000..68d7fbd
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.len
+new file mode 100644
+index 0000000..2a17e6e
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at
+new file mode 100644
+index 0000000..6fdaf86
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i
+new file mode 100644
+index 0000000..006451f
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i.len
+new file mode 100644
+index 0000000..131e265
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab
+new file mode 100644
+index 0000000..bdf584a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream
+new file mode 100644
+index 0000000..51075d3
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len
+new file mode 100644
+index 0000000..130ab28
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len
+new file mode 100644
+index 0000000..2a17e6e
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at
+new file mode 100644
+index 0000000..875403e
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i
+new file mode 100644
+index 0000000..38d57b6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i.len
+new file mode 100644
+index 0000000..131e265
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/counters.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/counters.tab
+new file mode 100644
+index 0000000..2ceb12b
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/counters.tab
+@@ -0,0 +1,2 @@
++2
++0
+\ No newline at end of file
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab
+new file mode 100644
+index 0000000..efb2d9d
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream
+new file mode 100644
+index 0000000..711d307
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len
+new file mode 100644
+index 0000000..b03b5e6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len
+new file mode 100644
+index 0000000..01bdaa1
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at
+new file mode 100644
+index 0000000..7d30a43
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i
+new file mode 100644
+index 0000000..bd25845
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i.len
+new file mode 100644
+index 0000000..131e265
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab
+new file mode 100644
+index 0000000..8bb7255
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream
+new file mode 100644
+index 0000000..100d205
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len
+new file mode 100644
+index 0000000..ccfcbf4
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len
+new file mode 100644
+index 0000000..01bdaa1
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at
+new file mode 100644
+index 0000000..12e81db
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i
+new file mode 100644
+index 0000000..f768a77
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i.len
+new file mode 100644
+index 0000000..131e265
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab
+new file mode 100644
+index 0000000..5828f69
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream
+new file mode 100644
+index 0000000..8366f07
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len
+new file mode 100644
+index 0000000..f217c77
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.len
+new file mode 100644
+index 0000000..0f9cf94
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.at b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.at
+new file mode 100644
+index 0000000..b3b0c82
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.at differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i
+new file mode 100644
+index 0000000..3f86736
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i.len b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i.len
+new file mode 100644
+index 0000000..131e265
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i.len differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/last-build.bin b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/last-build.bin
+new file mode 100644
+index 0000000..30871ee
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/cacheable/last-build.bin differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin
+new file mode 100644
+index 0000000..19f58fc
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin
+new file mode 100644
+index 0000000..f32c6fb
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/expo-speech-transcriber/android/build/outputs/logs/manifest-merger-debug-report.txt
+new file mode 100644
+index 0000000..420e9ba
+--- /dev/null
++++ b/node_modules/expo-speech-transcriber/android/build/outputs/logs/manifest-merger-debug-report.txt
+@@ -0,0 +1,28 @@
++-- Merging decision tree log ---
++manifest
++ADDED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:1:1-8:12
++INJECTED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:1:1-8:12
++	package
++		INJECTED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml
++	xmlns:android
++		ADDED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:1:11-69
++uses-permission#android.permission.RECORD_AUDIO
++ADDED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:2:3-69
++	android:name
++		ADDED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:2:20-66
++queries
++ADDED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:3:3-7:13
++intent#action:name:android.speech.RecognitionService
++ADDED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:4:5-6:14
++action#android.speech.RecognitionService
++ADDED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:5:7-66
++	android:name
++		ADDED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml:5:15-63
++uses-sdk
++INJECTED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml
++INJECTED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml
++	android:targetSdkVersion
++		INJECTED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml
++	android:minSdkVersion
++		INJECTED from /Users/a20180/Desktop/soma/cheftory/react-native/node_modules/expo-speech-transcriber/android/src/main/AndroidManifest.xml
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin b/node_modules/expo-speech-transcriber/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin
+new file mode 100644
+index 0000000..8f838bf
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/META-INF/expo-speech-transcriber_debug.kotlin_module b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/META-INF/expo-speech-transcriber_debug.kotlin_module
+new file mode 100644
+index 0000000..9dbc290
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/META-INF/expo-speech-transcriber_debug.kotlin_module differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.class
+new file mode 100644
+index 0000000..eb1a37f
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/DelayedFileStreamer$startStreaming$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.class
+new file mode 100644
+index 0000000..1623dd1
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/DelayedFileStreamer$streamAudioContents$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/DelayedFileStreamer.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/DelayedFileStreamer.class
+new file mode 100644
+index 0000000..b01ded6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/DelayedFileStreamer.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.class
+new file mode 100644
+index 0000000..af03668
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$createRecognitionListener$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.class
+new file mode 100644
+index 0000000..b138600
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$1$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.class
+new file mode 100644
+index 0000000..716caf8
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$2$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.class
+new file mode 100644
+index 0000000..1609478
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$4$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.class
+new file mode 100644
+index 0000000..d935e1a
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$5$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.class
+new file mode 100644
+index 0000000..058b906
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$1$9$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.class
+new file mode 100644
+index 0000000..df40f58
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.class
+new file mode 100644
+index 0000000..55481db
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$2.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.class
+new file mode 100644
+index 0000000..c4eb5e9
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$3.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.class
+new file mode 100644
+index 0000000..1ac44e1
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$4.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.class
+new file mode 100644
+index 0000000..e4186da
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$5.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.class
+new file mode 100644
+index 0000000..2423de5
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$6.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.class
+new file mode 100644
+index 0000000..b271bd6
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$7.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.class
+new file mode 100644
+index 0000000..eac33f3
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$8.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.class
+new file mode 100644
+index 0000000..11ad0c3
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunction$9.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.class
+new file mode 100644
+index 0000000..f74b3c9
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.class
+new file mode 100644
+index 0000000..2251707
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$2.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.class
+new file mode 100644
+index 0000000..9087778
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithPromise$3.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.class
+new file mode 100644
+index 0000000..b236ef0
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$AsyncFunctionWithoutArgs$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.class
+new file mode 100644
+index 0000000..af39279
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.class
+new file mode 100644
+index 0000000..5616cee
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$Function$2.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.class
+new file mode 100644
+index 0000000..1eb63c8
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.class
+new file mode 100644
+index 0000000..d3b0b16
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$FunctionWithoutArgs$2.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.class
+new file mode 100644
+index 0000000..1c99159
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$definition$lambda$10$$inlined$OnDestroy$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.class
+new file mode 100644
+index 0000000..19d49a9
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.class
+new file mode 100644
+index 0000000..c199258
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule$mlkitBufferTranscribe$1.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.class b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.class
+new file mode 100644
+index 0000000..fa05408
+Binary files /dev/null and b/node_modules/expo-speech-transcriber/android/build/tmp/kotlin-classes/debug/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.class differ
+diff --git a/node_modules/expo-speech-transcriber/android/src/main/java/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.kt b/node_modules/expo-speech-transcriber/android/src/main/java/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.kt
+index 9857dc9..b610e2e 100644
+--- a/node_modules/expo-speech-transcriber/android/src/main/java/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.kt
++++ b/node_modules/expo-speech-transcriber/android/src/main/java/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.kt
+@@ -3,9 +3,11 @@ package expo.modules.speechtranscriber
+ import android.Manifest
+ import android.content.Intent
+ import android.content.pm.PackageManager
++import android.os.Build
+ import android.os.Bundle
+ import android.os.Handler
+ import android.os.Looper
++import android.os.ParcelFileDescriptor
+ import android.speech.RecognitionListener
+ import android.speech.RecognizerIntent
+ import android.speech.SpeechRecognizer
+@@ -15,7 +17,14 @@ import androidx.core.content.ContextCompat
+ import expo.modules.kotlin.Promise
+ import expo.modules.kotlin.modules.Module
+ import expo.modules.kotlin.modules.ModuleDefinition
++import java.io.IOException
++import java.nio.ByteBuffer
++import java.nio.ByteOrder
+ import java.util.Locale
++import kotlinx.coroutines.*
++import kotlinx.coroutines.flow.collect
++import com.google.mlkit.genai.speechrecognition.*
++import com.google.mlkit.genai.common.audio.AudioSource
+ 
+ class ExpoSpeechTranscriberModule : Module() {
+   private var speechRecognizer: SpeechRecognizer? = null
+@@ -25,68 +34,192 @@ class ExpoSpeechTranscriberModule : Module() {
+   private var permissionPromise: Promise? = null
+   private val PERMISSION_REQUEST_CODE = 1001
+ 
++  // MLKit buffer transcription
++  private var mlkitRecognizer: com.google.mlkit.genai.speechrecognition.SpeechRecognizer? = null
++  private var mlkitPipeReadFd: ParcelFileDescriptor? = null
++  private var mlkitPipeSink: ParcelFileDescriptor.AutoCloseOutputStream? = null
++  private var mlkitTranscribing = false
++  private var mlkitJob: Job? = null
++  private val mlkitScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
++
++  private var storedContextualStrings: List<String> = emptyList()
++
+   override fun definition() = ModuleDefinition {
+     Name("ExpoSpeechTranscriber")
+     Events("onTranscriptionProgress", "onTranscriptionError")
+ 
+     AsyncFunction("recordRealTimeAndTranscribe") { promise: Promise ->
+-      mainHandler.post {
+-        startListening(promise)
+-      }
++      mainHandler.post { startListening(promise) }
+     }
+ 
+     AsyncFunction("stopListening") {
++      mainHandler.post { stopListening() }
++    }
++
++    Function("isRecording") { isRecording }
++
++    AsyncFunction("requestMicrophonePermissions") { promise: Promise ->
++      mainHandler.post { requestMicrophonePermissionsInternal(promise) }
++    }
++
++    AsyncFunction("checkStatus") { promise: Promise ->
+       mainHandler.post {
+-        stopListening()
++        val context = appContext.reactContext
++        if (context == null) {
++          promise.resolve(mapOf("isAvailable" to false, "isOnDeviceAvailable" to false, "apiLevel" to Build.VERSION.SDK_INT))
++          return@post
++        }
++        promise.resolve(mapOf(
++          "isAvailable" to SpeechRecognizer.isRecognitionAvailable(context),
++          "isOnDeviceAvailable" to true, // MLKit on-device
++          "apiLevel" to Build.VERSION.SDK_INT
++        ))
+       }
+     }
+ 
+-    Function("isRecording") {
+-      return@Function isRecording
++    Function("setContextualStrings") { strings: List<String> ->
++      storedContextualStrings = strings
+     }
+ 
+-    AsyncFunction("requestMicrophonePermissions") { promise: Promise ->
+-      mainHandler.post {
+-        requestMicrophonePermissionsInternal(promise)
++    AsyncFunction("realtimeBufferTranscribe") { buffer: List<Double>, sampleRate: Int, promise: Promise ->
++      mlkitBufferTranscribe(buffer, sampleRate)
++      promise.resolve(null)
++    }
++
++    Function("stopBufferTranscription") { stopMlkitTranscription() }
++
++    OnDestroy { mainHandler.post { cleanup() } }
++  }
++
++  // ─── MLKit buffer transcription via AudioSource.fromPfd ───
++  private fun mlkitBufferTranscribe(buffer: List<Double>, sampleRate: Int) {
++    if (!mlkitTranscribing) {
++      try {
++        val pipe = ParcelFileDescriptor.createPipe()
++        mlkitPipeReadFd = pipe[0]
++        mlkitPipeSink = ParcelFileDescriptor.AutoCloseOutputStream(pipe[1])
++
++        val locale = Locale.getDefault()
++        Log.d("ExpoSpeechTranscriber", "MLKit: starting, locale=$locale")
++
++        val options = speechRecognizerOptions {
++          this.locale = locale
++          preferredMode = SpeechRecognizerOptions.Mode.MODE_BASIC
++        }
++
++        mlkitRecognizer?.close()
++        mlkitRecognizer = SpeechRecognition.getClient(options)
++
++        val request = speechRecognizerRequest {
++          audioSource = AudioSource.fromPfd(mlkitPipeReadFd!!)
++        }
++
++        mlkitTranscribing = true
++
++        mlkitJob = mlkitScope.launch {
++          try {
++            mlkitRecognizer!!.startRecognition(request).collect { response ->
++              when (response) {
++                is SpeechRecognizerResponse.PartialTextResponse -> {
++                  val text = response.text
++                  Log.d("ExpoSpeechTranscriber", "MLKit partial: $text")
++                  if (text.isNotEmpty()) {
++                    sendEvent("onTranscriptionProgress", mapOf("text" to text, "isFinal" to false))
++                  }
++                }
++                is SpeechRecognizerResponse.FinalTextResponse -> {
++                  val text = response.text
++                  Log.d("ExpoSpeechTranscriber", "MLKit final: $text")
++                  if (text.isNotEmpty()) {
++                    sendEvent("onTranscriptionProgress", mapOf("text" to text, "isFinal" to true))
++                  }
++                }
++                is SpeechRecognizerResponse.ErrorResponse -> {
++                  val error = response.e
++                  Log.e("ExpoSpeechTranscriber", "MLKit error: ${error.message}")
++                  sendEvent("onTranscriptionError", mapOf("error" to (error.message ?: "MLKit error")))
++                }
++                is SpeechRecognizerResponse.CompletedResponse -> {
++                  Log.d("ExpoSpeechTranscriber", "MLKit: completed")
++                }
++              }
++            }
++          } catch (e: Exception) {
++            if (e !is CancellationException) {
++              Log.e("ExpoSpeechTranscriber", "MLKit flow error: ${e.message}")
++              sendEvent("onTranscriptionError", mapOf("error" to (e.message ?: "MLKit flow error")))
++            }
++          } finally {
++            mlkitTranscribing = false
++          }
++        }
++
++        Log.d("ExpoSpeechTranscriber", "MLKit: recognizer started")
++      } catch (e: Exception) {
++        Log.e("ExpoSpeechTranscriber", "MLKit setup failed: ${e.message}")
++        sendEvent("onTranscriptionError", mapOf("error" to "MLKit setup failed: ${e.message}"))
++        cleanupMlkit()
++        return
+       }
+     }
+ 
+-    OnDestroy {
+-      mainHandler.post {
+-        cleanup()
++    // Float32 [-1,1] → Int16 LE → pipe
++    try {
++      val byteBuffer = ByteBuffer.allocate(buffer.size * 2).order(ByteOrder.LITTLE_ENDIAN)
++      for (sample in buffer) {
++        val clamped = sample.coerceIn(-1.0, 1.0)
++        byteBuffer.putShort((clamped * 32767).toInt().toShort())
+       }
++      mlkitPipeSink?.write(byteBuffer.array())
++    } catch (e: IOException) {
++      Log.e("ExpoSpeechTranscriber", "MLKit pipe write error: ${e.message}")
+     }
+   }
+ 
++  private fun stopMlkitTranscription() {
++    Log.d("ExpoSpeechTranscriber", "MLKit: closing pipe")
++    try { mlkitPipeSink?.close() } catch (_: Exception) {}
++    mlkitPipeSink = null
++  }
++
++  private fun cleanupMlkit() {
++    mlkitJob?.cancel()
++    mlkitJob = null
++    try { mlkitPipeSink?.close() } catch (_: Exception) {}
++    try { mlkitPipeReadFd?.close() } catch (_: Exception) {}
++    mlkitPipeSink = null
++    mlkitPipeReadFd = null
++    mlkitRecognizer?.close()
++    mlkitRecognizer = null
++    mlkitTranscribing = false
++  }
++
++  // ─── Native SpeechRecognizer ───
+   private fun startListening(promise: Promise) {
+     val context = appContext.reactContext ?: run {
+-      sendEvent("onTranscriptionError", mapOf("message" to "Context is not available"))
++      sendEvent("onTranscriptionError", mapOf("error" to "Context not available"))
+       promise.resolve(false)
+       return
+     }
+-
+     if (!SpeechRecognizer.isRecognitionAvailable(context)) {
+-      val message = "Speech recognition is not available on this device."
+-      Log.e("ExpoSpeechTranscriber", message)
+-      sendEvent("onTranscriptionError", mapOf("message" to message))
++      sendEvent("onTranscriptionError", mapOf("error" to "Speech recognition not available"))
+       promise.resolve(false)
+       return
+     }
+-
+     if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+-      sendEvent("onTranscriptionError", mapOf("message" to "Missing RECORD_AUDIO permission."))
++      sendEvent("onTranscriptionError", mapOf("error" to "Missing RECORD_AUDIO permission"))
+       promise.resolve(false)
+       return
+     }
+ 
+     speechRecognizer?.destroy()
+-    speechRecognizer = null
+-
+     speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
++    val lang = "${Locale.getDefault().language}-${Locale.getDefault().country}"
+ 
+     val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+       putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+-      putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
++      putExtra(RecognizerIntent.EXTRA_LANGUAGE, lang)
++      putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, lang)
+       putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+       putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
+     }
+@@ -98,108 +231,68 @@ class ExpoSpeechTranscriberModule : Module() {
+   }
+ 
+   private fun stopListening() {
+-    try {
+-      speechRecognizer?.stopListening()
+-      speechRecognizer?.destroy()
+-    } catch (e: Exception) {
+-      Log.e("ExpoSpeechTranscriber", "Error stopping recognizer: ${e.message}")
+-    } finally {
+-      speechRecognizer = null
+-      isRecording = false
+-    }
++    try { speechRecognizer?.stopListening(); speechRecognizer?.destroy() }
++    catch (_: Exception) {}
++    finally { speechRecognizer = null; isRecording = false }
+   }
+ 
+   private fun cleanup() {
+     stopListening()
++    cleanupMlkit()
+   }
+ 
+   private fun createRecognitionListener(): RecognitionListener {
+     return object : RecognitionListener {
+-      override fun onReadyForSpeech(params: Bundle?) {
+-        Log.d("ExpoSpeechTranscriber", "Ready for speech")
+-      }
+-
++      override fun onReadyForSpeech(params: Bundle?) {}
+       override fun onBeginningOfSpeech() {
+-        Log.d("ExpoSpeechTranscriber", "Speech started")
++        sendEvent("onTranscriptionProgress", mapOf("text" to "", "isFinal" to false, "speechStart" to true))
+       }
+-
+       override fun onRmsChanged(rmsdB: Float) {}
+       override fun onBufferReceived(buffer: ByteArray?) {}
+-
+-      override fun onEndOfSpeech() {
+-        Log.d("ExpoSpeechTranscriber", "Speech ended")
+-      }
+-
++      override fun onEndOfSpeech() {}
+       override fun onPartialResults(partialResults: Bundle?) {
+         val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+-        if (!matches.isNullOrEmpty()) {
+-          Log.d("ExpoSpeechTranscriber", "Text: ${matches[0]}")
+-          sendEvent("onTranscriptionProgress", mapOf(
+-            "text" to matches[0],
+-            "isFinal" to false
+-          ))
++        if (!matches.isNullOrEmpty() && matches[0].isNotEmpty()) {
++          sendEvent("onTranscriptionProgress", mapOf("text" to matches[0], "isFinal" to false))
+         }
+       }
+-
+       override fun onResults(results: Bundle?) {
+         val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+         if (!matches.isNullOrEmpty()) {
+-           Log.d("ExpoSpeechTranscriber", "Text: ${matches[0]}")
+-          sendEvent("onTranscriptionProgress", mapOf(
+-            "text" to matches[0],
+-            "isFinal" to true
+-          ))
++          sendEvent("onTranscriptionProgress", mapOf("text" to matches[0], "isFinal" to true))
+         }
+         stopListening()
+       }
+-
+       override fun onError(error: Int) {
+-        val errorMessage = getErrorMessage(error)
+-        sendEvent("onTranscriptionError", mapOf("message" to errorMessage))
++        sendEvent("onTranscriptionError", mapOf("error" to getErrorMessage(error)))
+         stopListening()
+       }
+-
+       override fun onEvent(eventType: Int, params: Bundle?) {}
+     }
+   }
+ 
+-  private fun getErrorMessage(errorCode: Int): String {
+-    return when (errorCode) {
+-      SpeechRecognizer.ERROR_AUDIO -> "Audio recording error"
+-      SpeechRecognizer.ERROR_CLIENT -> "Client side error"
+-      SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions"
+-      SpeechRecognizer.ERROR_NETWORK -> "Network error"
+-      SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
+-      SpeechRecognizer.ERROR_NO_MATCH -> "No match found"
+-      SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Recognizer is busy"
+-      SpeechRecognizer.ERROR_SERVER -> "Error from server"
+-      SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "No speech input"
+-      else -> "An unknown error occurred"
+-    }
++  private fun getErrorMessage(errorCode: Int): String = when (errorCode) {
++    SpeechRecognizer.ERROR_AUDIO -> "Audio recording error"
++    SpeechRecognizer.ERROR_CLIENT -> "Client side error"
++    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions"
++    SpeechRecognizer.ERROR_NETWORK -> "Network error"
++    SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
++    SpeechRecognizer.ERROR_NO_MATCH -> "No match found"
++    SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Recognizer is busy"
++    SpeechRecognizer.ERROR_SERVER -> "Error from server"
++    SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "No speech input"
++    else -> "Unknown error ($errorCode)"
+   }
+ 
+   private fun requestMicrophonePermissionsInternal(promise: Promise) {
+-    val context = appContext.reactContext ?: run {
+-      promise.resolve("denied")
+-      return
++    val context = appContext.reactContext ?: run { promise.resolve("denied"); return }
++    if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
++      promise.resolve("granted"); return
+     }
+-
+-    if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) 
+-        == PackageManager.PERMISSION_GRANTED) {
+-      promise.resolve("granted")
+-      return
+-    }
+-
+     val activity = appContext.currentActivity
+     if (activity != null) {
+       permissionPromise = promise
+-      ActivityCompat.requestPermissions(
+-        activity,
+-        arrayOf(Manifest.permission.RECORD_AUDIO),
+-        PERMISSION_REQUEST_CODE
+-      )
+-    } else {
+-      promise.resolve("denied")
+-    }
++      ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.RECORD_AUDIO), PERMISSION_REQUEST_CODE)
++    } else promise.resolve("denied")
+   }
+ }
 diff --git a/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift b/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift
-index e333bc5..df9754d 100644
+index e333bc5..35bfcf9 100644
 --- a/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift
 +++ b/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift
 @@ -9,6 +9,7 @@ public class ExpoSpeechTranscriberModule: Module {
@@ -7,10 +1544,10 @@ index e333bc5..df9754d 100644
      private var bufferRecognitionTask: SFSpeechRecognitionTask?
      private var startedListening = false
 +    private var storedContextualStrings: [String] = []
-     
+ 
      public func definition() -> ModuleDefinition {
          Name("ExpoSpeechTranscriber")
-@@ -84,6 +85,10 @@ public class ExpoSpeechTranscriberModule: Module {
+@@ -84,6 +85,19 @@ public class ExpoSpeechTranscriberModule: Module {
          Function("stopBufferTranscription") { () -> Void in
              return self.stopBufferTranscription()
          }
@@ -18,29 +1555,36 @@ index e333bc5..df9754d 100644
 +        Function("setContextualStrings") { (strings: [String]) -> Void in
 +            self.storedContextualStrings = strings
 +        }
++
++        AsyncFunction("checkStatus") { () async -> [String: Any] in
++            let recognizer = SFSpeechRecognizer()
++            return [
++                "isAvailable": recognizer?.isAvailable ?? false,
++                "isOnDeviceAvailable": true,
++                "apiLevel": 0
++            ]
++        }
      }
      
      // MARK: - Private Implementation Methods
-@@ -98,6 +103,9 @@ public class ExpoSpeechTranscriberModule: Module {
-                 return
-             }
-             recognitionRequest.shouldReportPartialResults = true
-+            if !self.storedContextualStrings.isEmpty {
-+                recognitionRequest.contextualStrings = self.storedContextualStrings
-+            }
- 
-             bufferRecognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
-                 if let error = error {
 diff --git a/node_modules/expo-speech-transcriber/src/index.ts b/node_modules/expo-speech-transcriber/src/index.ts
-index d5731e3..e23b266 100644
+index d5731e3..1f1410d 100644
 --- a/node_modules/expo-speech-transcriber/src/index.ts
 +++ b/node_modules/expo-speech-transcriber/src/index.ts
-@@ -59,6 +59,10 @@ export function stopBufferTranscription(): void {
+@@ -59,6 +59,18 @@ export function stopBufferTranscription(): void {
    return ExpoSpeechTranscriberModule.stopBufferTranscription();
  }
  
 +export function setContextualStrings(strings: string[]): void {
 +  return ExpoSpeechTranscriberModule.setContextualStrings(strings);
++}
++
++export function checkStatus(): Promise<{
++  isAvailable: boolean;
++  isOnDeviceAvailable: boolean;
++  apiLevel: number;
++}> {
++  return ExpoSpeechTranscriberModule.checkStatus();
 +}
 +
  export function useRealTimeTranscription() {
