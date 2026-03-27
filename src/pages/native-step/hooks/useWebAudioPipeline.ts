@@ -1,17 +1,15 @@
 /**
  * useWebAudioPipeline – WebView bridge 기반 VAD-gated STT pipeline
  *
- * mode:
- *   'streaming' (iOS + Android on-device): VAD → speech → 실시간 STT 스트리밍
- *   'batch' (Android API33+ fallback): VAD → speech → 0.5초 침묵 → 일괄 전송
- *   'native' (Android API<33): VAD만 수행 → onVoiceStart/End로 네이티브 인식기 트리거
+ * WebView에서 getUserMedia(echoCancellation:true)로 녹음 →
+ * bridge를 통해 base64 PCM 청크 수신 →
+ * Silero VAD + expo-speech-transcriber (streaming)
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, Linking, Share, Platform } from 'react-native';
+import { Alert, Linking } from 'react-native';
 import type { WebView, WebViewMessageEvent } from 'react-native-webview';
 import { Audio } from 'expo-av';
-import { File, Paths } from 'expo-file-system/next';
 
 let realtimeBufferTranscribe: any = () => {};
 let stopBufferTranscription: any = () => {};
@@ -36,77 +34,6 @@ const MAX_UTTERANCE_SAMPLES = SAMPLE_RATE * 10;
 
 const SPEECH_THRESHOLD = 0.7;
 const SPEECH_FRAMES_TO_ACTIVATE = 3;
-const SILENCE_FRAMES_FOR_BATCH = 16; // ~0.5s
-
-// ─── Debug: PCM → WAV 저장 + 공유 ───
-function float32ToInt16(float32: Float32Array): Int16Array {
-  const int16 = new Int16Array(float32.length);
-  for (let i = 0; i < float32.length; i++) {
-    const s = Math.max(-1, Math.min(1, float32[i]));
-    int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-  }
-  return int16;
-}
-
-function createWavHeader(dataLength: number, sampleRate: number): ArrayBuffer {
-  const header = new ArrayBuffer(44);
-  const view = new DataView(header);
-  const writeString = (offset: number, str: string) => {
-    for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
-  };
-  writeString(0, 'RIFF');
-  view.setUint32(4, 36 + dataLength, true);
-  writeString(8, 'WAVE');
-  writeString(12, 'fmt ');
-  view.setUint32(16, 16, true); // chunk size
-  view.setUint16(20, 1, true); // PCM
-  view.setUint16(22, 1, true); // mono
-  view.setUint32(24, sampleRate, true);
-  view.setUint32(28, sampleRate * 2, true); // byte rate
-  view.setUint16(32, 2, true); // block align
-  view.setUint16(34, 16, true); // bits per sample
-  writeString(36, 'data');
-  view.setUint32(40, dataLength, true);
-  return header;
-}
-
-async function saveAndShareWav(chunks: Float32Array[], sampleRate: number) {
-  if (chunks.length === 0) return;
-
-  // 전체 샘플 합치기
-  let totalLen = 0;
-  for (const c of chunks) totalLen += c.length;
-  const merged = new Float32Array(totalLen);
-  let offset = 0;
-  for (const c of chunks) { merged.set(c, offset); offset += c.length; }
-
-  const int16 = float32ToInt16(merged);
-  const dataBytes = int16.buffer as ArrayBuffer;
-  const header = createWavHeader(dataBytes.byteLength, sampleRate);
-
-  // WAV 바이너리 → base64
-  const wav = new Uint8Array(header.byteLength + dataBytes.byteLength);
-  wav.set(new Uint8Array(header), 0);
-  wav.set(new Uint8Array(dataBytes), header.byteLength);
-
-  // Uint8Array → base64 (chunk 방식)
-  let binary = '';
-  const chunkSize = 8192;
-  for (let i = 0; i < wav.length; i += chunkSize) {
-    const slice = wav.subarray(i, Math.min(i + chunkSize, wav.length));
-    binary += String.fromCharCode(...slice);
-  }
-  const base64 = btoa(binary);
-
-  const file = new File(Paths.cache, `debug_audio_${Date.now()}.wav`);
-  file.write(base64, { encoding: 'base64' });
-  const path = file.uri;
-
-  const duration = (totalLen / sampleRate).toFixed(1);
-  console.log(`[Debug] WAV saved: ${path} (${duration}s, ${totalLen} samples)`);
-
-  Alert.alert('녹음 저장 완료', `${duration}초 녹음\n${path}`);
-}
 
 // ─── Ring Buffer ───
 class RingBuffer {
@@ -135,6 +62,20 @@ class RingBuffer {
     if (!this.full && this.pos < len) this.full = true;
   }
 
+  //꼭 queue를 구현할 필요가 있을까??
+  //뭔말인지 몰랐음.
+  // Ring Buffer의 read() 메서드입니다. 순환 버퍼에 저장된 오디오 데이터를 시간순으로 정렬해서 반환합니다.
+
+  // 예: buf = [D, E, A, B, C],  pos = 2,  full = true
+  //             ^pos
+
+  // 실제 시간 순서: A, B, C, D, E
+
+  // read()가 하는 일:
+  //   tail = 5 - 2 = 3
+  //   result[0..2] = buf[2..4]  → [A, B, C]  (pos 뒤쪽 = 오래된 데이터)
+  //   result[3..4] = buf[0..1]  → [D, E]     (pos 앞쪽 = 최신 데이터)
+  //   → [A, B, C, D, E] ✅ 시간순 정렬
   read(): Float32Array {
     if (!this.full) return this.buf.slice(0, this.pos);
     const result = new Float32Array(this.buf.length);
@@ -148,8 +89,6 @@ class RingBuffer {
 }
 
 // ─── Hook ───
-export type PipelineMode = 'streaming' | 'batch' | 'native';
-
 interface UseWebAudioPipelineOptions {
   onInterimResult: (text: string) => void;
   onFinalResult: (text: string) => void;
@@ -157,7 +96,6 @@ interface UseWebAudioPipelineOptions {
   onVoiceEnd?: () => void;
   boostWords?: string[];
   webViewRef: React.RefObject<WebView | null>;
-  mode?: PipelineMode;
 }
 
 export interface WebAudioPipelineResult extends AudioPipelineResult {
@@ -171,7 +109,6 @@ export function useWebAudioPipeline({
   onVoiceEnd,
   boostWords,
   webViewRef,
-  mode = 'streaming',
 }: UseWebAudioPipelineOptions): WebAudioPipelineResult & { onWebViewReady: () => void } {
   const [state, setState] = useState<PipelineState>('IDLE');
   const [error, setError] = useState<string | null>(null);
@@ -205,18 +142,6 @@ export function useWebAudioPipeline({
   onVoiceStartRef.current = onVoiceStart;
   onVoiceEndRef.current = onVoiceEnd;
 
-  const modeRef = useRef(mode);
-  modeRef.current = mode;
-
-  // Batch 모드 전용
-  const speechBufferRef = useRef<Float32Array[]>([]);
-  const speechBufferSamplesRef = useRef(0);
-  const silenceFrameCountRef = useRef(0);
-  const batchFlushingRef = useRef(false); // flush 재진입 방지
-
-  // Debug: 전체 녹음 누적
-  const debugRecordingRef = useRef<Float32Array[]>([]);
-
   // STT results
   const { text, isFinal, error: sttError } = useRealTimeTranscription();
   const prevTextRef = useRef('');
@@ -230,12 +155,7 @@ export function useWebAudioPipeline({
 
   const finishTranscription = useCallback(() => {
     transcribingRef.current = false;
-    batchFlushingRef.current = false;
-
-    // native 모드에서는 stopBufferTranscription 불필요
-    if (modeRef.current !== 'native') {
-      stopBufferTranscription();
-    }
+    stopBufferTranscription();
     onVoiceEndRef.current?.();
 
     vadRef.current?.reset();
@@ -243,9 +163,6 @@ export function useWebAudioPipeline({
     consecutiveSpeechRef.current = 0;
     utteranceSamplesRef.current = 0;
     accLenRef.current = 0;
-    speechBufferRef.current = [];
-    speechBufferSamplesRef.current = 0;
-    silenceFrameCountRef.current = 0;
 
     transitionTo('LISTENING');
   }, [transitionTo]);
@@ -258,27 +175,14 @@ export function useWebAudioPipeline({
   const startTranscribing = useCallback(() => {
     vadSpeechStartRef.current = performance.now();
     firstSttResultRef.current = true;
-    console.log(`[WebAudioPipeline] VAD → speech, opening STT (mode: ${modeRef.current})`);
+    console.log('[WebAudioPipeline] VAD → speech, opening STT');
     onVoiceStartRef.current?.();
 
-    if (modeRef.current === 'streaming') {
-      const preBuffer = ringBufferRef.current.read();
-      if (preBuffer.length > 0) {
-        realtimeBufferTranscribe(preBuffer, SAMPLE_RATE);
-      }
-      utteranceSamplesRef.current = preBuffer.length;
-    } else if (modeRef.current === 'batch') {
-      const preBuffer = ringBufferRef.current.read();
-      speechBufferRef.current = preBuffer.length > 0 ? [preBuffer] : [];
-      speechBufferSamplesRef.current = preBuffer.length;
-      silenceFrameCountRef.current = 0;
-      batchFlushingRef.current = false;
-      utteranceSamplesRef.current = preBuffer.length;
-    } else {
-      // native 모드: VAD만, 버퍼 처리 없음
-      silenceFrameCountRef.current = 0;
-      utteranceSamplesRef.current = 0;
+    const preBuffer = ringBufferRef.current.read();
+    if (preBuffer.length > 0) {
+      realtimeBufferTranscribe(preBuffer, SAMPLE_RATE);
     }
+    utteranceSamplesRef.current = preBuffer.length;
 
     transcribingRef.current = true;
     prevTextRef.current = '';
@@ -286,51 +190,11 @@ export function useWebAudioPipeline({
     transitionTo('TRANSCRIBING');
   }, [transitionTo]);
 
-  // ─── Batch 모드: 일괄 전송 ───
-  const flushBatchBuffer = useCallback(() => {
-    if (batchFlushingRef.current) return; // 재진입 방지
-    batchFlushingRef.current = true;
-
-    if (speechBufferRef.current.length === 0) {
-      finishTranscriptionRef.current();
-      return;
-    }
-
-    const totalSamples = speechBufferSamplesRef.current;
-    const merged = new Float32Array(totalSamples);
-    let offset = 0;
-    for (const chunk of speechBufferRef.current) {
-      merged.set(chunk, offset);
-      offset += chunk.length;
-    }
-
-    console.log(`[WebAudioPipeline] Batch: sending ${totalSamples} samples (${(totalSamples / SAMPLE_RATE).toFixed(2)}s)`);
-    realtimeBufferTranscribe(merged, SAMPLE_RATE);
-
-    // 버퍼 비우되 TRANSCRIBING 상태 유지 — 인식기 결과 대기
-    speechBufferRef.current = [];
-    speechBufferSamplesRef.current = 0;
-    silenceFrameCountRef.current = 0;
-
-    // pipe 닫기 (인식기에 오디오 끝 신호) — 인식기는 유지
-    setTimeout(() => {
-      console.log('[WebAudioPipeline] Batch: closing pipe (end of audio)');
-      stopBufferTranscription();
-    }, 300);
-
-    // finishTranscription은 호출하지 않음
-    // STT 결과/에러 이벤트가 오면 그때 finishTranscription 호출됨
-  }, []);
-
   // ─── STT result handler ───
   useEffect(() => {
     if (!text || text === prevTextRef.current) return;
     prevTextRef.current = text;
-
-    // native 모드 또는 TRANSCRIBING 상태에서 결과 처리
-    // native 모드: 네이티브 인식기 결과가 비동기로 오므로 LISTENING 상태일 수 있음
-    const isNativeMode = modeRef.current === 'native';
-    if (!isNativeMode && stateRef.current !== 'TRANSCRIBING') return;
+    if (stateRef.current !== 'TRANSCRIBING') return;
 
     const now = performance.now();
     const sinceVAD = vadSpeechStartRef.current > 0 ? (now - vadSpeechStartRef.current).toFixed(0) : '?';
@@ -338,12 +202,10 @@ export function useWebAudioPipeline({
     firstSttResultRef.current = false;
 
     if (isFinal) {
-      if (!isNativeMode && !transcribingRef.current) return;
+      if (!transcribingRef.current) return;
       console.log(`[Perf:STT] final "${text}" | VAD→STT: ${sinceVAD}ms${isFirst ? ' (first result)' : ''}`);
       onFinalRef.current(text);
-      if (transcribingRef.current) {
-        finishTranscription();
-      }
+      finishTranscription();
     } else {
       console.log(`[Perf:STT] interim "${text}" | VAD→STT: ${sinceVAD}ms${isFirst ? ' (first result)' : ''}`);
       onInterimRef.current(text);
@@ -361,47 +223,26 @@ export function useWebAudioPipeline({
   // ─── VAD handler ───
   const handleVADResult = useCallback(
     (prob: number) => {
-      // LISTENING: speech 감지
-      if (stateRef.current === 'LISTENING') {
-        if (prob > SPEECH_THRESHOLD) {
-          consecutiveSpeechRef.current++;
-          if (consecutiveSpeechRef.current >= SPEECH_FRAMES_TO_ACTIVATE) {
-            consecutiveSpeechRef.current = 0;
-            startTranscribing();
-          }
-        } else {
+      if (stateRef.current !== 'LISTENING') return;
+
+      if (prob > SPEECH_THRESHOLD) {
+        consecutiveSpeechRef.current++;
+        if (consecutiveSpeechRef.current >= SPEECH_FRAMES_TO_ACTIVATE) {
           consecutiveSpeechRef.current = 0;
+          startTranscribing();
         }
-        return;
+      } else {
+        consecutiveSpeechRef.current = 0;
       }
-
-      // TRANSCRIBING + batch 모드: 침묵 감지로 flush
-      if (stateRef.current === 'TRANSCRIBING' && modeRef.current === 'batch') {
-        if (batchFlushingRef.current) return;
-
-        if (prob > SPEECH_THRESHOLD) {
-          silenceFrameCountRef.current = 0;
-        } else {
-          silenceFrameCountRef.current++;
-          if (silenceFrameCountRef.current >= SILENCE_FRAMES_FOR_BATCH) {
-            console.log('[WebAudioPipeline] batch: 0.5s silence detected');
-            flushBatchBuffer();
-          }
-        }
-      }
-      // native 모드: VAD로 종료하지 않음 — 네이티브 인식기가 자체 결과/에러로 종료
     },
-    [startTranscribing, flushBatchBuffer],
+    [startTranscribing],
   );
 
   // ─── VAD 프레임 처리 ───
   const vadFrameCountRef = useRef(0);
   const processChunk = useCallback(
     async (buffer: Float32Array) => {
-      // native 모드: LISTENING일 때만 VAD (시작 트리거만, 종료는 네이티브 인식기가 처리)
-      const shouldProcess = stateRef.current === 'LISTENING' ||
-        (stateRef.current === 'TRANSCRIBING' && modeRef.current === 'batch');
-      if (!shouldProcess || !vadRef.current) return;
+      if (stateRef.current !== 'LISTENING' || !vadRef.current) return;
 
       const acc = accBufRef.current;
       let len = accLenRef.current;
@@ -419,8 +260,7 @@ export function useWebAudioPipeline({
 
       let pos = 0;
       const cur = accBufRef.current;
-      while (pos + WINDOW_SIZE <= len && (stateRef.current === 'LISTENING' ||
-        (stateRef.current === 'TRANSCRIBING' && modeRef.current === 'batch'))) {
+      while (pos + WINDOW_SIZE <= len && stateRef.current === 'LISTENING') {
         const frame = cur.subarray(pos, pos + WINDOW_SIZE);
         pos += WINDOW_SIZE;
         const tVad0 = performance.now();
@@ -450,6 +290,7 @@ export function useWebAudioPipeline({
       try {
         const msg = JSON.parse(event.nativeEvent.data);
 
+        //디버그 코드느 실제 로직과 분리하는 건 어떨까
         if (msg.type === 'debug') {
           console.log(`[WebAudioPipeline] Bridge debug: ${msg.msg}`);
           if (msg.msg === 'mic_ready') {
@@ -484,45 +325,25 @@ export function useWebAudioPipeline({
 
         const buffer = base64PcmToFloat32(msg.base64);
 
-        // Debug: 모든 청크 누적
-        debugRecordingRef.current.push(buffer);
-
         // Ring buffer — LISTENING일 때
         if (!transcribingRef.current) {
           ringBufferRef.current.write(buffer);
         }
 
-        // STT feed — TRANSCRIBING일 때 (streaming/batch만)
-        if (transcribingRef.current && !batchFlushingRef.current) {
-          if (modeRef.current === 'streaming') {
-            realtimeBufferTranscribe(buffer, SAMPLE_RATE);
-          } else if (modeRef.current === 'batch') {
-            speechBufferRef.current.push(buffer);
-            speechBufferSamplesRef.current += buffer.length;
-          }
-          // native 모드: 버퍼 처리 없음
+        // STT feed — TRANSCRIBING일 때
+        if (transcribingRef.current) {
+          realtimeBufferTranscribe(buffer, SAMPLE_RATE);
+          utteranceSamplesRef.current += buffer.length;
 
-          if (modeRef.current !== 'native') {
-            utteranceSamplesRef.current += buffer.length;
-            if (utteranceSamplesRef.current >= MAX_UTTERANCE_SAMPLES) {
-              console.log('[WebAudioPipeline] Max utterance reached');
-              if (modeRef.current === 'batch') {
-                flushBatchBuffer();
-              } else {
-                finishTranscriptionRef.current();
-              }
-              return;
-            }
+          if (utteranceSamplesRef.current >= MAX_UTTERANCE_SAMPLES) {
+            console.log('[WebAudioPipeline] Max utterance reached');
+            finishTranscriptionRef.current();
+            return;
           }
         }
 
-        // VAD 처리: native 모드는 LISTENING일 때만 (시작 트리거용)
-        const shouldRunVAD = stateRef.current === 'LISTENING' ||
-          (stateRef.current === 'TRANSCRIBING' &&
-           modeRef.current === 'batch' &&
-           !batchFlushingRef.current);
-
-        if (shouldRunVAD) {
+        // VAD — LISTENING일 때만
+        if (stateRef.current === 'LISTENING') {
           if (processingRef.current) {
             const acc = accBufRef.current;
             const len = accLenRef.current;
@@ -612,11 +433,6 @@ export function useWebAudioPipeline({
       transcribingRef.current = false;
       processingRef.current = false;
       prevTextRef.current = '';
-      speechBufferRef.current = [];
-      speechBufferSamplesRef.current = 0;
-      silenceFrameCountRef.current = 0;
-      batchFlushingRef.current = false;
-      debugRecordingRef.current = [];
 
       if (boostWords && boostWords.length > 0) {
         setContextualStrings(boostWords);
@@ -631,20 +447,18 @@ export function useWebAudioPipeline({
       }
 
       transitionTo('LISTENING');
-      console.log(`[WebAudioPipeline] Started (mode: ${mode})`);
+      console.log('[WebAudioPipeline] Started (streaming)');
     } catch (err: any) {
       console.error('[WebAudioPipeline] Start failed:', err);
       setError(err.message || 'Failed to start pipeline');
     }
-  }, [transitionTo, boostWords, injectStartRecording, mode]);
+  }, [transitionTo, boostWords, injectStartRecording]);
 
   // ─── Stop ───
   const stop = useCallback(() => {
     if (transcribingRef.current) {
       transcribingRef.current = false;
-      if (modeRef.current !== 'native') {
-        stopBufferTranscription();
-      }
+      stopBufferTranscription();
       onVoiceEndRef.current?.();
     }
 
@@ -653,24 +467,12 @@ export function useWebAudioPipeline({
       true;
     `);
 
-    // Debug: 녹음 저장 + 공유
-    const chunks = debugRecordingRef.current;
-    if (chunks.length > 0) {
-      console.log('[Debug] 녹음 청크 ' + chunks.length + '개, 저장 중...');
-      saveAndShareWav(chunks, SAMPLE_RATE).catch(e => console.warn('[Debug] WAV 저장 실패:', e));
-      debugRecordingRef.current = [];
-    }
-
     ringBufferRef.current.reset();
     consecutiveSpeechRef.current = 0;
     utteranceSamplesRef.current = 0;
     prevTextRef.current = '';
     accLenRef.current = 0;
     processingRef.current = false;
-    speechBufferRef.current = [];
-    speechBufferSamplesRef.current = 0;
-    silenceFrameCountRef.current = 0;
-    batchFlushingRef.current = false;
     transitionTo('IDLE');
   }, [transitionTo, webViewRef]);
 
