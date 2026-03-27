@@ -1,37 +1,8 @@
-import { Platform } from "react-native";
-import { getApp } from "@react-native-firebase/app";
-import {
-  getAnalytics,
-  logEvent,
-  logScreenView,
-  setUserProperty,
-} from "@react-native-firebase/analytics";
-
-let analyticsInstance: ReturnType<typeof getAnalytics> | null = null;
-
-function getAnalyticsInstance() {
-  if (Platform.OS === "web") return null;
-  if (!analyticsInstance) {
-    const app = getApp();
-    analyticsInstance = getAnalytics(app);
-  }
-  return analyticsInstance;
-}
+// Firebase Analytics 제거 — Amplitude로 대체 예정
+// 기존 track API 유지 (no-op)
 
 export const track = {
-  screen: (name: string) => {
-    const a = getAnalyticsInstance();
-    if (!a) return;
-    logScreenView(a, { screen_name: name, screen_class: name } as any);
-  },
-  event: (name: string, params?: Record<string, any>) => {
-    const a = getAnalyticsInstance();
-    if (!a) return;
-    logEvent(a, name as any, params);
-  },
-  userProp: (name: string, value: string) => {
-    const a = getAnalyticsInstance();
-    if (!a) return;
-    setUserProperty(a, name, value);
-  },
+  screen: (_name: string) => {},
+  event: (_name: string, _params?: Record<string, any>) => {},
+  userProp: (_name: string, _value: string) => {},
 };

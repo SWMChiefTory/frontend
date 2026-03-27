@@ -22,15 +22,12 @@ export default function AppLayout() {
 
   return (
     <KeyboardProvider statusBarTranslucent navigationBarTranslucent>
-      <Stack>
+      <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen
           name="index"
-          options={{ headerShown: false }}
           initialParams={{ setIsWebviewLoaded }}
         />
-        <Stack.Screen name="settings/settings" />
-        <Stack.Screen name="recipe/create" />
-        <Stack.Screen name="native-step/[id]" options={{ headerShown: false }} />
+        <Stack.Screen name="native-step/[id]" />
       </Stack>
     </KeyboardProvider>
   );

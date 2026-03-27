@@ -95,7 +95,6 @@ export default {
       "expo-web-browser",
       "expo-apple-authentication",
       "@react-native-google-signin/google-signin",
-      "@react-native-firebase/app",
       "./plugins/android-share",
       "./plugins/android-keystore",
       "./plugins/android-kakaotalk-queries",
@@ -107,6 +106,9 @@ export default {
             useFrameworks: "static",
             useModularHeaders: true,
             deploymentTarget: "16.1",
+          },
+          android: {
+            minSdkVersion: 26,
           },
         },
       ],
