@@ -42,9 +42,27 @@ class RingBuffer {
   private full = false;
   constructor(cap: number) { this.buf = new Float32Array(cap); }
 
+  //   Case 1: len >= cap (입력이 버퍼보다 크거나 같음)                                                       samples = [a b c d e f g h i j k l]  (len=12, cap=10)                                                  → 뒤에서 cap개만 잘라서 통째로 복사                                                                    buf: [c d e f g h i j k l]  pos=0, full=true                                                           앞쪽 데이터는 어차피 오래된 거니까 버립니다.
+  //                                                          Case 2: len <= space (남은 공간에 다 들어감)                                                           buf: [a b c _ _ _ _ _ _ _]  pos=3, space=7
+  // samples = [x y z]  (len=3)                                                                             → pos 위치부터 그냥 복사
+  // buf: [a b c x y z _ _ _ _]  pos=6
+
+  // Case 3: len > space (남은 공간 초과 → wrap around)
+  // buf: [_ _ _ _ _ _ _ a b c]  pos=7, space=3
+  // samples = [x y z w v]  (len=5)
+
+  // 1단계: 뒤쪽 빈 공간(3칸)에 x,y,z 채움
+  // buf: [_ _ _ _ _ _ _ x y z]
+
+  // 2단계: 나머지 w,v를 앞쪽(0번)부터 채움
+  // buf: [w v _ _ _ _ _ x y z]  pos=2, full=true
+
+  // 핵심: 메모리 할당 없이 고정 배열을 돌려쓰면서 항상 가장 최근 데이터만 유지합니다. 오디오 STT에서
+  // "최근 N초 분량의 오디오"를 유지하는 데 쓰이는 전형적인 패턴입니다.
   write(samples: Float32Array): void {
     const len = samples.length;
     const cap = this.buf.length;
+    //샘플이 넣을 수 있는 양보다 많다면 뒤에 잘라서 넣음
     if (len >= cap) {
       this.buf.set(samples.subarray(len - cap));
       this.pos = 0;
@@ -52,9 +70,10 @@ class RingBuffer {
       return;
     }
     const space = cap - this.pos;
+    //남은 공간에 다 들어감
     if (len <= space) {
       this.buf.set(samples, this.pos);
-    } else {
+    } else {//남은 공간 초과 시계 방향 순서로 채움
       this.buf.set(samples.subarray(0, space), this.pos);
       this.buf.set(samples.subarray(space), 0);
     }
@@ -115,15 +134,19 @@ export function useWebAudioPipeline({
 
   const stateRef = useRef<PipelineState>('IDLE');
   const webViewReadyRef = useRef(false);
+  //이건 웹뷰에서 알아서 start 두 번 오면 계속 start 유지하게 함.
   const pendingStartRef = useRef(false);
+
   const vadRef = useRef<SileroVADInstance | null>(null);
   const ringBufferRef = useRef(new RingBuffer(PRE_BUFFER_SAMPLES));
+  //TODO : stateRef로 통일
+  //PO : stateRef로 통일
   const transcribingRef = useRef(false);
 
   const consecutiveSpeechRef = useRef(0);
   const utteranceSamplesRef = useRef(0);
 
-  // VAD accumulator
+  // VAD accumulator(VAD만 알면 됨)
   const accBufRef = useRef(new Float32Array(4096 + WINDOW_SIZE));
   const accLenRef = useRef(0);
   const processingRef = useRef(false);
@@ -159,7 +182,9 @@ export function useWebAudioPipeline({
     onVoiceEndRef.current?.();
 
     vadRef.current?.reset();
+    //링버퍼 초기화
     ringBufferRef.current.reset();
+
     consecutiveSpeechRef.current = 0;
     utteranceSamplesRef.current = 0;
     accLenRef.current = 0;
@@ -247,6 +272,8 @@ export function useWebAudioPipeline({
       const acc = accBufRef.current;
       let len = accLenRef.current;
 
+  //     1단계: 누적 — 들어온 청크를 accBuf에 이어붙임
+  // accBuf: [기존 데이터 ... | 새 buffer 추가]
       if (len + buffer.length > acc.length) {
         const newBuf = new Float32Array(len + buffer.length + WINDOW_SIZE);
         newBuf.set(acc.subarray(0, len));
@@ -290,7 +317,8 @@ export function useWebAudioPipeline({
       try {
         const msg = JSON.parse(event.nativeEvent.data);
 
-        //디버그 코드느 실제 로직과 분리하는 건 어떨까
+        //디버그 코드는 실제 로직과 분리하는 건 어떨까
+        //그리고 웹뷰는 음성만 전달해주고, 권한 이런거는 네이티브에서 체크해야 함.
         if (msg.type === 'debug') {
           console.log(`[WebAudioPipeline] Bridge debug: ${msg.msg}`);
           if (msg.msg === 'mic_ready') {
@@ -343,6 +371,7 @@ export function useWebAudioPipeline({
         }
 
         // VAD — LISTENING일 때만
+        // PO : LISTENING 일때만 VAD실행. 계속 들으면 렉걸림
         if (stateRef.current === 'LISTENING') {
           if (processingRef.current) {
             const acc = accBufRef.current;
@@ -371,12 +400,16 @@ export function useWebAudioPipeline({
   );
 
   // ─── WebView 녹음 시작 inject ───
+  //PO : 꼭 이렇게 해야 할까?
+  //
   const injectStartRecording = useCallback(() => {
     if (!webViewRef.current) {
       console.warn('[WebAudioPipeline] WebView ref is null, cannot inject');
       return;
     }
     console.log('[WebAudioPipeline] Injecting __startRecording');
+    //PO: 메세지 방식으로 변경
+    //TODO: 메세지 방식으로 변경
     webViewRef.current.injectJavaScript(`
       if (window.__startRecording) {
         window.__startRecording();
@@ -389,6 +422,7 @@ export function useWebAudioPipeline({
   }, [webViewRef]);
   injectStartRecordingRef.current = injectStartRecording;
 
+
   const onWebViewReady = useCallback(() => {
     console.log('[WebAudioPipeline] WebView ready');
     webViewReadyRef.current = true;
@@ -399,6 +433,19 @@ export function useWebAudioPipeline({
   }, [injectStartRecording]);
 
   // ─── Start ───
+  //PO : WebView에서 getUserMedia() 호출하면 브라우저 레벨 권한을 요청하지만, Android에서 WebView의 마이크
+  // 접근은 앱의 네이티브 RECORD_AUDIO 권한이 먼저 승인되어 있어야 합니다
+  // 사용자가 마이크 버튼 탭
+  //          │
+  //          ▼
+  //   ① 네이티브 권한 (Audio.requestPermissionsAsync)
+  //      → AndroidManifest의 RECORD_AUDIO
+  //      → OS 레벨 권한 다이얼로그
+  //          │
+  //          ▼
+  //   ② WebView getUserMedia()
+  //      → WebView 내부에서 onPermissionRequest 콜백으로 승인
+  //      → ①이 거부되어 있으면 여기서 자동 실패
   const start = useCallback(async () => {
     try {
       setError(null);
@@ -427,10 +474,14 @@ export function useWebAudioPipeline({
 
       // Reset
       ringBufferRef.current.reset();
+      //굳이 길이를 왜 저장해두지?
       accLenRef.current = 0;
+      //VAD 0.7이상이 얼마나 진행되었는지
       consecutiveSpeechRef.current = 0;
       utteranceSamplesRef.current = 0;
+
       transcribingRef.current = false;
+      
       processingRef.current = false;
       prevTextRef.current = '';
 
@@ -462,6 +513,8 @@ export function useWebAudioPipeline({
       onVoiceEndRef.current?.();
     }
 
+    //PO : 메시지 형식으로 변경
+    //TODO : 메시지 형식으로 변경
     webViewRef.current?.injectJavaScript(`
       if (window.__stopRecording) window.__stopRecording();
       true;
@@ -484,6 +537,7 @@ export function useWebAudioPipeline({
   }, [finishTranscription]);
 
   // Cleanup
+  //컴포넌트 종료시 리셋
   useEffect(() => {
     return () => {
       if (transcribingRef.current) {
@@ -495,5 +549,5 @@ export function useWebAudioPipeline({
     };
   }, []);
 
-  return { state, start, stop, resetTranscription, error, handleWebViewMessage, onWebViewReady };
+  return { state, start, stop, resetTranscription, error, handleWebViewMessage, onWebViewReady, vadSpeechStartRef };
 }

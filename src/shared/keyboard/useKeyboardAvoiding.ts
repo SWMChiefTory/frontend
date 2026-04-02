@@ -23,13 +23,8 @@ const useGradualAnimation = () => {
 
 export const useKeyboardAvoidingAnimation = () => {
   const { height: keyboardHeight } = useGradualAnimation();
-  console.log("useKeyboardAvoidingAnimation", keyboardHeight);
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      paddingBottom: keyboardHeight.value,
-    };
-  });
-  return {
-    animatedStyle,
-  };
+  const animatedStyle = useAnimatedStyle(() => ({
+    paddingBottom: keyboardHeight.value,
+  }));
+  return { animatedStyle };
 };

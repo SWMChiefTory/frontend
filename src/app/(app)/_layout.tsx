@@ -27,7 +27,13 @@ export default function AppLayout() {
           name="index"
           initialParams={{ setIsWebviewLoaded }}
         />
-        <Stack.Screen name="native-step/[id]" />
+        <Stack.Screen
+          name="native-step/[id]"
+          options={{
+            presentation: 'transparentModal',
+            animation: 'fade',
+          }}
+        />
       </Stack>
     </KeyboardProvider>
   );

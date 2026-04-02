@@ -137,24 +137,16 @@ export function useHandleMessage({
         const msg = JSON.parse(jsonStr);
         console.log('[Native] __NATIVE_MSG__ 수신:', msg.type);
         if (msg.type === 'START_COOKING') {
-          const { recipeId, videoId, recipe } = msg.payload;
-          console.log('[Native] START_COOKING → navigating to native-step, recipeId:', recipeId, 'videoId:', videoId);
+          const { recipeId } = msg.payload;
+          console.log('[Native] START_COOKING → navigating to native-step, recipeId:', recipeId);
           try {
-            console.log('[Native] router.push pathname: /(app)/native-step/[id]');
             router.push({
               pathname: "/(app)/native-step/[id]",
-              params: { id: recipeId, videoId, recipe: JSON.stringify(recipe) },
+              params: { id: recipeId },
             } as any);
             console.log('[Native] router.push OK');
           } catch (e: any) {
             console.error('[Native] router.push ERROR:', e.message);
-            // 폴백: href 문자열 방식
-            try {
-              router.push(`/native-step/${recipeId}?videoId=${videoId}` as any);
-              console.log('[Native] fallback push OK');
-            } catch (e2: any) {
-              console.error('[Native] fallback push ERROR:', e2.message);
-            }
           }
         }
       } catch (e: any) {

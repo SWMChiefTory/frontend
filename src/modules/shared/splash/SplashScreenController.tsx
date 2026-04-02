@@ -26,6 +26,7 @@ export function SplashScreenController({
   isReady: boolean;
 }) {
   const [showChildren, setShowChildren] = useState(false);
+  const [animationDone, setAnimationDone] = useState(false);
   const { cachedMarket } = useMarketStore();
 
   // Reanimated 값들
@@ -81,13 +82,19 @@ export function SplashScreenController({
       scaleInStart,
       withTiming(0.8, { duration: scaleInDuration }, (finished) => {
         if (finished) {
-          // 스플래시를 숨기지 않고 children을 보여줌
-          runOnJS(setShowChildren)(true);
-          childrenOpacity.value = withTiming(1, { duration: 300 });
+          runOnJS(setAnimationDone)(true);
         }
       }),
     );
   }, []);
+
+  // 애니메이션 완료 + isReady 둘 다 true일 때 children 페이드 인
+  useEffect(() => {
+    if (animationDone && isReady && !showChildren) {
+      setShowChildren(true);
+      childrenOpacity.value = withTiming(1, { duration: 300 });
+    }
+  }, [animationDone, isReady]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -114,14 +121,13 @@ export function SplashScreenController({
         </Animated.View>
       </View>
 
-      {/* Children - 애니메이션 완료 후 페이드 인 */}
-      {isReady && showChildren && (
-        <Animated.View
-          style={[StyleSheet.absoluteFillObject, animatedChildrenStyle]}
-        >
-          {children}
-        </Animated.View>
-      )}
+      {/* Children - 항상 마운트 (프리로드), 애니메이션+isReady 완료 후 페이드 인 */}
+      <Animated.View
+        style={[StyleSheet.absoluteFillObject, animatedChildrenStyle]}
+        pointerEvents={showChildren ? 'auto' : 'none'}
+      >
+        {children}
+      </Animated.View>
     </View>
   );
 }

@@ -26,7 +26,9 @@ export function useMarketBootstrap() {
         }
 
         // Step 2: 서버에서 정확한 market 정보 받아오기 (백그라운드)
+        const t0 = performance.now();
         const response = await getMarket();
+        console.log(`[Perf:Bootstrap] getMarket() | ${(performance.now() - t0).toFixed(0)}ms`);
         setMarket(response.market, response.country_code);
 
         // Step 3: AsyncStorage 캐시 업데이트 (다음 실행을 위해)
