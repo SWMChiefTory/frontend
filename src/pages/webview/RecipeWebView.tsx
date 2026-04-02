@@ -28,8 +28,11 @@ export type SafeArea = {
   bottom: SafeAreaProps;
 };
 
+const webviewTimingRef = { mountedAt: 0 };
+
 export function RecipeWebViewContent() {
   const { market } = useMarketStore();
+  if (!webviewTimingRef.mountedAt) webviewTimingRef.mountedAt = performance.now();
   const webviewRef = useRef<WebView>(null);
   const [error, setError] = useState<Error | null>(null);
   const [canGoBack, setCanGoBack] = useState(false);
@@ -134,6 +137,12 @@ export function RecipeWebViewContent() {
             style={[styles.webview]}
             userAgent={getUserAgent()}
             onMessage={handleMessage}
+            onLoadStart={() => {
+              console.log(`[Perf:WebView] loadStart | 마운트 후: ${(performance.now() - webviewTimingRef.mountedAt).toFixed(0)}ms`);
+            }}
+            onLoadEnd={() => {
+              console.log(`[Perf:WebView] loadEnd | 마운트 후: ${(performance.now() - webviewTimingRef.mountedAt).toFixed(0)}ms`);
+            }}
             onError={handleError}
             onRenderProcessGone={(e) => {
               webviewRef.current?.reload();

@@ -12,7 +12,9 @@ export function useAuthBootstrap() {
     const init = async () => {
       try {
         setLoading(true);
+        const t0 = performance.now();
         const user = await getUser(); // 토큰이 있다면 서버에서 사용자 복원
+        console.log(`[Perf:Bootstrap] getUser() | ${(performance.now() - t0).toFixed(0)}ms`);
         setAmplitudeUserId(user.provider_sub);
         setUser(
           User.create({

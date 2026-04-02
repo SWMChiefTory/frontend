@@ -127,29 +127,44 @@ export function useVoiceCommand({
   const handleInterimResult = useCallback(
     async (text: string) => {
       if (!text.trim()) return;
+      const tE2E = performance.now();
       setTranscript(text);
 
+      // 1. 키워드 매칭
+      const tKeyword0 = performance.now();
       const localResult = classifyLocal(text);
+      const tKeyword1 = performance.now();
       if (localResult) {
+        console.log(`[Perf:keyword] interim "${text}" → ${localResult.intent} | ${(tKeyword1 - tKeyword0).toFixed(1)}ms`);
         const executed = executeIntent(localResult.intent, localResult.stepNumber);
         if (executed) {
+          console.log(`[Perf:E2E] interim "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
           handledInInterimRef.current = true;
           resetTranscriptionRef.current();
           return;
         }
       }
 
+      // 2. NLU 추론
       if (nluReadyRef.current && nluRef.current) {
         try {
+          const tNlu0 = performance.now();
           const result = await nluRef.current.classify(text);
+          const tNlu1 = performance.now();
+          console.log(`[Perf:NLU] interim "${text}" → ${result?.intent ?? 'none'}(${((result?.confidence ?? 0) * 100).toFixed(1)}%) | ${(tNlu1 - tNlu0).toFixed(1)}ms`);
+
           if (result && result.confidence >= NLU_CONFIDENCE_THRESHOLD) {
             if (result.intent === 'GO_TO_SCENE') {
               setSceneSearching(true);
+              const tScene0 = performance.now();
               const sceneMatch = await findBestScene(text);
+              const tScene1 = performance.now();
               setSceneSearching(false);
+              console.log(`[Perf:scene] interim "${text}" → ${sceneMatch?.label ?? 'no match'} | ${(tScene1 - tScene0).toFixed(1)}ms`);
               if (sceneMatch) {
                 seekToScene(sceneMatch.index);
                 showFeedback(sceneMatch.label);
+                console.log(`[Perf:E2E] interim "${text}" → 장면 이동 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
                 handledInInterimRef.current = true;
                 resetTranscriptionRef.current();
                 return;
@@ -158,6 +173,7 @@ export function useVoiceCommand({
               const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumber(text) : undefined;
               const executed = executeIntent(result.intent, stepNum);
               if (executed) {
+                console.log(`[Perf:E2E] interim "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
                 handledInInterimRef.current = true;
                 resetTranscriptionRef.current();
                 return;
@@ -177,34 +193,53 @@ export function useVoiceCommand({
         return;
       }
       if (!text.trim()) return;
+      const tE2E = performance.now();
       setTranscript(text);
 
+      // 1. 키워드 매칭
+      const tKeyword0 = performance.now();
       const localResult = classifyLocal(text);
+      const tKeyword1 = performance.now();
       if (localResult) {
+        console.log(`[Perf:keyword] final "${text}" → ${localResult.intent} | ${(tKeyword1 - tKeyword0).toFixed(1)}ms`);
         executeIntent(localResult.intent, localResult.stepNumber);
+        console.log(`[Perf:E2E] final "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
         return;
       }
 
+      // 2. NLU 추론
       if (nluReadyRef.current && nluRef.current) {
         try {
+          const tNlu0 = performance.now();
           const result = await nluRef.current.classify(text);
+          const tNlu1 = performance.now();
+          console.log(`[Perf:NLU] final "${text}" → ${result?.intent ?? 'none'}(${((result?.confidence ?? 0) * 100).toFixed(1)}%) | ${(tNlu1 - tNlu0).toFixed(1)}ms`);
+
           if (result && result.confidence >= NLU_CONFIDENCE_THRESHOLD) {
             if (result.intent === 'GO_TO_SCENE') {
               setSceneSearching(true);
             } else {
               const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumber(text) : undefined;
               executeIntent(result.intent, stepNum);
+              console.log(`[Perf:E2E] final "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
               return;
             }
           }
         } catch (e) { console.warn('[VoiceCommand] NLU final error:', e); }
       }
 
+      // 3. 씬 매칭 (embed + cosine)
+      const tScene0 = performance.now();
       const sceneMatch = await findBestScene(text);
+      const tScene1 = performance.now();
       setSceneSearching(false);
+      console.log(`[Perf:scene] final "${text}" → ${sceneMatch?.label ?? 'no match'} | ${(tScene1 - tScene0).toFixed(1)}ms`);
       if (sceneMatch) {
         seekToScene(sceneMatch.index);
         showFeedback(sceneMatch.label);
+        console.log(`[Perf:E2E] final "${text}" → 장면 이동 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
+      } else {
+        console.log(`[Perf:E2E] final "${text}" → no match | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
       }
     },
     [executeIntent, extractStepNumber, findBestScene, seekToScene, showFeedback],
@@ -237,6 +272,7 @@ export function useVoiceCommand({
     error: pipelineError,
     handleWebViewMessage,
     onWebViewReady,
+    vadSpeechStartRef,
   } = useWebAudioPipeline({
     onInterimResult: handleInterimResult,
     onFinalResult: handleFinalResult,
