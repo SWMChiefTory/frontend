@@ -1,10 +1,11 @@
 import { View, Text, Pressable, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';
+import * as Haptics from 'expo-haptics';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
-import BottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useQueryClient } from '@tanstack/react-query';
 import { CategoryChips } from '@/src/pages/bookmark/components/category-chips';
 import { RecipeGrid } from '@/src/pages/bookmark/components/recipe-grid';
@@ -33,10 +34,10 @@ export function BookmarkScreen() {
   const insets = useSafeAreaInsets();
   const queryClient = useQueryClient();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const categorySheetRef = useRef<BottomSheet>(null);
-  const addCategorySheetRef = useRef<BottomSheet>(null);
-  const recipeActionSheetRef = useRef<BottomSheet>(null);
-  const changeCategorySheetRef = useRef<BottomSheet>(null);
+  const categorySheetRef = useRef<BottomSheetModal>(null);
+  const addCategorySheetRef = useRef<BottomSheetModal>(null);
+  const recipeActionSheetRef = useRef<BottomSheetModal>(null);
+  const changeCategorySheetRef = useRef<BottomSheetModal>(null);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeCard | null>(null);
 
@@ -68,13 +69,14 @@ export function BookmarkScreen() {
   }, []);
 
   const handleRecipeLongPress = useCallback((recipe: RecipeCard) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setSelectedRecipe(recipe);
-    recipeActionSheetRef.current?.expand();
+    recipeActionSheetRef.current?.present();
   }, []);
 
   const handleChangeCategory = useCallback(() => {
-    recipeActionSheetRef.current?.close();
-    setTimeout(() => changeCategorySheetRef.current?.expand(), 300);
+    recipeActionSheetRef.current?.dismiss();
+    setTimeout(() => changeCategorySheetRef.current?.present(), 300);
   }, []);
 
   const handleSelectCategory = useCallback(async (categoryId: string) => {
@@ -83,7 +85,7 @@ export function BookmarkScreen() {
       await client.put(`/recipes/${selectedRecipe.id}/categories`, { category_id: categoryId });
       queryClient.invalidateQueries({ queryKey: ['myRecipes'] });
       queryClient.invalidateQueries({ queryKey: ['categorizedRecipes'] });
-      changeCategorySheetRef.current?.close();
+      changeCategorySheetRef.current?.dismiss();
       setSelectedRecipe(null);
     } catch {
       Alert.alert('오류', '카테고리 변경에 실패했어요');
@@ -92,7 +94,7 @@ export function BookmarkScreen() {
 
   const handleAddCategory = useCallback(() => {
     setNewCategoryName('');
-    addCategorySheetRef.current?.expand();
+    addCategorySheetRef.current?.present();
   }, []);
 
   const handleSubmitCategory = useCallback(async () => {
@@ -101,7 +103,7 @@ export function BookmarkScreen() {
     try {
       await createCategory(name);
       queryClient.invalidateQueries({ queryKey: ['categories'] });
-      addCategorySheetRef.current?.close();
+      addCategorySheetRef.current?.dismiss();
       setNewCategoryName('');
     } catch {
       Alert.alert('오류', '카테고리 생성에 실패했어요');
@@ -109,7 +111,7 @@ export function BookmarkScreen() {
   }, [newCategoryName, queryClient]);
 
   const handleCategoryManage = useCallback(() => {
-    categorySheetRef.current?.expand();
+    categorySheetRef.current?.present();
   }, []);
 
   const handleDeleteCategory = useCallback(async (cat: { id: string; name: string }) => {
@@ -187,9 +189,9 @@ export function BookmarkScreen() {
       )}
 
       {/* 카테고리 관리 바텀시트 */}
-      <BottomSheet
+      <BottomSheetModal
         ref={categorySheetRef}
-        index={-1}
+
         snapPoints={['40%']}
         enablePanDownToClose
         backdropComponent={(props) => (
@@ -202,7 +204,7 @@ export function BookmarkScreen() {
             <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 18, fontWeight: '700', color: colors.text.primary }}>
               카테고리 관리
             </Text>
-            <Pressable onPress={() => categorySheetRef.current?.close()}>
+            <Pressable onPress={() => categorySheetRef.current?.dismiss()}>
               <Ionicons name="close" size={22} color={colors.text.secondary} />
             </Pressable>
           </View>
@@ -225,12 +227,12 @@ export function BookmarkScreen() {
             ))
           )}
         </BottomSheetView>
-      </BottomSheet>
+      </BottomSheetModal>
 
       {/* 카테고리 추가 바텀시트 */}
-      <BottomSheet
+      <BottomSheetModal
         ref={addCategorySheetRef}
-        index={-1}
+
         enableDynamicSizing
         enablePanDownToClose
         keyboardBehavior="interactive"
@@ -276,12 +278,12 @@ export function BookmarkScreen() {
             </Text>
           </Pressable>
         </BottomSheetView>
-      </BottomSheet>
+      </BottomSheetModal>
 
       {/* 레시피 액션 바텀시트 (롱프레스) */}
-      <BottomSheet
+      <BottomSheetModal
         ref={recipeActionSheetRef}
-        index={-1}
+
         enableDynamicSizing
         enablePanDownToClose
         backdropComponent={(props) => (
@@ -296,7 +298,7 @@ export function BookmarkScreen() {
             </Text>
           )}
           <Pressable
-            onPress={() => { recipeActionSheetRef.current?.close(); if (selectedRecipe) router.push(`/native-step/${selectedRecipe.id}`); }}
+            onPress={() => { recipeActionSheetRef.current?.dismiss(); if (selectedRecipe) router.push(`/native-step/${selectedRecipe.id}`); }}
             style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md }}
           >
             <Ionicons name="mic" size={20} color={colors.primary} />
@@ -310,19 +312,19 @@ export function BookmarkScreen() {
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>카테고리 변경</Text>
           </Pressable>
           <Pressable
-            onPress={() => { recipeActionSheetRef.current?.close(); Alert.alert('삭제', `${selectedRecipe?.title} 삭제`); }}
+            onPress={() => { recipeActionSheetRef.current?.dismiss(); Alert.alert('삭제', `${selectedRecipe?.title} 삭제`); }}
             style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md }}
           >
             <Ionicons name="trash-outline" size={20} color={colors.semantic.error} />
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.semantic.error }}>삭제</Text>
           </Pressable>
         </BottomSheetView>
-      </BottomSheet>
+      </BottomSheetModal>
 
       {/* 카테고리 변경 바텀시트 */}
-      <BottomSheet
+      <BottomSheetModal
         ref={changeCategorySheetRef}
-        index={-1}
+
         enableDynamicSizing
         enablePanDownToClose
         backdropComponent={(props) => (
@@ -350,7 +352,7 @@ export function BookmarkScreen() {
             ))
           )}
         </BottomSheetView>
-      </BottomSheet>
+      </BottomSheetModal>
     </View>
   );
 }
