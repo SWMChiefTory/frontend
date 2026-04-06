@@ -51,12 +51,12 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
           onPress={() => onPress(card)}
           style={{
             width: 120,
-            height: 110,
+            height: 130,
             backgroundColor: 'transparent',
             borderRadius: radius.lg,
             paddingHorizontal: spacing.sm,
             paddingBottom: spacing.sm,
-            paddingTop: spacing.sm,
+            paddingTop: spacing.md,
             alignItems: 'center',
             borderCurve: 'continuous',
             borderWidth: 1.5,
@@ -68,7 +68,7 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
             {card.image && (
               <Image
                 source={card.image}
-                style={{ width: 72, height: 72 }}
+                style={{ width: 64, height: 64 }}
                 contentFit="contain"
               />
             )}
