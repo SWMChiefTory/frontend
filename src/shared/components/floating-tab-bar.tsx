@@ -50,8 +50,8 @@ export function FloatingTabBar({ activeTab, onTabPress }: FloatingTabBarProps) {
         <View
           style={{
             flexDirection: 'row',
-            paddingVertical: spacing.sm,
-            paddingHorizontal: spacing.lg,
+            paddingVertical: spacing.lg,
+            paddingHorizontal: spacing.xl,
             gap: spacing.md,
           }}
         >
@@ -71,7 +71,7 @@ export function FloatingTabBar({ activeTab, onTabPress }: FloatingTabBarProps) {
               >
                 <MaterialCommunityIcons
                   name={isActive ? tab.iconActive : tab.icon}
-                  size={22}
+                  size={28}
                   color={isActive ? '#1F2937' : '#C0C0C0'}
                 />
               </Pressable>
