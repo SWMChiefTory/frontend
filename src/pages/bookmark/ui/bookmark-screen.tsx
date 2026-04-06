@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import BottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { CategoryChips } from '@/src/pages/bookmark/components/category-chips';
 import { RecipeGrid } from '@/src/pages/bookmark/components/recipe-grid';
-import { colors, spacing, radius } from '@/src/shared/design/tokens';
+import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { MOCK_CATEGORIES, MOCK_MY_RECIPES } from '@/src/shared/data/mock';
 import type { RecipeCard, Category } from '@/src/shared/data/mock';
 
@@ -74,7 +74,7 @@ export function BookmarkScreen() {
             height: 48,
           }}
         >
-          <Text style={{ fontSize: 20, fontWeight: '700', color: colors.text.primary }}>
+          <Text style={{ fontFamily: typography.heading.fontFamily, ...typography.heading.h2, color: colors.text.primary }}>
             나의 레시피
           </Text>
           <Pressable onPress={handleCategoryManage} hitSlop={8}>

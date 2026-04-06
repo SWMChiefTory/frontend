@@ -1,6 +1,6 @@
 import { View, Text, Pressable, ScrollView } from 'react-native';
 import { Image } from 'expo-image';
-import { colors, spacing, radius } from '@/src/shared/design/tokens';
+import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import type { RecipeCard, ThemeCard } from '@/src/shared/data/mock';
 
 interface ThemeCardsSectionProps {
@@ -13,8 +13,8 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
     <View style={{ gap: spacing.md }}>
       <Text
         style={{
-          fontSize: 18,
-          fontWeight: '700',
+          fontFamily: typography.heading.fontFamily,
+          ...typography.heading.h2,
           color: colors.text.primary,
           paddingHorizontal: spacing.lg,
         }}
@@ -46,15 +46,15 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
                 source={card.image}
                 style={{
                   position: 'absolute',
-                  top: 8,
-                  right: 8,
-                  width: 72,
-                  height: 72,
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                  width: '60%',
                 }}
                 contentFit="contain"
               />
             )}
-            <Text style={{ fontSize: 16, fontWeight: '700', color: colors.text.inverse }}>
+            <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 16, fontWeight: '700', color: colors.text.inverse }}>
               {card.title}
             </Text>
             <Text style={{ fontSize: 12, color: 'rgba(255,255,255,0.8)' }}>
@@ -79,8 +79,8 @@ export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListS
     <View style={{ gap: spacing.md }}>
       <Text
         style={{
-          fontSize: 18,
-          fontWeight: '700',
+          fontFamily: typography.heading.fontFamily,
+          ...typography.heading.h2,
           color: colors.text.primary,
           paddingHorizontal: spacing.lg,
         }}
@@ -110,7 +110,7 @@ export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListS
             />
             <View style={{ gap: 2 }}>
               <Text
-                style={{ fontSize: 13, fontWeight: '600', color: colors.text.primary }}
+                style={{ fontFamily: typography.body.fontFamily, fontSize: 13, fontWeight: '600', color: colors.text.primary }}
                 numberOfLines={1}
               >
                 {recipe.title}

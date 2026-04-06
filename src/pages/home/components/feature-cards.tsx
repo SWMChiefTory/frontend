@@ -1,7 +1,7 @@
 import { View, Text, Pressable, ScrollView, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, spacing, radius } from '@/src/shared/design/tokens';
+import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 
 const CARD_IMAGES = {
   create: require('@/assets/images/card-recipe-create.png'),
@@ -81,6 +81,7 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
               <Text
                 style={{
+                  fontFamily: typography.heading.fontFamily,
                   fontSize: 13,
                   fontWeight: '700',
                   color: colors.text.inverse,
