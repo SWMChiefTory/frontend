@@ -5,6 +5,8 @@ import { Image } from 'expo-image';
 import { colors, spacing, radius } from '@/src/shared/design/tokens';
 import { MOCK_BERRY_BALANCE } from '@/src/shared/data/mock';
 
+const BERRY_ICON = require('@/assets/images/berry-icon.png');
+
 interface HomeHeaderProps {
   onBerryPress: () => void;
   onSearchPress: () => void;
@@ -31,18 +33,11 @@ export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: Hom
           style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}
           hitSlop={8}
         >
-          <View
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 14,
-              backgroundColor: '#FFE8E8',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Text style={{ fontSize: 16 }}>🫐</Text>
-          </View>
+          <Image
+            source={BERRY_ICON}
+            style={{ width: 28, height: 28 }}
+            contentFit="contain"
+          />
           <Text style={{ fontSize: 16, fontWeight: '700', color: colors.text.primary }}>
             {MOCK_BERRY_BALANCE}
           </Text>

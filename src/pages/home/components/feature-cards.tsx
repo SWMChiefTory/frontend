@@ -1,20 +1,26 @@
-import { View, Text, Pressable, ScrollView, Alert } from 'react-native';
+import { View, Text, Pressable, ScrollView, Alert, ImageSourcePropType } from 'react-native';
+import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius } from '@/src/shared/design/tokens';
 
+const CARD_IMAGES = {
+  create: require('@/assets/images/card-recipe-create.png'),
+  fridge: require('@/assets/images/card-fridge.png'),
+  calendar: require('@/assets/images/card-calendar.png'),
+};
+
 interface FeatureCard {
-  id: string;
+  id: keyof typeof CARD_IMAGES;
   title: string;
   subtitle: string;
   backgroundColor: string;
-  icon: string;
   locked: boolean;
 }
 
 const FEATURES: FeatureCard[] = [
-  { id: 'create', title: '레시피', subtitle: '생성', backgroundColor: colors.card.recipe, icon: '📖', locked: false },
-  { id: 'fridge', title: '냉장고', subtitle: '파먹기', backgroundColor: colors.card.fridge, icon: '🧊', locked: true },
-  { id: 'calendar', title: '캘린더', subtitle: '', backgroundColor: colors.card.calendar, icon: '📅', locked: true },
+  { id: 'create', title: '레시피', subtitle: '생성', backgroundColor: colors.card.recipe, locked: false },
+  { id: 'fridge', title: '냉장고', subtitle: '파먹기', backgroundColor: colors.card.fridge, locked: true },
+  { id: 'calendar', title: '캘린더', subtitle: '', backgroundColor: colors.card.calendar, locked: true },
 ];
 
 interface FeatureCardsProps {
@@ -50,7 +56,11 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
             borderCurve: 'continuous',
           }}
         >
-          <Text style={{ fontSize: 28 }}>{feature.icon}</Text>
+          <Image
+            source={CARD_IMAGES[feature.id]}
+            style={{ width: 48, height: 48 }}
+            contentFit="contain"
+          />
 
           <View>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>

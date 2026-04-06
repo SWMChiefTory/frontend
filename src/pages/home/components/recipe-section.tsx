@@ -38,8 +38,22 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
               padding: spacing.md,
               justifyContent: 'flex-end',
               borderCurve: 'continuous',
+              overflow: 'hidden',
             }}
           >
+            {card.image && (
+              <Image
+                source={card.image}
+                style={{
+                  position: 'absolute',
+                  top: 4,
+                  right: 4,
+                  width: 56,
+                  height: 56,
+                }}
+                contentFit="contain"
+              />
+            )}
             <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text.inverse }}>
               {card.title}
             </Text>
