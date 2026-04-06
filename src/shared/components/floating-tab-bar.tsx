@@ -1,8 +1,8 @@
-import { Pressable, View, Text, useWindowDimensions } from 'react-native';
+import { Pressable, View, Text, Platform, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 import { colors, radius, spacing } from '@/src/shared/design/tokens';
-import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
 interface Tab {
   key: string;
@@ -25,6 +25,50 @@ export function FloatingTabBar({ activeTab, onTabPress }: FloatingTabBarProps) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const tabBarWidth = Math.min(width * 0.55, 240);
+  const isIOS = Platform.OS === 'ios';
+
+  const tabContent = (
+    <View
+      style={{
+        flexDirection: 'row',
+        paddingVertical: spacing.sm,
+        paddingHorizontal: spacing.lg,
+        gap: spacing.md,
+      }}
+    >
+      {TABS.map((tab) => {
+        const isActive = activeTab === tab.key;
+        return (
+          <Pressable
+            key={tab.key}
+            onPress={() => onTabPress(tab.key)}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              gap: 2,
+              paddingVertical: spacing.xs,
+            }}
+            hitSlop={8}
+          >
+            <Ionicons
+              name={isActive ? tab.iconActive : tab.icon}
+              size={22}
+              color={isActive ? colors.tab.active : colors.tab.inactive}
+            />
+            <Text
+              style={{
+                fontSize: 10,
+                fontWeight: isActive ? '600' : '400',
+                color: isActive ? colors.tab.active : colors.tab.inactive,
+              }}
+            >
+              {tab.label}
+            </Text>
+          </Pressable>
+        );
+      })}
+    </View>
+  );
 
   return (
     <View
@@ -37,50 +81,32 @@ export function FloatingTabBar({ activeTab, onTabPress }: FloatingTabBarProps) {
       }}
       pointerEvents="box-none"
     >
-      <View
-        style={{
-          flexDirection: 'row',
-          width: tabBarWidth,
-          backgroundColor: '#FFFFFF',
-          borderRadius: radius.full,
-          paddingVertical: spacing.sm,
-          paddingHorizontal: spacing.lg,
-          gap: spacing.md,
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)',
-        }}
-      >
-        {TABS.map((tab) => {
-          const isActive = activeTab === tab.key;
-          return (
-            <Pressable
-              key={tab.key}
-              onPress={() => onTabPress(tab.key)}
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                gap: 2,
-                paddingVertical: spacing.xs,
-              }}
-              hitSlop={8}
-            >
-              <Ionicons
-                name={isActive ? tab.iconActive : tab.icon}
-                size={22}
-                color={isActive ? colors.tab.active : colors.tab.inactive}
-              />
-              <Text
-                style={{
-                  fontSize: 10,
-                  fontWeight: isActive ? '600' : '400',
-                  color: isActive ? colors.tab.active : colors.tab.inactive,
-                }}
-              >
-                {tab.label}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </View>
+      {isIOS ? (
+        <BlurView
+          intensity={80}
+          tint="systemChromeMaterial"
+          style={{
+            width: tabBarWidth,
+            borderRadius: radius.full,
+            overflow: 'hidden',
+            borderCurve: 'continuous',
+          }}
+        >
+          {tabContent}
+        </BlurView>
+      ) : (
+        <View
+          style={{
+            width: tabBarWidth,
+            backgroundColor: '#FFFFFF',
+            borderRadius: radius.full,
+            overflow: 'hidden',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)',
+          }}
+        >
+          {tabContent}
+        </View>
+      )}
     </View>
   );
 }

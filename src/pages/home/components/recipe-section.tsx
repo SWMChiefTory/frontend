@@ -21,57 +21,53 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
           onPress={() => onPress(card)}
           style={{
             width: 150,
-            height: 130,
+            height: 150,
             backgroundColor: card.backgroundColor,
             borderRadius: radius.lg,
+            padding: spacing.md,
+            justifyContent: 'space-between',
             borderCurve: 'continuous',
             overflow: 'hidden',
           }}
         >
-          {/* 에셋 영역 */}
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            {card.image && (
-              <Image
-                source={card.image}
-                style={{ width: 80, height: 80 }}
-                contentFit="contain"
-              />
-            )}
-          </View>
-
-          {/* 텍스트 — 하단 둥근 사각형 */}
-          <View style={{ paddingHorizontal: spacing.sm, paddingBottom: spacing.sm }}>
-            <View
+          {/* 에셋 — 오른쪽 상단 */}
+          {card.image && (
+            <Image
+              source={card.image}
               style={{
-                backgroundColor: 'rgba(255,255,255,0.88)',
-                borderRadius: radius.md,
-                paddingHorizontal: spacing.sm,
-                paddingVertical: spacing.xs,
-                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
+                position: 'absolute',
+                top: -4,
+                right: -4,
+                width: 100,
+                height: 100,
               }}
+              contentFit="contain"
+            />
+          )}
+
+          {/* 하단 텍스트 */}
+          <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+            <Text
+              style={{
+                fontFamily: typography.heading.fontFamily,
+                fontSize: 16,
+                fontWeight: '700',
+                color: colors.text.inverse,
+              }}
+              numberOfLines={1}
             >
-              <Text
-                style={{
-                  fontFamily: typography.heading.fontFamily,
-                  fontSize: 13,
-                  fontWeight: '700',
-                  color: colors.text.primary,
-                }}
-                numberOfLines={1}
-              >
-                {card.title}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: typography.body.fontFamily,
-                  fontSize: 10,
-                  color: colors.text.secondary,
-                }}
-                numberOfLines={1}
-              >
-                {card.subtitle}
-              </Text>
-            </View>
+              {card.title}
+            </Text>
+            <Text
+              style={{
+                fontFamily: typography.body.fontFamily,
+                fontSize: 12,
+                color: 'rgba(255,255,255,0.8)',
+              }}
+              numberOfLines={1}
+            >
+              {card.subtitle}
+            </Text>
           </View>
         </Pressable>
       ))}
