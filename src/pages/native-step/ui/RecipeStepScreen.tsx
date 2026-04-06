@@ -252,8 +252,8 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
   if (isShorts) {
     return (
       <GestureHandlerRootView style={styles.root}>
-        {/* 영상 — 화면 70% */}
-        <View style={{ height: screenHeight * 0.7, backgroundColor: '#000' }}>
+        {/* 영상 — 풀스크린 */}
+        <View style={{ flex: 1, backgroundColor: '#000' }}>
           <WebView
             ref={webviewRef}
             source={{ uri: youtubeUri }}
@@ -293,12 +293,12 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
             <Ionicons name="chevron-back" size={22} color="#fff" />
           </Pressable>
 
-          {/* 오버레이 — 오른쪽 세로 버튼 그룹 */}
+          {/* 오버레이 — 오른쪽 세로 버튼 그룹 (바닥 기준) */}
           <View
             style={{
               position: 'absolute',
               right: 12,
-              top: insets.top + 8,
+              bottom: insets.bottom + 16,
               gap: 12,
               alignItems: 'center',
               zIndex: 10,
@@ -411,9 +411,10 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
               position: 'absolute',
               bottom: 0,
               left: 0,
-              right: 60,
+              right: 64,
               padding: 16,
               paddingBottom: insets.bottom + 16,
+              borderTopLeftRadius: 16,
               backgroundColor: 'rgba(0,0,0,0.5)',
             }}
           >
