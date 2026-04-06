@@ -9,7 +9,7 @@ const SLIDES = [
     id: '1',
     image: require('@/assets/images/paw-print.png'),
     title: '쉐프토리에 오신 걸 환영해요!',
-    subtitle: '유튜브 요리 영상을 AI가 레시피로 만들어드려요',
+    subtitle: '말만 하면 토리가 대신 터치해줄게요',
     imageStyle: { width: 160, height: 160 },
     backgroundColor: '#FFF8E1',
   },
@@ -61,7 +61,7 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   }, [onComplete]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background }}>
+    <View style={{ flex: 1, backgroundColor: (SLIDES[currentIndex] as any).backgroundColor ?? colors.background }}>
       <FlatList
         ref={flatListRef}
         data={SLIDES}
@@ -125,6 +125,7 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
           paddingBottom: insets.bottom + spacing.lg,
           gap: spacing.lg,
           alignItems: 'center',
+          backgroundColor: (SLIDES[currentIndex] as any).backgroundColor ?? colors.background,
         }}
       >
         {/* 페이지 인디케이터 */}
