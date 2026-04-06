@@ -1,11 +1,12 @@
 import { forwardRef, useCallback, useImperativeHandle, useRef, useState } from 'react';
-import { View, Text, Pressable, Alert, ActivityIndicator, Linking, Keyboard } from 'react-native';
+import { View, Text, Pressable, Alert, ActivityIndicator, Linking, Keyboard, ScrollView } from 'react-native';
 import BottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { client } from '@/src/modules/shared/api/client';
 import { MOCK_BERRY_BALANCE } from '@/src/shared/data/mock';
+import { useCategories } from '@/src/entities/recipe/hooks/use-my-recipes';
 
 const BERRY_ICON = require('@/assets/images/berry-icon.png');
 
@@ -34,6 +35,8 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const { data: categories } = useCategories();
 
   useImperativeHandle(ref, () => ({
     open: () => sheetRef.current?.expand(),
@@ -41,6 +44,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
       sheetRef.current?.close();
       setUrl('');
       setError(null);
+      setSelectedCategoryId(null);
     },
   }));
 
@@ -58,9 +62,17 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
       const res = await client.post('/recipes', { video_url: videoUrl });
       const recipeId = res.data?.recipe_id ?? res.data?.recipeId;
 
+      // 카테고리 선택했으면 등록
+      if (selectedCategoryId && recipeId) {
+        try {
+          await client.put(`/recipes/${recipeId}/categories`, { category_id: selectedCategoryId });
+        } catch {}
+      }
+
       setLoading(false);
       sheetRef.current?.close();
       setUrl('');
+      setSelectedCategoryId(null);
       Alert.alert('레시피 생성 완료!', `레시피가 생성되었어요. 잠시 후 확인할 수 있습니다.`);
     } catch (err: any) {
       setLoading(false);
@@ -152,6 +164,38 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
             </Text>
           )}
         </View>
+
+        {/* 카테고리 선택 */}
+        {categories && categories.length > 0 && (
+          <View style={{ gap: spacing.sm }}>
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
+              카테고리 (선택)
+            </Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: spacing.sm }}>
+              {categories.map((cat) => {
+                const isSelected = selectedCategoryId === cat.categoryId;
+                return (
+                  <Pressable
+                    key={cat.categoryId}
+                    onPress={() => setSelectedCategoryId(isSelected ? null : cat.categoryId)}
+                    style={{
+                      paddingHorizontal: 14,
+                      paddingVertical: 6,
+                      borderRadius: radius.full,
+                      backgroundColor: isSelected ? colors.primary : 'transparent',
+                      borderWidth: 1,
+                      borderColor: isSelected ? colors.primary : colors.border,
+                    }}
+                  >
+                    <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: isSelected ? '#fff' : colors.text.primary }}>
+                      {cat.name}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+          </View>
+        )}
 
         {/* 생성 버튼 */}
         <Pressable

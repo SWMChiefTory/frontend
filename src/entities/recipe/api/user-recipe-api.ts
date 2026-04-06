@@ -1,4 +1,17 @@
 import { client } from '@/src/modules/shared/api/client';
+import { z } from 'zod';
+
+const CategorySchema = z.object({
+  categoryId: z.string(),
+  count: z.number(),
+  name: z.string(),
+});
+
+const CategoriesResponseSchema = z.object({
+  categories: z.array(CategorySchema),
+  total_count: z.number().optional(),
+  totalCount: z.number().optional(),
+});
 
 export interface UserRecipe {
   recipeId: string;
@@ -68,12 +81,23 @@ export async function fetchCategories(): Promise<Category[]> {
   try {
     const res = await client.get('/recipes/categories');
     const raw = res.data;
-    const categories = raw.categories ?? raw.data ?? [];
-    return categories.map((c: any) => ({
-      categoryId: c.category_id ?? c.categoryId ?? '',
-      name: c.name ?? '',
-      count: c.count ?? 0,
-    }));
+
+    // snake_case → camelCase 변환
+    const normalized = {
+      categories: (raw.categories ?? []).map((c: any) => ({
+        categoryId: c.category_id ?? c.categoryId ?? '',
+        name: c.name ?? '',
+        count: c.count ?? 0,
+      })),
+      totalCount: raw.total_count ?? raw.totalCount ?? 0,
+    };
+
+    const parsed = CategoriesResponseSchema.safeParse(normalized);
+    if (!parsed.success) {
+      console.warn('[UserRecipeAPI] categories zod error:', parsed.error.issues);
+    }
+
+    return normalized.categories;
   } catch (err: any) {
     console.warn('[UserRecipeAPI] fetchCategories error:', err?.response?.status, err?.message);
     return [];
