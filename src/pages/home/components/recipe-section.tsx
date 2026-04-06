@@ -178,8 +178,8 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
                   alignItems: 'center',
                   gap: 4,
                   backgroundColor: colors.primary,
-                  paddingHorizontal: spacing.sm,
-                  paddingVertical: spacing.xs,
+                  paddingHorizontal: spacing.md,
+                  paddingVertical: spacing.sm,
                   borderRadius: radius.full,
                   alignSelf: 'flex-start',
                 }}
