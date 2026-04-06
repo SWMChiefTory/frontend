@@ -1,6 +1,7 @@
-import { View, Text, Pressable, ScrollView } from 'react-native';
+import { View, Text, Pressable, ScrollView, Alert } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import type { RecipeCard, ThemeCard } from '@/src/shared/data/mock';
 
@@ -158,7 +159,7 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
               }}
               contentFit="cover"
             />
-            <View style={{ flex: 1, justifyContent: 'center', gap: spacing.xs }}>
+            <View style={{ flex: 1, justifyContent: 'center', gap: spacing.sm }}>
               <Text
                 style={{
                   fontFamily: typography.heading.fontFamily,
@@ -170,44 +171,24 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
               >
                 {recipe.title}
               </Text>
-              <View style={{ flexDirection: 'row', gap: spacing.xs, flexWrap: 'wrap' }}>
-                {recipe.cookingTime ? (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 2,
-                      backgroundColor: colors.background,
-                      paddingHorizontal: spacing.sm,
-                      paddingVertical: 2,
-                      borderRadius: radius.full,
-                    }}
-                  >
-                    <Ionicons name="time-outline" size={11} color={colors.text.secondary} />
-                    <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 10, color: colors.text.secondary }}>
-                      {recipe.cookingTime}분
-                    </Text>
-                  </View>
-                ) : null}
-                {recipe.servings ? (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 2,
-                      backgroundColor: colors.background,
-                      paddingHorizontal: spacing.sm,
-                      paddingVertical: 2,
-                      borderRadius: radius.full,
-                    }}
-                  >
-                    <Ionicons name="people-outline" size={11} color={colors.text.secondary} />
-                    <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 10, color: colors.text.secondary }}>
-                      {recipe.servings}
-                    </Text>
-                  </View>
-                ) : null}
-              </View>
+              <Pressable
+                onPress={() => router.push(`/native-step/${recipe.id}`)}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 4,
+                  backgroundColor: colors.primary,
+                  paddingHorizontal: spacing.sm,
+                  paddingVertical: spacing.xs,
+                  borderRadius: radius.full,
+                  alignSelf: 'flex-start',
+                }}
+              >
+                <Ionicons name="mic" size={12} color="#fff" />
+                <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 11, fontWeight: '600', color: '#fff' }}>
+                  음성 모드
+                </Text>
+              </Pressable>
             </View>
           </Pressable>
         ))}
