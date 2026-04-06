@@ -30,17 +30,29 @@ export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: Hom
       >
         <Pressable
           onPress={onBerryPress}
-          style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}
+          style={{ alignItems: 'center', width: 48 }}
           hitSlop={8}
         >
           <Image
             source={BERRY_ICON}
-            style={{ width: 28, height: 28 }}
+            style={{ width: 36, height: 36 }}
             contentFit="contain"
           />
-          <Text style={{ fontSize: 16, fontWeight: '700', color: colors.text.primary }}>
-            {MOCK_BERRY_BALANCE}
-          </Text>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: -4,
+              backgroundColor: colors.background,
+              paddingHorizontal: 6,
+              paddingVertical: 1,
+              borderRadius: radius.full,
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+            }}
+          >
+            <Text style={{ fontSize: 10, fontWeight: '700', color: colors.text.primary }}>
+              {MOCK_BERRY_BALANCE}
+            </Text>
+          </View>
         </Pressable>
 
         <Pressable onPress={onSettingsPress} hitSlop={8}>
