@@ -138,7 +138,7 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
             key={recipe.id}
             onPress={() => onPress(recipe)}
             style={{
-              width: 260,
+              width: 220,
               flexDirection: 'row',
               gap: spacing.md,
               backgroundColor: colors.surface,
@@ -150,8 +150,8 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
             <Image
               source={{ uri: recipe.thumbnailUrl }}
               style={{
-                width: 80,
-                height: 80,
+                width: 68,
+                height: 68,
                 borderRadius: radius.sm,
                 backgroundColor: colors.border,
               }}
