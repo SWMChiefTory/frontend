@@ -10,6 +10,7 @@ interface CategoryChipsProps {
 
 export function CategoryChips({ categories, selected, onSelect, onAdd }: CategoryChipsProps) {
   return (
+    <View>
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
@@ -17,6 +18,7 @@ export function CategoryChips({ categories, selected, onSelect, onAdd }: Categor
         paddingHorizontal: spacing.lg,
         gap: spacing.sm,
         paddingVertical: spacing.sm,
+        alignItems: 'center',
       }}
     >
       {/* 추가 칩 — 맨 앞 */}
@@ -67,5 +69,6 @@ export function CategoryChips({ categories, selected, onSelect, onAdd }: Categor
         );
       })}
     </ScrollView>
+    </View>
   );
 }
