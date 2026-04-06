@@ -14,7 +14,7 @@ import { deleteCategory } from '@/src/entities/recipe/api/user-recipe-api';
 import type { UserRecipe, Category } from '@/src/entities/recipe/api/user-recipe-api';
 import type { RecipeCard } from '@/src/shared/data/mock';
 
-const TORY_CRY = require('@/assets/images/tory-logo.png');
+const EMPTY_STATE = require('@/assets/images/empty-state.png');
 
 function toRecipeCards(recipes: UserRecipe[]): RecipeCard[] {
   return recipes
@@ -158,7 +158,7 @@ export function BookmarkScreen() {
         </View>
       ) : recipes.length === 0 ? (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: spacing.md, paddingBottom: 80 }}>
-          <Image source={TORY_CRY} style={{ width: 80, height: 80, opacity: 0.5 }} contentFit="contain" />
+          <Image source={EMPTY_STATE} style={{ width: 120, height: 120 }} contentFit="contain" />
           <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 15, color: colors.text.disabled }}>
             {selectedCategory === 'all' ? '아직 저장된 레시피가 없어요' : '이 카테고리에 레시피가 없어요'}
           </Text>

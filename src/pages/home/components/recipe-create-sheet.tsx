@@ -84,73 +84,68 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
       )}
       backgroundStyle={{ borderRadius: radius.xl }}
     >
-      <BottomSheetView style={{ padding: spacing.xl, gap: spacing.lg, flex: 1 }}>
-        {/* 헤더 */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 20, fontWeight: '700', color: colors.text.primary }}>
-            레시피 생성
+      <BottomSheetView style={{ padding: spacing.xl, flex: 1, justifyContent: 'flex-end', gap: spacing.md }}>
+        {/* 베리 비용 */}
+        <View style={{ alignItems: 'center', gap: spacing.xs }}>
+          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
+            등록 시 1 베리가 소모됩니다
           </Text>
-          <Pressable onPress={() => sheetRef.current?.close()}>
-            <Ionicons name="close" size={24} color={colors.text.secondary} />
-          </Pressable>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.xs }}>
+            <Image source={BERRY_ICON} style={{ width: 16, height: 16 }} contentFit="contain" />
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.primary, fontWeight: '600' }}>
+              보유 {MOCK_BERRY_BALANCE}개
+            </Text>
+          </View>
         </View>
 
-        {/* URL 입력 */}
+        {/* URL 입력 + YouTube 칩 */}
         <View style={{ gap: spacing.sm }}>
-          <BottomSheetTextInput
-            value={url}
-            onChangeText={(text) => { setUrl(text); setError(null); }}
-            placeholder="https://www.youtube.com/watch?v=..."
-            placeholderTextColor={colors.text.disabled}
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="url"
-            style={{
-              fontFamily: typography.body.fontFamily,
-              fontSize: 15,
-              color: colors.text.primary,
-              borderWidth: 1,
-              borderColor: error ? colors.semantic.error : (isValid ? colors.primary : colors.border),
-              borderRadius: radius.md,
-              paddingHorizontal: spacing.lg,
-              paddingVertical: spacing.md,
-              backgroundColor: colors.background,
-            }}
-          />
+          <View style={{ flexDirection: 'row', gap: spacing.sm, alignItems: 'center' }}>
+            <View style={{ flex: 1 }}>
+              <BottomSheetTextInput
+                value={url}
+                onChangeText={(text) => { setUrl(text); setError(null); }}
+                placeholder="YouTube URL 붙여넣기"
+                placeholderTextColor={colors.text.disabled}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="url"
+                style={{
+                  fontFamily: typography.body.fontFamily,
+                  fontSize: 14,
+                  color: colors.text.primary,
+                  borderWidth: 1,
+                  borderColor: error ? colors.semantic.error : (isValid ? colors.primary : colors.border),
+                  borderRadius: radius.md,
+                  paddingHorizontal: spacing.md,
+                  paddingVertical: spacing.md,
+                  backgroundColor: colors.background,
+                }}
+              />
+            </View>
+            <Pressable
+              onPress={() => Linking.openURL('https://www.youtube.com')}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 4,
+                backgroundColor: '#FF0000',
+                paddingHorizontal: spacing.md,
+                paddingVertical: spacing.sm,
+                borderRadius: radius.full,
+              }}
+            >
+              <Ionicons name="logo-youtube" size={14} color="#fff" />
+              <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, fontWeight: '600', color: '#fff' }}>
+                검색
+              </Text>
+            </Pressable>
+          </View>
           {error && (
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, color: colors.semantic.error }}>
               {error}
             </Text>
           )}
-          {url.length > 0 && !isValid && !error && (
-            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, color: colors.text.disabled }}>
-              유효한 YouTube URL을 입력해주세요
-            </Text>
-          )}
-        </View>
-
-        {/* YouTube 검색 링크 */}
-        <Pressable
-          onPress={() => Linking.openURL('https://www.youtube.com')}
-          style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}
-        >
-          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
-            URL을 모르시나요?
-          </Text>
-          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: '#FF0000', fontWeight: '600' }}>
-            YouTube에서 검색
-          </Text>
-        </Pressable>
-
-        {/* 베리 비용 */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm }}>
-          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
-            등록 시 1 베리가 소모됩니다
-          </Text>
-          <Image source={BERRY_ICON} style={{ width: 16, height: 16 }} contentFit="contain" />
-          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.primary, fontWeight: '600' }}>
-            {MOCK_BERRY_BALANCE}
-          </Text>
         </View>
 
         {/* 생성 버튼 */}
