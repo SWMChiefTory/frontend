@@ -13,6 +13,7 @@ export interface RecommendRecipe {
   videoSeconds: number;
   channelTitle: string;
   cookingTime: number;
+  description: string;
   creditCost: number;
 }
 
@@ -26,23 +27,21 @@ export async function fetchRecommendRecipes(
     });
 
     const raw = res.data;
-    console.log(`[RecommendAPI] ${recommendType} response keys:`, Object.keys(raw));
-
-    // 웹뷰와 동일한 매핑: raw.recommendRecipes 배열에서 변환
-    const recipes = raw.recommendRecipes ?? raw.data ?? [];
-    console.log(`[RecommendAPI] ${recommendType} recipes count:`, recipes.length);
+    // API 응답이 snake_case
+    const recipes = raw.recommend_recipes ?? raw.recommendRecipes ?? [];
 
     return {
-      nextCursor: raw.nextCursor ?? null,
-      hasNext: raw.hasNext ?? false,
+      nextCursor: raw.next_cursor ?? raw.nextCursor ?? null,
+      hasNext: raw.has_next ?? raw.hasNext ?? false,
       data: recipes.map((item: any) => ({
-        recipeId: item.recipeId ?? '',
-        recipeTitle: item.recipeTitle ?? '',
-        videoThumbnailUrl: item.videoThumbnailUrl ?? '',
-        videoSeconds: item.videoSeconds ?? 0,
-        channelTitle: item.channelTitle ?? '',
-        cookingTime: item.cookingTime ?? 0,
-        creditCost: item.creditCost ?? 0,
+        recipeId: item.recipe_id ?? item.recipeId ?? '',
+        recipeTitle: item.recipe_title ?? item.recipeTitle ?? '',
+        videoThumbnailUrl: item.video_thumbnail_url ?? item.videoThumbnailUrl ?? '',
+        videoSeconds: item.video_seconds ?? item.videoSeconds ?? 0,
+        channelTitle: item.channel_title ?? item.channelTitle ?? '',
+        cookingTime: item.cooking_time ?? item.cookingTime ?? 0,
+        description: item.description ?? '',
+        creditCost: item.credit_cost ?? item.creditCost ?? 0,
       })),
     };
   } catch (err: any) {
