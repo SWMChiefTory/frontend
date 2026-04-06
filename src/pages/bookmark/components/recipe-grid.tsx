@@ -60,7 +60,7 @@ export function RecipeGrid({ recipes, onPress, onLongPress }: RecipeGridProps) {
                 justifyContent: 'center',
                 gap: 4,
                 backgroundColor: colors.primary,
-                paddingVertical: 1,
+                paddingVertical: 6,
                 borderRadius: radius.sm,
                 marginTop: 2,
               }}
