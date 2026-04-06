@@ -52,30 +52,42 @@ export function HomeScreen() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ gap: spacing.xl, paddingBottom: 120 }}
+        contentContainerStyle={{ paddingBottom: 120 }}
       >
-        <FeatureCards
-          onCreatePress={handleCreatePress}
-          onLockedPress={handleLockedPress}
-        />
+        {/* 기능 카드 영역 — 흰색 배경 */}
+        <View style={{ backgroundColor: colors.background, paddingVertical: spacing.lg }}>
+          <FeatureCards
+            onCreatePress={handleCreatePress}
+            onLockedPress={handleLockedPress}
+          />
+        </View>
 
-        <ThemeCardsSection
-          cards={MOCK_THEME_CARDS}
-          onPress={handleThemePress}
-        />
+        {/* 추천/콘텐츠 영역 — surface 배경으로 분리 */}
+        <View
+          style={{
+            backgroundColor: colors.surface,
+            paddingVertical: spacing.xl,
+            gap: spacing.xxl,
+          }}
+        >
+          <ThemeCardsSection
+            cards={MOCK_THEME_CARDS}
+            onPress={handleThemePress}
+          />
 
-        <RecipeListSection
-          title="지금 핫한 레시피"
-          icon="🔥"
-          recipes={MOCK_HOT_RECIPES}
-          onPress={handleRecipePress}
-        />
+          <RecipeListSection
+            title="지금 핫한 레시피"
+            icon="🔥"
+            recipes={MOCK_HOT_RECIPES}
+            onPress={handleRecipePress}
+          />
 
-        <RecipeListSection
-          title="최근 시청 레시피"
-          recipes={MOCK_RECENT_RECIPES}
-          onPress={handleRecipePress}
-        />
+          <RecipeListSection
+            title="최근 시청 레시피"
+            recipes={MOCK_RECENT_RECIPES}
+            onPress={handleRecipePress}
+          />
+        </View>
       </ScrollView>
 
       {/* 잠금 기능 모달 */}

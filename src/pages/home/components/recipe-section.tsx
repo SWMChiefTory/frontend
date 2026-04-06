@@ -31,11 +31,11 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
             key={card.id}
             onPress={() => onPress(card)}
             style={{
-              width: 140,
-              height: 100,
+              width: 180,
+              height: 130,
               backgroundColor: card.backgroundColor,
               borderRadius: radius.lg,
-              padding: spacing.md,
+              padding: spacing.lg,
               justifyContent: 'flex-end',
               borderCurve: 'continuous',
               overflow: 'hidden',
@@ -46,18 +46,18 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
                 source={card.image}
                 style={{
                   position: 'absolute',
-                  top: 4,
-                  right: 4,
-                  width: 56,
-                  height: 56,
+                  top: 8,
+                  right: 8,
+                  width: 72,
+                  height: 72,
                 }}
                 contentFit="contain"
               />
             )}
-            <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text.inverse }}>
+            <Text style={{ fontSize: 16, fontWeight: '700', color: colors.text.inverse }}>
               {card.title}
             </Text>
-            <Text style={{ fontSize: 11, color: 'rgba(255,255,255,0.8)' }}>
+            <Text style={{ fontSize: 12, color: 'rgba(255,255,255,0.8)' }}>
               {card.subtitle}
             </Text>
           </Pressable>
