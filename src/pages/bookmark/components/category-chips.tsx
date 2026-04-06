@@ -24,7 +24,7 @@ export function CategoryChips({ categories, selected, onSelect, onAdd }: Categor
         onPress={onAdd}
         style={{
           paddingHorizontal: spacing.md,
-          paddingVertical: spacing.sm,
+          paddingVertical: spacing.xs,
           borderRadius: radius.full,
           borderWidth: 1,
           borderColor: colors.border,
