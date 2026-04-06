@@ -10,7 +10,13 @@ interface ThemeCardsSectionProps {
 
 export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
   return (
-    <View style={{ gap: spacing.md }}>
+    <View
+      style={{
+        backgroundColor: colors.surface,
+        paddingVertical: spacing.lg,
+        gap: spacing.md,
+      }}
+    >
       <Text
         style={{
           fontFamily: typography.heading.fontFamily,
@@ -109,7 +115,13 @@ interface RecipeListSectionProps {
 
 export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListSectionProps) {
   return (
-    <View style={{ gap: spacing.md }}>
+    <View
+      style={{
+        backgroundColor: colors.surface,
+        paddingVertical: spacing.lg,
+        gap: spacing.md,
+      }}
+    >
       <Text
         style={{
           fontFamily: typography.heading.fontFamily,
@@ -118,7 +130,7 @@ export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListS
           paddingHorizontal: spacing.lg,
         }}
       >
-        {icon} {title}
+        {title}
       </Text>
       <ScrollView
         horizontal
