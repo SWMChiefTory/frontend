@@ -1,10 +1,11 @@
 import { ScrollView, View, Alert, Modal, Text, Pressable, ActivityIndicator } from 'react-native';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { HomeHeader } from '@/src/pages/home/components/home-header';
 import { FeatureCards } from '@/src/pages/home/components/feature-cards';
 import { ThemeCardsSection, RecipeListSection, RecentRecipeSection, RecentRecipeSkeleton, RecipeListSkeleton } from '@/src/pages/home/components/recipe-section';
+import { RecipeCreateSheet, type RecipeCreateSheetRef } from '@/src/pages/home/components/recipe-create-sheet';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import {
   MOCK_THEME_CARDS,
@@ -31,6 +32,7 @@ function toRecipeCards(data: any[] | undefined): RecipeCard[] {
 
 export function HomeScreen() {
   const [lockedModal, setLockedModal] = useState<string | null>(null);
+  const createSheetRef = useRef<RecipeCreateSheetRef>(null);
 
   const { data: popularData, isLoading: popularLoading } = useRecommendRecipes(RecommendType.POPULAR);
   const { data: trendingData, isLoading: trendingLoading } = useRecommendRecipes(RecommendType.TRENDING);
@@ -58,7 +60,7 @@ export function HomeScreen() {
   }, []);
 
   const handleCreatePress = useCallback(() => {
-    Alert.alert('레시피 생성', '레시피 생성 바텀시트');
+    createSheetRef.current?.open();
   }, []);
 
   const handleLockedPress = useCallback((feature: string) => {
@@ -201,6 +203,9 @@ export function HomeScreen() {
           </View>
         </Pressable>
       </Modal>
+
+      {/* 레시피 생성 바텀시트 */}
+      <RecipeCreateSheet ref={createSheetRef} />
     </View>
   );
 }
