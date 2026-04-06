@@ -3,6 +3,7 @@ import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
+import { Skeleton } from '@/src/shared/components/skeleton';
 import type { RecipeCard, ThemeCard } from '@/src/shared/data/mock';
 
 interface ThemeCardsSectionProps {
@@ -255,6 +256,49 @@ export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListS
               </Text>
             </View>
           </Pressable>
+        ))}
+      </ScrollView>
+    </View>
+  );
+}
+
+// ─── Skeleton 변형 ───
+
+export function RecentRecipeSkeleton() {
+  return (
+    <View style={{ paddingVertical: spacing.lg, gap: spacing.md }}>
+      <Skeleton width={140} height={22} style={{ marginLeft: spacing.lg }} />
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}>
+        {[1, 2, 3].map((i) => (
+          <View key={i} style={{ width: 220, flexDirection: 'row', gap: spacing.md, backgroundColor: colors.surface, borderRadius: radius.lg, padding: spacing.sm }}>
+            <Skeleton width={68} height={68} borderRadius={radius.sm} />
+            <View style={{ flex: 1, gap: spacing.sm, justifyContent: 'center' }}>
+              <Skeleton width="80%" height={14} />
+              <Skeleton width="50%" height={12} />
+              <Skeleton width="100%" height={28} borderRadius={radius.sm} />
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  );
+}
+
+export function RecipeListSkeleton({ title }: { title: string }) {
+  return (
+    <View style={{ paddingVertical: spacing.lg, gap: spacing.md }}>
+      <Text style={{ fontFamily: typography.heading.fontFamily, ...typography.heading.h2, color: colors.text.primary, paddingHorizontal: spacing.lg }}>
+        {title}
+      </Text>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}>
+        {[1, 2, 3].map((i) => (
+          <View key={i} style={{ width: 160, gap: spacing.sm }}>
+            <Skeleton width={160} height={100} />
+            <Skeleton width={120} height={14} />
+            <Skeleton width={80} height={11} />
+          </View>
         ))}
       </ScrollView>
     </View>

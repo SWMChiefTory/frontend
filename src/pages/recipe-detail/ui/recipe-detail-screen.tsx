@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
+import { Skeleton } from '@/src/shared/components/skeleton';
 import { useRecipeDetail } from '@/src/entities/recipe/hooks/use-recipe-detail';
 
 interface RecipeDetailScreenProps {
@@ -28,8 +29,39 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background }}>
-        <ActivityIndicator size="large" color={colors.primary} />
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
+        {/* 썸네일 스켈레톤 */}
+        <Skeleton width="100%" height={width * 9 / 16} borderRadius={0} />
+        <View style={{ padding: spacing.xl, gap: spacing.md }}>
+          <Skeleton width="90%" height={26} />
+          <Skeleton width="70%" height={16} />
+          <View style={{ flexDirection: 'row', gap: spacing.sm }}>
+            <Skeleton width={70} height={28} borderRadius={radius.full} />
+            <Skeleton width={100} height={28} borderRadius={radius.full} />
+          </View>
+        </View>
+        <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.xl }} />
+        <View style={{ padding: spacing.xl, gap: spacing.md }}>
+          <Skeleton width={60} height={22} />
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }}>
+            {[1, 2, 3, 4, 5].map((i) => (
+              <Skeleton key={i} width={70} height={36} />
+            ))}
+          </View>
+        </View>
+        <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.xl }} />
+        <View style={{ padding: spacing.xl, gap: spacing.lg }}>
+          <Skeleton width={60} height={22} />
+          {[1, 2, 3].map((i) => (
+            <View key={i} style={{ flexDirection: 'row', gap: spacing.md }}>
+              <Skeleton width={28} height={28} borderRadius={14} />
+              <View style={{ flex: 1, gap: spacing.xs }}>
+                <Skeleton width="60%" height={16} />
+                <Skeleton width="90%" height={14} />
+              </View>
+            </View>
+          ))}
+        </View>
       </View>
     );
   }
