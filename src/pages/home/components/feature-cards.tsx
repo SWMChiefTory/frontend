@@ -74,7 +74,7 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
               <Text
                 style={{
                   fontFamily: typography.heading.fontFamily,
-                  fontSize: 13,
+                  fontSize: 16,
                   fontWeight: '700',
                   color: colors.text.inverse,
                 }}
@@ -86,7 +86,7 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
               )}
             </View>
             {feature.subtitle ? (
-              <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 11, color: 'rgba(255,255,255,0.8)' }}>
+              <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: 'rgba(255,255,255,0.8)' }}>
                 {feature.subtitle}
               </Text>
             ) : null}
