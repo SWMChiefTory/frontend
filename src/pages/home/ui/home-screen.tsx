@@ -1,6 +1,7 @@
 import { ScrollView, View, Alert, Modal, Text, Pressable, ActivityIndicator } from 'react-native';
 import { useCallback, useMemo, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { HomeHeader } from '@/src/pages/home/components/home-header';
 import { FeatureCards } from '@/src/pages/home/components/feature-cards';
 import { ThemeCardsSection, RecipeListSection, RecentRecipeSection } from '@/src/pages/home/components/recipe-section';
@@ -69,7 +70,7 @@ export function HomeScreen() {
   }, []);
 
   const handleRecipePress = useCallback((recipe: any) => {
-    Alert.alert(recipe.title, 'Recipe Detail(네이티브)로 이동');
+    router.push(`/recipe/${recipe.id}`);
   }, []);
 
   return (
