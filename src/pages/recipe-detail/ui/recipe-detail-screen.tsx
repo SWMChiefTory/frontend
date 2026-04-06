@@ -2,13 +2,11 @@ import { View, Text, Pressable, ScrollView, useWindowDimensions } from 'react-na
 import { useCallback, useRef } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { WebView } from 'react-native-webview';
+import YoutubePlayer, { type YoutubeIframeRef } from 'react-native-youtube-iframe';
 import { router } from 'expo-router';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { Skeleton } from '@/src/shared/components/skeleton';
 import { useRecipeDetail } from '@/src/entities/recipe/hooks/use-recipe-detail';
-
-const YOUTUBE_URL = process.env.EXPO_PUBLIC_YOUTUBE_URL ?? 'http://localhost:3000';
 
 interface RecipeDetailScreenProps {
   recipeId: string;
@@ -18,7 +16,7 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const { data: recipe, isLoading, error } = useRecipeDetail(recipeId);
-  const webviewRef = useRef<WebView>(null);
+  const playerRef = useRef<YoutubeIframeRef>(null);
 
   const handleBack = useCallback(() => {
     router.back();
@@ -31,7 +29,7 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
   }, [recipe, recipeId]);
 
   const seekTo = useCallback((seconds: number) => {
-    webviewRef.current?.postMessage(JSON.stringify({ type: 'SEEK_TO', seconds }));
+    playerRef.current?.seekTo(seconds, true);
   }, []);
 
   if (isLoading) {
@@ -72,8 +70,6 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
     );
   }
 
-  const videoUri = `${YOUTUBE_URL}?videoId=${recipe.videoInfo.videoId}`;
-
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       {/* 영상 — 고정 (스크롤 안 됨) */}
@@ -97,16 +93,15 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
           <Ionicons name="chevron-back" size={22} color="#fff" />
         </Pressable>
 
-        <WebView
-          ref={webviewRef}
-          source={{ uri: videoUri }}
-          style={{ width, height: width * 9 / 16, backgroundColor: '#000' }}
-          allowsInlineMediaPlayback
-          mediaPlaybackRequiresUserAction={false}
-          mediaCapturePermissionGrantType="grant"
-          javaScriptEnabled
-          domStorageEnabled
-          allowsFullscreenVideo
+        <YoutubePlayer
+          ref={playerRef}
+          height={width * 9 / 16}
+          width={width}
+          videoId={recipe.videoInfo.videoId}
+          play={false}
+          webViewProps={{
+            allowsInlineMediaPlayback: true,
+          }}
         />
       </View>
 
