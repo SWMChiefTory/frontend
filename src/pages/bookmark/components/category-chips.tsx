@@ -1,10 +1,8 @@
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius } from '@/src/shared/design/tokens';
-import type { Category } from '@/src/shared/data/mock';
-
 interface CategoryChipsProps {
-  categories: Category[];
+  categories: { id: string; name: string }[];
   selected: string;
   onSelect: (id: string) => void;
   onAdd: () => void;
