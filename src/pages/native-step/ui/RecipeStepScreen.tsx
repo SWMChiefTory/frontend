@@ -297,7 +297,7 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
         </View>
 
         {/* 하단 — 왼쪽 설명 + 오른쪽 버튼 세로 */}
-        <View style={{ flex: 1, backgroundColor: '#111', flexDirection: 'row' }}>
+        <View style={{ flex: 1, backgroundColor: '#000', flexDirection: 'row' }}>
           {/* 왼쪽: 스텝 내용 */}
           <View style={{ flex: 1, paddingHorizontal: 16, paddingTop: 12 }}>
             <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
