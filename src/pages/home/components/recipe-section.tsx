@@ -57,8 +57,8 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
             borderWidth: 1.5,
             borderColor: '#C4A882',
             alignItems: 'center',
-            justifyContent: 'center',
-            paddingTop: spacing.sm,
+            justifyContent: 'flex-start',
+            paddingTop: spacing.lg,
           }}
         >
           {/* 에셋 — 중앙 */}
