@@ -119,6 +119,7 @@ interface UseWebAudioPipelineOptions {
 
 export interface WebAudioPipelineResult extends AudioPipelineResult {
   handleWebViewMessage: (event: WebViewMessageEvent) => void;
+  vadSpeechStartRef: React.RefObject<number>;
 }
 
 export function useWebAudioPipeline({
@@ -203,9 +204,14 @@ export function useWebAudioPipeline({
     console.log('[WebAudioPipeline] VAD → speech, opening STT');
     onVoiceStartRef.current?.();
 
+    // 매 발화 시작 전 biasing 설정 (realtimeBufferTranscribe에서 Kotlin으로 전달)
+    if (boostWords && boostWords.length > 0) {
+      (globalThis as any).__sttBiasingWords = boostWords;
+    }
+
     const preBuffer = ringBufferRef.current.read();
     if (preBuffer.length > 0) {
-      realtimeBufferTranscribe(preBuffer, SAMPLE_RATE);
+      realtimeBufferTranscribe(preBuffer, SAMPLE_RATE, boostWords ?? []);
     }
     utteranceSamplesRef.current = preBuffer.length;
 
@@ -213,7 +219,7 @@ export function useWebAudioPipeline({
     prevTextRef.current = '';
     sttSeqRef.current++;
     transitionTo('TRANSCRIBING');
-  }, [transitionTo]);
+  }, [transitionTo, boostWords]);
 
   // ─── STT result handler ───
   useEffect(() => {
@@ -360,7 +366,7 @@ export function useWebAudioPipeline({
 
         // STT feed — TRANSCRIBING일 때
         if (transcribingRef.current) {
-          realtimeBufferTranscribe(buffer, SAMPLE_RATE);
+          realtimeBufferTranscribe(buffer, SAMPLE_RATE, []);
           utteranceSamplesRef.current += buffer.length;
 
           if (utteranceSamplesRef.current >= MAX_UTTERANCE_SAMPLES) {

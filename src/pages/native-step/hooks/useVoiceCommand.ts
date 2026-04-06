@@ -30,6 +30,8 @@ interface UseVoiceCommandOptions {
   isFirstStep: boolean;
   isLastStep: boolean;
   webViewRef: React.RefObject<WebView | null>;
+  onVoiceStart?: () => void;
+  onVoiceEnd?: () => void;
 }
 
 export function useVoiceCommand({
@@ -44,6 +46,8 @@ export function useVoiceCommand({
   isFirstStep,
   isLastStep,
   webViewRef,
+  onVoiceStart,
+  onVoiceEnd,
 }: UseVoiceCommandOptions) {
   const [isListening, setIsListening] = useState(false);
   const [intentFeedback, setIntentFeedback] = useState<string | null>(null);
@@ -276,6 +280,8 @@ export function useVoiceCommand({
   } = useWebAudioPipeline({
     onInterimResult: handleInterimResult,
     onFinalResult: handleFinalResult,
+    onVoiceStart,
+    onVoiceEnd,
     boostWords,
     webViewRef,
   });
