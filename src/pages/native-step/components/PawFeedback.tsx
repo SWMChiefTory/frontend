@@ -18,46 +18,36 @@ interface PawFeedbackProps {
 }
 
 /**
- * 음성 명령 수행 시 버튼 바로 위에서 발자국이 나타났다 아래로 사라지는 피드백.
+ * 버튼 위에 오버레이로 발자국이 나타났다 사라지는 피드백.
+ * 부모 View와 동일한 위치에 겹쳐서 표시됨.
  */
-export function PawFeedback({ visible, onDone, size = 48 }: PawFeedbackProps) {
+export function PawFeedback({ visible, onDone, size = 36 }: PawFeedbackProps) {
   const opacity = useSharedValue(0);
-  const translateY = useSharedValue(-20);
-  const scale = useSharedValue(0.5);
+  const scale = useSharedValue(0.3);
 
   useEffect(() => {
     if (!visible) return;
 
-    // 위에서 나타남
-    translateY.value = -20;
     opacity.value = withSequence(
-      withTiming(1, { duration: 150, easing: Easing.out(Easing.ease) }),
-      withDelay(500, withTiming(0, { duration: 300, easing: Easing.in(Easing.ease) })),
-    );
-
-    translateY.value = withSequence(
-      withTiming(-size - 4, { duration: 150, easing: Easing.out(Easing.ease) }),
-      withDelay(500, withTiming(-size + 10, { duration: 300, easing: Easing.in(Easing.ease) })),
+      withTiming(0.9, { duration: 150, easing: Easing.out(Easing.ease) }),
+      withDelay(500, withTiming(0, { duration: 400, easing: Easing.in(Easing.ease) })),
     );
 
     scale.value = withSequence(
-      withTiming(1.1, { duration: 150, easing: Easing.out(Easing.back(2)) }),
+      withTiming(1.15, { duration: 150, easing: Easing.out(Easing.back(2)) }),
       withTiming(1, { duration: 100 }),
-      withDelay(400, withTiming(0.5, { duration: 300, easing: Easing.in(Easing.ease) })),
+      withDelay(400, withTiming(0.7, { duration: 400, easing: Easing.in(Easing.ease) })),
     );
 
     if (onDone) {
-      const timer = setTimeout(() => onDone(), 950);
+      const timer = setTimeout(() => onDone(), 1050);
       return () => clearTimeout(timer);
     }
   }, [visible]);
 
   const animStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
-    transform: [
-      { translateY: translateY.value },
-      { scale: scale.value },
-    ],
+    transform: [{ scale: scale.value }],
   }));
 
   if (!visible) return null;
@@ -68,12 +58,12 @@ export function PawFeedback({ visible, onDone, size = 48 }: PawFeedbackProps) {
         {
           position: 'absolute',
           top: 0,
-          left: '50%',
-          marginLeft: -size / 2,
-          width: size,
-          height: size,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
           zIndex: 999,
-          elevation: 999,
         },
         animStyle,
       ]}
