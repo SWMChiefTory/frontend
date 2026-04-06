@@ -20,15 +20,19 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
           key={card.id}
           onPress={() => onPress(card)}
           style={{
-            width: 150,
-            height: 110,
+            width: 140,
+            height: 56,
             backgroundColor: card.backgroundColor,
-            borderRadius: radius.xl,
-            padding: spacing.md,
-            justifyContent: 'flex-end',
+            borderRadius: radius.full,
+            paddingLeft: spacing.lg,
+            paddingRight: card.image ? 48 : spacing.lg,
+            flexDirection: 'row',
+            alignItems: 'center',
             borderCurve: 'continuous',
             overflow: 'hidden',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            borderWidth: 1,
+            borderColor: colors.border,
+            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)',
           }}
         >
           {card.image && (
@@ -36,19 +40,23 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
               source={card.image}
               style={{
                 position: 'absolute',
-                top: -12,
-                right: -12,
-                bottom: -12,
-                width: '80%',
+                right: -4,
+                width: 52,
+                height: 52,
               }}
               contentFit="contain"
             />
           )}
-          <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 15, fontWeight: '700', color: colors.text.inverse }}>
+          <Text
+            style={{
+              fontFamily: typography.heading.fontFamily,
+              fontSize: 14,
+              fontWeight: '700',
+              color: colors.text.primary,
+            }}
+            numberOfLines={1}
+          >
             {card.title}
-          </Text>
-          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 11, color: 'rgba(255,255,255,0.85)' }}>
-            {card.subtitle}
           </Text>
         </Pressable>
       ))}
