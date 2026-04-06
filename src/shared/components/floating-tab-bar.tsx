@@ -1,14 +1,13 @@
 import { Pressable, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { BlurView } from 'expo-blur';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
 import { useEffect } from 'react';
-import { colors, radius, spacing } from '@/src/shared/design/tokens';
+import { radius, spacing } from '@/src/shared/design/tokens';
 
 interface Tab {
   key: string;
@@ -63,15 +62,15 @@ export function FloatingTabBar({ activeTab, onTabPress }: FloatingTabBarProps) {
       }}
       pointerEvents="box-none"
     >
-      <BlurView
-        intensity={60}
-        tint="systemChromeMaterial"
+      <View
         style={{
           width: tabBarWidth,
           borderRadius: radius.full,
           overflow: 'hidden',
           borderCurve: 'continuous',
-          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+          backgroundColor: '#FFFFFF',
+          borderWidth: 1,
+          borderColor: '#E5E7EB',
         }}
       >
         <View
@@ -86,13 +85,12 @@ export function FloatingTabBar({ activeTab, onTabPress }: FloatingTabBarProps) {
             style={[
               {
                 position: 'absolute',
-                top: spacing.md + (spacing.xs),
+                top: spacing.md + spacing.xs,
                 left: innerPadding,
                 width: INDICATOR_SIZE,
                 height: INDICATOR_SIZE,
                 borderRadius: INDICATOR_SIZE / 2,
-                backgroundColor: 'rgba(255, 255, 255, 0.6)',
-                boxShadow: '0 1px 4px rgba(0, 0, 0, 0.08)',
+                backgroundColor: '#F3F4F6',
                 borderCurve: 'continuous',
               },
               indicatorStyle,
@@ -122,7 +120,7 @@ export function FloatingTabBar({ activeTab, onTabPress }: FloatingTabBarProps) {
             );
           })}
         </View>
-      </BlurView>
+      </View>
     </View>
   );
 }

@@ -78,7 +78,6 @@ export function HomeScreen() {
 
           <RecipeListSection
             title="지금 핫한 레시피"
-            icon="🔥"
             recipes={MOCK_HOT_RECIPES}
             onPress={handleRecipePress}
           />
