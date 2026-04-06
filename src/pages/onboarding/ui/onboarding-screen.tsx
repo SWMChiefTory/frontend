@@ -21,6 +21,13 @@ const SLIDES = [
   },
   {
     id: '3',
+    image: require('@/assets/images/onboarding-share1.png'),
+    title: '유튜브에서 바로 공유하세요',
+    subtitle: '요리 영상에서 공유 버튼을 누르고\n쉐프토리로 보내면 자동 등록돼요',
+    imageStyle: { width: 180, height: 360 },
+  },
+  {
+    id: '4',
     image: require('@/assets/images/onboarding-step.png'),
     title: '음성으로 요리해요',
     subtitle: '핸즈프리 모드에서\n"다음", "이전"만 말하면 단계가 넘어가요',
