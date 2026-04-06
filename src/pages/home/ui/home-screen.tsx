@@ -51,7 +51,7 @@ export function HomeScreen() {
           paddingBottom: spacing.lg,
           borderBottomLeftRadius: radius.xl,
           borderBottomRightRadius: radius.xl,
-          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.15)',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
           zIndex: 1,
         }}
       >
@@ -69,7 +69,7 @@ export function HomeScreen() {
       {/* 스크롤 콘텐츠 영역 */}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 120, paddingTop: spacing.md, gap: spacing.sm }}
+        contentContainerStyle={{ paddingBottom: 120, paddingTop: spacing.xl, gap: spacing.lg }}
       >
           <ThemeCardsSection
             cards={MOCK_THEME_CARDS}
