@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ScrollView, Alert, ActionSheetIOS, Platform, ActivityIndicator, TextInput } from 'react-native';
+import { View, Text, Pressable, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,6 +11,7 @@ import { RecipeGrid } from '@/src/pages/bookmark/components/recipe-grid';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { useMyRecipes, useCategorizedRecipes, useCategories } from '@/src/entities/recipe/hooks/use-my-recipes';
 import { createCategory, deleteCategory } from '@/src/entities/recipe/api/user-recipe-api';
+import { client } from '@/src/modules/shared/api/client';
 import type { UserRecipe } from '@/src/entities/recipe/api/user-recipe-api';
 import type { RecipeCard } from '@/src/shared/data/mock';
 
@@ -34,7 +35,10 @@ export function BookmarkScreen() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const categorySheetRef = useRef<BottomSheet>(null);
   const addCategorySheetRef = useRef<BottomSheet>(null);
+  const recipeActionSheetRef = useRef<BottomSheet>(null);
+  const changeCategorySheetRef = useRef<BottomSheet>(null);
   const [newCategoryName, setNewCategoryName] = useState('');
+  const [selectedRecipe, setSelectedRecipe] = useState<RecipeCard | null>(null);
 
   const { data: categoriesData } = useCategories();
   const { data: allRecipesData, isLoading: allLoading } = useMyRecipes();
@@ -64,27 +68,27 @@ export function BookmarkScreen() {
   }, []);
 
   const handleRecipeLongPress = useCallback((recipe: RecipeCard) => {
-    if (Platform.OS === 'ios') {
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          options: ['취소', '음성 모드로 시작', '삭제'],
-          cancelButtonIndex: 0,
-          destructiveButtonIndex: 2,
-          title: recipe.title,
-        },
-        (index) => {
-          if (index === 1) router.push(`/native-step/${recipe.id}`);
-          if (index === 2) Alert.alert('삭제', `${recipe.title} 삭제`);
-        },
-      );
-    } else {
-      Alert.alert(recipe.title, '', [
-        { text: '취소', style: 'cancel' },
-        { text: '음성 모드', onPress: () => router.push(`/native-step/${recipe.id}`) },
-        { text: '삭제', style: 'destructive' },
-      ]);
-    }
+    setSelectedRecipe(recipe);
+    recipeActionSheetRef.current?.expand();
   }, []);
+
+  const handleChangeCategory = useCallback(() => {
+    recipeActionSheetRef.current?.close();
+    setTimeout(() => changeCategorySheetRef.current?.expand(), 300);
+  }, []);
+
+  const handleSelectCategory = useCallback(async (categoryId: string) => {
+    if (!selectedRecipe) return;
+    try {
+      await client.put(`/recipes/${selectedRecipe.id}/categories`, { category_id: categoryId });
+      queryClient.invalidateQueries({ queryKey: ['myRecipes'] });
+      queryClient.invalidateQueries({ queryKey: ['categorizedRecipes'] });
+      changeCategorySheetRef.current?.close();
+      setSelectedRecipe(null);
+    } catch {
+      Alert.alert('오류', '카테고리 변경에 실패했어요');
+    }
+  }, [selectedRecipe, queryClient]);
 
   const handleAddCategory = useCallback(() => {
     setNewCategoryName('');
@@ -271,6 +275,80 @@ export function BookmarkScreen() {
               추가하기
             </Text>
           </Pressable>
+        </BottomSheetView>
+      </BottomSheet>
+
+      {/* 레시피 액션 바텀시트 (롱프레스) */}
+      <BottomSheet
+        ref={recipeActionSheetRef}
+        index={-1}
+        enableDynamicSizing
+        enablePanDownToClose
+        backdropComponent={(props) => (
+          <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} />
+        )}
+        backgroundStyle={{ borderRadius: radius.xl }}
+      >
+        <BottomSheetView style={{ padding: spacing.xl, gap: spacing.sm }}>
+          {selectedRecipe && (
+            <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 16, fontWeight: '700', color: colors.text.primary, marginBottom: spacing.sm }} numberOfLines={1}>
+              {selectedRecipe.title}
+            </Text>
+          )}
+          <Pressable
+            onPress={() => { recipeActionSheetRef.current?.close(); if (selectedRecipe) router.push(`/native-step/${selectedRecipe.id}`); }}
+            style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md }}
+          >
+            <Ionicons name="mic" size={20} color={colors.primary} />
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>음성 모드로 시작</Text>
+          </Pressable>
+          <Pressable
+            onPress={handleChangeCategory}
+            style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md }}
+          >
+            <Ionicons name="folder-outline" size={20} color={colors.text.secondary} />
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>카테고리 변경</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => { recipeActionSheetRef.current?.close(); Alert.alert('삭제', `${selectedRecipe?.title} 삭제`); }}
+            style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md }}
+          >
+            <Ionicons name="trash-outline" size={20} color={colors.semantic.error} />
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.semantic.error }}>삭제</Text>
+          </Pressable>
+        </BottomSheetView>
+      </BottomSheet>
+
+      {/* 카테고리 변경 바텀시트 */}
+      <BottomSheet
+        ref={changeCategorySheetRef}
+        index={-1}
+        enableDynamicSizing
+        enablePanDownToClose
+        backdropComponent={(props) => (
+          <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} />
+        )}
+        backgroundStyle={{ borderRadius: radius.xl }}
+      >
+        <BottomSheetView style={{ padding: spacing.xl, gap: spacing.md }}>
+          <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 18, fontWeight: '700', color: colors.text.primary }}>
+            카테고리 선택
+          </Text>
+          {categories.filter((c) => c.id !== 'all').length === 0 ? (
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.disabled, paddingVertical: spacing.lg, textAlign: 'center' }}>
+              카테고리가 없어요. 먼저 카테고리를 추가해주세요.
+            </Text>
+          ) : (
+            categories.filter((c) => c.id !== 'all').map((cat) => (
+              <Pressable
+                key={cat.id}
+                onPress={() => handleSelectCategory(cat.id)}
+                style={{ paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border }}
+              >
+                <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>{cat.name}</Text>
+              </Pressable>
+            ))
+          )}
         </BottomSheetView>
       </BottomSheet>
     </View>
