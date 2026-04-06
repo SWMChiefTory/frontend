@@ -222,7 +222,7 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
     router.back();
   }, [stopListening]);
 
-  const youtubeUri = `${YOUTUBE_URL}?videoId=${videoId}`;
+  const youtubeUri = `${YOUTUBE_URL}?videoId=${videoId}${isShorts ? '&shorts=1' : ''}`;
 
   if (!currentStep) {
     return (
@@ -274,16 +274,16 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
             }}
           />
 
-          {/* 오버레이 — 백 버튼 */}
+          {/* 오버레이 — 왼쪽 상단: 백 버튼 */}
           <Pressable
             onPress={handleBack}
             style={{
               position: 'absolute',
               top: insets.top + 8,
               left: 12,
-              width: 36,
-              height: 36,
-              borderRadius: 18,
+              width: 40,
+              height: 40,
+              borderRadius: 20,
               backgroundColor: 'rgba(0,0,0,0.4)',
               alignItems: 'center',
               justifyContent: 'center',
@@ -293,60 +293,127 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
             <Ionicons name="chevron-back" size={22} color="#fff" />
           </Pressable>
 
-          {/* 오버레이 — 마이크 버튼 */}
-          <View style={{ position: 'absolute', top: insets.top + 8, right: 12, zIndex: 10, overflow: 'visible' }}>
-            <PawFeedback visible={intentFeedback?.intent === 'GO_TO_SCENE' || intentFeedback?.intent === 'GO_TO_STEP'} size={32} />
-            <Pressable
-              onPress={isVideoLoaded ? toggleListening : undefined}
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 18,
-                backgroundColor: isListening ? 'rgba(74,222,128,0.3)' : 'rgba(0,0,0,0.4)',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Ionicons name={isListening ? 'mic' : 'mic-off'} size={18} color={isListening ? '#4ade80' : '#fff'} />
-            </Pressable>
-          </View>
+          {/* 오버레이 — 오른쪽 세로 버튼 그룹 */}
+          <View
+            style={{
+              position: 'absolute',
+              right: 12,
+              top: insets.top + 8,
+              gap: 12,
+              alignItems: 'center',
+              zIndex: 10,
+            }}
+          >
+            {/* 마이크 */}
+            <View style={{ overflow: 'visible', position: 'relative' }}>
+              <PawFeedback visible={intentFeedback?.intent === 'GO_TO_SCENE' || intentFeedback?.intent === 'GO_TO_STEP'} size={32} />
+              <Pressable
+                onPress={isVideoLoaded ? toggleListening : undefined}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 20,
+                  backgroundColor: isListening ? 'rgba(74,222,128,0.3)' : 'rgba(0,0,0,0.4)',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Ionicons name={isListening ? 'mic' : 'mic-off'} size={18} color={isListening ? '#4ade80' : '#fff'} />
+              </Pressable>
+            </View>
 
-          {/* 오버레이 — 타이머 */}
-          <View style={{ position: 'absolute', top: insets.top + 8, right: 56, zIndex: 10 }}>
+            {/* 타이머 */}
             <HeaderTimer
               timer={timerResult.timer}
               displayTime={timerResult.displayTime}
               isUrgent={timerResult.isUrgent}
               onPress={() => timerSheetRef.current?.open()}
             />
+
+            {/* 재생/정지 */}
+            <View style={{ overflow: 'visible', position: 'relative' }}>
+              <PawFeedback visible={intentFeedback?.intent === 'PLAY' || intentFeedback?.intent === 'PAUSE'} size={28} />
+              <Pressable
+                onPress={togglePlay}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 20,
+                  backgroundColor: 'rgba(0,0,0,0.4)',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Ionicons name={isPlaying ? 'pause' : 'play'} size={16} color="#fff" />
+              </Pressable>
+            </View>
+
+            {/* 구분선 */}
+            <View style={{ width: 24, height: 1, backgroundColor: 'rgba(255,255,255,0.2)' }} />
+
+            {/* 이전 */}
+            <View style={{ overflow: 'visible', position: 'relative' }}>
+              <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={28} />
+              <Pressable
+                onPress={goToPrevStep}
+                disabled={isFirstStep}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 20,
+                  backgroundColor: isFirstStep ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.4)',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Ionicons name="chevron-up" size={20} color={isFirstStep ? 'rgba(255,255,255,0.3)' : '#fff'} />
+              </Pressable>
+            </View>
+
+            {/* 다음 */}
+            <View style={{ overflow: 'visible', position: 'relative' }}>
+              <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={28} />
+              {isLastStep ? (
+                <Pressable
+                  onPress={handleBack}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    backgroundColor: '#16a34a',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Ionicons name="checkmark" size={20} color="#fff" />
+                </Pressable>
+              ) : (
+                <Pressable
+                  onPress={goToNextStep}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    backgroundColor: 'rgba(0,0,0,0.4)',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Ionicons name="chevron-down" size={20} color="#fff" />
+                </Pressable>
+              )}
+            </View>
           </View>
 
-          {/* 오버레이 — 재생/정지 */}
-          <View style={{ position: 'absolute', top: insets.top + 52, right: 12, zIndex: 10, overflow: 'visible' }}>
-            <PawFeedback visible={intentFeedback?.intent === 'PLAY' || intentFeedback?.intent === 'PAUSE'} size={28} />
-            <Pressable
-              onPress={togglePlay}
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 18,
-                backgroundColor: 'rgba(0,0,0,0.4)',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Ionicons name={isPlaying ? 'pause' : 'play'} size={16} color="#fff" />
-            </Pressable>
-          </View>
-
-          {/* 오버레이 — 하단 스텝 정보 */}
+          {/* 오버레이 — 하단 스텝 정보 + 진행바 + STT */}
           <View
             style={{
               position: 'absolute',
               bottom: 0,
               left: 0,
-              right: 0,
+              right: 60,
               padding: 16,
+              paddingBottom: insets.bottom + 16,
               backgroundColor: 'rgba(0,0,0,0.5)',
             }}
           >
@@ -360,7 +427,6 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
                   : currentStep.description}
               </Text>
             )}
-            {/* 진행 바 */}
             <View style={{ flexDirection: 'row', gap: 3, marginTop: 8 }}>
               {steps.map((_: any, i: number) => (
                 <View
@@ -374,48 +440,15 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
                 />
               ))}
             </View>
-          </View>
-        </View>
-
-        {/* 하단 — 네비게이션 + STT */}
-        <View style={{ flex: 1, backgroundColor: '#111', justifyContent: 'center' }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 24 }}>
-            <View style={{ position: 'relative', overflow: 'visible', zIndex: 100 }}>
-              <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={28} />
-              <Pressable
-                onPress={goToPrevStep}
-                disabled={isFirstStep}
-                style={[styles.navBtn, isFirstStep && styles.navBtnHidden]}
-              >
-                <Ionicons name="chevron-back" size={18} color={isFirstStep ? 'transparent' : 'rgba(255,255,255,0.8)'} />
-                <Text style={[styles.navBtnText, isFirstStep && { color: 'transparent' }]}>이전</Text>
-              </Pressable>
-            </View>
-
-            {isLastStep ? (
-              <Pressable onPress={handleBack} style={styles.completeBtn}>
-                <Text style={styles.completeBtnText}>완료</Text>
-                <Ionicons name="checkmark" size={16} color="#fff" />
-              </Pressable>
-            ) : (
-              <View style={{ position: 'relative', overflow: 'visible', zIndex: 100 }}>
-                <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={28} />
-                <Pressable onPress={goToNextStep} style={styles.navBtn}>
-                  <Text style={styles.navBtnText}>다음</Text>
-                  <Ionicons name="chevron-forward" size={18} color="rgba(255,255,255,0.8)" />
-                </Pressable>
+            {isListening && (
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 8 }}>
+                <View style={[styles.sttDot, pipelineState === 'TRANSCRIBING' ? styles.sttDotActive : styles.sttDotIdle]} />
+                <Text style={[styles.sttText, pipelineState === 'TRANSCRIBING' ? styles.sttTextActive : styles.sttTextIdle]} numberOfLines={1}>
+                  {pipelineState === 'TRANSCRIBING' ? transcript || '듣고 있어요...' : '대기 중'}
+                </Text>
               </View>
             )}
           </View>
-
-          {isListening && (
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, marginTop: 12 }}>
-              <View style={[styles.sttDot, pipelineState === 'TRANSCRIBING' ? styles.sttDotActive : styles.sttDotIdle]} />
-              <Text style={[styles.sttText, pipelineState === 'TRANSCRIBING' ? styles.sttTextActive : styles.sttTextIdle]} numberOfLines={1}>
-                {pipelineState === 'TRANSCRIBING' ? transcript || '듣고 있어요...' : '대기 중'}
-              </Text>
-            </View>
-          )}
         </View>
 
         <IntentFeedbackToast message={intentFeedback?.text ?? null} />
