@@ -10,8 +10,8 @@ interface Tab {
 }
 
 const TABS: Tab[] = [
-  { key: 'home', icon: 'home-circle-outline', iconActive: 'home-circle' },
-  { key: 'bookmark', icon: 'heart-circle-outline', iconActive: 'heart-circle' },
+  { key: 'home', icon: 'home-variant-outline', iconActive: 'home-variant' },
+  { key: 'bookmark', icon: 'bookmark-outline', iconActive: 'bookmark' },
 ];
 
 interface FloatingTabBarProps {
