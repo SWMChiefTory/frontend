@@ -57,7 +57,7 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
             borderCurve: 'continuous',
           }}
         >
-          {/* 투명 배경 이미지 — 상단에 배치 */}
+          {/* 이미지 */}
           <Image
             source={CARD_IMAGES[feature.id]}
             style={{
@@ -81,9 +81,6 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
               >
                 {feature.title}
               </Text>
-              {feature.locked && (
-                <Ionicons name="lock-closed" size={11} color="rgba(255,255,255,0.7)" />
-              )}
             </View>
             {feature.subtitle ? (
               <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: 'rgba(255,255,255,0.8)' }}>
@@ -91,6 +88,36 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
               </Text>
             ) : null}
           </View>
+
+          {/* 잠금 오버레이 */}
+          {feature.locked && (
+            <View
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0,0,0,0.35)',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: radius.lg,
+                gap: spacing.xs,
+              }}
+            >
+              <Ionicons name="lock-closed" size={24} color="rgba(255,255,255,0.9)" />
+              <Text
+                style={{
+                  fontFamily: typography.body.fontFamily,
+                  fontSize: 11,
+                  fontWeight: '600',
+                  color: 'rgba(255,255,255,0.85)',
+                }}
+              >
+                준비 중
+              </Text>
+            </View>
+          )}
         </Pressable>
       ))}
     </View>

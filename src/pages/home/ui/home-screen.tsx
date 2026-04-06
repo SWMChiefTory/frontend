@@ -1,18 +1,34 @@
-import { ScrollView, View, Alert, Modal, Text, Pressable } from 'react-native';
-import { useCallback, useState } from 'react';
+import { ScrollView, View, Alert, Modal, Text, Pressable, ActivityIndicator } from 'react-native';
+import { useCallback, useMemo, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { HomeHeader } from '@/src/pages/home/components/home-header';
 import { FeatureCards } from '@/src/pages/home/components/feature-cards';
 import { ThemeCardsSection, RecipeListSection } from '@/src/pages/home/components/recipe-section';
-import { colors, spacing, radius } from '@/src/shared/design/tokens';
-import {
-  MOCK_THEME_CARDS,
-  MOCK_HOT_RECIPES,
-  MOCK_RECENT_RECIPES,
-} from '@/src/shared/data/mock';
+import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
+import { MOCK_THEME_CARDS } from '@/src/shared/data/mock';
+import { useRecommendRecipes } from '@/src/entities/recipe/hooks/use-recommend-recipes';
+import { RecommendType } from '@/src/entities/recipe/api/recommend-api';
+import type { RecipeCard } from '@/src/shared/data/mock';
+
+function toRecipeCards(data: any[] | undefined): RecipeCard[] {
+  if (!data) return [];
+  return data.map((r) => ({
+    id: r.recipeId,
+    title: r.recipeTitle,
+    thumbnailUrl: r.videoThumbnailUrl,
+    duration: r.cookingTime ? `${r.cookingTime}분` : '',
+    views: '',
+  }));
+}
 
 export function HomeScreen() {
   const [lockedModal, setLockedModal] = useState<string | null>(null);
+
+  const { data: popularData, isLoading: popularLoading } = useRecommendRecipes(RecommendType.POPULAR);
+  const { data: trendingData, isLoading: trendingLoading } = useRecommendRecipes(RecommendType.TRENDING);
+
+  const hotRecipes = useMemo(() => toRecipeCards(popularData?.data), [popularData]);
+  const recentRecipes = useMemo(() => toRecipeCards(trendingData?.data), [trendingData]);
 
   const handleBerryPress = useCallback(() => {
     Alert.alert('베리', '베리 잔액: 32');
@@ -44,7 +60,7 @@ export function HomeScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-      {/* 고정 헤더 영역 (베리+검색+기능카드) */}
+      {/* 고정 헤더 영역 */}
       <View
         style={{
           backgroundColor: colors.surface,
@@ -71,26 +87,34 @@ export function HomeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120, paddingTop: spacing.xl, gap: spacing.lg }}
       >
-          <ThemeCardsSection
-            cards={MOCK_THEME_CARDS}
-            onPress={handleThemePress}
-          />
+        <ThemeCardsSection
+          cards={MOCK_THEME_CARDS}
+          onPress={handleThemePress}
+        />
 
-          <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
+        <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
 
+        {popularLoading ? (
+          <ActivityIndicator color={colors.primary} style={{ paddingVertical: spacing.xxl }} />
+        ) : (
           <RecipeListSection
             title="지금 핫한 레시피"
-            recipes={MOCK_HOT_RECIPES}
+            recipes={hotRecipes}
             onPress={handleRecipePress}
           />
+        )}
 
-          <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
+        <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
 
+        {trendingLoading ? (
+          <ActivityIndicator color={colors.primary} style={{ paddingVertical: spacing.xxl }} />
+        ) : (
           <RecipeListSection
             title="최근 시청 레시피"
-            recipes={MOCK_RECENT_RECIPES}
+            recipes={recentRecipes}
             onPress={handleRecipePress}
           />
+        )}
       </ScrollView>
 
       {/* 잠금 기능 모달 */}
@@ -116,13 +140,13 @@ export function HomeScreen() {
             }}
           >
             <Ionicons name="lock-closed" size={40} color={colors.text.disabled} />
-            <Text style={{ fontSize: 18, fontWeight: '700', color: colors.text.primary }}>
+            <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 18, fontWeight: '700', color: colors.text.primary }}>
               준비 중이에요
             </Text>
-            <Text style={{ fontSize: 14, color: colors.text.secondary, textAlign: 'center' }}>
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.secondary, textAlign: 'center' }}>
               {lockedModal} 기능이{'\n'}곧 출시될 예정이에요!
             </Text>
-            <Text style={{ fontSize: 14, color: colors.text.secondary }}>
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.secondary }}>
               이 기능이 필요하신가요?
             </Text>
             <View style={{ flexDirection: 'row', gap: spacing.md }}>
@@ -140,7 +164,7 @@ export function HomeScreen() {
                   borderCurve: 'continuous',
                 }}
               >
-                <Text style={{ fontSize: 14, fontWeight: '600', color: colors.primary }}>
+                <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, fontWeight: '600', color: colors.primary }}>
                   👍 필요해
                 </Text>
               </Pressable>
@@ -155,7 +179,7 @@ export function HomeScreen() {
                   borderCurve: 'continuous',
                 }}
               >
-                <Text style={{ fontSize: 14, fontWeight: '600', color: colors.text.secondary }}>
+                <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, fontWeight: '600', color: colors.text.secondary }}>
                   👎 괜찮아
                 </Text>
               </Pressable>
