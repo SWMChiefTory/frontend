@@ -10,6 +10,28 @@ interface ThemeCardsSectionProps {
 
 export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
   return (
+    <View style={{ gap: spacing.md }}>
+      <Text
+        style={{
+          fontFamily: typography.heading.fontFamily,
+          ...typography.heading.h2,
+          color: colors.text.primary,
+          paddingHorizontal: spacing.lg,
+        }}
+      >
+        이런 요리 어때요?
+      </Text>
+      <Text
+        style={{
+          fontFamily: typography.body.fontFamily,
+          fontSize: 13,
+          color: colors.text.secondary,
+          paddingHorizontal: spacing.lg,
+          marginTop: -spacing.sm,
+        }}
+      >
+        토리가 직접 엄선했어요!
+      </Text>
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
@@ -20,41 +42,40 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
           key={card.id}
           onPress={() => onPress(card)}
           style={{
-            width: 150,
-            height: 150,
+            width: 120,
+            height: 140,
             backgroundColor: colors.background,
             borderRadius: radius.lg,
-            padding: spacing.md,
-            justifyContent: 'space-between',
+            paddingHorizontal: spacing.sm,
+            paddingBottom: spacing.sm,
+            paddingTop: spacing.sm,
+            alignItems: 'center',
             borderCurve: 'continuous',
             overflow: 'hidden',
             borderWidth: 1.5,
             borderColor: '#FFDAB9',
           }}
         >
-          {/* 에셋 — 오른쪽 상단 */}
-          {card.image && (
-            <Image
-              source={card.image}
-              style={{
-                position: 'absolute',
-                top: -4,
-                right: -4,
-                width: 100,
-                height: 100,
-              }}
-              contentFit="contain"
-            />
-          )}
+          {/* 에셋 — 중앙 */}
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            {card.image && (
+              <Image
+                source={card.image}
+                style={{ width: 72, height: 72 }}
+                contentFit="contain"
+              />
+            )}
+          </View>
 
           {/* 하단 텍스트 */}
-          <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+          <View style={{ alignItems: 'center' }}>
             <Text
               style={{
                 fontFamily: typography.heading.fontFamily,
-                fontSize: 16,
+                fontSize: 13,
                 fontWeight: '700',
                 color: colors.text.primary,
+                textAlign: 'center',
               }}
               numberOfLines={1}
             >
@@ -63,8 +84,9 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
             <Text
               style={{
                 fontFamily: typography.body.fontFamily,
-                fontSize: 12,
+                fontSize: 10,
                 color: colors.text.secondary,
+                textAlign: 'center',
               }}
               numberOfLines={1}
             >
@@ -74,6 +96,7 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
         </Pressable>
       ))}
     </ScrollView>
+    </View>
   );
 }
 
