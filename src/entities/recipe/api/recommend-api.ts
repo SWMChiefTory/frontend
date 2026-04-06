@@ -16,33 +16,37 @@ export interface RecommendRecipe {
   creditCost: number;
 }
 
-interface RawRecommendResponse {
-  nextCursor: string | null;
-  hasNext: boolean;
-  recommendRecipes: any[];
-}
-
 export async function fetchRecommendRecipes(
   recommendType: RecommendType,
   cursor?: string | null,
 ): Promise<{ data: RecommendRecipe[]; nextCursor: string | null; hasNext: boolean }> {
-  const res = await client.get<RawRecommendResponse>(
-    `/recipes/recommend/${recommendType}`,
-    { params: { cursor, query: 'ALL' } },
-  );
+  try {
+    const res = await client.get(`/recipes/recommend/${recommendType}`, {
+      params: { query: 'ALL' },
+    });
 
-  const raw = res.data;
-  return {
-    nextCursor: raw.nextCursor,
-    hasNext: raw.hasNext,
-    data: (raw.recommendRecipes ?? []).map((item: any) => ({
-      recipeId: item.recipeId,
-      recipeTitle: item.recipeTitle,
-      videoThumbnailUrl: item.videoThumbnailUrl,
-      videoSeconds: item.videoSeconds,
-      channelTitle: item.channelTitle ?? '',
-      cookingTime: item.cookingTime ?? 0,
-      creditCost: item.creditCost ?? 0,
-    })),
-  };
+    const raw = res.data;
+    console.log(`[RecommendAPI] ${recommendType} response keys:`, Object.keys(raw));
+
+    // 웹뷰와 동일한 매핑: raw.recommendRecipes 배열에서 변환
+    const recipes = raw.recommendRecipes ?? raw.data ?? [];
+    console.log(`[RecommendAPI] ${recommendType} recipes count:`, recipes.length);
+
+    return {
+      nextCursor: raw.nextCursor ?? null,
+      hasNext: raw.hasNext ?? false,
+      data: recipes.map((item: any) => ({
+        recipeId: item.recipeId ?? '',
+        recipeTitle: item.recipeTitle ?? '',
+        videoThumbnailUrl: item.videoThumbnailUrl ?? '',
+        videoSeconds: item.videoSeconds ?? 0,
+        channelTitle: item.channelTitle ?? '',
+        cookingTime: item.cookingTime ?? 0,
+        creditCost: item.creditCost ?? 0,
+      })),
+    };
+  } catch (err: any) {
+    console.error(`[RecommendAPI] ${recommendType} error:`, err?.response?.status, err?.message);
+    return { data: [], nextCursor: null, hasNext: false };
+  }
 }
