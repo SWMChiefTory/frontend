@@ -252,8 +252,8 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
   if (isShorts) {
     return (
       <GestureHandlerRootView style={styles.root}>
-        {/* 영상 — 화면 70% (맨 위부터, 헤더 없음) */}
-        <View style={{ height: screenHeight * 0.7, backgroundColor: '#000', paddingTop: insets.top }}>
+        {/* 영상 — 화면 70% (safe area 포함) */}
+        <View style={{ height: screenHeight * 0.7, backgroundColor: '#000' }}>
           <WebView
             ref={webviewRef}
             source={{ uri: youtubeUri }}
@@ -322,57 +322,17 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
             )}
           </View>
 
-          {/* 오른쪽: 버튼 세로 나열 */}
-          <View style={{ width: 56, alignItems: 'center', justifyContent: 'center', gap: 10, paddingBottom: Math.max(insets.bottom, 12) }}>
-            {/* 이전 */}
-            <View style={{ overflow: 'visible', position: 'relative' }}>
-              <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={28} />
-              <Pressable
-                onPress={goToPrevStep}
-                disabled={isFirstStep}
-                style={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: 12,
-                  backgroundColor: isFirstStep ? '#2a2a2a' : '#333',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Ionicons name="chevron-up" size={20} color={isFirstStep ? '#555' : '#fff'} />
-              </Pressable>
-            </View>
-
+          {/* 오른쪽: 버튼 세로 나열 — 영상과 겹침 가능하도록 absolute */}
+          <View style={{ position: 'absolute', right: 8, top: -60, bottom: 0, width: 56, alignItems: 'center', justifyContent: 'flex-end', paddingBottom: Math.max(insets.bottom, 12), gap: 10 }}>
             {/* 재생/정지 */}
             <View style={{ overflow: 'visible', position: 'relative' }}>
               <PawFeedback visible={intentFeedback?.intent === 'PLAY' || intentFeedback?.intent === 'PAUSE'} size={28} />
               <Pressable
                 onPress={togglePlay}
-                style={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: 12,
-                  backgroundColor: '#333',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
+                style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: '#333', alignItems: 'center', justifyContent: 'center' }}
               >
                 <Ionicons name={isPlaying ? 'pause' : 'play'} size={18} color="#fff" />
               </Pressable>
-            </View>
-
-            {/* 다음 */}
-            <View style={{ overflow: 'visible', position: 'relative' }}>
-              <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={28} />
-              {isLastStep ? (
-                <Pressable onPress={handleBack} style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: '#16a34a', alignItems: 'center', justifyContent: 'center' }}>
-                  <Ionicons name="checkmark" size={20} color="#fff" />
-                </Pressable>
-              ) : (
-                <Pressable onPress={goToNextStep} style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: '#f97316', alignItems: 'center', justifyContent: 'center' }}>
-                  <Ionicons name="chevron-down" size={20} color="#fff" />
-                </Pressable>
-              )}
             </View>
 
             {/* 마이크 */}
@@ -380,17 +340,36 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
               <PawFeedback visible={intentFeedback?.intent === 'GO_TO_SCENE' || intentFeedback?.intent === 'GO_TO_STEP'} size={28} />
               <Pressable
                 onPress={isVideoLoaded ? toggleListening : undefined}
-                style={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: 12,
-                  backgroundColor: isListening ? 'rgba(74,222,128,0.3)' : '#333',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
+                style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: isListening ? 'rgba(74,222,128,0.3)' : '#333', alignItems: 'center', justifyContent: 'center' }}
               >
                 <Ionicons name={isListening ? 'mic' : 'mic-off'} size={18} color={isListening ? '#4ade80' : '#fff'} />
               </Pressable>
+            </View>
+
+            {/* 이전 + 다음 붙어있게 */}
+            <View style={{ gap: 2 }}>
+              <View style={{ overflow: 'visible', position: 'relative' }}>
+                <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={28} />
+                <Pressable
+                  onPress={goToPrevStep}
+                  disabled={isFirstStep}
+                  style={{ width: 44, height: 44, borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomLeftRadius: 2, borderBottomRightRadius: 2, backgroundColor: isFirstStep ? '#2a2a2a' : '#333', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <Ionicons name="chevron-up" size={20} color={isFirstStep ? '#555' : '#fff'} />
+                </Pressable>
+              </View>
+              <View style={{ overflow: 'visible', position: 'relative' }}>
+                <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={28} />
+                {isLastStep ? (
+                  <Pressable onPress={handleBack} style={{ width: 44, height: 44, borderTopLeftRadius: 2, borderTopRightRadius: 2, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, backgroundColor: '#16a34a', alignItems: 'center', justifyContent: 'center' }}>
+                    <Ionicons name="checkmark" size={20} color="#fff" />
+                  </Pressable>
+                ) : (
+                  <Pressable onPress={goToNextStep} style={{ width: 44, height: 44, borderTopLeftRadius: 2, borderTopRightRadius: 2, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, backgroundColor: '#f97316', alignItems: 'center', justifyContent: 'center' }}>
+                    <Ionicons name="chevron-down" size={20} color="#fff" />
+                  </Pressable>
+                )}
+              </View>
             </View>
           </View>
         </View>
