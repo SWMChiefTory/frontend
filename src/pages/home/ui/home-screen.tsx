@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { HomeHeader } from '@/src/pages/home/components/home-header';
 import { FeatureCards } from '@/src/pages/home/components/feature-cards';
-import { ThemeCardsSection, RecipeListSection } from '@/src/pages/home/components/recipe-section';
+import { ThemeCardsSection, RecipeListSection, RecentRecipeSection } from '@/src/pages/home/components/recipe-section';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import {
   MOCK_THEME_CARDS,
@@ -21,7 +21,8 @@ function toRecipeCards(data: any[] | undefined): RecipeCard[] {
     title: r.recipeTitle,
     thumbnailUrl: r.videoThumbnailUrl,
     duration: r.cookingTime ? `${r.cookingTime}분` : '',
-    views: '',
+    views: r.channelTitle ?? '',
+    description: r.description ?? '',
   }));
 }
 
@@ -98,6 +99,17 @@ export function HomeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120, paddingTop: spacing.xl, gap: spacing.lg }}
       >
+        {trendingLoading ? (
+          <ActivityIndicator color={colors.primary} style={{ paddingVertical: spacing.xxl }} />
+        ) : (
+          <RecentRecipeSection
+            recipes={recentRecipes}
+            onPress={handleRecipePress}
+          />
+        )}
+
+        <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
+
         <ThemeCardsSection
           cards={MOCK_THEME_CARDS}
           onPress={handleThemePress}
@@ -111,18 +123,6 @@ export function HomeScreen() {
           <RecipeListSection
             title="지금 핫한 레시피"
             recipes={hotRecipes}
-            onPress={handleRecipePress}
-          />
-        )}
-
-        <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
-
-        {trendingLoading ? (
-          <ActivityIndicator color={colors.primary} style={{ paddingVertical: spacing.xxl }} />
-        ) : (
-          <RecipeListSection
-            title="최근 시청 레시피"
-            recipes={recentRecipes}
             onPress={handleRecipePress}
           />
         )}

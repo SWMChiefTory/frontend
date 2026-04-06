@@ -16,6 +16,7 @@ export interface RecipeCard {
   thumbnailUrl: string;
   duration: string;
   views: string;
+  description?: string;
 }
 
 export interface Category {

@@ -105,6 +105,87 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
   );
 }
 
+interface RecentRecipeSectionProps {
+  recipes: RecipeCard[];
+  onPress: (recipe: RecipeCard) => void;
+}
+
+export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionProps) {
+  return (
+    <View
+      style={{
+        paddingVertical: spacing.lg,
+        gap: spacing.md,
+      }}
+    >
+      <Text
+        style={{
+          fontFamily: typography.heading.fontFamily,
+          ...typography.heading.h2,
+          color: colors.text.primary,
+          paddingHorizontal: spacing.lg,
+        }}
+      >
+        최근 시청 레시피
+      </Text>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}
+      >
+        {recipes.map((recipe) => (
+          <Pressable
+            key={recipe.id}
+            onPress={() => onPress(recipe)}
+            style={{
+              width: 260,
+              flexDirection: 'row',
+              gap: spacing.md,
+              backgroundColor: colors.surface,
+              borderRadius: radius.lg,
+              padding: spacing.sm,
+              borderCurve: 'continuous',
+            }}
+          >
+            <Image
+              source={{ uri: recipe.thumbnailUrl }}
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: radius.sm,
+                backgroundColor: colors.border,
+              }}
+              contentFit="cover"
+            />
+            <View style={{ flex: 1, justifyContent: 'center', gap: spacing.xs }}>
+              <Text
+                style={{
+                  fontFamily: typography.heading.fontFamily,
+                  fontSize: 14,
+                  fontWeight: '600',
+                  color: colors.text.primary,
+                }}
+                numberOfLines={2}
+              >
+                {recipe.title}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: typography.body.fontFamily,
+                  fontSize: 11,
+                  color: colors.text.disabled,
+                }}
+              >
+                {recipe.duration} {recipe.views ? `· ${recipe.views}` : ''}
+              </Text>
+            </View>
+          </Pressable>
+        ))}
+      </ScrollView>
+    </View>
+  );
+}
+
 interface RecipeListSectionProps {
   title: string;
   icon?: string;
