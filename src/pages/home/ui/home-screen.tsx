@@ -86,8 +86,9 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
           paddingBottom: spacing.lg,
           borderBottomLeftRadius: radius.xl,
           borderBottomRightRadius: radius.xl,
-          borderBottomWidth: 1,
-          borderBottomColor: '#C8C8C8',
+          borderWidth: 1,
+          borderTopWidth: 0,
+          borderColor: '#C8C8C8',
         }}
       >
         <HomeHeader
