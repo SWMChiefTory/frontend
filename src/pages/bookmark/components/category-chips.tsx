@@ -25,8 +25,8 @@ export function CategoryChips({ categories, selected, onSelect, onAdd }: Categor
       <Pressable
         onPress={onAdd}
         style={{
-          paddingHorizontal: spacing.md,
-          paddingVertical: spacing.xs,
+          paddingHorizontal: 14,
+          paddingVertical: 6,
           borderRadius: radius.full,
           borderWidth: 1,
           borderColor: colors.border,
@@ -37,7 +37,7 @@ export function CategoryChips({ categories, selected, onSelect, onAdd }: Categor
         }}
       >
         <Ionicons name="add" size={16} color={colors.text.secondary} />
-        <Text style={{ fontSize: 13, color: colors.text.secondary }}>추가</Text>
+        <Text style={{ fontSize: 16, color: colors.text.secondary }}>추가</Text>
       </Pressable>
 
       {categories.map((cat) => {
@@ -58,7 +58,7 @@ export function CategoryChips({ categories, selected, onSelect, onAdd }: Categor
           >
             <Text
               style={{
-                fontSize: 13,
+                fontSize: 16,
                 fontWeight: isSelected ? '600' : '400',
                 color: isSelected ? colors.text.inverse : colors.text.primary,
               }}
