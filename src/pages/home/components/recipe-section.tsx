@@ -43,7 +43,7 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
           onPress={() => onPress(card)}
           style={{
             width: 120,
-            height: 140,
+            height: 110,
             backgroundColor: colors.background,
             borderRadius: radius.lg,
             paddingHorizontal: spacing.sm,
