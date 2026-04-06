@@ -58,7 +58,7 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
   }, []);
 
   const handleSettingsPress = useCallback(() => {
-    Alert.alert('설정', '설정 화면(웹뷰)으로 이동');
+    router.push('/settings');
   }, []);
 
   const handleCreatePress = useCallback(() => {
