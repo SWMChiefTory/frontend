@@ -30,18 +30,18 @@ export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: Hom
       >
         <Pressable
           onPress={onBerryPress}
-          style={{ alignItems: 'center', width: 48 }}
+          style={{ alignItems: 'center', width: 36 }}
           hitSlop={8}
         >
           <Image
             source={BERRY_ICON}
-            style={{ width: 36, height: 36 }}
+            style={{ width: 24, height: 24 }}
             contentFit="contain"
           />
           <View
             style={{
               position: 'absolute',
-              bottom: -4,
+              bottom: -6,
               backgroundColor: colors.background,
               paddingHorizontal: 6,
               paddingVertical: 1,
