@@ -39,15 +39,14 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
             )}
           </View>
 
-          {/* 텍스트 칩 — 하단에 떠있는 느낌 */}
+          {/* 텍스트 — 하단 둥근 사각형 */}
           <View style={{ paddingHorizontal: spacing.sm, paddingBottom: spacing.sm }}>
             <View
               style={{
-                backgroundColor: 'rgba(255,255,255,0.85)',
-                borderRadius: radius.full,
-                paddingHorizontal: spacing.md,
+                backgroundColor: 'rgba(255,255,255,0.88)',
+                borderRadius: radius.md,
+                paddingHorizontal: spacing.sm,
                 paddingVertical: spacing.xs,
-                alignSelf: 'flex-start',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
               }}
             >
@@ -61,6 +60,16 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
                 numberOfLines={1}
               >
                 {card.title}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: typography.body.fontFamily,
+                  fontSize: 10,
+                  color: colors.text.secondary,
+                }}
+                numberOfLines={1}
+              >
+                {card.subtitle}
               </Text>
             </View>
           </View>
