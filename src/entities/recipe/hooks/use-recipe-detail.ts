@@ -3,7 +3,7 @@ import { fetchRecipeDetail } from '../api/recipe-detail-api';
 
 export function useRecipeDetail(id: string) {
   return useQuery({
-    queryKey: ['recipe', id],
+    queryKey: ['recipeDetail', id],
     queryFn: () => fetchRecipeDetail(id),
     enabled: !!id,
   });
