@@ -1,5 +1,6 @@
 import { View, Text, Pressable, ScrollView } from 'react-native';
 import { Image } from 'expo-image';
+import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import type { RecipeCard, ThemeCard } from '@/src/shared/data/mock';
 
@@ -169,15 +170,44 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
               >
                 {recipe.title}
               </Text>
-              <Text
-                style={{
-                  fontFamily: typography.body.fontFamily,
-                  fontSize: 11,
-                  color: colors.text.disabled,
-                }}
-              >
-                {recipe.duration} {recipe.views ? `· ${recipe.views}` : ''}
-              </Text>
+              <View style={{ flexDirection: 'row', gap: spacing.xs, flexWrap: 'wrap' }}>
+                {recipe.cookingTime ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 2,
+                      backgroundColor: colors.background,
+                      paddingHorizontal: spacing.sm,
+                      paddingVertical: 2,
+                      borderRadius: radius.full,
+                    }}
+                  >
+                    <Ionicons name="time-outline" size={11} color={colors.text.secondary} />
+                    <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 10, color: colors.text.secondary }}>
+                      {recipe.cookingTime}분
+                    </Text>
+                  </View>
+                ) : null}
+                {recipe.servings ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 2,
+                      backgroundColor: colors.background,
+                      paddingHorizontal: spacing.sm,
+                      paddingVertical: 2,
+                      borderRadius: radius.full,
+                    }}
+                  >
+                    <Ionicons name="people-outline" size={11} color={colors.text.secondary} />
+                    <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 10, color: colors.text.secondary }}>
+                      {recipe.servings}
+                    </Text>
+                  </View>
+                ) : null}
+              </View>
             </View>
           </Pressable>
         ))}

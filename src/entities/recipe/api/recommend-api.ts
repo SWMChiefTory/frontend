@@ -13,6 +13,7 @@ export interface RecommendRecipe {
   videoSeconds: number;
   channelTitle: string;
   cookingTime: number;
+  servings: number;
   description: string;
   creditCost: number;
 }
@@ -40,6 +41,7 @@ export async function fetchRecommendRecipes(
         videoSeconds: item.video_seconds ?? item.videoSeconds ?? 0,
         channelTitle: item.channel_title ?? item.channelTitle ?? '',
         cookingTime: item.cooking_time ?? item.cookingTime ?? 0,
+        servings: item.servings ?? 0,
         description: item.description ?? '',
         creditCost: item.credit_cost ?? item.creditCost ?? 0,
       })),
