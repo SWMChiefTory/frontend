@@ -50,7 +50,7 @@ export function useVoiceCommand({
   onVoiceEnd,
 }: UseVoiceCommandOptions) {
   const [isListening, setIsListening] = useState(false);
-  const [intentFeedback, setIntentFeedback] = useState<string | null>(null);
+  const [intentFeedback, setIntentFeedback] = useState<{ text: string; intent: string } | null>(null);
   const [transcript, setTranscript] = useState('');
   const [sceneSearching, setSceneSearching] = useState(false);
   const feedbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -74,8 +74,8 @@ export function useVoiceCommand({
 
   const { findBestScene } = useSceneMatcher(sceneLabels);
 
-  const showFeedback = useCallback((text: string) => {
-    setIntentFeedback(text);
+  const showFeedback = useCallback((text: string, intent: string = 'UNKNOWN') => {
+    setIntentFeedback({ text, intent });
     if (feedbackTimerRef.current) clearTimeout(feedbackTimerRef.current);
     feedbackTimerRef.current = setTimeout(() => setIntentFeedback(null), 1800);
   }, []);
@@ -85,23 +85,23 @@ export function useVoiceCommand({
       if (intent === 'EXTRA') return false;
       switch (intent) {
         case 'NEXT_STEP':
-          if (isLastStep) { showFeedback('마지막 단계예요'); }
-          else { goToNextStep(); showFeedback('다음 단계 →'); }
+          if (isLastStep) { showFeedback('마지막 단계예요', 'NEXT_STEP'); }
+          else { goToNextStep(); showFeedback('다음 단계 →', 'NEXT_STEP'); }
           break;
         case 'PREV_STEP':
-          if (isFirstStep) { showFeedback('첫 번째 단계예요'); }
-          else { goToPrevStep(); showFeedback('← 이전 단계'); }
+          if (isFirstStep) { showFeedback('첫 번째 단계예요', 'PREV_STEP'); }
+          else { goToPrevStep(); showFeedback('← 이전 단계', 'PREV_STEP'); }
           break;
         case 'GO_TO_STEP':
           if (stepNumber && stepNumber >= 1 && stepNumber <= totalSteps) {
-            goToStep(stepNumber); showFeedback(`${stepNumber}단계로 이동`);
-          } else { showFeedback(`${stepNumber}단계는 없어요`); }
+            goToStep(stepNumber); showFeedback(`${stepNumber}단계로 이동`, 'GO_TO_STEP');
+          } else { showFeedback(`${stepNumber}단계는 없어요`, 'GO_TO_STEP'); }
           break;
         case 'PLAY':
-          play(); showFeedback('▶ 재생');
+          play(); showFeedback('▶ 재생', 'PLAY');
           break;
         case 'PAUSE':
-          pause(); showFeedback('⏸ 일시정지');
+          pause(); showFeedback('⏸ 일시정지', 'PAUSE');
           break;
         case 'GO_TO_SCENE':
           return false;
@@ -167,7 +167,7 @@ export function useVoiceCommand({
               console.log(`[Perf:scene] interim "${text}" → ${sceneMatch?.label ?? 'no match'} | ${(tScene1 - tScene0).toFixed(1)}ms`);
               if (sceneMatch) {
                 seekToScene(sceneMatch.index);
-                showFeedback(sceneMatch.label);
+                showFeedback(sceneMatch.label, 'GO_TO_SCENE');
                 console.log(`[Perf:E2E] interim "${text}" → 장면 이동 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
                 handledInInterimRef.current = true;
                 resetTranscriptionRef.current();
@@ -240,7 +240,7 @@ export function useVoiceCommand({
       console.log(`[Perf:scene] final "${text}" → ${sceneMatch?.label ?? 'no match'} | ${(tScene1 - tScene0).toFixed(1)}ms`);
       if (sceneMatch) {
         seekToScene(sceneMatch.index);
-        showFeedback(sceneMatch.label);
+        showFeedback(sceneMatch.label, 'GO_TO_SCENE');
         console.log(`[Perf:E2E] final "${text}" → 장면 이동 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
       } else {
         console.log(`[Perf:E2E] final "${text}" → no match | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
