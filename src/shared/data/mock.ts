@@ -31,7 +31,7 @@ export const MOCK_THEME_CARDS: ThemeCard[] = [
   { id: '2', title: '버터떡', subtitle: '바삭한 한입 간식', backgroundColor: '#B39B65', image: require('@/assets/images/theme-butter-tteok.png') },
   { id: '3', title: '봄동 비빔밥', subtitle: '제철 봄나물 요리', backgroundColor: '#5E8E6E', image: require('@/assets/images/theme-bomdong.png') },
   { id: '4', title: '밤에 땡기는', subtitle: '야식 타임', backgroundColor: '#5A6275', image: require('@/assets/images/theme-night-snack.png') },
-  { id: '5', title: '사랑 한 끼', subtitle: '연인 요리', backgroundColor: '#9E6B6B' },
+  { id: '5', title: '사랑 한 끼', subtitle: '연인 요리', backgroundColor: '#9E6B6B', image: require('@/assets/images/theme-love-meal.png') },
 ];
 
 export const MOCK_HOT_RECIPES: RecipeCard[] = [
