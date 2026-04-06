@@ -10,6 +10,7 @@ export async function fetchRecipeById(recipeId: string): Promise<RecipeEntry> {
   try {
     const res = await client.get(`/recipes/${recipeId}`);
     const raw = res.data;
+    console.log(`[RecipeAPI] fetchRecipeById(${recipeId}) keys:`, Object.keys(raw));
 
     const videoInfo = raw.video_info ?? raw.videoInfo ?? {};
     const meta = raw.recipe_detail_meta ?? raw.recipeDetailMeta ?? {};
