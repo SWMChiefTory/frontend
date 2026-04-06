@@ -58,7 +58,7 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
             borderCurve: 'continuous',
             overflow: 'hidden',
             borderWidth: 1.5,
-            borderColor: '#FFDAB9',
+            borderColor: '#C4A882',
           }}
         >
           {/* 에셋 — 중앙 */}
