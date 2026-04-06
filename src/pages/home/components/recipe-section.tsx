@@ -20,44 +20,50 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
           key={card.id}
           onPress={() => onPress(card)}
           style={{
-            width: 140,
-            height: 56,
+            width: 150,
+            height: 130,
             backgroundColor: card.backgroundColor,
-            borderRadius: radius.full,
-            paddingLeft: spacing.lg,
-            paddingRight: card.image ? 48 : spacing.lg,
-            flexDirection: 'row',
-            alignItems: 'center',
+            borderRadius: radius.lg,
             borderCurve: 'continuous',
             overflow: 'hidden',
-            borderWidth: 1,
-            borderColor: colors.border,
-            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)',
           }}
         >
-          {card.image && (
-            <Image
-              source={card.image}
+          {/* 에셋 영역 */}
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            {card.image && (
+              <Image
+                source={card.image}
+                style={{ width: 80, height: 80 }}
+                contentFit="contain"
+              />
+            )}
+          </View>
+
+          {/* 텍스트 칩 — 하단에 떠있는 느낌 */}
+          <View style={{ paddingHorizontal: spacing.sm, paddingBottom: spacing.sm }}>
+            <View
               style={{
-                position: 'absolute',
-                right: -4,
-                width: 52,
-                height: 52,
+                backgroundColor: 'rgba(255,255,255,0.85)',
+                borderRadius: radius.full,
+                paddingHorizontal: spacing.md,
+                paddingVertical: spacing.xs,
+                alignSelf: 'flex-start',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
               }}
-              contentFit="contain"
-            />
-          )}
-          <Text
-            style={{
-              fontFamily: typography.heading.fontFamily,
-              fontSize: 14,
-              fontWeight: '700',
-              color: colors.text.primary,
-            }}
-            numberOfLines={1}
-          >
-            {card.title}
-          </Text>
+            >
+              <Text
+                style={{
+                  fontFamily: typography.heading.fontFamily,
+                  fontSize: 13,
+                  fontWeight: '700',
+                  color: colors.text.primary,
+                }}
+                numberOfLines={1}
+              >
+                {card.title}
+              </Text>
+            </View>
+          </View>
         </Pressable>
       ))}
     </ScrollView>
