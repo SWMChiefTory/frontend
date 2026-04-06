@@ -22,6 +22,10 @@ export default function AppLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen
+          name="settings"
+          options={{ animation: 'slide_from_right' }}
+        />
+        <Stack.Screen
           name="recipe/[id]"
           options={{ animation: 'slide_from_right' }}
         />
