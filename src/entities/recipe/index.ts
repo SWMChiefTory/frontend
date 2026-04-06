@@ -8,6 +8,7 @@ export function useRecipe(recipeId: string) {
   return useSuspenseQuery<RecipeEntry>({
     queryKey: ['recipe', recipeId],
     queryFn: () => fetchRecipeById(recipeId),
-    staleTime: Infinity,
+    staleTime: 5 * 60 * 1000,
+    retry: 2,
   });
 }
