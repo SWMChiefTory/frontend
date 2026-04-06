@@ -7,10 +7,11 @@ import { colors, spacing, radius, typography } from '@/src/shared/design/tokens'
 const SLIDES = [
   {
     id: '1',
-    image: require('@/assets/images/onboarding-tory.png'),
+    image: require('@/assets/images/paw-print.png'),
     title: '쉐프토리에 오신 걸 환영해요!',
     subtitle: '유튜브 요리 영상을 AI가 레시피로 만들어드려요',
-    imageStyle: { width: 200, height: 200 },
+    imageStyle: { width: 160, height: 160 },
+    backgroundColor: '#FFF8E1',
   },
   {
     id: '2',
@@ -81,6 +82,7 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
               justifyContent: 'center',
               paddingHorizontal: spacing.xxl,
               gap: spacing.xl,
+              backgroundColor: (item as any).backgroundColor ?? colors.background,
             }}
           >
             <Image
