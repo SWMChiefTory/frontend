@@ -29,9 +29,9 @@ export const colors = {
   },
 
   card: {
-    recipe: '#FF7300',
-    fridge: '#2DB89A',
-    calendar: '#8B6FC0',
+    recipe: '#C4632B',
+    fridge: '#5A9E8F',
+    calendar: '#7D6B9E',
   },
 
   tab: {
