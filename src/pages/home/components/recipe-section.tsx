@@ -176,12 +176,12 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
+                  justifyContent: 'center',
                   gap: 4,
                   backgroundColor: colors.primary,
-                  paddingHorizontal: spacing.md,
                   paddingVertical: spacing.sm,
-                  borderRadius: radius.full,
-                  alignSelf: 'flex-start',
+                  borderRadius: radius.sm,
+                  marginTop: 'auto',
                 }}
               >
                 <Ionicons name="mic" size={12} color="#fff" />
