@@ -136,7 +136,7 @@ export function BookmarkScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       {/* 헤더 */}
-      <View style={{ paddingTop: insets.top, backgroundColor: colors.background }}>
+      <View style={{ paddingTop: insets.top, backgroundColor: colors.surface }}>
         <View
           style={{
             flexDirection: 'row',
@@ -191,8 +191,10 @@ export function BookmarkScreen() {
       {/* 카테고리 관리 바텀시트 */}
       <BottomSheetModal
         ref={categorySheetRef}
-
-        snapPoints={['40%']}
+        enableDynamicSizing
+        detached
+        bottomInset={60}
+        style={{ marginHorizontal: 16 }}
         enablePanDownToClose
         backdropComponent={(props) => (
           <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} />
@@ -232,7 +234,6 @@ export function BookmarkScreen() {
       {/* 카테고리 추가 바텀시트 */}
       <BottomSheetModal
         ref={addCategorySheetRef}
-
         enableDynamicSizing
         enablePanDownToClose
         keyboardBehavior="interactive"
@@ -285,6 +286,9 @@ export function BookmarkScreen() {
         ref={recipeActionSheetRef}
 
         enableDynamicSizing
+        detached
+        bottomInset={60}
+        style={{ marginHorizontal: 16 }}
         enablePanDownToClose
         backdropComponent={(props) => (
           <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} />
@@ -326,6 +330,9 @@ export function BookmarkScreen() {
         ref={changeCategorySheetRef}
 
         enableDynamicSizing
+        detached
+        bottomInset={60}
+        style={{ marginHorizontal: 16 }}
         enablePanDownToClose
         backdropComponent={(props) => (
           <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} />
