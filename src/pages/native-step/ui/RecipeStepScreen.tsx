@@ -332,12 +332,14 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
           }}
         >
           {/* 타이머 */}
-          <HeaderTimer
-            timer={timerResult.timer}
-            displayTime={timerResult.displayTime}
-            isUrgent={timerResult.isUrgent}
-            onPress={() => timerSheetRef.current?.open()}
-          />
+          <View style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: '#333', alignItems: 'center', justifyContent: 'center' }}>
+            <HeaderTimer
+              timer={timerResult.timer}
+              displayTime={timerResult.displayTime}
+              isUrgent={timerResult.isUrgent}
+              onPress={() => timerSheetRef.current?.open()}
+            />
+          </View>
 
           {/* 재생/정지 */}
           <View style={{ overflow: 'visible', position: 'relative' }}>
