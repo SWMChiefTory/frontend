@@ -69,7 +69,7 @@ export function HomeScreen() {
       {/* 스크롤 콘텐츠 영역 */}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 120, paddingTop: spacing.xxl, gap: spacing.xxl }}
+        contentContainerStyle={{ paddingBottom: 120, paddingTop: spacing.md, gap: spacing.sm }}
       >
           <ThemeCardsSection
             cards={MOCK_THEME_CARDS}
