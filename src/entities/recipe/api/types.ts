@@ -52,4 +52,5 @@ export interface Recipe {
 export interface RecipeEntry {
   recipe: Recipe;
   videoId: string;
+  videoType?: 'SHORTS' | 'NORMAL';
 }

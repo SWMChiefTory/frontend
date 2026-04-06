@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Pressable, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Dimensions, useWindowDimensions } from 'react-native';
 import { router } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -53,9 +53,10 @@ interface Scene {
 interface RecipeStepScreenProps {
   videoId: string;
   recipe: any;
+  isShorts?: boolean;
 }
 
-export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
+export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeStepScreenProps) {
   const insets = useSafeAreaInsets();
   const webviewRef = useRef<WebView>(null);
 
@@ -245,6 +246,185 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
     });
   };
 
+  const { height: screenHeight } = useWindowDimensions();
+
+  // ─── Shorts 레이아웃 ───
+  if (isShorts) {
+    return (
+      <GestureHandlerRootView style={styles.root}>
+        {/* 영상 — 화면 70% */}
+        <View style={{ height: screenHeight * 0.7, backgroundColor: '#000' }}>
+          <WebView
+            ref={webviewRef}
+            source={{ uri: youtubeUri }}
+            style={{ flex: 1, backgroundColor: '#000' }}
+            allowsInlineMediaPlayback
+            mediaPlaybackRequiresUserAction={false}
+            mediaCapturePermissionGrantType="grant"
+            javaScriptEnabled
+            domStorageEnabled
+            mixedContentMode="compatibility"
+            allowsFullscreenVideo
+            originWhitelist={['*']}
+            injectedJavaScriptBeforeContentLoaded={INJECTED_JS_BRIDGE}
+            onMessage={handleYouTubeMessage}
+            onLoad={() => {
+              setIsVideoLoaded(true);
+              setTimeout(() => onWebViewReady(), 1500);
+            }}
+          />
+
+          {/* 오버레이 — 백 버튼 */}
+          <Pressable
+            onPress={handleBack}
+            style={{
+              position: 'absolute',
+              top: insets.top + 8,
+              left: 12,
+              width: 36,
+              height: 36,
+              borderRadius: 18,
+              backgroundColor: 'rgba(0,0,0,0.4)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10,
+            }}
+          >
+            <Ionicons name="chevron-back" size={22} color="#fff" />
+          </Pressable>
+
+          {/* 오버레이 — 마이크 버튼 */}
+          <View style={{ position: 'absolute', top: insets.top + 8, right: 12, zIndex: 10, overflow: 'visible' }}>
+            <PawFeedback visible={intentFeedback?.intent === 'GO_TO_SCENE' || intentFeedback?.intent === 'GO_TO_STEP'} size={32} />
+            <Pressable
+              onPress={isVideoLoaded ? toggleListening : undefined}
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 18,
+                backgroundColor: isListening ? 'rgba(74,222,128,0.3)' : 'rgba(0,0,0,0.4)',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Ionicons name={isListening ? 'mic' : 'mic-off'} size={18} color={isListening ? '#4ade80' : '#fff'} />
+            </Pressable>
+          </View>
+
+          {/* 오버레이 — 타이머 */}
+          <View style={{ position: 'absolute', top: insets.top + 8, right: 56, zIndex: 10 }}>
+            <HeaderTimer
+              timer={timerResult.timer}
+              displayTime={timerResult.displayTime}
+              isUrgent={timerResult.isUrgent}
+              onPress={() => timerSheetRef.current?.open()}
+            />
+          </View>
+
+          {/* 오버레이 — 재생/정지 */}
+          <View style={{ position: 'absolute', top: insets.top + 52, right: 12, zIndex: 10, overflow: 'visible' }}>
+            <PawFeedback visible={intentFeedback?.intent === 'PLAY' || intentFeedback?.intent === 'PAUSE'} size={28} />
+            <Pressable
+              onPress={togglePlay}
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 18,
+                backgroundColor: 'rgba(0,0,0,0.4)',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Ionicons name={isPlaying ? 'pause' : 'play'} size={16} color="#fff" />
+            </Pressable>
+          </View>
+
+          {/* 오버레이 — 하단 스텝 정보 */}
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              padding: 16,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+            }}
+          >
+            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '700' }} numberOfLines={1}>
+              {currentStep?.title}
+            </Text>
+            {currentStep?.description && (
+              <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: 13, marginTop: 4 }} numberOfLines={2}>
+                {Array.isArray(currentStep.description)
+                  ? currentStep.description.map((d: any) => d.content).join(' · ')
+                  : currentStep.description}
+              </Text>
+            )}
+            {/* 진행 바 */}
+            <View style={{ flexDirection: 'row', gap: 3, marginTop: 8 }}>
+              {steps.map((_: any, i: number) => (
+                <View
+                  key={i}
+                  style={{
+                    flex: 1,
+                    height: 3,
+                    borderRadius: 2,
+                    backgroundColor: i === currentStepIndex ? '#f97316' : i < currentStepIndex ? 'rgba(249,115,22,0.4)' : 'rgba(255,255,255,0.2)',
+                  }}
+                />
+              ))}
+            </View>
+          </View>
+        </View>
+
+        {/* 하단 — 네비게이션 + STT */}
+        <View style={{ flex: 1, backgroundColor: '#111', justifyContent: 'center' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 24 }}>
+            <View style={{ position: 'relative', overflow: 'visible', zIndex: 100 }}>
+              <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={28} />
+              <Pressable
+                onPress={goToPrevStep}
+                disabled={isFirstStep}
+                style={[styles.navBtn, isFirstStep && styles.navBtnHidden]}
+              >
+                <Ionicons name="chevron-back" size={18} color={isFirstStep ? 'transparent' : 'rgba(255,255,255,0.8)'} />
+                <Text style={[styles.navBtnText, isFirstStep && { color: 'transparent' }]}>이전</Text>
+              </Pressable>
+            </View>
+
+            {isLastStep ? (
+              <Pressable onPress={handleBack} style={styles.completeBtn}>
+                <Text style={styles.completeBtnText}>완료</Text>
+                <Ionicons name="checkmark" size={16} color="#fff" />
+              </Pressable>
+            ) : (
+              <View style={{ position: 'relative', overflow: 'visible', zIndex: 100 }}>
+                <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={28} />
+                <Pressable onPress={goToNextStep} style={styles.navBtn}>
+                  <Text style={styles.navBtnText}>다음</Text>
+                  <Ionicons name="chevron-forward" size={18} color="rgba(255,255,255,0.8)" />
+                </Pressable>
+              </View>
+            )}
+          </View>
+
+          {isListening && (
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, marginTop: 12 }}>
+              <View style={[styles.sttDot, pipelineState === 'TRANSCRIBING' ? styles.sttDotActive : styles.sttDotIdle]} />
+              <Text style={[styles.sttText, pipelineState === 'TRANSCRIBING' ? styles.sttTextActive : styles.sttTextIdle]} numberOfLines={1}>
+                {pipelineState === 'TRANSCRIBING' ? transcript || '듣고 있어요...' : '대기 중'}
+              </Text>
+            </View>
+          )}
+        </View>
+
+        <IntentFeedbackToast message={intentFeedback?.text ?? null} />
+        <TimerSheet ref={timerSheetRef} timerResult={timerResult} stepName={currentStep?.title ?? '타이머'} />
+      </GestureHandlerRootView>
+    );
+  }
+
+  // ─── 일반 레이아웃 ───
   return (
     <GestureHandlerRootView style={styles.root}>
       <View style={{ paddingTop: insets.top, backgroundColor: '#000' }}>
