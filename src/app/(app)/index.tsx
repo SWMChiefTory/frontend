@@ -1,55 +1,21 @@
-import { View } from "react-native";
-import { RecipeWebView } from "@/src/pages/webview/RecipeWebView";
-import { track } from "@/src/modules/shared/utils/analytics";
-import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from "expo-av";
-import { Stack } from "expo-router";
-import { useEffect } from "react";
+import { useState } from 'react';
+import { View } from 'react-native';
+import { Stack } from 'expo-router';
+import { FloatingTabBar } from '@/src/shared/components/floating-tab-bar';
+import { HomeScreen } from '@/src/pages/home/ui/home-screen';
+import { BookmarkScreen } from '@/src/pages/bookmark/ui/bookmark-screen';
 
-export default function WebViewScreen() {
-  useEffect(() => {
-    track.screen("RecipeDetail");
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        await Audio.setAudioModeAsync({
-          allowsRecordingIOS: true,
-          playsInSilentModeIOS: true,
-          interruptionModeIOS: InterruptionModeIOS.DoNotMix,
-          interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
-          shouldDuckAndroid: false,
-          staysActiveInBackground: false,
-          playThroughEarpieceAndroid: true,
-        });
-      } catch (e) {
-        console.warn("Failed to set audio mode", e);
-      }
-    })();
-
-    return () => {
-      (async () => {
-        try {
-          await Audio.setAudioModeAsync({
-            allowsRecordingIOS: false,
-            playsInSilentModeIOS: false,
-            interruptionModeIOS: InterruptionModeIOS.DuckOthers,
-            interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
-            shouldDuckAndroid: true,
-            staysActiveInBackground: false,
-            playThroughEarpieceAndroid: false,
-          });
-        } catch (e) {
-          console.warn("Failed to reset audio mode", e);
-        }
-      })();
-    };
-  }, []);
+export default function MainScreen() {
+  const [activeTab, setActiveTab] = useState('home');
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
       <Stack.Screen options={{ headerShown: false }} />
-      <RecipeWebView />
+
+      {activeTab === 'home' && <HomeScreen />}
+      {activeTab === 'bookmark' && <BookmarkScreen />}
+
+      <FloatingTabBar activeTab={activeTab} onTabPress={setActiveTab} />
     </View>
   );
 }
