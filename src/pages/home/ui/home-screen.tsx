@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { HomeHeader } from '@/src/pages/home/components/home-header';
 import { FeatureCards } from '@/src/pages/home/components/feature-cards';
-import { ThemeCardsSection, RecipeListSection, RecentRecipeSection } from '@/src/pages/home/components/recipe-section';
+import { ThemeCardsSection, RecipeListSection, RecentRecipeSection, RecentRecipeSkeleton, RecipeListSkeleton } from '@/src/pages/home/components/recipe-section';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import {
   MOCK_THEME_CARDS,
@@ -103,7 +103,7 @@ export function HomeScreen() {
         contentContainerStyle={{ paddingBottom: 120, paddingTop: spacing.xl, gap: spacing.lg }}
       >
         {trendingLoading ? (
-          <ActivityIndicator color={colors.primary} style={{ paddingVertical: spacing.xxl }} />
+          <RecentRecipeSkeleton />
         ) : (
           <RecentRecipeSection
             recipes={recentRecipes}
@@ -121,7 +121,7 @@ export function HomeScreen() {
         <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
 
         {popularLoading ? (
-          <ActivityIndicator color={colors.primary} style={{ paddingVertical: spacing.xxl }} />
+          <RecipeListSkeleton title="지금 핫한 레시피" />
         ) : (
           <RecipeListSection
             title="지금 핫한 레시피"
