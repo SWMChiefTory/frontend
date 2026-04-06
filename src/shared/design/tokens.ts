@@ -12,7 +12,7 @@ export const colors = {
   primaryDark: '#E56600',
 
   background: '#FFFFFF',
-  surface: '#F9FAFB',
+  surface: '#F0EFED',
   border: '#E5E7EB',
 
   text: {

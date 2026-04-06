@@ -84,6 +84,7 @@ function RootNavigator({ isLoggedIn }: { isLoggedIn: boolean }) {
         headerLeft: () => <CustomBackButton />,
         headerStyle: { backgroundColor: theme.colors.primary },
         contentStyle: { backgroundColor: theme.colors.background },
+        animation: 'fade',
       }}
     >
       <Stack.Protected guard={isLoggedIn}>
