@@ -16,6 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { useVoiceCommand } from '@/src/pages/native-step/hooks/useVoiceCommand';
 import { IntentFeedbackToast } from '@/src/pages/native-step/components/IntentFeedbackToast';
+import { PawFeedback } from '@/src/pages/native-step/components/PawFeedback';
 import { useStepTimer } from '@/src/pages/native-step/hooks/useStepTimer';
 import { HeaderTimer, TimerSheet, type TimerSheetRef } from '@/src/pages/native-step/components/TimerBottomSheet';
 
@@ -264,6 +265,8 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
             onPress={() => timerSheetRef.current?.open()}
           />
 
+          <View style={{ position: 'relative' }}>
+            <PawFeedback visible={!!intentFeedback} />
           <Pressable
             onPress={isVideoLoaded ? toggleListening : undefined}
             style={[
@@ -279,6 +282,7 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
               color={!isVideoLoaded ? 'rgba(255,255,255,0.3)' : isListening ? '#4ade80' : '#fff'}
             />
           </Pressable>
+          </View>
         </View>
 
         {/* ─── Timer Mini Bar (헤더 바로 아래, 진행 바 위) ─── */}
