@@ -51,7 +51,7 @@ export function HomeScreen() {
           paddingBottom: spacing.lg,
           borderBottomLeftRadius: radius.xl,
           borderBottomRightRadius: radius.xl,
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.15)',
           zIndex: 1,
         }}
       >
