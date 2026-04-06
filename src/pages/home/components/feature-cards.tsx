@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ScrollView, useWindowDimensions } from 'react-native';
+import { View, Text, Pressable, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
@@ -51,33 +51,25 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
           style={{
             flex: 1,
             height: cardHeight,
+            backgroundColor: feature.backgroundColor,
             borderRadius: radius.lg,
             overflow: 'hidden',
             borderCurve: 'continuous',
           }}
         >
-          {/* 배경 이미지 꽉 채움 */}
+          {/* 투명 배경 이미지 — 상단에 배치 */}
           <Image
             source={CARD_IMAGES[feature.id]}
             style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
+              flex: 1,
+              marginTop: spacing.sm,
+              marginHorizontal: spacing.xs,
             }}
-            contentFit="cover"
+            contentFit="contain"
           />
 
-          {/* 하단 그라데이션 + 텍스트 */}
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'flex-end',
-              padding: spacing.sm,
-              backgroundColor: 'rgba(0,0,0,0.1)',
-            }}
-          >
+          {/* 하단 텍스트 */}
+          <View style={{ padding: spacing.sm }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
               <Text
                 style={{
@@ -94,7 +86,7 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
               )}
             </View>
             {feature.subtitle ? (
-              <Text style={{ fontSize: 11, color: 'rgba(255,255,255,0.8)' }}>
+              <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 11, color: 'rgba(255,255,255,0.8)' }}>
                 {feature.subtitle}
               </Text>
             ) : null}
