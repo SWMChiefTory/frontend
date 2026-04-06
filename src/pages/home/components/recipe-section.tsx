@@ -65,7 +65,7 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
           {card.image && (
             <Image
               source={card.image}
-              style={{ width: 72, height: 72 }}
+              style={{ width: 65, height: 65 }}
               contentFit="contain"
             />
           )}
