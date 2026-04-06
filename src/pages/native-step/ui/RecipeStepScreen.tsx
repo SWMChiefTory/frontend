@@ -290,7 +290,7 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
             </View>
             <View style={{ flexDirection: 'row', gap: 3, marginTop: 6 }}>
               {steps.map((_: any, i: number) => (
-                <View key={i} style={{ flex: 1, height: 3, borderRadius: 2, backgroundColor: i === currentStepIndex ? '#f97316' : i < currentStepIndex ? 'rgba(249,115,22,0.4)' : 'rgba(255,255,255,0.15)' }} />
+                <View key={i} style={{ flex: 1, height: 3, borderRadius: 2, backgroundColor: i === currentStepIndex ? '#C4632B' : i < currentStepIndex ? 'rgba(249,115,22,0.4)' : 'rgba(255,255,255,0.15)' }} />
               ))}
             </View>
           </View>
@@ -382,7 +382,7 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
                   <Ionicons name="checkmark" size={20} color="#fff" />
                 </Pressable>
               ) : (
-                <Pressable onPress={goToNextStep} style={{ width: 44, height: 44, borderTopLeftRadius: 2, borderTopRightRadius: 2, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, backgroundColor: '#f97316', alignItems: 'center', justifyContent: 'center' }}>
+                <Pressable onPress={goToNextStep} style={{ width: 44, height: 44, borderTopLeftRadius: 2, borderTopRightRadius: 2, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, backgroundColor: '#C4632B', alignItems: 'center', justifyContent: 'center' }}>
                   <Ionicons name="chevron-down" size={20} color="#fff" />
                 </Pressable>
               )}
@@ -644,7 +644,7 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
   },
   progressSegment: { flex: 1, height: 4, borderRadius: 2 },
-  progressActive: { backgroundColor: '#f97316' },
+  progressActive: { backgroundColor: '#C4632B' },
   progressDone: { backgroundColor: 'rgba(249,115,22,0.4)' },
   progressPending: { backgroundColor: 'rgba(255,255,255,0.12)' },
 
@@ -690,7 +690,7 @@ const styles = StyleSheet.create({
   descList: { gap: 8 },
   descRow: { flexDirection: 'row', alignItems: 'flex-start' },
   descDot: {
-    color: '#f97316',
+    color: '#C4632B',
     fontSize: 20,
     fontWeight: '700',
     marginRight: 8,

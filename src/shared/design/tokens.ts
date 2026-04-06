@@ -7,9 +7,9 @@
  */
 
 export const colors = {
-  primary: '#E56600',
+  primary: '#C4632B',
   primaryLight: '#FFF0E0',
-  primaryDark: '#E56600',
+  primaryDark: '#A85223',
 
   background: '#FFFFFF',
   surface: '#F0EFED',
@@ -35,7 +35,7 @@ export const colors = {
   },
 
   tab: {
-    active: '#FF7300',
+    active: '#C4632B',
     inactive: '#9CA3AF',
   },
 } as const;

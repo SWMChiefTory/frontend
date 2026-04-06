@@ -21,7 +21,7 @@ function StepContent({ recipeId }: { recipeId: string }) {
 function StepFallback() {
   return (
     <View style={{ flex: 1, backgroundColor: '#000', alignItems: 'center', justifyContent: 'center' }}>
-      <ActivityIndicator size="large" color="#f97316" />
+      <ActivityIndicator size="large" color="#C4632B" />
       <Text style={{ color: 'rgba(255,255,255,0.5)', marginTop: 12, fontSize: 14 }}>
         레시피 불러오는 중...
       </Text>
@@ -40,7 +40,7 @@ function StepError({ error, resetErrorBoundary }: { error: Error; resetErrorBoun
       </Text>
       <Pressable
         onPress={() => router.back()}
-        style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: '#f97316', borderRadius: 12 }}
+        style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: '#C4632B', borderRadius: 12 }}
       >
         <Text style={{ color: '#fff', fontWeight: '600' }}>돌아가기</Text>
       </Pressable>

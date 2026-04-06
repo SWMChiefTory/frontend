@@ -80,7 +80,7 @@ export function PawFeedback({ visible, onDone, size = 36 }: PawFeedbackProps) {
         source={PAW_IMAGE}
         style={{ width: size, height: size }}
         contentFit="contain"
-        tintColor="#E56600"
+        tintColor="#C4632B"
       />
     </Animated.View>
   );
