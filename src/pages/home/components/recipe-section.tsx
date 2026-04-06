@@ -49,54 +49,40 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
         <Pressable
           key={card.id}
           onPress={() => onPress(card)}
-          style={{
-            width: 120,
-            height: 120,
-            borderRadius: radius.lg,
-            borderCurve: 'continuous',
-            borderWidth: 1.5,
-            borderColor: '#C4A882',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            paddingTop: spacing.lg,
-          }}
+          style={{ width: 100, alignItems: 'center', gap: spacing.xs }}
         >
-          {/* 에셋 — 중앙 */}
-          {card.image && (
-            <Image
-              source={card.image}
-              style={{ width: 65, height: 65 }}
-              contentFit="contain"
-            />
-          )}
-
-          {/* 텍스트 — absolute 하단 오버레이 */}
           <View
             style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              paddingVertical: spacing.xs,
-              paddingHorizontal: spacing.sm,
-              backgroundColor: 'rgba(255,255,255,0.9)',
-              borderBottomLeftRadius: radius.lg - 2,
-              borderBottomRightRadius: radius.lg - 2,
+              width: 100,
+              height: 100,
+              borderRadius: radius.lg,
+              borderCurve: 'continuous',
+              borderWidth: 1.5,
+              borderColor: '#C4A882',
               alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            <Text
-              style={{
-                fontFamily: typography.heading.fontFamily,
-                fontSize: 12,
-                fontWeight: '700',
-                color: colors.text.primary,
-              }}
-              numberOfLines={1}
-            >
-              {card.title}
-            </Text>
+            {card.image && (
+              <Image
+                source={card.image}
+                style={{ width: 60, height: 60 }}
+                contentFit="contain"
+              />
+            )}
           </View>
+          <Text
+            style={{
+              fontFamily: typography.heading.fontFamily,
+              fontSize: 12,
+              fontWeight: '700',
+              color: colors.text.primary,
+              textAlign: 'center',
+            }}
+            numberOfLines={1}
+          >
+            {card.title}
+          </Text>
         </Pressable>
       ))}
     </ScrollView>
