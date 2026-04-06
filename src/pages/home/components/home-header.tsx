@@ -1,0 +1,78 @@
+import { View, Text, Pressable } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
+import { colors, spacing, radius } from '@/src/shared/design/tokens';
+import { MOCK_BERRY_BALANCE } from '@/src/shared/data/mock';
+
+interface HomeHeaderProps {
+  onBerryPress: () => void;
+  onSearchPress: () => void;
+  onSettingsPress: () => void;
+}
+
+export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: HomeHeaderProps) {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <View style={{ paddingTop: insets.top, backgroundColor: colors.background }}>
+      {/* 1행: 베리 + 설정 */}
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingHorizontal: spacing.lg,
+          paddingVertical: spacing.sm,
+        }}
+      >
+        <Pressable
+          onPress={onBerryPress}
+          style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}
+          hitSlop={8}
+        >
+          <View
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: 14,
+              backgroundColor: '#FFE8E8',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={{ fontSize: 16 }}>🫐</Text>
+          </View>
+          <Text style={{ fontSize: 16, fontWeight: '700', color: colors.text.primary }}>
+            {MOCK_BERRY_BALANCE}
+          </Text>
+        </Pressable>
+
+        <Pressable onPress={onSettingsPress} hitSlop={8}>
+          <Ionicons name="settings-outline" size={24} color={colors.text.secondary} />
+        </Pressable>
+      </View>
+
+      {/* 2행: 검색바 */}
+      <View style={{ paddingHorizontal: spacing.lg, paddingBottom: spacing.md }}>
+        <Pressable
+          onPress={onSearchPress}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: spacing.sm,
+            backgroundColor: colors.surface,
+            borderRadius: radius.md,
+            paddingHorizontal: spacing.md,
+            paddingVertical: spacing.md,
+          }}
+        >
+          <Ionicons name="search-outline" size={18} color={colors.text.disabled} />
+          <Text style={{ fontSize: 14, color: colors.text.disabled }}>
+            레시피를 검색하세요
+          </Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+}
