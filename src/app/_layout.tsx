@@ -120,7 +120,10 @@ export default function RootLayout() {
 
   const [fontsLoaded] = useFonts({
     'KHNPHandotumOTF': require('@/assets/fonts/KHNPHDotfR.otf'),
-    'KHNPHandotumOTF Bold': require('@/assets/fonts/KHNPHDotfB.otf'),
+    'KHNPHandotumOTF-Bold': require('@/assets/fonts/KHNPHDotfB.otf'),
+    'Pretendard': require('@/assets/fonts/Pretendard-Regular.otf'),
+    'Pretendard-SemiBold': require('@/assets/fonts/Pretendard-SemiBold.otf'),
+    'Pretendard-Bold': require('@/assets/fonts/Pretendard-Bold.otf'),
   });
 
   useOnlineManager();
