@@ -252,35 +252,8 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
   if (isShorts) {
     return (
       <GestureHandlerRootView style={styles.root}>
-        {/* 헤더 — 백 버튼 + 스텝 진행 표시 */}
-        <View style={{ paddingTop: insets.top, backgroundColor: '#000' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, height: 44 }}>
-            <Pressable onPress={handleBack} style={{ width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' }}>
-              <Ionicons name="chevron-back" size={22} color="#fff" />
-            </Pressable>
-            <Text style={{ flex: 1, color: '#fff', fontSize: 14, fontWeight: '600', textAlign: 'center' }} numberOfLines={1}>
-              {currentStepIndex + 1}/{totalSteps} {currentStep?.title}
-            </Text>
-            <View style={{ width: 40 }} />
-          </View>
-          {/* 진행 바 */}
-          <View style={{ flexDirection: 'row', gap: 3, paddingHorizontal: 12, paddingBottom: 4 }}>
-            {steps.map((_: any, i: number) => (
-              <View
-                key={i}
-                style={{
-                  flex: 1,
-                  height: 3,
-                  borderRadius: 2,
-                  backgroundColor: i === currentStepIndex ? '#f97316' : i < currentStepIndex ? 'rgba(249,115,22,0.4)' : 'rgba(255,255,255,0.15)',
-                }}
-              />
-            ))}
-          </View>
-        </View>
-
-        {/* 영상 — 화면 70% */}
-        <View style={{ height: screenHeight * 0.7, backgroundColor: '#000' }}>
+        {/* 영상 — 화면 70% (맨 위부터, 헤더 없음) */}
+        <View style={{ height: screenHeight * 0.7, backgroundColor: '#000', paddingTop: insets.top }}>
           <WebView
             ref={webviewRef}
             source={{ uri: youtubeUri }}
@@ -300,6 +273,27 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
               setTimeout(() => onWebViewReady(), 1500);
             }}
           />
+
+          {/* 오버레이 — 백 버튼 + 진행바 */}
+          <View style={{ position: 'absolute', top: insets.top + 8, left: 0, right: 0, zIndex: 10, paddingHorizontal: 12 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Pressable
+                onPress={handleBack}
+                style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' }}
+              >
+                <Ionicons name="chevron-back" size={20} color="#fff" />
+              </Pressable>
+              <Text style={{ flex: 1, color: '#fff', fontSize: 13, fontWeight: '600', textAlign: 'center' }} numberOfLines={1}>
+                {currentStepIndex + 1}/{totalSteps}
+              </Text>
+              <View style={{ width: 36 }} />
+            </View>
+            <View style={{ flexDirection: 'row', gap: 3, marginTop: 6 }}>
+              {steps.map((_: any, i: number) => (
+                <View key={i} style={{ flex: 1, height: 3, borderRadius: 2, backgroundColor: i === currentStepIndex ? '#f97316' : i < currentStepIndex ? 'rgba(249,115,22,0.4)' : 'rgba(255,255,255,0.15)' }} />
+              ))}
+            </View>
+          </View>
         </View>
 
         {/* 하단 — 스텝 설명 + 버튼 (바닥부터) */}
@@ -320,7 +314,7 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
 
           {/* 버튼 행 + STT */}
           <View style={{ paddingBottom: Math.max(insets.bottom, 16), gap: 8 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 10 }}>
               {/* 이전 */}
               <View style={{ overflow: 'visible', position: 'relative' }}>
                 <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={28} />
