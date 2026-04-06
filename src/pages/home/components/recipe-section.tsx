@@ -111,7 +111,7 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
           paddingHorizontal: spacing.lg,
         }}
       >
-        최근 시청 레시피
+        최근 레시피
       </Text>
       <ScrollView
         horizontal
