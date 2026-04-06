@@ -266,7 +266,7 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
           />
 
           <View style={{ position: 'relative' }}>
-            <PawFeedback visible={!!intentFeedback} />
+            <PawFeedback visible={intentFeedback?.intent === 'GO_TO_SCENE' || intentFeedback?.intent === 'GO_TO_STEP'} size={32} />
           <Pressable
             onPress={isVideoLoaded ? toggleListening : undefined}
             style={[
@@ -335,9 +335,12 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
           onHttpError={(e) => console.log('[WebView HTTP Error]', e.nativeEvent)}
         />
         {isVideoLoaded && (
-          <Pressable onPress={togglePlay} style={styles.playFab}>
+          <View style={{ position: 'absolute', top: 8, right: 8 }}>
+            <PawFeedback visible={intentFeedback?.intent === 'PLAY' || intentFeedback?.intent === 'PAUSE'} size={28} />
+          <Pressable onPress={togglePlay} style={[styles.playFab, { position: 'relative', top: 0, right: 0 }]}>
             <Ionicons name={isPlaying ? 'pause' : 'play'} size={16} color="#fff" />
           </Pressable>
+          </View>
         )}
       </View>
 
@@ -382,7 +385,7 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
       </GestureDetector>
 
       {/* ─── Intent Feedback Toast ─── */}
-      <IntentFeedbackToast message={intentFeedback} />
+      <IntentFeedbackToast message={intentFeedback?.text ?? null} />
 
       {/* ─── 하단: 그라디언트 + 네비게이션 ─── */}
       <View style={styles.bottomGradient} pointerEvents="box-none">
@@ -390,15 +393,18 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
         <View style={styles.gradStep2} pointerEvents="none" />
         <View style={styles.gradStep3} pointerEvents="none" />
         <View style={styles.bottomBar}>
-          <Pressable
-            onPress={goToPrevStep}
-            disabled={isFirstStep}
-            style={[styles.navBtn, isFirstStep && styles.navBtnHidden]}
-            hitSlop={8}
-          >
-            <Ionicons name="chevron-back" size={18} color={isFirstStep ? 'transparent' : 'rgba(255,255,255,0.8)'} />
-            <Text style={[styles.navBtnText, isFirstStep && { color: 'transparent' }]}>이전</Text>
-          </Pressable>
+          <View style={{ position: 'relative' }}>
+            <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={32} />
+            <Pressable
+              onPress={goToPrevStep}
+              disabled={isFirstStep}
+              style={[styles.navBtn, isFirstStep && styles.navBtnHidden]}
+              hitSlop={8}
+            >
+              <Ionicons name="chevron-back" size={18} color={isFirstStep ? 'transparent' : 'rgba(255,255,255,0.8)'} />
+              <Text style={[styles.navBtnText, isFirstStep && { color: 'transparent' }]}>이전</Text>
+            </Pressable>
+          </View>
 
           {isLastStep ? (
             <Pressable onPress={handleBack} style={styles.completeBtn}>
@@ -406,10 +412,13 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
               <Ionicons name="checkmark" size={16} color="#fff" />
             </Pressable>
           ) : (
-            <Pressable onPress={goToNextStep} style={styles.navBtn} hitSlop={8}>
-              <Text style={styles.navBtnText}>다음</Text>
-              <Ionicons name="chevron-forward" size={18} color="rgba(255,255,255,0.8)" />
-            </Pressable>
+            <View style={{ position: 'relative' }}>
+              <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={32} />
+              <Pressable onPress={goToNextStep} style={styles.navBtn} hitSlop={8}>
+                <Text style={styles.navBtnText}>다음</Text>
+                <Ionicons name="chevron-forward" size={18} color="rgba(255,255,255,0.8)" />
+              </Pressable>
+            </View>
           )}
         </View>
         <View style={[styles.sttSafeArea, { height: Math.max(insets.bottom, 24) }]}>
