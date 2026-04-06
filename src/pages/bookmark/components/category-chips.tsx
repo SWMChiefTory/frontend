@@ -17,7 +17,8 @@ export function CategoryChips({ categories, selected, onSelect, onAdd }: Categor
       contentContainerStyle={{
         paddingHorizontal: spacing.lg,
         gap: spacing.sm,
-        paddingVertical: spacing.sm,
+        paddingTop: spacing.lg,
+        paddingBottom: spacing.sm,
         alignItems: 'center',
       }}
     >

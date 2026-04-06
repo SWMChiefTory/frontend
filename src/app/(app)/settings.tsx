@@ -157,7 +157,7 @@ export default function SettingsScreen() {
       <Stack.Screen options={{ headerShown: false }} />
 
       {/* 헤더 */}
-      <View style={{ paddingTop: insets.top, backgroundColor: colors.background }}>
+      <View style={{ paddingTop: insets.top, backgroundColor: colors.surface }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: spacing.md, height: 48 }}>
           <Pressable onPress={() => router.back()} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}>
             <Ionicons name="chevron-back" size={24} color={colors.text.primary} />
