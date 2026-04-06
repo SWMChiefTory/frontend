@@ -8,9 +8,10 @@ const SLIDES = [
   {
     id: '1',
     image: require('@/assets/images/paw-print.png'),
+    secondImage: require('@/assets/images/brand-logo.png'),
     title: '쉐프토리에 오신 걸 환영해요!',
     subtitle: '말만 하면 토리가 대신 터치해줄게요',
-    imageStyle: { width: 160, height: 160 },
+    imageStyle: { width: 120, height: 120 },
     backgroundColor: '#FFF5F0',
   },
   {
@@ -88,6 +89,13 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
               backgroundColor: (item as any).backgroundColor ?? colors.background,
             }}
           >
+            {(item as any).secondImage && (
+              <Image
+                source={(item as any).secondImage}
+                style={{ width: 180, height: 50, marginBottom: spacing.md }}
+                contentFit="contain"
+              />
+            )}
             <Image
               source={item.image}
               style={item.imageStyle}
