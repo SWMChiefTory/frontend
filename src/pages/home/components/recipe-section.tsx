@@ -53,8 +53,8 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
         >
           <View
             style={{
-              width: 100,
-              height: 100,
+              width: 76,
+              height: 76,
               borderRadius: radius.lg,
               borderCurve: 'continuous',
               borderWidth: 1.5,
