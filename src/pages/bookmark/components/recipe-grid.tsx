@@ -1,6 +1,8 @@
-import { View, Text, Pressable, Alert, useWindowDimensions } from 'react-native';
+import { View, Text, Pressable, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
-import { colors, spacing, radius } from '@/src/shared/design/tokens';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import type { RecipeCard } from '@/src/shared/data/mock';
 
 interface RecipeGridProps {
@@ -40,16 +42,34 @@ export function RecipeGrid({ recipes, onPress, onLongPress }: RecipeGridProps) {
             }}
             contentFit="cover"
           />
-          <View style={{ gap: 2 }}>
+          <View style={{ gap: 4 }}>
             <Text
-              style={{ fontSize: 14, fontWeight: '600', color: colors.text.primary }}
-              numberOfLines={1}
+              style={{ fontFamily: typography.body.fontFamily, fontSize: 14, fontWeight: '600', color: colors.text.primary }}
+              numberOfLines={2}
             >
               {recipe.title}
             </Text>
-            <Text style={{ fontSize: 12, color: colors.text.secondary }}>
-              {recipe.duration}
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, color: colors.text.secondary }}>
+              {recipe.duration} {recipe.views ? `· ${recipe.views}` : ''}
             </Text>
+            <Pressable
+              onPress={() => router.push(`/native-step/${recipe.id}`)}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 4,
+                backgroundColor: colors.primary,
+                paddingVertical: spacing.xs,
+                borderRadius: radius.sm,
+                marginTop: 2,
+              }}
+            >
+              <Ionicons name="mic" size={12} color="#fff" />
+              <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, fontWeight: '600', color: '#fff' }}>
+                음성 모드
+              </Text>
+            </Pressable>
           </View>
         </Pressable>
       ))}
