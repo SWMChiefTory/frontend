@@ -43,13 +43,13 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}
+      contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.sm }}
     >
       {cards.map((card) => (
         <Pressable
           key={card.id}
           onPress={() => onPress(card)}
-          style={{ width: 100, alignItems: 'center', gap: spacing.xs }}
+          style={{ width: 84, alignItems: 'center', gap: spacing.xs }}
         >
           <View
             style={{
