@@ -393,7 +393,7 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
         <View style={styles.gradStep2} pointerEvents="none" />
         <View style={styles.gradStep3} pointerEvents="none" />
         <View style={styles.bottomBar}>
-          <View style={{ position: 'relative' }}>
+          <View style={{ position: 'relative', overflow: 'visible', zIndex: 100 }}>
             <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={32} />
             <Pressable
               onPress={goToPrevStep}
@@ -412,7 +412,7 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
               <Ionicons name="checkmark" size={16} color="#fff" />
             </Pressable>
           ) : (
-            <View style={{ position: 'relative' }}>
+            <View style={{ position: 'relative', overflow: 'visible', zIndex: 100 }}>
               <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={32} />
               <Pressable onPress={goToNextStep} style={styles.navBtn} hitSlop={8}>
                 <Text style={styles.navBtnText}>다음</Text>
