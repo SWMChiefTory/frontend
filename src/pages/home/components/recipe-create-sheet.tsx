@@ -73,7 +73,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
     <BottomSheet
       ref={sheetRef}
       index={-1}
-      snapPoints={['55%']}
+      enableDynamicSizing
       enablePanDownToClose
       keyboardBehavior="interactive"
       keyboardBlurBehavior="restore"
@@ -84,7 +84,12 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
       )}
       backgroundStyle={{ borderRadius: radius.xl }}
     >
-      <BottomSheetView style={{ padding: spacing.xl, flex: 1, justifyContent: 'flex-end', gap: spacing.md }}>
+      <BottomSheetView style={{ padding: spacing.xl, gap: spacing.md }}>
+        {/* 제목 */}
+        <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 20, fontWeight: '700', color: colors.text.primary }}>
+          레시피 등록하기
+        </Text>
+
         {/* 베리 비용 */}
         <View style={{ alignItems: 'center', gap: spacing.xs }}>
           <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
@@ -158,7 +163,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
             paddingVertical: spacing.lg,
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: 'auto',
+            marginTop: spacing.sm,
             borderCurve: 'continuous',
           }}
         >
