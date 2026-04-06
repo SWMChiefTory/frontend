@@ -17,6 +17,8 @@ export interface RecipeCard {
   duration: string;
   views: string;
   description?: string;
+  servings?: number;
+  cookingTime?: number;
 }
 
 export interface Category {

@@ -23,6 +23,8 @@ function toRecipeCards(data: any[] | undefined): RecipeCard[] {
     duration: r.cookingTime ? `${r.cookingTime}분` : '',
     views: r.channelTitle ?? '',
     description: r.description ?? '',
+    servings: r.servings ?? 0,
+    cookingTime: r.cookingTime ?? 0,
   }));
 }
 
