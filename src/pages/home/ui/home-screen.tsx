@@ -5,7 +5,11 @@ import { HomeHeader } from '@/src/pages/home/components/home-header';
 import { FeatureCards } from '@/src/pages/home/components/feature-cards';
 import { ThemeCardsSection, RecipeListSection } from '@/src/pages/home/components/recipe-section';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
-import { MOCK_THEME_CARDS } from '@/src/shared/data/mock';
+import {
+  MOCK_THEME_CARDS,
+  MOCK_HOT_RECIPES,
+  MOCK_RECENT_RECIPES,
+} from '@/src/shared/data/mock';
 import { useRecommendRecipes } from '@/src/entities/recipe/hooks/use-recommend-recipes';
 import { RecommendType } from '@/src/entities/recipe/api/recommend-api';
 import type { RecipeCard } from '@/src/shared/data/mock';
@@ -27,8 +31,15 @@ export function HomeScreen() {
   const { data: popularData, isLoading: popularLoading } = useRecommendRecipes(RecommendType.POPULAR);
   const { data: trendingData, isLoading: trendingLoading } = useRecommendRecipes(RecommendType.TRENDING);
 
-  const hotRecipes = useMemo(() => toRecipeCards(popularData?.data), [popularData]);
-  const recentRecipes = useMemo(() => toRecipeCards(trendingData?.data), [trendingData]);
+  const hotRecipes = useMemo(() => {
+    const apiCards = toRecipeCards(popularData?.data);
+    return apiCards.length > 0 ? apiCards : MOCK_HOT_RECIPES;
+  }, [popularData]);
+
+  const recentRecipes = useMemo(() => {
+    const apiCards = toRecipeCards(trendingData?.data);
+    return apiCards.length > 0 ? apiCards : MOCK_RECENT_RECIPES;
+  }, [trendingData]);
 
   const handleBerryPress = useCallback(() => {
     Alert.alert('베리', '베리 잔액: 32');
