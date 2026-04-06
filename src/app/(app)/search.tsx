@@ -12,8 +12,8 @@ import {
   deleteSearchHistory,
   deleteAllSearchHistories,
   searchRecipes,
-  type SearchedRecipe,
 } from '@/src/entities/recipe/api/search-api';
+import { fetchRecommendRecipes, RecommendType } from '@/src/entities/recipe/api/recommend-api';
 
 function useDebounce(value: string, delay: number) {
   const [debounced, setDebounced] = useState(value);
@@ -43,6 +43,17 @@ export default function SearchScreen() {
     queryFn: fetchSearchHistories,
     staleTime: 5 * 60_000,
   });
+
+  const { data: trendingData } = useQuery({
+    queryKey: ['trendingForSearch'],
+    queryFn: () => fetchRecommendRecipes(RecommendType.TRENDING),
+    staleTime: 5 * 60_000,
+  });
+
+  const popularKeywords = [
+    '제육볶음', '파스타', '김치찌개', '계란덮밥',
+    '알리오 올리오', '볶음밥', '떡볶이', '미역국',
+  ];
 
   const { data: results, isLoading: searchLoading } = useQuery({
     queryKey: ['searchRecipes', submittedQuery],
@@ -178,6 +189,64 @@ export default function SearchScreen() {
                     <Pressable onPress={() => handleDeleteHistory(h.text)} hitSlop={4}>
                       <Ionicons name="close" size={14} color={colors.text.disabled} />
                     </Pressable>
+                  </Pressable>
+                ))}
+              </ScrollView>
+            </View>
+          )}
+
+          {/* 인기 검색어 */}
+          <View style={{ gap: spacing.md, paddingTop: spacing.xl }}>
+            <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 16, fontWeight: '700', color: colors.text.primary, paddingHorizontal: spacing.xl }}>
+              인기 검색어
+            </Text>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, paddingHorizontal: spacing.xl }}>
+              {popularKeywords.map((kw, i) => (
+                <Pressable
+                  key={i}
+                  onPress={() => handleSubmit(kw)}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: spacing.xs,
+                    backgroundColor: colors.surface,
+                    paddingHorizontal: spacing.md,
+                    paddingVertical: spacing.sm,
+                    borderRadius: radius.full,
+                  }}
+                >
+                  <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, fontWeight: '700', color: colors.primary }}>
+                    {i + 1}
+                  </Text>
+                  <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.primary }}>
+                    {kw}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          </View>
+
+          {/* 트렌딩 레시피 */}
+          {trendingData && trendingData.data.length > 0 && (
+            <View style={{ gap: spacing.md, paddingTop: spacing.xl }}>
+              <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 16, fontWeight: '700', color: colors.text.primary, paddingHorizontal: spacing.xl }}>
+                지금 뜨는 레시피
+              </Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: spacing.xl, gap: spacing.md }}>
+                {trendingData.data.slice(0, 8).map((r) => (
+                  <Pressable
+                    key={r.recipeId}
+                    onPress={() => router.push(`/recipe/${r.recipeId}`)}
+                    style={{ width: 140, gap: spacing.sm }}
+                  >
+                    <Image
+                      source={{ uri: r.videoThumbnailUrl }}
+                      style={{ width: 140, height: 90, borderRadius: radius.md, backgroundColor: colors.surface }}
+                      contentFit="cover"
+                    />
+                    <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, fontWeight: '500', color: colors.text.primary }} numberOfLines={2}>
+                      {r.recipeTitle}
+                    </Text>
                   </Pressable>
                 ))}
               </ScrollView>
