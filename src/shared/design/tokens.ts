@@ -48,7 +48,7 @@ export const colors = {
  */
 export const typography = {
   heading: {
-    fontFamily: 'GowunBatang',
+    fontFamily: 'KHNPHandotumOTF',
     h1: { fontSize: 24, fontWeight: '700' as const, lineHeight: 32 },
     h2: { fontSize: 20, fontWeight: '700' as const, lineHeight: 28 },
   },
