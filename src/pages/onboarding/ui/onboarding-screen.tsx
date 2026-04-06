@@ -11,7 +11,7 @@ const SLIDES = [
     title: '쉐프토리에 오신 걸 환영해요!',
     subtitle: '말만 하면 토리가 대신 터치해줄게요',
     imageStyle: { width: 160, height: 160 },
-    backgroundColor: '#FFF8E1',
+    backgroundColor: '#FFF5F0',
   },
   {
     id: '2',
@@ -19,6 +19,7 @@ const SLIDES = [
     title: '레시피를 등록하세요',
     subtitle: '유튜브 URL만 붙여넣으면\n재료, 단계가 자동으로 정리돼요',
     imageStyle: { width: 180, height: 360 },
+    backgroundColor: '#FFF5F0',
   },
   {
     id: '3',
@@ -26,6 +27,7 @@ const SLIDES = [
     title: '유튜브에서 바로 공유하세요',
     subtitle: '요리 영상에서 공유 버튼을 누르고\n쉐프토리로 보내면 자동 등록돼요',
     imageStyle: { width: 180, height: 360 },
+    backgroundColor: '#FFF5F0',
   },
   {
     id: '4',
@@ -33,6 +35,7 @@ const SLIDES = [
     title: '음성으로 요리해요',
     subtitle: '핸즈프리 모드에서\n"다음", "이전"만 말하면 단계가 넘어가요',
     imageStyle: { width: 180, height: 360 },
+    backgroundColor: '#FFF5F0',
   },
 ];
 
