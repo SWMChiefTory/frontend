@@ -24,8 +24,9 @@ export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: Hom
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingHorizontal: spacing.lg,
-          paddingVertical: spacing.sm,
+          paddingHorizontal: spacing.xl,
+          paddingTop: spacing.lg,
+          paddingBottom: spacing.md,
         }}
       >
         <Pressable
@@ -61,7 +62,7 @@ export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: Hom
       </View>
 
       {/* 2행: 검색바 */}
-      <View style={{ paddingHorizontal: spacing.lg, paddingBottom: spacing.md }}>
+      <View style={{ paddingHorizontal: spacing.xl, paddingBottom: spacing.lg }}>
         <Pressable
           onPress={onSearchPress}
           style={{
@@ -70,7 +71,7 @@ export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: Hom
             gap: spacing.sm,
             backgroundColor: colors.background,
             borderRadius: radius.md,
-            paddingHorizontal: spacing.md,
+            paddingHorizontal: spacing.lg,
             paddingVertical: spacing.md,
           }}
         >
