@@ -1,17 +1,17 @@
-import { View, Text, Pressable, ScrollView, Alert, ActionSheetIOS, Platform, ActivityIndicator } from 'react-native';
+import { View, Text, Pressable, ScrollView, Alert, ActionSheetIOS, Platform, ActivityIndicator, TextInput } from 'react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
-import BottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useQueryClient } from '@tanstack/react-query';
 import { CategoryChips } from '@/src/pages/bookmark/components/category-chips';
 import { RecipeGrid } from '@/src/pages/bookmark/components/recipe-grid';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { useMyRecipes, useCategorizedRecipes, useCategories } from '@/src/entities/recipe/hooks/use-my-recipes';
-import { deleteCategory } from '@/src/entities/recipe/api/user-recipe-api';
-import type { UserRecipe, Category } from '@/src/entities/recipe/api/user-recipe-api';
+import { createCategory, deleteCategory } from '@/src/entities/recipe/api/user-recipe-api';
+import type { UserRecipe } from '@/src/entities/recipe/api/user-recipe-api';
 import type { RecipeCard } from '@/src/shared/data/mock';
 
 const EMPTY_STATE = require('@/assets/images/empty-state.png');
@@ -25,7 +25,6 @@ function toRecipeCards(recipes: UserRecipe[]): RecipeCard[] {
       thumbnailUrl: r.videoThumbnailUrl,
       duration: r.cookingTime ? `${r.cookingTime}분` : '',
       views: r.channelTitle,
-      videoType: r.videoType,
     }));
 }
 
@@ -34,6 +33,8 @@ export function BookmarkScreen() {
   const queryClient = useQueryClient();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const categorySheetRef = useRef<BottomSheet>(null);
+  const addCategorySheetRef = useRef<BottomSheet>(null);
+  const [newCategoryName, setNewCategoryName] = useState('');
 
   const { data: categoriesData } = useCategories();
   const { data: allRecipesData, isLoading: allLoading } = useMyRecipes();
@@ -86,17 +87,22 @@ export function BookmarkScreen() {
   }, []);
 
   const handleAddCategory = useCallback(() => {
-    Alert.prompt?.('카테고리 추가', '이름을 입력하세요', async (name) => {
-      if (!name?.trim()) return;
-      try {
-        const { createCategory } = await import('@/src/entities/recipe/api/user-recipe-api');
-        await createCategory(name.trim());
-        queryClient.invalidateQueries({ queryKey: ['categories'] });
-      } catch {
-        Alert.alert('오류', '카테고리 생성에 실패했어요');
-      }
-    }) ?? Alert.alert('카테고리 추가', '새 카테고리를 만듭니다');
-  }, [queryClient]);
+    setNewCategoryName('');
+    addCategorySheetRef.current?.expand();
+  }, []);
+
+  const handleSubmitCategory = useCallback(async () => {
+    const name = newCategoryName.trim();
+    if (!name) return;
+    try {
+      await createCategory(name);
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      addCategorySheetRef.current?.close();
+      setNewCategoryName('');
+    } catch {
+      Alert.alert('오류', '카테고리 생성에 실패했어요');
+    }
+  }, [newCategoryName, queryClient]);
 
   const handleCategoryManage = useCallback(() => {
     categorySheetRef.current?.expand();
@@ -197,17 +203,74 @@ export function BookmarkScreen() {
             </Pressable>
           </View>
 
-          {categories.filter((c) => c.id !== 'all').map((cat) => (
-            <View
-              key={cat.id}
-              style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: spacing.sm }}
-            >
-              <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>{cat.name}</Text>
-              <Pressable onPress={() => handleDeleteCategory(cat)} hitSlop={8}>
-                <Ionicons name="trash-outline" size={20} color={colors.semantic.error} />
-              </Pressable>
-            </View>
-          ))}
+          {categories.filter((c) => c.id !== 'all').length === 0 ? (
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.disabled, textAlign: 'center', paddingVertical: spacing.xl }}>
+              카테고리가 없어요
+            </Text>
+          ) : (
+            categories.filter((c) => c.id !== 'all').map((cat) => (
+              <View
+                key={cat.id}
+                style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: spacing.sm }}
+              >
+                <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>{cat.name}</Text>
+                <Pressable onPress={() => handleDeleteCategory(cat)} hitSlop={8}>
+                  <Ionicons name="trash-outline" size={20} color={colors.semantic.error} />
+                </Pressable>
+              </View>
+            ))
+          )}
+        </BottomSheetView>
+      </BottomSheet>
+
+      {/* 카테고리 추가 바텀시트 */}
+      <BottomSheet
+        ref={addCategorySheetRef}
+        index={-1}
+        enableDynamicSizing
+        enablePanDownToClose
+        keyboardBehavior="interactive"
+        keyboardBlurBehavior="restore"
+        backdropComponent={(props) => (
+          <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} />
+        )}
+        backgroundStyle={{ borderRadius: radius.xl }}
+      >
+        <BottomSheetView style={{ padding: spacing.xl, gap: spacing.md }}>
+          <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 18, fontWeight: '700', color: colors.text.primary }}>
+            카테고리 추가
+          </Text>
+          <BottomSheetTextInput
+            value={newCategoryName}
+            onChangeText={setNewCategoryName}
+            placeholder="카테고리 이름"
+            placeholderTextColor={colors.text.disabled}
+            autoFocus
+            style={{
+              fontFamily: typography.body.fontFamily,
+              fontSize: 15,
+              color: colors.text.primary,
+              borderWidth: 1,
+              borderColor: newCategoryName.trim() ? colors.primary : colors.border,
+              borderRadius: radius.md,
+              paddingHorizontal: spacing.md,
+              paddingVertical: spacing.md,
+            }}
+          />
+          <Pressable
+            onPress={handleSubmitCategory}
+            disabled={!newCategoryName.trim()}
+            style={{
+              backgroundColor: newCategoryName.trim() ? colors.primary : colors.border,
+              borderRadius: radius.md,
+              paddingVertical: spacing.md,
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 15, fontWeight: '600', color: '#fff' }}>
+              추가하기
+            </Text>
+          </Pressable>
         </BottomSheetView>
       </BottomSheet>
     </View>
