@@ -28,7 +28,7 @@ export async function fetchMyRecipes(cursor?: string | null): Promise<{
   try {
     const res = await client.get('/recipes/recent', { params: cursor ? { cursor } : {} });
     const raw = res.data;
-    const recipes = raw.recipes ?? raw.data ?? [];
+    const recipes = raw.recent_recipes ?? raw.recipes ?? raw.data ?? [];
 
     return {
       nextCursor: raw.next_cursor ?? raw.nextCursor ?? null,
@@ -50,7 +50,7 @@ export async function fetchCategorizedRecipes(categoryId: string, cursor?: strin
   try {
     const res = await client.get(`/recipes/categorized/${categoryId}`, { params: cursor ? { cursor } : {} });
     const raw = res.data;
-    const recipes = raw.recipes ?? raw.data ?? [];
+    const recipes = raw.categorized_recipes ?? raw.recent_recipes ?? raw.recipes ?? raw.data ?? [];
 
     return {
       nextCursor: raw.next_cursor ?? raw.nextCursor ?? null,
@@ -90,18 +90,16 @@ export async function deleteCategory(categoryId: string): Promise<void> {
 }
 
 function mapUserRecipe(r: any): UserRecipe {
-  const videoInfo = r.video_info ?? r.videoInfo ?? r;
-  const meta = r.recipe_detail_meta ?? r.recipeDetailMeta ?? r;
   return {
     recipeId: r.recipe_id ?? r.recipeId ?? '',
-    recipeTitle: r.recipe_title ?? r.recipeTitle ?? videoInfo.video_title ?? videoInfo.videoTitle ?? '',
-    videoId: videoInfo.video_id ?? videoInfo.videoId ?? '',
-    videoThumbnailUrl: videoInfo.video_thumbnail_url ?? videoInfo.videoThumbnailUrl ?? '',
-    videoType: videoInfo.video_type ?? videoInfo.videoType ?? 'NORMAL',
-    channelTitle: videoInfo.channel_title ?? videoInfo.channelTitle ?? '',
-    cookingTime: meta.cooking_time ?? meta.cookingTime ?? 0,
-    servings: meta.servings ?? 0,
-    description: meta.description ?? '',
+    recipeTitle: r.recipe_title ?? r.recipeTitle ?? '',
+    videoId: r.video_id ?? r.videoId ?? '',
+    videoThumbnailUrl: r.video_thumbnail_url ?? r.videoThumbnailUrl ?? '',
+    videoType: r.video_type ?? r.videoType ?? 'NORMAL',
+    channelTitle: r.channel_title ?? r.channelTitle ?? '',
+    cookingTime: r.cook_time ?? r.cooking_time ?? r.cookingTime ?? 0,
+    servings: r.servings ?? 0,
+    description: r.description ?? '',
     recipeStatus: r.recipe_status ?? r.recipeStatus ?? '',
   };
 }
