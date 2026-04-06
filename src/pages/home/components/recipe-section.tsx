@@ -22,12 +22,14 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
           style={{
             width: 150,
             height: 150,
-            backgroundColor: card.backgroundColor,
+            backgroundColor: colors.background,
             borderRadius: radius.lg,
             padding: spacing.md,
             justifyContent: 'space-between',
             borderCurve: 'continuous',
             overflow: 'hidden',
+            borderWidth: 1.5,
+            borderColor: '#FFDAB9',
           }}
         >
           {/* 에셋 — 오른쪽 상단 */}
@@ -52,7 +54,7 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
                 fontFamily: typography.heading.fontFamily,
                 fontSize: 16,
                 fontWeight: '700',
-                color: colors.text.inverse,
+                color: colors.text.primary,
               }}
               numberOfLines={1}
             >
@@ -62,7 +64,7 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
               style={{
                 fontFamily: typography.body.fontFamily,
                 fontSize: 12,
-                color: 'rgba(255,255,255,0.8)',
+                color: colors.text.secondary,
               }}
               numberOfLines={1}
             >
