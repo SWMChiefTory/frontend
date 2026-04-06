@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { HomeHeader } from '@/src/pages/home/components/home-header';
 import { FeatureCards } from '@/src/pages/home/components/feature-cards';
 import { ThemeCardsSection, RecipeListSection } from '@/src/pages/home/components/recipe-section';
-import { CategoryRow } from '@/src/pages/home/components/category-row';
 import { colors, spacing, radius } from '@/src/shared/design/tokens';
 import {
   MOCK_THEME_CARDS,
@@ -75,12 +74,6 @@ export function HomeScreen() {
           <ThemeCardsSection
             cards={MOCK_THEME_CARDS}
             onPress={handleThemePress}
-          />
-
-          <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
-
-          <CategoryRow
-            onPress={(id, label) => Alert.alert(label, `${label} 카테고리 페이지(웹뷰)로 이동`)}
           />
 
           <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
