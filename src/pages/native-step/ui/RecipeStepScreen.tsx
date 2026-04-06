@@ -296,121 +296,102 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
           </View>
         </View>
 
-        {/* 하단 — 스텝 설명 + 버튼 (바닥부터) */}
-        <View style={{ flex: 1, backgroundColor: '#111', paddingHorizontal: 16 }}>
-          {/* 스텝 내용 */}
-          <ScrollView style={{ flex: 1, paddingTop: 12 }} showsVerticalScrollIndicator={false}>
-            <Text style={{ color: '#fff', fontSize: 20, fontWeight: '700' }}>
-              {currentStep?.title}
-            </Text>
-            {currentStep?.description && (
-              <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 15, marginTop: 8, lineHeight: 22 }}>
-                {Array.isArray(currentStep.description)
-                  ? currentStep.description.map((d: any) => d.content).join('\n')
-                  : currentStep.description}
+        {/* 하단 — 왼쪽 설명 + 오른쪽 버튼 세로 */}
+        <View style={{ flex: 1, backgroundColor: '#111', flexDirection: 'row' }}>
+          {/* 왼쪽: 스텝 내용 */}
+          <View style={{ flex: 1, paddingHorizontal: 16, paddingTop: 12 }}>
+            <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+              <Text style={{ color: '#fff', fontSize: 20, fontWeight: '700' }}>
+                {currentStep?.title}
               </Text>
-            )}
-          </ScrollView>
-
-          {/* 버튼 행 + STT */}
-          <View style={{ paddingBottom: Math.max(insets.bottom, 16), gap: 8 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 10 }}>
-              {/* 이전 */}
-              <View style={{ overflow: 'visible', position: 'relative' }}>
-                <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={28} />
-                <Pressable
-                  onPress={goToPrevStep}
-                  disabled={isFirstStep}
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 22,
-                    backgroundColor: isFirstStep ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.15)',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Ionicons name="chevron-back" size={20} color={isFirstStep ? 'rgba(255,255,255,0.2)' : '#fff'} />
-                </Pressable>
-              </View>
-
-              {/* 재생/정지 */}
-              <View style={{ overflow: 'visible', position: 'relative' }}>
-                <PawFeedback visible={intentFeedback?.intent === 'PLAY' || intentFeedback?.intent === 'PAUSE'} size={28} />
-                <Pressable
-                  onPress={togglePlay}
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 22,
-                    backgroundColor: 'rgba(255,255,255,0.15)',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Ionicons name={isPlaying ? 'pause' : 'play'} size={18} color="#fff" />
-                </Pressable>
-              </View>
-
-              {/* 다음 */}
-              <View style={{ overflow: 'visible', position: 'relative', flex: 1 }}>
-                <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={28} />
-                {isLastStep ? (
-                  <Pressable
-                    onPress={handleBack}
-                    style={{
-                      height: 44,
-                      borderRadius: 22,
-                      backgroundColor: '#16a34a',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <Text style={{ color: '#fff', fontSize: 15, fontWeight: '700' }}>완료</Text>
-                  </Pressable>
-                ) : (
-                  <Pressable
-                    onPress={goToNextStep}
-                    style={{
-                      height: 44,
-                      borderRadius: 22,
-                      backgroundColor: '#f97316',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <Text style={{ color: '#fff', fontSize: 15, fontWeight: '700' }}>다음 단계</Text>
-                  </Pressable>
-                )}
-              </View>
-
-              {/* 마이크 */}
-              <View style={{ overflow: 'visible', position: 'relative' }}>
-                <PawFeedback visible={intentFeedback?.intent === 'GO_TO_SCENE' || intentFeedback?.intent === 'GO_TO_STEP'} size={28} />
-                <Pressable
-                  onPress={isVideoLoaded ? toggleListening : undefined}
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 22,
-                    backgroundColor: isListening ? 'rgba(74,222,128,0.3)' : 'rgba(255,255,255,0.15)',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Ionicons name={isListening ? 'mic' : 'mic-off'} size={18} color={isListening ? '#4ade80' : '#fff'} />
-                </Pressable>
-              </View>
-            </View>
-
+              {currentStep?.description && (
+                <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 15, marginTop: 8, lineHeight: 22 }}>
+                  {Array.isArray(currentStep.description)
+                    ? currentStep.description.map((d: any) => d.content).join('\n')
+                    : currentStep.description}
+                </Text>
+              )}
+            </ScrollView>
             {isListening && (
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, paddingBottom: Math.max(insets.bottom, 12) }}>
                 <View style={[styles.sttDot, pipelineState === 'TRANSCRIBING' ? styles.sttDotActive : styles.sttDotIdle]} />
                 <Text style={[styles.sttText, pipelineState === 'TRANSCRIBING' ? styles.sttTextActive : styles.sttTextIdle]} numberOfLines={1}>
                   {pipelineState === 'TRANSCRIBING' ? transcript || '듣고 있어요...' : '대기 중'}
                 </Text>
               </View>
             )}
+          </View>
+
+          {/* 오른쪽: 버튼 세로 나열 */}
+          <View style={{ width: 56, alignItems: 'center', justifyContent: 'center', gap: 10, paddingBottom: Math.max(insets.bottom, 12) }}>
+            {/* 이전 */}
+            <View style={{ overflow: 'visible', position: 'relative' }}>
+              <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={28} />
+              <Pressable
+                onPress={goToPrevStep}
+                disabled={isFirstStep}
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 12,
+                  backgroundColor: isFirstStep ? '#2a2a2a' : '#333',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Ionicons name="chevron-up" size={20} color={isFirstStep ? '#555' : '#fff'} />
+              </Pressable>
+            </View>
+
+            {/* 재생/정지 */}
+            <View style={{ overflow: 'visible', position: 'relative' }}>
+              <PawFeedback visible={intentFeedback?.intent === 'PLAY' || intentFeedback?.intent === 'PAUSE'} size={28} />
+              <Pressable
+                onPress={togglePlay}
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 12,
+                  backgroundColor: '#333',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Ionicons name={isPlaying ? 'pause' : 'play'} size={18} color="#fff" />
+              </Pressable>
+            </View>
+
+            {/* 다음 */}
+            <View style={{ overflow: 'visible', position: 'relative' }}>
+              <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={28} />
+              {isLastStep ? (
+                <Pressable onPress={handleBack} style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: '#16a34a', alignItems: 'center', justifyContent: 'center' }}>
+                  <Ionicons name="checkmark" size={20} color="#fff" />
+                </Pressable>
+              ) : (
+                <Pressable onPress={goToNextStep} style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: '#f97316', alignItems: 'center', justifyContent: 'center' }}>
+                  <Ionicons name="chevron-down" size={20} color="#fff" />
+                </Pressable>
+              )}
+            </View>
+
+            {/* 마이크 */}
+            <View style={{ overflow: 'visible', position: 'relative' }}>
+              <PawFeedback visible={intentFeedback?.intent === 'GO_TO_SCENE' || intentFeedback?.intent === 'GO_TO_STEP'} size={28} />
+              <Pressable
+                onPress={isVideoLoaded ? toggleListening : undefined}
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 12,
+                  backgroundColor: isListening ? 'rgba(74,222,128,0.3)' : '#333',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Ionicons name={isListening ? 'mic' : 'mic-off'} size={18} color={isListening ? '#4ade80' : '#fff'} />
+              </Pressable>
+            </View>
           </View>
         </View>
 
