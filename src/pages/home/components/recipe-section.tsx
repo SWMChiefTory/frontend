@@ -52,7 +52,7 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
           style={{
             width: 120,
             height: 110,
-            backgroundColor: colors.background,
+            backgroundColor: 'transparent',
             borderRadius: radius.lg,
             paddingHorizontal: spacing.sm,
             paddingBottom: spacing.sm,
