@@ -76,11 +76,15 @@ export function HomeScreen() {
             onPress={handleThemePress}
           />
 
+          <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
+
           <RecipeListSection
             title="지금 핫한 레시피"
             recipes={MOCK_HOT_RECIPES}
             onPress={handleRecipePress}
           />
+
+          <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
 
           <RecipeListSection
             title="최근 시청 레시피"

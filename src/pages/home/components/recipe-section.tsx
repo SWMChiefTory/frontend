@@ -12,12 +12,8 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
   return (
     <View
       style={{
-        marginHorizontal: spacing.lg,
-        backgroundColor: colors.surface,
-        borderRadius: radius.xl,
         paddingVertical: spacing.lg,
         gap: spacing.md,
-        borderCurve: 'continuous',
       }}
     >
       <Text
@@ -120,12 +116,8 @@ export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListS
   return (
     <View
       style={{
-        marginHorizontal: spacing.lg,
-        backgroundColor: colors.surface,
-        borderRadius: radius.xl,
         paddingVertical: spacing.lg,
         gap: spacing.md,
-        borderCurve: 'continuous',
       }}
     >
       <Text
