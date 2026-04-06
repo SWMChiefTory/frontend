@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as ExpoSplashScreen from "expo-splash-screen";
+import { useFonts } from "expo-font";
 import { GlobalErrorBoundary } from "../modules/shared/components/error/GlobalErrorBoundary";
 import { SplashScreenController } from "../modules/shared/splash/SplashScreenController";
 import { useEffect } from "react";
@@ -116,6 +117,11 @@ const theme = {
 
 export default function RootLayout() {
   const { isReady, isLoggedIn } = useAppBootstrap();
+
+  const [fontsLoaded] = useFonts({
+    'KHNPHandotumOTF': require('@/assets/fonts/KHNPHDotfR.otf'),
+    'KHNPHandotumOTF Bold': require('@/assets/fonts/KHNPHDotfB.otf'),
+  });
 
   useOnlineManager();
   useAppState(onAppStateChange);
