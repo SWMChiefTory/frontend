@@ -17,7 +17,7 @@ export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: Hom
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={{ paddingTop: insets.top, backgroundColor: colors.surface }}>
+    <View style={{ paddingTop: insets.top }}>
       {/* 1행: 베리 + 설정 */}
       <View
         style={{
