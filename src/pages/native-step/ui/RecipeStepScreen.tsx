@@ -16,6 +16,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { useVoiceCommand } from '@/src/pages/native-step/hooks/useVoiceCommand';
 import { IntentFeedbackToast } from '@/src/pages/native-step/components/IntentFeedbackToast';
+import { useStepTimer } from '@/src/pages/native-step/hooks/useStepTimer';
+import { HeaderTimer, TimerSheet, type TimerSheetRef } from '@/src/pages/native-step/components/TimerBottomSheet';
 
 const YOUTUBE_URL = process.env.EXPO_PUBLIC_YOUTUBE_URL ?? 'http://localhost:3000';
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -67,6 +69,13 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === totalSteps - 1;
   const scenes: Scene[] = currentStep?.scenes ?? [];
+
+  // ─── Timer ───
+  const timerSheetRef = useRef<TimerSheetRef>(null);
+  const timerResult = useStepTimer({
+    recipeId: recipe?.id ?? videoId,
+    recipeTitle: recipe?.title ?? '',
+  });
   const sceneLabels = useMemo(() => scenes.map((s: Scene) => s.label), [scenes]);
 
   // 앱이 꺼지지 않게 잠금 설정
@@ -93,7 +102,7 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
     setCurrentStepIndex(i);
     setActiveSceneIndex(sceneIdx);
     const scene = steps[i]?.scenes?.[sceneIdx];
-    if (scene) postToYouTube({ type: 'SEEK_TO', time: parseTime(scene.start) });
+    if (scene) postToYouTube({ type: 'SEEK_TO', seconds: parseTime(scene.start) });
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   }, [steps, totalSteps, postToYouTube, parseTime]);
 
@@ -113,19 +122,19 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
   const seekToScene = useCallback((i: number) => {
     const scene = currentStep?.scenes?.[i];
     if (scene) {
-      postToYouTube({ type: 'SEEK_TO', time: parseTime(scene.start) });
-      postToYouTube({ type: 'PLAY' });
+      postToYouTube({ type: 'SEEK_TO', seconds: parseTime(scene.start) });
+      postToYouTube({ type: 'PLAY_VIDEO' });
       setActiveSceneIndex(i);
     }
   }, [currentStep, postToYouTube, parseTime]);
 
   const playVideo = useCallback(() => {
-    postToYouTube({ type: 'PLAY' });
+    postToYouTube({ type: 'PLAY_VIDEO' });
     setIsPlaying(true);
   }, [postToYouTube]);
 
   const pauseVideo = useCallback(() => {
-    postToYouTube({ type: 'PAUSE' });
+    postToYouTube({ type: 'PAUSE_VIDEO' });
     setIsPlaying(false);
   }, [postToYouTube]);
 
@@ -133,6 +142,19 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
     if (isPlaying) pauseVideo();
     else playVideo();
   }, [isPlaying, playVideo, pauseVideo]);
+
+  // ─── Volume Ducking (음성 인식 중 영상 볼륨 줄이기) ───
+  const setVideoVolume = useCallback((volume: number) => {
+    postToYouTube({ type: 'SET_VOLUME', volume });
+  }, [postToYouTube]);
+
+  const onVoiceStart = useCallback(() => {
+    setVideoVolume(0);
+  }, [setVideoVolume]);
+
+  const onVoiceEnd = useCallback(() => {
+    setVideoVolume(1);
+  }, [setVideoVolume]);
 
   // ─── Voice Command ───
   const {
@@ -156,6 +178,8 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
     isFirstStep,
     isLastStep,
     webViewRef: webviewRef,
+    onVoiceStart,
+    onVoiceEnd,
   });
 
   // ─── WebView Message ───
@@ -233,6 +257,13 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
             {currentStep.title}
           </Text>
 
+          <HeaderTimer
+            timer={timerResult.timer}
+            displayTime={timerResult.displayTime}
+            isUrgent={timerResult.isUrgent}
+            onPress={() => timerSheetRef.current?.open()}
+          />
+
           <Pressable
             onPress={isVideoLoaded ? toggleListening : undefined}
             style={[
@@ -249,6 +280,8 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
             />
           </Pressable>
         </View>
+
+        {/* ─── Timer Mini Bar (헤더 바로 아래, 진행 바 위) ─── */}
 
         {/* ─── 세그먼트 진행 바 ─── */}
         <View style={styles.progressBar}>
@@ -391,6 +424,12 @@ export function RecipeStepScreen({ videoId, recipe }: RecipeStepScreenProps) {
           )}
         </View>
       </View>
+      {/* ─── Timer Bottom Sheet ─── */}
+      <TimerSheet
+        ref={timerSheetRef}
+        timerResult={timerResult}
+        stepName={currentStep?.title ?? '타이머'}
+      />
     </GestureHandlerRootView>
   );
 }
