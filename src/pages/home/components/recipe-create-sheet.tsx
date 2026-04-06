@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useImperativeHandle, useRef, useState } from 'react';
-import { View, Text, TextInput, Pressable, Alert, ActivityIndicator, Linking } from 'react-native';
-import BottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { View, Text, Pressable, Alert, ActivityIndicator, Linking } from 'react-native';
+import BottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
@@ -96,7 +96,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
 
         {/* URL 입력 */}
         <View style={{ gap: spacing.sm }}>
-          <TextInput
+          <BottomSheetTextInput
             value={url}
             onChangeText={(text) => { setUrl(text); setError(null); }}
             placeholder="https://www.youtube.com/watch?v=..."
