@@ -38,7 +38,7 @@ export function HeaderTimer({
       ? '#ef4444'
       : timer.state === 'PAUSED'
         ? 'rgba(255,255,255,0.5)'
-        : '#f97316';
+        : '#C4632B';
 
   return (
     <Pressable onPress={onPress} hitSlop={8} style={s.headerTimer}>
@@ -88,7 +88,7 @@ export function TimerMiniBar({
     ? '#22c55e'
     : isUrgent ? '#ef4444'
     : isPaused ? 'rgba(249,115,22,0.4)'
-    : '#f97316';
+    : '#C4632B';
 
   const textColor = isPaused ? 'rgba(255,255,255,0.5)' : '#fff';
 
@@ -350,7 +350,7 @@ const s = StyleSheet.create({
   pickerContainer: { alignItems: 'center', gap: 20 },
   pickerTitle: { color: 'rgba(255,255,255,0.7)', fontSize: 15, fontWeight: '600' },
   pickerRow: { flexDirection: 'row', justifyContent: 'center', gap: 32 },
-  startBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: '#f97316', paddingHorizontal: 48, paddingVertical: 14, borderRadius: 24 },
+  startBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: '#C4632B', paddingHorizontal: 48, paddingVertical: 14, borderRadius: 24 },
   startBtnText: { color: '#fff', fontSize: 16, fontWeight: '700' },
 
   wheelContainer: { alignItems: 'center', gap: 8 },
@@ -359,14 +359,14 @@ const s = StyleSheet.create({
   wheelHighlight: { position: 'absolute', top: ITEM_HEIGHT, left: 0, right: 0, height: ITEM_HEIGHT, backgroundColor: 'rgba(249,115,22,0.15)', borderRadius: 10, borderWidth: 1, borderColor: 'rgba(249,115,22,0.3)' },
   wheelItem: { height: ITEM_HEIGHT, justifyContent: 'center', alignItems: 'center' },
   wheelItemText: { fontSize: 24, color: 'rgba(255,255,255,0.3)', fontVariant: ['tabular-nums'] },
-  wheelItemTextSelected: { color: '#f97316', fontSize: 28, fontWeight: '700' },
+  wheelItemTextSelected: { color: '#C4632B', fontSize: 28, fontWeight: '700' },
 
   timerDetail: { alignItems: 'center', gap: 12 },
   timerDetailName: { color: 'rgba(255,255,255,0.7)', fontSize: 15, fontWeight: '500' },
   pausedLabel: { color: 'rgba(255,255,255,0.4)', fontSize: 12, fontWeight: '500' },
   timerDetailTime: { color: '#fff', fontSize: 48, fontWeight: '700', fontVariant: ['tabular-nums'] },
   timerDetailProgress: { width: '100%', height: 4, backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: 2, overflow: 'hidden' },
-  timerDetailProgressFill: { height: '100%', backgroundColor: '#f97316', borderRadius: 2 },
+  timerDetailProgressFill: { height: '100%', backgroundColor: '#C4632B', borderRadius: 2 },
   timerDetailActions: { flexDirection: 'row', gap: 16, marginTop: 8 },
   actionBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 24, paddingVertical: 12, borderRadius: 20, borderWidth: 1, borderColor: 'rgba(255,255,255,0.12)' },
   actionBtnText: { color: '#fff', fontSize: 14, fontWeight: '600' },
