@@ -87,7 +87,7 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
           borderBottomLeftRadius: radius.xl,
           borderBottomRightRadius: radius.xl,
           borderBottomWidth: 1,
-          borderBottomColor: colors.border,
+          borderBottomColor: '#C8C8C8',
         }}
       >
         <HomeHeader
