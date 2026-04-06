@@ -114,7 +114,7 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
                   color: 'rgba(255,255,255,0.85)',
                 }}
               >
-                준비 중
+                곧 만나요!
               </Text>
             </View>
           )}
