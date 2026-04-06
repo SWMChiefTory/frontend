@@ -20,7 +20,7 @@ export default function AppLayout() {
   return (
     <KeyboardProvider statusBarTranslucent navigationBarTranslucent>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
+        <Stack.Screen name="index" options={{ animation: 'fade' }} />
         <Stack.Screen
           name="onboarding"
           options={{ animation: 'fade' }}
