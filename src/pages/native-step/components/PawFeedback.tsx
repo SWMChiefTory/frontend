@@ -7,7 +7,6 @@ import Animated, {
   withTiming,
   withDelay,
   Easing,
-  runOnJS,
 } from 'react-native-reanimated';
 
 const PAW_IMAGE = require('@/assets/images/paw-print.png');
@@ -19,40 +18,36 @@ interface PawFeedbackProps {
 }
 
 /**
- * 음성 명령 수행 시 발자국이 올라왔다 사라지는 피드백 애니메이션.
- * - 아래에서 위로 올라오면서 나타남
- * - 잠시 유지 후 위로 올라가며 사라짐
+ * 음성 명령 수행 시 버튼 바로 위에서 발자국이 나타났다 아래로 사라지는 피드백.
  */
 export function PawFeedback({ visible, onDone, size = 48 }: PawFeedbackProps) {
   const opacity = useSharedValue(0);
-  const translateY = useSharedValue(20);
+  const translateY = useSharedValue(-20);
   const scale = useSharedValue(0.5);
 
   useEffect(() => {
     if (!visible) return;
 
-    // 올라오면서 나타남
+    // 위에서 나타남
+    translateY.value = -20;
     opacity.value = withSequence(
-      withTiming(1, { duration: 200, easing: Easing.out(Easing.ease) }),
-      withDelay(600, withTiming(0, { duration: 400, easing: Easing.in(Easing.ease) })),
+      withTiming(1, { duration: 150, easing: Easing.out(Easing.ease) }),
+      withDelay(500, withTiming(0, { duration: 300, easing: Easing.in(Easing.ease) })),
     );
 
     translateY.value = withSequence(
-      withTiming(0, { duration: 200, easing: Easing.out(Easing.ease) }),
-      withDelay(600, withTiming(-30, { duration: 400, easing: Easing.in(Easing.ease) })),
+      withTiming(-size - 4, { duration: 150, easing: Easing.out(Easing.ease) }),
+      withDelay(500, withTiming(-size + 10, { duration: 300, easing: Easing.in(Easing.ease) })),
     );
 
     scale.value = withSequence(
-      withTiming(1, { duration: 200, easing: Easing.out(Easing.back(1.5)) }),
-      withDelay(600, withTiming(0.6, {
-        duration: 400,
-        easing: Easing.in(Easing.ease),
-      })),
+      withTiming(1.1, { duration: 150, easing: Easing.out(Easing.back(2)) }),
+      withTiming(1, { duration: 100 }),
+      withDelay(400, withTiming(0.5, { duration: 300, easing: Easing.in(Easing.ease) })),
     );
 
-    // 애니메이션 끝나면 콜백
     if (onDone) {
-      const timer = setTimeout(() => onDone(), 1200);
+      const timer = setTimeout(() => onDone(), 950);
       return () => clearTimeout(timer);
     }
   }, [visible]);
@@ -72,10 +67,13 @@ export function PawFeedback({ visible, onDone, size = 48 }: PawFeedbackProps) {
       style={[
         {
           position: 'absolute',
-          top: -size - 8,
-          alignSelf: 'center',
+          top: 0,
+          left: '50%',
+          marginLeft: -size / 2,
           width: size,
           height: size,
+          zIndex: 999,
+          elevation: 999,
         },
         animStyle,
       ]}
