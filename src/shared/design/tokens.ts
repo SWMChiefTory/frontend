@@ -40,6 +40,12 @@ export const colors = {
   },
 } as const;
 
+/**
+ * 타이포그래피
+ * - 제목: 한수원 한돋움 (커스텀 폰트 로드 후 적용)
+ * - 본문: Pretendard (커스텀 폰트 로드 후 적용)
+ * - 폰트 미로드 시 시스템 기본 폰트로 fallback
+ */
 export const typography = {
   heading: {
     fontFamily: 'HanSuWonHanDotUm',

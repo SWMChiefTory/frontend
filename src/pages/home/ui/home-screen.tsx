@@ -44,40 +44,32 @@ export function HomeScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-      <HomeHeader
-        onBerryPress={handleBerryPress}
-        onSearchPress={handleSearchPress}
-        onSettingsPress={handleSettingsPress}
-      />
+      {/* 고정 헤더 영역 (베리+검색+기능카드) */}
+      <View
+        style={{
+          backgroundColor: colors.surface,
+          paddingBottom: spacing.lg,
+          borderBottomLeftRadius: radius.xl,
+          borderBottomRightRadius: radius.xl,
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
+        }}
+      >
+        <HomeHeader
+          onBerryPress={handleBerryPress}
+          onSearchPress={handleSearchPress}
+          onSettingsPress={handleSettingsPress}
+        />
+        <FeatureCards
+          onCreatePress={handleCreatePress}
+          onLockedPress={handleLockedPress}
+        />
+      </View>
 
+      {/* 스크롤 콘텐츠 영역 */}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 120 }}
+        contentContainerStyle={{ paddingBottom: 120, paddingTop: spacing.xxl, gap: spacing.xxl }}
       >
-        {/* 헤더 영역 (기능 카드 포함) — surface 배경으로 띄움 */}
-        <View
-          style={{
-            backgroundColor: colors.surface,
-            paddingBottom: spacing.xl,
-            borderBottomLeftRadius: radius.xl,
-            borderBottomRightRadius: radius.xl,
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-          }}
-        >
-          <FeatureCards
-            onCreatePress={handleCreatePress}
-            onLockedPress={handleLockedPress}
-          />
-        </View>
-
-        {/* 추천/콘텐츠 영역 — 흰색 배경 */}
-        <View
-          style={{
-            backgroundColor: colors.background,
-            paddingTop: spacing.xxl,
-            gap: spacing.xxl,
-          }}
-        >
           <ThemeCardsSection
             cards={MOCK_THEME_CARDS}
             onPress={handleThemePress}
@@ -95,7 +87,6 @@ export function HomeScreen() {
             recipes={MOCK_RECENT_RECIPES}
             onPress={handleRecipePress}
           />
-        </View>
       </ScrollView>
 
       {/* 잠금 기능 모달 */}
