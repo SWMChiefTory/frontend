@@ -75,6 +75,9 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
       index={-1}
       snapPoints={['55%']}
       enablePanDownToClose
+      keyboardBehavior="interactive"
+      keyboardBlurBehavior="restore"
+      android_keyboardInputMode="adjustResize"
       backdropComponent={(props) => (
         <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} />
       )}
