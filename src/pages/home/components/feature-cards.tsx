@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ScrollView, Alert, ImageSourcePropType } from 'react-native';
+import { View, Text, Pressable, ScrollView, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius } from '@/src/shared/design/tokens';
@@ -29,14 +29,16 @@ interface FeatureCardsProps {
 }
 
 export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps) {
+  const { width } = useWindowDimensions();
+  const cardWidth = (width - spacing.lg * 2 - spacing.md * 2) / 3;
+  const cardHeight = cardWidth * 1.2;
+
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{
+    <View
+      style={{
+        flexDirection: 'row',
         paddingHorizontal: spacing.lg,
         gap: spacing.md,
-        paddingVertical: spacing.sm,
       }}
     >
       {FEATURES.map((feature) => (
@@ -47,38 +49,57 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
             else onCreatePress();
           }}
           style={{
-            width: 120,
-            height: 140,
-            backgroundColor: feature.backgroundColor,
+            flex: 1,
+            height: cardHeight,
             borderRadius: radius.lg,
-            padding: spacing.md,
-            justifyContent: 'space-between',
+            overflow: 'hidden',
             borderCurve: 'continuous',
           }}
         >
+          {/* 배경 이미지 꽉 채움 */}
           <Image
             source={CARD_IMAGES[feature.id]}
-            style={{ width: 48, height: 48 }}
-            contentFit="contain"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+            }}
+            contentFit="cover"
           />
 
-          <View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-              <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text.inverse }}>
+          {/* 하단 그라데이션 + 텍스트 */}
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'flex-end',
+              padding: spacing.sm,
+              backgroundColor: 'rgba(0,0,0,0.25)',
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: '700',
+                  color: colors.text.inverse,
+                }}
+              >
                 {feature.title}
               </Text>
               {feature.locked && (
-                <Ionicons name="lock-closed" size={12} color="rgba(255,255,255,0.7)" />
+                <Ionicons name="lock-closed" size={11} color="rgba(255,255,255,0.7)" />
               )}
             </View>
             {feature.subtitle ? (
-              <Text style={{ fontSize: 12, color: 'rgba(255,255,255,0.8)' }}>
+              <Text style={{ fontSize: 11, color: 'rgba(255,255,255,0.8)' }}>
                 {feature.subtitle}
               </Text>
             ) : null}
           </View>
         </Pressable>
       ))}
-    </ScrollView>
+    </View>
   );
 }
