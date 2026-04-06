@@ -54,19 +54,27 @@ export function HomeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
-        {/* 기능 카드 영역 — 흰색 배경 */}
-        <View style={{ backgroundColor: colors.background, paddingVertical: spacing.lg }}>
+        {/* 헤더 영역 (기능 카드 포함) — surface 배경으로 띄움 */}
+        <View
+          style={{
+            backgroundColor: colors.surface,
+            paddingBottom: spacing.xl,
+            borderBottomLeftRadius: radius.xl,
+            borderBottomRightRadius: radius.xl,
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
+          }}
+        >
           <FeatureCards
             onCreatePress={handleCreatePress}
             onLockedPress={handleLockedPress}
           />
         </View>
 
-        {/* 추천/콘텐츠 영역 — surface 배경으로 분리 */}
+        {/* 추천/콘텐츠 영역 — 흰색 배경 */}
         <View
           style={{
-            backgroundColor: colors.surface,
-            paddingVertical: spacing.xl,
+            backgroundColor: colors.background,
+            paddingTop: spacing.xxl,
             gap: spacing.xxl,
           }}
         >
