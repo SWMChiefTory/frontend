@@ -2,11 +2,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { WebView } from "react-native-webview";
 import { getUserAgent, getWebViewUrl } from "./WebViewConfig";
 import { BackHandler, Platform, StyleSheet, View } from "react-native";
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
 import { useMarketStore } from "@/src/modules/shared/store/marketStore";
 import { useHandleMessage } from "@/src/pages/webview/message/useHandleMessage";
 import { subscribeMessage } from "@/src/shared/webview/sendMessage";
 import { useKeyboardAvoidingAnimation } from "@/src/shared/keyboard/useKeyboardAvoiding";
-import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import { tryGrantPermission } from "./timer/notifications/timerNotifications";
@@ -37,8 +37,29 @@ export function RecipeWebViewContent() {
   const [error, setError] = useState<Error | null>(null);
   const [canGoBack, setCanGoBack] = useState(false);
   
-  // const [isLoading,setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const loadingOpacity = useSharedValue(1);
+  const loadingBarWidth = useSharedValue(0);
 
+  const animatedLoadingStyle = useAnimatedStyle(() => ({
+    opacity: loadingOpacity.value,
+  }));
+
+  const animatedBarStyle = useAnimatedStyle(() => ({
+    width: `${loadingBarWidth.value}%`,
+  }));
+
+  useEffect(() => {
+    if (isLoading) {
+      // 로딩 시작 시 바를 80%까지 천천히 채움
+      loadingBarWidth.value = 0;
+      loadingBarWidth.value = withTiming(80, { duration: 3000 });
+    } else {
+      // 로딩 완료: 바를 100%로 빠르게 채운 후 fade out
+      loadingBarWidth.value = withTiming(100, { duration: 200 });
+      loadingOpacity.value = withTiming(0, { duration: 300 });
+    }
+  }, [isLoading]);
 
   const [safeArea, setSafeArea] = useState<SafeArea>({
     left: { isEixsts: false, color: "#FFFFFF" },
@@ -142,6 +163,7 @@ export function RecipeWebViewContent() {
             }}
             onLoadEnd={() => {
               console.log(`[Perf:WebView] loadEnd | 마운트 후: ${(performance.now() - webviewTimingRef.mountedAt).toFixed(0)}ms`);
+              setIsLoading(false);
             }}
             onError={handleError}
             onRenderProcessGone={(e) => {
@@ -191,7 +213,26 @@ export function RecipeWebViewContent() {
           backgroundColor: safeArea.bottom.color,
         }}
       />
-      {/* <WebviewLoadingView/> */}
+      {isLoading && (
+        <Animated.View
+          style={[
+            StyleSheet.absoluteFillObject,
+            { backgroundColor: 'white', justifyContent: 'flex-start' },
+            animatedLoadingStyle,
+          ]}
+          pointerEvents={isLoading ? 'auto' : 'none'}
+        >
+          <View style={{ height: insets.top }} />
+          <View style={{ height: 3, backgroundColor: '#f3f4f6', overflow: 'hidden' }}>
+            <Animated.View
+              style={[
+                { height: '100%', backgroundColor: '#f97316', borderRadius: 2 },
+                animatedBarStyle,
+              ]}
+            />
+          </View>
+        </Animated.View>
+      )}
     </View>
   );
 }

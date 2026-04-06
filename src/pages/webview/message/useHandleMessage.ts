@@ -16,6 +16,13 @@ import {
   resumeActivity,
   endActivity,
 } from "@/src/pages/webview/timer/live-activity/liveActivity";
+import {
+  useTimerStore,
+  startTimerAction,
+  pauseTimerAction,
+  resumeTimerAction,
+  cancelTimerAction,
+} from "@/src/pages/native-step/hooks/useStepTimer";
 import { useUserStore } from "@/src/modules/user/business/store/userStore";
 import { useMarketStore } from "@/src/modules/shared/store/marketStore";
 import { Alert, Linking, Platform } from "react-native";
@@ -88,6 +95,7 @@ enum payloadType {
   SAFE_AREA = "SAFE_AREA",
   SYSTEM_VOLUME = "SYSTEM_VOLUME",
   GET_APP_VERSION = "GET_APP_VERSION",
+  OPEN_TIMER_SHEET = "OPEN_TIMER_SHEET",
 }
 
 class InvalidJsonError extends Error {
@@ -299,48 +307,47 @@ export function useHandleMessage({
               break;
             }
 
+            // ─── 타이머: Zustand 전역 스토어로 라우팅 ───
             case payloadType.SCHEDULE_TIMER_NOTIFICATION: {
               const { timerId, recipeId, remainingSeconds, recipeTitle } =
                 req.payload;
-              await scheduleTimerAlarm(
-                timerId,
+              // 네이티브 타이머 스토어로 시작 (알림 + Live Activity 포함)
+              startTimerAction({
+                name: recipeTitle,
+                seconds: remainingSeconds,
                 recipeId,
                 recipeTitle,
-                remainingSeconds,
-                market ?? cachedMarket,
-              );
-              break;
-            }
-            case payloadType.CANCEL_TIMER_NOTIFICATION: {
-              const { timerId } = req.payload;
-              await cancelTimerAlarm({ timerId });
-              break;
-            }
-            case payloadType.START_LIVE_ACTIVITY: {
-              const { timerId, activityName, endAt, recipeId } = req.payload;
-              await startActivity({ timerId, activityName, endAt, recipeId });
-              break;
-            }
-            case payloadType.PAUSE_LIVE_ACTIVITY: {
-              const { timerId, startedAt, pausedAt, duration, remainingTime } =
-                req.payload;
-              await pauseActivity({
-                timerId,
-                startedAt,
-                pausedAt,
-                duration,
-                remainingTime,
+                market: market ?? cachedMarket,
               });
               break;
             }
+            case payloadType.CANCEL_TIMER_NOTIFICATION: {
+              cancelTimerAction();
+              break;
+            }
+            case payloadType.START_LIVE_ACTIVITY: {
+              // startTimerAction에서 이미 처리하므로 무시
+              break;
+            }
+            case payloadType.PAUSE_LIVE_ACTIVITY: {
+              pauseTimerAction();
+              break;
+            }
             case payloadType.RESUME_LIVE_ACTIVITY: {
-              const { timerId, startedAt, endAt, duration } = req.payload;
-              await resumeActivity({ timerId, startedAt, endAt, duration });
+              const { recipeId } = req.payload;
+              resumeTimerAction({
+                recipeId: recipeId ?? '',
+                recipeTitle: '',
+                market: market ?? cachedMarket,
+              });
               break;
             }
             case payloadType.END_LIVE_ACTIVITY: {
-              const { timerId } = req.payload;
-              await endActivity({ timerId });
+              cancelTimerAction();
+              break;
+            }
+            case payloadType.OPEN_TIMER_SHEET: {
+              useTimerStore.getState().openSheet();
               break;
             }
             case payloadType.LOCK_ORIENTATION: {

@@ -24,11 +24,11 @@ export interface Category {
 }
 
 export const MOCK_THEME_CARDS: ThemeCard[] = [
-  { id: '1', title: '두바이 초콜릿', subtitle: '달콤한 피스타치오', backgroundColor: '#5C3D2E', image: require('@/assets/images/theme-dubai-chocolate.png') },
-  { id: '2', title: '버터떡', subtitle: '바삭한 한입 간식', backgroundColor: '#D4A017', image: require('@/assets/images/theme-butter-tteok.png') },
-  { id: '3', title: '봄동 비빔밥', subtitle: '제철 봄나물 요리', backgroundColor: '#4A7C59', image: require('@/assets/images/theme-bomdong.png') },
-  { id: '4', title: '야식 모음', subtitle: '밤에 땡기는 요리', backgroundColor: '#2C3E50' },
-  { id: '5', title: '가족 요리', subtitle: '함께 만드는 레시피', backgroundColor: '#C0392B' },
+  { id: '1', title: '두바이 초콜릿', subtitle: '달콤한 피스타치오', backgroundColor: '#3E2518', image: require('@/assets/images/theme-dubai-chocolate.png') },
+  { id: '2', title: '버터떡', subtitle: '바삭한 한입 간식', backgroundColor: '#B8860B', image: require('@/assets/images/theme-butter-tteok.png') },
+  { id: '3', title: '봄동 비빔밥', subtitle: '제철 봄나물 요리', backgroundColor: '#2D5A3D', image: require('@/assets/images/theme-bomdong.png') },
+  { id: '4', title: '야식 모음', subtitle: '밤에 땡기는 요리', backgroundColor: '#1A2636' },
+  { id: '5', title: '가족 요리', subtitle: '함께 만드는 레시피', backgroundColor: '#8B1A1A' },
 ];
 
 export const MOCK_HOT_RECIPES: RecipeCard[] = [
