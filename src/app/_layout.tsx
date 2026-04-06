@@ -119,8 +119,8 @@ export default function RootLayout() {
   const { isReady, isLoggedIn } = useAppBootstrap();
 
   const [fontsLoaded] = useFonts({
-    'GowunBatang': require('@/assets/fonts/GowunBatang-Regular.ttf'),
-    'GowunBatang-Bold': require('@/assets/fonts/GowunBatang-Bold.ttf'),
+    'KHNPHandotumOTF': require('@/assets/fonts/KHNPHDotfR.otf'),
+    'KHNPHandotumOTF-Bold': require('@/assets/fonts/KHNPHDotfB.otf'),
     'Pretendard': require('@/assets/fonts/Pretendard-Regular.otf'),
     'Pretendard-SemiBold': require('@/assets/fonts/Pretendard-SemiBold.otf'),
     'Pretendard-Bold': require('@/assets/fonts/Pretendard-Bold.otf'),
