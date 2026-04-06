@@ -29,8 +29,8 @@ export async function fetchRecipeById(recipeId: string): Promise<RecipeEntry> {
         ingredients: ingredients.map((i: any) => ({
           name: i.name ?? '',
           amount: {
-            value: i.amount?.value ?? null,
-            unit: i.amount?.unit ?? null,
+            value: typeof i.amount === 'object' ? (i.amount?.value ?? null) : (i.amount ?? null),
+            unit: typeof i.amount === 'object' ? (i.amount?.unit ?? null) : (i.unit ?? null),
           },
           substitute: i.substitute ?? null,
           selectionTip: i.selection_tip ?? i.selectionTip ?? null,
@@ -45,11 +45,17 @@ export async function fetchRecipeById(recipeId: string): Promise<RecipeEntry> {
           })),
           tip: s.tip ?? null,
           knowledge: s.knowledge ?? null,
-          scenes: (s.scenes ?? []).map((sc: any) => ({
-            label: sc.label ?? '',
-            start: formatSeconds(sc.start_time ?? sc.startTime ?? sc.start ?? 0),
-            end: formatSeconds(sc.end_time ?? sc.endTime ?? sc.end ?? 0),
-          })),
+          scenes: s.scenes?.length
+            ? s.scenes.map((sc: any) => ({
+                label: sc.label ?? '',
+                start: formatSeconds(sc.start_time ?? sc.startTime ?? sc.start ?? 0),
+                end: formatSeconds(sc.end_time ?? sc.endTime ?? sc.end ?? 0),
+              }))
+            : (s.details ?? []).map((d: any, idx: number) => ({
+                label: d.text ?? `장면 ${idx + 1}`,
+                start: formatSeconds(d.start ?? 0),
+                end: formatSeconds((s.details?.[idx + 1]?.start ?? d.start ?? 0) + 1),
+              })),
           timerSeconds: s.timer_seconds ?? s.timerSeconds ?? null,
           heatLevel: s.heat_level ?? s.heatLevel ?? null,
         })),
