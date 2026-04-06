@@ -54,7 +54,7 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
   }, []);
 
   const handleSearchPress = useCallback(() => {
-    Alert.alert('검색', '검색 화면(웹뷰)으로 이동');
+    router.push('/search');
   }, []);
 
   const handleSettingsPress = useCallback(() => {
