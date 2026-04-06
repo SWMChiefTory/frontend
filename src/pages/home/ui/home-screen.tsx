@@ -109,14 +109,15 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
       >
         {trendingLoading ? (
           <RecentRecipeSkeleton />
-        ) : (
-          <RecentRecipeSection
-            recipes={recentRecipes}
-            onPress={handleRecipePress}
-          />
-        )}
-
-        <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
+        ) : recentRecipes.length > 0 ? (
+          <>
+            <RecentRecipeSection
+              recipes={recentRecipes}
+              onPress={handleRecipePress}
+            />
+            <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
+          </>
+        ) : null}
 
         <ThemeCardsSection
           cards={MOCK_THEME_CARDS}
