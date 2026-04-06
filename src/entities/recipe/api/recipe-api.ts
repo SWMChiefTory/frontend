@@ -19,6 +19,7 @@ export async function fetchRecipeById(recipeId: string): Promise<RecipeEntry> {
 
     return {
       videoId: videoInfo.video_id ?? videoInfo.videoId ?? '',
+      videoType: (videoInfo.video_type ?? videoInfo.videoType ?? 'NORMAL') as 'SHORTS' | 'NORMAL',
       recipe: {
         title: videoInfo.video_title ?? videoInfo.videoTitle ?? '',
         description: meta.description ?? null,
