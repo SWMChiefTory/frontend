@@ -1,19 +1,18 @@
 import { Pressable, View, Text, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { colors, radius, spacing } from '@/src/shared/design/tokens';
 
 interface Tab {
   key: string;
-  label: string;
-  icon: keyof typeof Ionicons.glyphMap;
-  iconActive: keyof typeof Ionicons.glyphMap;
+  icon: keyof typeof MaterialCommunityIcons.glyphMap;
+  iconActive: keyof typeof MaterialCommunityIcons.glyphMap;
 }
 
 const TABS: Tab[] = [
-  { key: 'home', label: '홈', icon: 'home-outline', iconActive: 'home' },
-  { key: 'bookmark', label: '북마크', icon: 'bookmark-outline', iconActive: 'bookmark' },
+  { key: 'home', icon: 'home-variant-outline', iconActive: 'home-variant' },
+  { key: 'bookmark', icon: 'bookmark-outline', iconActive: 'bookmark' },
 ];
 
 interface FloatingTabBarProps {
@@ -70,20 +69,11 @@ export function FloatingTabBar({ activeTab, onTabPress }: FloatingTabBarProps) {
                 }}
                 hitSlop={8}
               >
-                <Ionicons
+                <MaterialCommunityIcons
                   name={isActive ? tab.iconActive : tab.icon}
                   size={22}
-                  color={isActive ? colors.tab.active : colors.tab.inactive}
+                  color={isActive ? '#1F2937' : '#C0C0C0'}
                 />
-                <Text
-                  style={{
-                    fontSize: 10,
-                    fontWeight: isActive ? '600' : '400',
-                    color: isActive ? colors.tab.active : colors.tab.inactive,
-                  }}
-                >
-                  {tab.label}
-                </Text>
               </Pressable>
             );
           })}
