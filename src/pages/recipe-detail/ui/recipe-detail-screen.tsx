@@ -1,12 +1,14 @@
-import { View, Text, Pressable, ScrollView, ActivityIndicator, useWindowDimensions } from 'react-native';
-import { useCallback } from 'react';
-import { Image } from 'expo-image';
+import { View, Text, Pressable, ScrollView, useWindowDimensions } from 'react-native';
+import { useCallback, useRef } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { WebView } from 'react-native-webview';
 import { router } from 'expo-router';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { Skeleton } from '@/src/shared/components/skeleton';
 import { useRecipeDetail } from '@/src/entities/recipe/hooks/use-recipe-detail';
+
+const YOUTUBE_URL = process.env.EXPO_PUBLIC_YOUTUBE_URL ?? 'http://localhost:3000';
 
 interface RecipeDetailScreenProps {
   recipeId: string;
@@ -16,6 +18,7 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const { data: recipe, isLoading, error } = useRecipeDetail(recipeId);
+  const webviewRef = useRef<WebView>(null);
 
   const handleBack = useCallback(() => {
     router.back();
@@ -27,10 +30,13 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
     }
   }, [recipe, recipeId]);
 
+  const seekTo = useCallback((seconds: number) => {
+    webviewRef.current?.postMessage(JSON.stringify({ type: 'SEEK_TO', seconds }));
+  }, []);
+
   if (isLoading) {
     return (
       <View style={{ flex: 1, backgroundColor: colors.background }}>
-        {/* 썸네일 스켈레톤 */}
         <Skeleton width="100%" height={width * 9 / 16} borderRadius={0} />
         <View style={{ padding: spacing.xl, gap: spacing.md }}>
           <Skeleton width="90%" height={26} />
@@ -49,19 +55,6 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
             ))}
           </View>
         </View>
-        <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.xl }} />
-        <View style={{ padding: spacing.xl, gap: spacing.lg }}>
-          <Skeleton width={60} height={22} />
-          {[1, 2, 3].map((i) => (
-            <View key={i} style={{ flexDirection: 'row', gap: spacing.md }}>
-              <Skeleton width={28} height={28} borderRadius={14} />
-              <View style={{ flex: 1, gap: spacing.xs }}>
-                <Skeleton width="60%" height={16} />
-                <Skeleton width="90%" height={14} />
-              </View>
-            </View>
-          ))}
-        </View>
       </View>
     );
   }
@@ -79,35 +72,46 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
     );
   }
 
+  const videoUri = `${YOUTUBE_URL}?videoId=${recipe.videoInfo.videoId}`;
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
-        {/* 영상 썸네일 */}
-        <View>
-          <Image
-            source={{ uri: recipe.videoInfo.videoThumbnailUrl }}
-            style={{ width, height: width * 9 / 16, backgroundColor: colors.surface }}
-            contentFit="cover"
-          />
-          {/* 뒤로가기 */}
-          <Pressable
-            onPress={handleBack}
-            style={{
-              position: 'absolute',
-              top: insets.top + spacing.sm,
-              left: spacing.lg,
-              width: 36,
-              height: 36,
-              borderRadius: 18,
-              backgroundColor: 'rgba(0,0,0,0.4)',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Ionicons name="chevron-back" size={22} color="#fff" />
-          </Pressable>
-        </View>
+      {/* 영상 — 고정 (스크롤 안 됨) */}
+      <View style={{ paddingTop: insets.top, backgroundColor: '#000' }}>
+        {/* 뒤로가기 오버레이 */}
+        <Pressable
+          onPress={handleBack}
+          style={{
+            position: 'absolute',
+            top: insets.top + 8,
+            left: 12,
+            width: 36,
+            height: 36,
+            borderRadius: 18,
+            backgroundColor: 'rgba(0,0,0,0.4)',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10,
+          }}
+        >
+          <Ionicons name="chevron-back" size={22} color="#fff" />
+        </Pressable>
 
+        <WebView
+          ref={webviewRef}
+          source={{ uri: videoUri }}
+          style={{ width, height: width * 9 / 16, backgroundColor: '#000' }}
+          allowsInlineMediaPlayback
+          mediaPlaybackRequiresUserAction={false}
+          mediaCapturePermissionGrantType="grant"
+          javaScriptEnabled
+          domStorageEnabled
+          allowsFullscreenVideo
+        />
+      </View>
+
+      {/* 스크롤 콘텐츠 */}
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
         {/* 레시피 요약 */}
         <View style={{ padding: spacing.xl, gap: spacing.md }}>
           <Text
@@ -137,7 +141,6 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
             </Text>
           ) : null}
 
-          {/* 인분 + 채널 칩 */}
           <View style={{ flexDirection: 'row', gap: spacing.sm, flexWrap: 'wrap' }}>
             {recipe.servings > 0 && (
               <View
@@ -183,13 +186,7 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
         {/* 재료 */}
         {recipe.ingredients.length > 0 && (
           <View style={{ padding: spacing.xl, gap: spacing.md }}>
-            <Text
-              style={{
-                fontFamily: typography.heading.fontFamily,
-                ...typography.heading.h2,
-                color: colors.text.primary,
-              }}
-            >
+            <Text style={{ fontFamily: typography.heading.fontFamily, ...typography.heading.h2, color: colors.text.primary }}>
               재료
             </Text>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }}>
@@ -223,18 +220,11 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
         {/* 단계 */}
         {recipe.steps.length > 0 && (
           <View style={{ padding: spacing.xl, gap: spacing.lg }}>
-            <Text
-              style={{
-                fontFamily: typography.heading.fontFamily,
-                ...typography.heading.h2,
-                color: colors.text.primary,
-              }}
-            >
+            <Text style={{ fontFamily: typography.heading.fontFamily, ...typography.heading.h2, color: colors.text.primary }}>
               레시피
             </Text>
             {recipe.steps.map((step, i) => (
               <View key={i} style={{ flexDirection: 'row', gap: spacing.md }}>
-                {/* 스텝 번호 */}
                 <View
                   style={{
                     width: 28,
@@ -249,7 +239,6 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
                     {i + 1}
                   </Text>
                 </View>
-                {/* 스텝 내용 */}
                 <View style={{ flex: 1, gap: spacing.xs }}>
                   <Text
                     style={{
@@ -262,17 +251,29 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
                     {step.subtitle}
                   </Text>
                   {step.details.map((d, j) => (
-                    <Text
+                    <Pressable
                       key={j}
+                      onPress={() => seekTo(d.start)}
                       style={{
-                        fontFamily: typography.body.fontFamily,
-                        fontSize: 14,
-                        color: colors.text.secondary,
-                        lineHeight: 22,
+                        flexDirection: 'row',
+                        alignItems: 'flex-start',
+                        gap: spacing.sm,
+                        paddingVertical: spacing.xs,
                       }}
                     >
-                      {d.text}
-                    </Text>
+                      <Ionicons name="play-circle-outline" size={16} color={colors.primary} style={{ marginTop: 2 }} />
+                      <Text
+                        style={{
+                          fontFamily: typography.body.fontFamily,
+                          fontSize: 14,
+                          color: colors.text.secondary,
+                          lineHeight: 22,
+                          flex: 1,
+                        }}
+                      >
+                        {d.text}
+                      </Text>
+                    </Pressable>
                   ))}
                 </View>
               </View>
@@ -301,47 +302,29 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
         )}
       </ScrollView>
 
-      {/* 하단 고정 CTA — 음성 모드로 요리 시작 */}
-      <View
+      {/* 플로팅 음성 모드 버튼 */}
+      <Pressable
+        onPress={handleStartCooking}
         style={{
           position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
+          bottom: insets.bottom + 16,
+          right: 16,
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: spacing.sm,
+          backgroundColor: colors.primary,
           paddingHorizontal: spacing.xl,
-          paddingTop: spacing.md,
-          paddingBottom: Math.max(insets.bottom, spacing.lg) + spacing.sm,
-          backgroundColor: colors.background,
-          borderTopWidth: 1,
-          borderTopColor: colors.border,
+          paddingVertical: spacing.md,
+          borderRadius: radius.full,
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+          borderCurve: 'continuous',
         }}
       >
-        <Pressable
-          onPress={handleStartCooking}
-          style={{
-            backgroundColor: colors.primary,
-            borderRadius: radius.lg,
-            paddingVertical: spacing.lg,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: spacing.sm,
-            borderCurve: 'continuous',
-          }}
-        >
-          <Ionicons name="mic" size={20} color="#fff" />
-          <Text
-            style={{
-              fontFamily: typography.heading.fontFamily,
-              fontSize: 16,
-              fontWeight: '700',
-              color: '#fff',
-            }}
-          >
-            음성 모드로 요리 시작
-          </Text>
-        </Pressable>
-      </View>
+        <Ionicons name="mic" size={20} color="#fff" />
+        <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 15, fontWeight: '700', color: '#fff' }}>
+          음성 모드
+        </Text>
+      </Pressable>
     </View>
   );
 }
