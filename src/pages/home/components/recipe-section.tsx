@@ -59,7 +59,6 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
             paddingTop: spacing.sm,
             alignItems: 'center',
             borderCurve: 'continuous',
-            overflow: 'hidden',
             borderWidth: 1.5,
             borderColor: '#C4A882',
           }}
