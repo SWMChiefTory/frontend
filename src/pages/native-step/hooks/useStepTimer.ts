@@ -9,9 +9,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
 import { create } from 'zustand';
 import * as Haptics from 'expo-haptics';
-import { scheduleTimerAlarm, cancelTimerAlarm } from '@/src/pages/webview/timer/notifications/timerNotifications';
-import { startActivity, pauseActivity, resumeActivity, endActivity } from '@/src/pages/webview/timer/live-activity/liveActivity';
-import { useMarketStore } from '@/src/modules/shared/store/marketStore';
+import { scheduleTimerAlarm, cancelTimerAlarm } from '@/src/modules/timer/notifications/timerNotifications';
+import { startActivity, pauseActivity, resumeActivity, endActivity } from '@/src/modules/timer/live-activity/liveActivity';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 export type TimerState = 'IDLE' | 'ACTIVE' | 'PAUSED' | 'FINISHED';
 

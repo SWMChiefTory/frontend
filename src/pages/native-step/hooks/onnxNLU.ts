@@ -13,10 +13,15 @@ export type IntentLabel =
   | 'NEXT_STEP'
   | 'PREV_STEP'
   | 'GO_TO_STEP'
+  | 'GO_TO_SCENE_NUMBER'
   | 'PLAY'
   | 'PAUSE'
   | 'EXTRA'
-  | 'GO_TO_SCENE';
+  | 'GO_TO_SCENE'
+  | 'TIMER_START'
+  | 'TIMER_CANCEL'
+  | 'TIMER_PAUSE'
+  | 'TIMER_RESUME';
 
 const ID2LABEL: Record<number, IntentLabel> = {
   0: 'NEXT_STEP',

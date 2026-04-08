@@ -1,0 +1,230 @@
+{
+  "category_id": "girlfriend",
+  "category_name": "여친한테",
+  "category_emoji": "💖",
+  "concept": "예쁘고 사랑스러운 한 접시. 비주얼·플레이팅·달콤. 사진부터 찍게 되는 요리.",
+  "dishes": [
+    {
+      "id": "love-girlfriend-1",
+      "title": "노오븐! 여심저격 핑꾸핑꾸 딸기케이크 만들기♥ - Ari Kitchen(아리키친)",
+      "channel": "ARIKITCHEN (아리키친)",
+      "youtube_url": "https://www.youtube.com/watch?v=8nP_UPsRb50",
+      "thumbnail": "https://i.ytimg.com/vi/8nP_UPsRb50/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "중급",
+        "time": "1시간이상",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트",
+          "기념일",
+          "홈파티"
+        ],
+        "style": [
+          "디저트"
+        ],
+        "ingredient_focus": [
+          "빵",
+          "달걀"
+        ],
+        "budget": "보통"
+      },
+      "hook": "심쿵 유발! 딸기 가득 케이크",
+      "why_recommended": "달콤한 딸기 케이크는 그 자체로 사랑스러운 비주얼을 자랑하며, 완벽한 플레이팅으로 여친의 마음을 사로잡을 수 있습니다. 특별한 날 달콤한 분위기를 더해줄 디저트로 손색이 없습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-girlfriend-2",
+      "title": "[SUB] 내가 좋아하는 프렌치 토스트 : My favorite French Toast | Honeykki 꿀키",
+      "channel": "꿀키honeykki",
+      "youtube_url": "https://www.youtube.com/watch?v=wJsNRrPTFS0",
+      "thumbnail": "https://i.ytimg.com/vi/wJsNRrPTFS0/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "논알콜",
+          "없음"
+        ],
+        "occasion": [
+          "데이트",
+          "주말브런치"
+        ],
+        "style": [
+          "양식"
+        ],
+        "ingredient_focus": [
+          "빵",
+          "달걀"
+        ],
+        "budget": "가성비"
+      },
+      "hook": "폭신달콤, 입덕 유발 토스트",
+      "why_recommended": "겉바속촉의 완벽한 프렌치 토스트는 따뜻하고 부드러운 매력으로 여친의 아침을 사랑스럽게 만들어줍니다. 예쁜 플레이팅으로 브런치 카페 분위기를 연출하기 좋습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-girlfriend-3",
+      "title": "[#피크타임]  당신의 감바스가 맛없는 이유! 실패 없는 완전 범죄, 어남선생 버터감바스 | #신상출시편스토랑 | KBS 211105 방송",
+      "channel": "KBS Entertain",
+      "youtube_url": "https://www.youtube.com/watch?v=gG_nGQr6IRk",
+      "thumbnail": "https://i.ytimg.com/vi/gG_nGQr6IRk/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "초보",
+        "time": "10분",
+        "format": "롱폼",
+        "pairing": [
+          "와인"
+        ],
+        "occasion": [
+          "데이트",
+          "홈파티",
+          "평일저녁"
+        ],
+        "style": [
+          "양식",
+          "퓨전"
+        ],
+        "ingredient_focus": [
+          "해산물"
+        ],
+        "budget": "보통"
+      },
+      "hook": "분위기 만점, 감성 감바스",
+      "why_recommended": "고소한 버터 향과 탱글한 새우의 조화가 돋보이는 감바스는 고급스러운 분위기를 연출하기에 좋습니다. 와인과 함께라면 더욱 특별한 데이트를 완성할 수 있습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-girlfriend-4",
+      "title": "[Sub] 정말 '크리미'해요. 집에서 간단하게 색다른 오므라이스!!",
+      "channel": "백종원 PAIK JONG WON",
+      "youtube_url": "https://www.youtube.com/watch?v=AlK2Gl6kHZI",
+      "thumbnail": "https://i.ytimg.com/vi/AlK2Gl6kHZI/hqdefault.jpg",
+      "estimated_duration": "17:03",
+      "tags": {
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트",
+          "평일저녁"
+        ],
+        "style": [
+          "일식",
+          "퓨전"
+        ],
+        "ingredient_focus": [
+          "밥",
+          "달걀"
+        ],
+        "budget": "가성비"
+      },
+      "hook": "부드럽고 예쁜 한 그릇",
+      "why_recommended": "부드러운 달걀 이불을 덮은 오므라이스는 보기만 해도 미소가 지어지는 사랑스러운 비주얼을 자랑합니다. 익숙하면서도 특별한 맛으로 여친에게 따뜻한 한 끼를 선물할 수 있습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-girlfriend-5",
+      "title": "아침을 부탁해♥햄치즈프렌치토스트 [만개의레시피]",
+      "channel": "만개의레시피 10K Recipe",
+      "youtube_url": "https://www.youtube.com/watch?v=_FB28YMYVyE",
+      "thumbnail": "https://i.ytimg.com/vi/_FB28YMYVyE/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "초보",
+        "time": "10분",
+        "format": "롱폼",
+        "pairing": [
+          "논알콜"
+        ],
+        "occasion": [
+          "데이트",
+          "주말브런치"
+        ],
+        "style": [
+          "양식"
+        ],
+        "ingredient_focus": [
+          "빵",
+          "치즈"
+        ],
+        "budget": "가성비"
+      },
+      "hook": "간단하게 만드는 예쁜 브런치",
+      "why_recommended": "간단하지만 근사한 비주얼의 햄치즈 프렌치토스트는 여친에게 정성 가득한 브런치를 선사하기 좋습니다. 톡톡 씹히는 소시지와 달콤짭짤한 맛의 조화가 돋보입니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-girlfriend-6",
+      "title": "[4K] 내가 좋아하는 팬케이크 레시피 : My Favorite Pancake Recipe : Honeykki 꿀키",
+      "channel": "꿀키honeykki",
+      "youtube_url": "https://www.youtube.com/watch?v=YRD3AGmBgPE",
+      "thumbnail": "https://i.ytimg.com/vi/YRD3AGmBgPE/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "중급",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트",
+          "주말브런치"
+        ],
+        "style": [
+          "양식",
+          "디저트"
+        ],
+        "ingredient_focus": [
+          "빵",
+          "달걀"
+        ],
+        "budget": "보통"
+      },
+      "hook": "몽글몽글, 구름 같은 팬케이크",
+      "why_recommended": "폭신하고 몽실몽실한 식감의 팬케이크는 마치 구름을 먹는 듯한 기분 좋은 경험을 선사합니다. 예쁜 토핑과 함께라면 여친의 감성을 자극하는 완벽한 디저트가 될 것입니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-girlfriend-7",
+      "title": "편스토랑 류수영 참간초파스타 만들기 간단해요.",
+      "channel": "눈꽃의식탁",
+      "youtube_url": "https://www.youtube.com/watch?v=wsPwzZl5o_c",
+      "thumbnail": "https://i.ytimg.com/vi/wsPwzZl5o_c/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "논알콜"
+        ],
+        "occasion": [
+          "데이트",
+          "평일저녁"
+        ],
+        "style": [
+          "퓨전"
+        ],
+        "ingredient_focus": [
+          "면",
+          "채소"
+        ],
+        "budget": "가성비"
+      },
+      "hook": "새콤달콤, 상큼한 파스타",
+      "why_recommended": "알록달록한 채소와 깔끔한 면의 조화가 시각적으로 아름다운 파스타입니다. 새콤달콤매콤한 맛으로 입맛을 돋우며, 색다른 파스타를 즐기고 싶은 여친에게 추천합니다.",
+      "is_curator_pick": true
+    }
+  ]
+}

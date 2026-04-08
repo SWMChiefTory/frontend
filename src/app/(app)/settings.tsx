@@ -4,12 +4,16 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { client } from '@/src/modules/shared/api/client';
-import { removeAuthToken } from '@/src/modules/shared/storage/SecureStorage';
-import { useUserStore } from '@/src/modules/user/business/store/userStore';
+import { client } from '@/src/shared/api/client';
+import { useLogout } from '@/src/entities/user';
+import { useBalance } from '@/src/entities/balance';
+import { trackNative } from '@/src/shared/analytics';
+import { AmplitudeEvent } from '@/src/shared/analytics/amplitudeEvents';
+import { resetAmplitudeUser } from '@/src/shared/analytics/amplitude';
+import { CreditRechargeSheet, type CreditRechargeSheetRef } from '@/src/widgets/credit-recharge/credit-recharge-sheet';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
-import { MOCK_BERRY_BALANCE } from '@/src/shared/data/mock';
 import Constants from 'expo-constants';
 
 const BERRY_ICON = require('@/assets/images/berry-icon.png');
@@ -28,17 +32,6 @@ function useUserProfile() {
       };
     },
     staleTime: 5 * 60 * 1000,
-  });
-}
-
-function useBalance() {
-  return useQuery({
-    queryKey: ['balance'],
-    queryFn: async () => {
-      const res = await client.get('/users/me/balance');
-      return res.data?.balance ?? res.data?.berry_balance ?? 0;
-    },
-    staleTime: 2 * 60 * 1000,
   });
 }
 
@@ -101,7 +94,13 @@ function SectionHeader({ title }: { title: string }) {
 export default function SettingsScreen() {
   const insets = useSafeAreaInsets();
   const queryClient = useQueryClient();
-  const { removeUser } = useUserStore();
+  const { mutate: logout } = useLogout({
+    onSettled: () => {
+      trackNative(AmplitudeEvent.LOGOUT);
+      resetAmplitudeUser();
+    },
+  });
+  const rechargeSheetRef = useRef<CreditRechargeSheetRef>(null);
   const { data: profile } = useUserProfile();
   const { data: balance } = useBalance();
   const appVersion = Constants.expoConfig?.version ?? '1.0.0';
@@ -112,39 +111,17 @@ export default function SettingsScreen() {
       {
         text: '로그아웃',
         style: 'destructive',
-        onPress: async () => {
-          await removeAuthToken();
-          removeUser();
-          queryClient.clear();
-          router.replace('/');
+        onPress: () => {
+          logout(undefined, {
+            onSettled: () => queryClient.clear(),
+          });
         },
       },
     ]);
   };
 
   const handleDeleteAccount = () => {
-    Alert.alert(
-      '회원 탈퇴',
-      '탈퇴하면 모든 레시피와 데이터가 삭제됩니다.\n정말 탈퇴하시겠어요?',
-      [
-        { text: '취소', style: 'cancel' },
-        {
-          text: '탈퇴',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await client.delete('/users/me');
-              await removeAuthToken();
-              removeUser();
-              queryClient.clear();
-              router.replace('/');
-            } catch {
-              Alert.alert('오류', '탈퇴 처리에 실패했어요');
-            }
-          },
-        },
-      ],
-    );
+    router.push('/withdrawal');
   };
 
   const handleResetOnboarding = async () => {
@@ -190,10 +167,11 @@ export default function SettingsScreen() {
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
             <Image source={BERRY_ICON} style={{ width: 24, height: 24 }} contentFit="contain" />
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, fontWeight: '600', color: colors.text.primary }}>
-              {balance ?? MOCK_BERRY_BALANCE}개
+              {balance?.balance ?? 0}개
             </Text>
           </View>
           <Pressable
+            onPress={() => rechargeSheetRef.current?.open()}
             style={{
               backgroundColor: colors.primary,
               paddingHorizontal: spacing.lg,
@@ -208,9 +186,9 @@ export default function SettingsScreen() {
         </View>
 
         <SectionHeader title="약관" />
-        <SettingsItem icon="document-text-outline" label="개인정보 처리방침" onPress={() => Alert.alert('개인정보 처리방침')} />
+        <SettingsItem icon="document-text-outline" label="개인정보 처리방침" onPress={() => router.push('/legal/privacy-policy')} />
         <Divider />
-        <SettingsItem icon="document-outline" label="서비스 이용약관" onPress={() => Alert.alert('서비스 이용약관')} />
+        <SettingsItem icon="document-outline" label="서비스 이용약관" onPress={() => router.push('/legal/terms-of-service')} />
 
         <SectionHeader title="앱 정보" />
         <SettingsItem icon="refresh-outline" label="온보딩 다시 보기" onPress={handleResetOnboarding} />
@@ -232,6 +210,8 @@ export default function SettingsScreen() {
         <Divider />
         <SettingsItem icon="person-remove-outline" label="회원 탈퇴" onPress={handleDeleteAccount} destructive />
       </ScrollView>
+
+      <CreditRechargeSheet ref={rechargeSheetRef} />
     </View>
   );
 }

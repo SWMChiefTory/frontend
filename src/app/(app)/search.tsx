@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView, FlatList, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView, FlatList, ActivityIndicator, Linking, Platform } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
@@ -14,6 +14,8 @@ import {
   searchRecipes,
 } from '@/src/entities/recipe/api/search-api';
 import { fetchRecommendRecipes, RecommendType } from '@/src/entities/recipe/api/recommend-api';
+import { ToryEmptyState } from '@/src/shared/components/tory-empty-state';
+import { track, SearchEvents } from '@/src/shared/analytics';
 
 function useDebounce(value: string, delay: number) {
   const [debounced, setDebounced] = useState(value);
@@ -61,10 +63,14 @@ export default function SearchScreen() {
     enabled: submittedQuery.trim().length > 0,
   });
 
-  const handleSubmit = useCallback((query: string) => {
+  const handleSubmit = useCallback((
+    query: string,
+    method: 'direct' | 'recent' | 'popular' | 'autocomplete' = 'direct',
+  ) => {
     if (!query.trim()) return;
     setInput(query);
     setSubmittedQuery(query);
+    track(SearchEvents.EXECUTED, { keyword: query.trim(), search_method: method });
     queryClient.invalidateQueries({ queryKey: ['searchHistories'] });
   }, [queryClient]);
 
@@ -82,6 +88,23 @@ export default function SearchScreen() {
     await deleteAllSearchHistories();
     queryClient.invalidateQueries({ queryKey: ['searchHistories'] });
   }, [queryClient]);
+
+  const openYoutubeSearch = useCallback(async (keyword: string, source: string = 'search_results') => {
+    if (!keyword.trim()) return;
+    track(SearchEvents.YOUTUBE_CLICK, { keyword: keyword.trim(), source });
+    const encoded = encodeURIComponent(keyword.trim());
+    const appUrl = Platform.select({
+      ios: `youtube://www.youtube.com/results?search_query=${encoded}`,
+      android: `vnd.youtube://results?search_query=${encoded}`,
+    }) as string;
+    const webUrl = `https://www.youtube.com/results?search_query=${encoded}`;
+    try {
+      const canOpen = await Linking.canOpenURL(appUrl);
+      await Linking.openURL(canOpen ? appUrl : webUrl);
+    } catch {
+      await Linking.openURL(webUrl);
+    }
+  }, []);
 
   const showAutocomplete = input.trim().length > 0 && !submittedQuery && autocomplete && autocomplete.length > 0;
   const showResults = submittedQuery.trim().length > 0;
@@ -141,7 +164,7 @@ export default function SearchScreen() {
           {autocomplete.map((item, i) => (
             <Pressable
               key={i}
-              onPress={() => handleSubmit(item.text)}
+              onPress={() => handleSubmit(item.text, 'autocomplete')}
               style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm, paddingHorizontal: spacing.xl, paddingVertical: spacing.md }}
             >
               <Ionicons name="search-outline" size={16} color={colors.text.disabled} />
@@ -172,7 +195,7 @@ export default function SearchScreen() {
                 {histories.map((h, i) => (
                   <Pressable
                     key={i}
-                    onPress={() => handleSubmit(h.text)}
+                    onPress={() => handleSubmit(h.text, 'recent')}
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
@@ -204,7 +227,7 @@ export default function SearchScreen() {
               {popularKeywords.map((kw, i) => (
                 <Pressable
                   key={i}
-                  onPress={() => handleSubmit(kw)}
+                  onPress={() => handleSubmit(kw, 'popular')}
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -266,9 +289,48 @@ export default function SearchScreen() {
             data={results.data}
             keyExtractor={(item) => item.recipeId}
             contentContainerStyle={{ padding: spacing.lg, gap: spacing.md }}
-            renderItem={({ item }) => (
+            ListHeaderComponent={
               <Pressable
-                onPress={() => router.push(`/recipe/${item.recipeId}`)}
+                onPress={() => openYoutubeSearch(submittedQuery)}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: spacing.lg,
+                  paddingVertical: spacing.md,
+                  backgroundColor: colors.surface,
+                  borderRadius: radius.md,
+                  borderCurve: 'continuous',
+                  marginBottom: spacing.sm,
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm, flex: 1 }}>
+                  <Ionicons name="logo-youtube" size={18} color="#FF0000" />
+                  <Text
+                    style={{
+                      fontFamily: typography.body.fontFamily,
+                      fontSize: 13,
+                      color: colors.text.secondary,
+                      flex: 1,
+                    }}
+                    numberOfLines={1}
+                  >
+                    유튜브에서 '{submittedQuery}' 검색
+                  </Text>
+                </View>
+                <Ionicons name="open-outline" size={16} color={colors.text.disabled} />
+              </Pressable>
+            }
+            renderItem={({ item, index }) => (
+              <Pressable
+                onPress={() => {
+                  track(SearchEvents.RESULT_CLICK, {
+                    keyword: submittedQuery,
+                    position: index,
+                    recipe_id: String(item.recipeId),
+                  });
+                  router.push(`/recipe/${item.recipeId}`);
+                }}
                 style={{ flexDirection: 'row', gap: spacing.md, paddingVertical: spacing.sm }}
               >
                 <Image
@@ -288,11 +350,38 @@ export default function SearchScreen() {
             )}
           />
         ) : (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: spacing.md }}>
-            <Ionicons name="search-outline" size={40} color={colors.text.disabled} />
-            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 15, color: colors.text.disabled }}>
-              검색 결과가 없어요
-            </Text>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: spacing.xl }}>
+            <ToryEmptyState
+              variant="search"
+              title="검색 결과가 없어요"
+              description={`'${submittedQuery}'와 일치하는 레시피를 찾지 못했어요`}
+            />
+            <Pressable
+              onPress={() => openYoutubeSearch(submittedQuery)}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: spacing.sm,
+                paddingHorizontal: spacing.lg,
+                paddingVertical: spacing.md,
+                backgroundColor: colors.surface,
+                borderRadius: radius.md,
+                borderCurve: 'continuous',
+                marginTop: spacing.sm,
+              }}
+            >
+              <Ionicons name="logo-youtube" size={18} color="#FF0000" />
+              <Text
+                style={{
+                  fontFamily: typography.body.fontFamily,
+                  fontSize: 13,
+                  color: colors.text.secondary,
+                }}
+              >
+                유튜브에서 '{submittedQuery}' 검색
+              </Text>
+              <Ionicons name="open-outline" size={16} color={colors.text.disabled} />
+            </Pressable>
           </View>
         )
       )}

@@ -1,82 +1,170 @@
-import { client } from '@/src/modules/shared/api/client';
+import { z } from 'zod';
+import { client } from '@/src/shared/api';
 import { RECIPE_MAP, DEFAULT_RECIPE_ID } from './mock-data';
 import type { RecipeEntry } from './types';
 
-/**
- * recipeId로 레시피 데이터를 가져옵니다.
- * 실제 API → RecipeEntry 변환. API 실패 시 목데이터 fallback.
- */
+// ─── Raw schemas ─────────────────────────────────────────────────
+
+const RawVideoInfoSchema = z
+  .object({
+    video_id: z.string().nullish(),
+    video_type: z.enum(['SHORTS', 'NORMAL']).nullish(),
+    video_title: z.string().nullish(),
+  })
+  .passthrough();
+
+const RawMetaSchema = z
+  .object({
+    description: z.string().nullish(),
+    servings: z.number().nullish(),
+    cooking_time: z.number().nullish(),
+  })
+  .passthrough();
+
+const RawAmountSchema = z
+  .object({
+    value: z.number().nullish(),
+    unit: z.string().nullish(),
+  })
+  .passthrough();
+
+const RawIngredientSchema = z
+  .object({
+    name: z.string(),
+    amount: z.union([z.number(), RawAmountSchema]).nullish(),
+    unit: z.string().nullish(),
+    substitute: z.string().nullish(),
+    selection_tip: z.string().nullish(),
+  })
+  .passthrough();
+
+const RawStepDetailSchema = z
+  .object({
+    text: z.string().nullish(),
+    content: z.string().nullish(),
+    start: z.number().nullish(),
+  })
+  .passthrough();
+
+const RawSceneSchema = z
+  .object({
+    label: z.string().nullish(),
+    start_time: z.number().nullish(),
+    end_time: z.number().nullish(),
+    start: z.number().nullish(),
+    end: z.number().nullish(),
+  })
+  .passthrough();
+
+const RawStepSchema = z
+  .object({
+    step_order: z.number().nullish(),
+    order: z.number().nullish(),
+    subtitle: z.string().nullish(),
+    title: z.string().nullish(),
+    details: z.array(RawStepDetailSchema).default([]),
+    scenes: z.array(RawSceneSchema).nullish(),
+    tip: z.any().nullish(),
+    knowledge: z.any().nullish(),
+    timer_seconds: z.number().nullish(),
+    heat_level: z.string().nullish(),
+  })
+  .passthrough();
+
+const RawRecipeResponseSchema = z
+  .object({
+    video_info: RawVideoInfoSchema.optional(),
+    recipe_detail_meta: RawMetaSchema.optional(),
+    recipe_ingredient: z.array(RawIngredientSchema).default([]),
+    recipe_steps: z.array(RawStepSchema).default([]),
+  })
+  .passthrough();
+
+type RawIngredient = z.infer<typeof RawIngredientSchema>;
+type RawStep = z.infer<typeof RawStepSchema>;
+type RawStepDetail = z.infer<typeof RawStepDetailSchema>;
+type RawScene = z.infer<typeof RawSceneSchema>;
+
+// ─── Transformers ────────────────────────────────────────────────
+
+function formatSeconds(totalSeconds: number | null | undefined): string {
+  const s = totalSeconds ?? 0;
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${m}:${String(sec).padStart(2, '0')}`;
+}
+
+function toIngredient(raw: RawIngredient) {
+  const isObjAmount = raw.amount && typeof raw.amount === 'object';
+  return {
+    name: raw.name,
+    amount: {
+      value: isObjAmount ? (raw.amount as any).value ?? null : (raw.amount as number | null) ?? null,
+      unit: isObjAmount ? (raw.amount as any).unit ?? null : raw.unit ?? null,
+    },
+    substitute: raw.substitute ?? null,
+    selectionTip: raw.selection_tip ?? null,
+  };
+}
+
+function toScenesFromDetails(details: RawStepDetail[]) {
+  return details.map((d, idx) => ({
+    label: d.text ?? `장면 ${idx + 1}`,
+    start: formatSeconds(d.start ?? 0),
+    end: formatSeconds((details[idx + 1]?.start ?? d.start ?? 0) + 1),
+  }));
+}
+
+function toScenesFromScenes(scenes: RawScene[]) {
+  return scenes.map((sc) => ({
+    label: sc.label ?? '',
+    start: formatSeconds(sc.start_time ?? sc.start ?? 0),
+    end: formatSeconds(sc.end_time ?? sc.end ?? 0),
+  }));
+}
+
+function toStep(raw: RawStep) {
+  return {
+    order: raw.step_order ?? raw.order ?? 0,
+    title: raw.subtitle ?? raw.title ?? '',
+    description: (raw.details ?? []).map((d) => ({
+      content: d.text ?? d.content ?? '',
+      start: formatSeconds(d.start ?? 0),
+    })),
+    tip: raw.tip ?? null,
+    knowledge: raw.knowledge ?? null,
+    scenes: raw.scenes?.length ? toScenesFromScenes(raw.scenes) : toScenesFromDetails(raw.details ?? []),
+    timerSeconds: raw.timer_seconds ?? null,
+    heatLevel: raw.heat_level ?? null,
+  };
+}
+
+// ─── API ─────────────────────────────────────────────────────────
+
 export async function fetchRecipeById(recipeId: string): Promise<RecipeEntry> {
   try {
     const res = await client.get(`/recipes/${recipeId}`);
-    const raw = res.data;
-    console.log(`[RecipeAPI] fetchRecipeById(${recipeId}) keys:`, Object.keys(raw));
-
-    const videoInfo = raw.video_info ?? raw.videoInfo ?? {};
-    const meta = raw.recipe_detail_meta ?? raw.recipeDetailMeta ?? {};
-    const ingredients = raw.recipe_ingredient ?? raw.recipeIngredient ?? [];
-    const steps = raw.recipe_steps ?? raw.recipeSteps ?? [];
+    const parsed = RawRecipeResponseSchema.parse(res.data);
 
     return {
-      videoId: videoInfo.video_id ?? videoInfo.videoId ?? '',
-      videoType: (videoInfo.video_type ?? videoInfo.videoType ?? 'NORMAL') as 'SHORTS' | 'NORMAL',
+      videoId: parsed.video_info?.video_id ?? '',
+      videoType: parsed.video_info?.video_type ?? 'NORMAL',
       recipe: {
-        title: videoInfo.video_title ?? videoInfo.videoTitle ?? '',
-        description: meta.description ?? null,
-        servings: meta.servings ?? null,
-        cookingTimeMinutes: meta.cooking_time ?? meta.cookingTime ?? null,
+        title: parsed.video_info?.video_title ?? '',
+        description: parsed.recipe_detail_meta?.description ?? null,
+        servings: parsed.recipe_detail_meta?.servings ?? null,
+        cookingTimeMinutes: parsed.recipe_detail_meta?.cooking_time ?? null,
         difficulty: '',
         category: '',
-        ingredients: ingredients.map((i: any) => ({
-          name: i.name ?? '',
-          amount: {
-            value: typeof i.amount === 'object' ? (i.amount?.value ?? null) : (i.amount ?? null),
-            unit: typeof i.amount === 'object' ? (i.amount?.unit ?? null) : (i.unit ?? null),
-          },
-          substitute: i.substitute ?? null,
-          selectionTip: i.selection_tip ?? i.selectionTip ?? null,
-        })),
+        ingredients: parsed.recipe_ingredient.map(toIngredient),
         tools: [],
-        steps: steps.map((s: any) => ({
-          order: s.step_order ?? s.stepOrder ?? s.order ?? 0,
-          title: s.subtitle ?? s.title ?? '',
-          description: (s.details ?? []).map((d: any) => ({
-            content: d.text ?? d.content ?? '',
-            start: formatSeconds(d.start ?? 0),
-          })),
-          tip: s.tip ?? null,
-          knowledge: s.knowledge ?? null,
-          scenes: s.scenes?.length
-            ? s.scenes.map((sc: any) => ({
-                label: sc.label ?? '',
-                start: formatSeconds(sc.start_time ?? sc.startTime ?? sc.start ?? 0),
-                end: formatSeconds(sc.end_time ?? sc.endTime ?? sc.end ?? 0),
-              }))
-            : (s.details ?? []).map((d: any, idx: number) => ({
-                label: d.text ?? `장면 ${idx + 1}`,
-                start: formatSeconds(d.start ?? 0),
-                end: formatSeconds((s.details?.[idx + 1]?.start ?? d.start ?? 0) + 1),
-              })),
-          timerSeconds: s.timer_seconds ?? s.timerSeconds ?? null,
-          heatLevel: s.heat_level ?? s.heatLevel ?? null,
-        })),
+        steps: parsed.recipe_steps.map(toStep),
       },
     };
   } catch (err: any) {
     console.warn(`[RecipeAPI] fetchRecipeById(${recipeId}) failed:`, err?.response?.status, err?.message);
-
-    // fallback: 목데이터
     const entry = RECIPE_MAP[recipeId] ?? RECIPE_MAP[DEFAULT_RECIPE_ID];
-    if (!entry) {
-      throw new Error(`Recipe not found: ${recipeId}`);
-    }
+    if (!entry) throw new Error(`Recipe not found: ${recipeId}`);
     return entry;
   }
-}
-
-function formatSeconds(totalSeconds: number): string {
-  if (typeof totalSeconds === 'string') return totalSeconds;
-  const m = Math.floor(totalSeconds / 60);
-  const s = totalSeconds % 60;
-  return `${m}:${String(s).padStart(2, '0')}`;
 }

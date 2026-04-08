@@ -1,10 +1,12 @@
-import { View, Text, Pressable, ScrollView, Alert } from 'react-native';
+import { View, Text, Pressable, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { Skeleton } from '@/src/shared/components/skeleton';
 import type { RecipeCard, ThemeCard } from '@/src/shared/data/mock';
+import { useRecipeCreateStore } from '@/src/pages/home/model/recipe-create-store';
+import { useRecipeProgress, RecipeStatus } from '@/src/entities/recipe';
 
 interface ThemeCardsSectionProps {
   cards: ThemeCard[];
@@ -63,13 +65,37 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
               justifyContent: 'center',
             }}
           >
-            {card.image && (
-              <Image
-                source={card.image}
-                style={{ width: 60, height: 60 }}
-                contentFit="contain"
-              />
-            )}
+            {card.image && (() => {
+              const size =
+                card.id === 'night-snack'
+                  ? 48
+                  : card.id === 'love-meal'
+                    ? 54
+                    : 60;
+              const offsetY =
+                card.id === 'bomdong'
+                  ? 6
+                  : card.id === 'dubai-cookie'
+                    ? -2
+                    : card.id === 'butter-tteok'
+                      ? -1
+                      : card.id === 'night-snack'
+                        ? 4
+                        : card.id === 'love-meal'
+                          ? 2
+                          : 0;
+              return (
+                <Image
+                  source={card.image}
+                  style={{
+                    width: size,
+                    height: size,
+                    transform: [{ translateY: offsetY }],
+                  }}
+                  contentFit="contain"
+                />
+              );
+            })()}
           </View>
           <Text
             style={{
@@ -95,11 +121,41 @@ interface RecentRecipeSectionProps {
   onPress: (recipe: RecipeCard) => void;
 }
 
+export function CreatingRecipeSection() {
+  const creating = useRecipeCreateStore((s) => s.creatingRecipes);
+  if (creating.length === 0) return null;
+
+  return (
+    <View style={{ paddingTop: spacing.lg, paddingBottom: spacing.xs, gap: spacing.md }}>
+      <Text
+        style={{
+          fontFamily: typography.heading.fontFamily,
+          ...typography.heading.h2,
+          color: colors.text.primary,
+          paddingHorizontal: spacing.lg,
+        }}
+      >
+        생성 중인 레시피
+      </Text>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}
+      >
+        {creating.map((c) => (
+          <CreatingRecipeCard key={c.recipeId} recipeId={c.recipeId} />
+        ))}
+      </ScrollView>
+    </View>
+  );
+}
+
 export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionProps) {
   return (
     <View
       style={{
-        paddingVertical: spacing.lg,
+        paddingTop: spacing.xs,
+        paddingBottom: spacing.lg,
         gap: spacing.md,
       }}
     >
@@ -176,6 +232,115 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
           </Pressable>
         ))}
       </ScrollView>
+    </View>
+  );
+}
+
+// ─── 생성 중 카드 (최근 레시피 섹션 prepend) ───
+function CreatingRecipeCard({ recipeId }: { recipeId: string }) {
+  const { data: status } = useRecipeProgress(recipeId);
+  const removeCreating = useRecipeCreateStore((s) => s.removeCreating);
+
+  const isDone = status === RecipeStatus.SUCCESS;
+  const isFailed =
+    status === RecipeStatus.FAILED ||
+    status === RecipeStatus.BLOCKED ||
+    status === RecipeStatus.BANNED;
+
+  const statusText = isDone
+    ? '생성 완료'
+    : isFailed
+      ? '레시피 생성 실패'
+      : '레시피 생성 중...';
+  const statusColor = isDone ? colors.semantic.success : isFailed ? colors.semantic.error : colors.primary;
+
+  return (
+    <View
+      style={{
+        width: 220,
+        flexDirection: 'row',
+        gap: spacing.md,
+        backgroundColor: colors.surface,
+        borderRadius: radius.lg,
+        padding: spacing.sm,
+        borderCurve: 'continuous',
+      }}
+    >
+      <View
+        style={{
+          width: 68,
+          height: 68,
+          borderRadius: radius.sm,
+          backgroundColor: colors.background,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {isDone ? (
+          <Ionicons name="checkmark-circle" size={36} color={colors.semantic.success} />
+        ) : isFailed ? (
+          <Ionicons name="alert-circle" size={36} color={colors.semantic.error} />
+        ) : (
+          <ActivityIndicator size="small" color={colors.primary} />
+        )}
+      </View>
+      <View style={{ flex: 1, justifyContent: 'center', gap: spacing.xs }}>
+        <Text
+          style={{
+            fontFamily: typography.heading.fontFamily,
+            fontSize: 13,
+            fontWeight: '600',
+            color: colors.text.primary,
+          }}
+          numberOfLines={2}
+        >
+          새 레시피
+        </Text>
+        <Text
+          style={{
+            fontFamily: typography.body.fontFamily,
+            fontSize: 11,
+            fontWeight: '600',
+            color: statusColor,
+          }}
+        >
+          {statusText}
+        </Text>
+        {!isDone && !isFailed && (
+          <View style={{ height: 3, backgroundColor: colors.border, borderRadius: 2, overflow: 'hidden' }}>
+            <View
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: '40%',
+                backgroundColor: colors.primary,
+                borderRadius: 2,
+              }}
+            />
+          </View>
+        )}
+      </View>
+      {/* 실패 시 dismiss 버튼 */}
+      {isFailed && (
+        <Pressable
+          onPress={() => removeCreating(recipeId)}
+          hitSlop={8}
+          style={{
+            position: 'absolute',
+            top: 4,
+            right: 4,
+            width: 22,
+            height: 22,
+            borderRadius: 11,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Ionicons name="close" size={16} color={colors.text.disabled} />
+        </Pressable>
+      )}
     </View>
   );
 }

@@ -15,11 +15,13 @@ interface PawFeedbackProps {
   visible: boolean;
   onDone?: () => void;
   size?: number;
+  direction?: 'down' | 'right';
 }
 
-export function PawFeedback({ visible, onDone, size = 36 }: PawFeedbackProps) {
+export function PawFeedback({ visible, onDone, size = 36, direction = 'down' }: PawFeedbackProps) {
   const opacity = useSharedValue(0);
   const translateY = useSharedValue(0);
+  const translateX = useSharedValue(0);
   const scale = useSharedValue(0.3);
 
   useEffect(() => {
@@ -37,11 +39,18 @@ export function PawFeedback({ visible, onDone, size = 36 }: PawFeedbackProps) {
       withDelay(400, withTiming(1, { duration: 300 })),
     );
 
-    // 사라짐: 아래로 이동
-    translateY.value = withSequence(
-      withTiming(0, { duration: 150 }),
-      withDelay(500, withTiming(30, { duration: 300, easing: Easing.in(Easing.ease) })),
-    );
+    // 사라짐: 방향에 따라 이동
+    if (direction === 'right') {
+      translateX.value = withSequence(
+        withTiming(0, { duration: 150 }),
+        withDelay(500, withTiming(30, { duration: 300, easing: Easing.in(Easing.ease) })),
+      );
+    } else {
+      translateY.value = withSequence(
+        withTiming(0, { duration: 150 }),
+        withDelay(500, withTiming(30, { duration: 300, easing: Easing.in(Easing.ease) })),
+      );
+    }
 
     if (onDone) {
       const timer = setTimeout(() => onDone(), 950);
@@ -52,6 +61,7 @@ export function PawFeedback({ visible, onDone, size = 36 }: PawFeedbackProps) {
   const animStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
     transform: [
+      { translateX: translateX.value },
       { translateY: translateY.value },
       { scale: scale.value },
     ],

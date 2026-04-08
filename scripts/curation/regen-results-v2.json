@@ -1,0 +1,805 @@
+{
+  "ok": [],
+  "fail": [
+    {
+      "themeId": "love-meal",
+      "dishId": "love-boyfriend-2",
+      "recipeId": "00ae3c64-e77e-473a-b4fc-e9133a877353",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "소고기는 맛있소 6편, 소고기 덮밥 규동 [Gyudong] | 정호영의 오늘도 요리",
+      "youtube_url": "https://www.youtube.com/watch?v=zXpznElExPI",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-boyfriend-3",
+      "recipeId": "da51f3d2-3a4c-48ca-84a0-1f19d73f8a7a",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[이연복] 10분이면 만드는 중화비빔당면! 간단하게 만들 수 있는 여름철 초특급 별미 레시피!",
+      "youtube_url": "https://www.youtube.com/watch?v=8W6ONdRUc3k",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-boyfriend-4",
+      "recipeId": "b5015637-4cb5-49d5-a365-dde8ba9d4a14",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "더 이상의 부대찌개는 없습니다! 이걸로 끝내겠습니다",
+      "youtube_url": "https://www.youtube.com/watch?v=-MvfUUPB5-Y",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-boyfriend-5",
+      "recipeId": "3cac6b4c-8f71-4234-b9df-99ddbefce9fc",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "세상 간단한 스테이크덮밥 7가지",
+      "youtube_url": "https://www.youtube.com/watch?v=V0mLSqv4xm4",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-girlfriend-2",
+      "recipeId": "c976e1ad-8a4e-4d76-9421-b396796dd370",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[SUB] 내가 좋아하는 프렌치 토스트 : My favorite French Toast | Honeykki 꿀키",
+      "youtube_url": "https://www.youtube.com/watch?v=wJsNRrPTFS0",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-girlfriend-3",
+      "recipeId": "60b21e77-0cc7-46f3-a9f6-3e65ba596248",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[#피크타임]  당신의 감바스가 맛없는 이유! 실패 없는 완전 범죄, 어남선생 버터감바스 | #신상출시편스토랑 | KBS 211105 방송",
+      "youtube_url": "https://www.youtube.com/watch?v=gG_nGQr6IRk",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-girlfriend-4",
+      "recipeId": "d7817dc2-4914-4418-a26c-d7f124efc714",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[Sub] 정말 '크리미'해요. 집에서 간단하게 색다른 오므라이스!!",
+      "youtube_url": "https://www.youtube.com/watch?v=AlK2Gl6kHZI",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-girlfriend-6",
+      "recipeId": "9ae11781-1cd0-4909-806c-8823b7e58ccd",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[4K] 내가 좋아하는 팬케이크 레시피 : My Favorite Pancake Recipe : Honeykki 꿀키",
+      "youtube_url": "https://www.youtube.com/watch?v=YRD3AGmBgPE",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-girlfriend-7",
+      "recipeId": "6f15d2c0-104a-44e1-be5b-2b4875b03cba",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "편스토랑 류수영 참간초파스타 만들기 간단해요.",
+      "youtube_url": "https://www.youtube.com/watch?v=wsPwzZl5o_c",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-first-date-1",
+      "recipeId": "73e6683a-fce3-46ac-9155-9941b6653190",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "백종원표 알리오올리오 파스타 만드는 법 aglio e olio pasta recipe [꾸미채식TV]",
+      "youtube_url": "https://www.youtube.com/watch?v=hpJqKJFteTg",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-first-date-2",
+      "recipeId": "75781943-37e5-4720-9b19-e9dc85994864",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[#편셰프의점메추] 오늘은 어린이날🎵 파스타 세상~🍝🧡 남녀노소 입맛 모두 사로잡는 류수영의 파스타 레시피😎ㅣ KBS방송",
+      "youtube_url": "https://www.youtube.com/watch?v=L2pd2ux9dio",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-first-date-3",
+      "recipeId": "75781943-37e5-4720-9b19-e9dc85994864",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[#편셰프의점메추] 오늘은 어린이날🎵 파스타 세상~🍝🧡 남녀노소 입맛 모두 사로잡는 류수영의 파스타 레시피😎ㅣ KBS방송",
+      "youtube_url": "https://www.youtube.com/watch?v=L2pd2ux9dio",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-first-date-5",
+      "recipeId": "3f555dfc-16fb-40df-8fca-3adcb57ed98c",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "홈메이드 감성 요리 백종원 감바스 레시피",
+      "youtube_url": "https://www.youtube.com/watch?v=3ps1ZyWsRtc",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-home-invite-1",
+      "recipeId": "ec487633-9626-4dfc-88d1-167e76d68bf3",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[Sub] 집에서 만든 새우감바스?? '감바스 알 아히요'",
+      "youtube_url": "https://www.youtube.com/watch?v=jBdQ65yHB_U",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-home-invite-2",
+      "recipeId": "70b7db1b-25d5-4b9c-a705-a4980552ac19",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "평생 써먹는 스테이크 굽는 법",
+      "youtube_url": "https://www.youtube.com/watch?v=sWN2dxP4Vtw",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-home-invite-3",
+      "recipeId": "36c98ed8-8025-4ffe-bc40-a2c9bca3db90",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[크림감자뇨끼] 레스토랑보다 더 깊은 맛 소스로 만드는 고급 요리ㅣ감자뇨끼 이렇게만 만드시면 실패하지 않아요ㅣ양은 풍부하게 맛은 진하고 더 맛있게ㅣ감자로 만든 고급감자요리 뇨끼",
+      "youtube_url": "https://www.youtube.com/watch?v=WXk13SeMdEo",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-home-invite-4",
+      "recipeId": "bbc4e9e9-9eb1-411b-b916-4b31f5132f68",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "이번 크리스마스엔 집에서 간단히 즐기는 찹! 스테이크",
+      "youtube_url": "https://www.youtube.com/watch?v=7cCAlN06WPc",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-home-invite-6",
+      "recipeId": "0848ffa7-7cd8-4e9d-bab1-bad382c2d6a2",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "라따뚜이 속 바로 그 요리?? 라따뚜이 만들기 : Ratatouille inspired by the Pixar film Ratatouille | Honeykki 꿀키",
+      "youtube_url": "https://www.youtube.com/watch?v=V5xf5M3axHE",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-cook-together-1",
+      "recipeId": "3de171b2-6a1e-4630-ab51-89bfb93ad208",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "고기만두!! 비법이 들어 있습니다. 가족과 함께 집에서 만들어 보세요!!  ㅣ 백종원의 쿠킹로그",
+      "youtube_url": "https://www.youtube.com/watch?v=SZp5fTHZnmc",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-cook-together-2",
+      "recipeId": "5b769f33-da96-4a22-9bb7-89c8164c2a17",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "의외로 많은 분들이 틀리는 김밥 말기 핵심 포인트",
+      "youtube_url": "https://www.youtube.com/watch?v=10fl2mebYHs",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-cook-together-3",
+      "recipeId": "5b5ec22a-92cb-496e-aa4e-d26f1a250a78",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "이원일 셰프와 함께 완벽한 버거 레시피 찾기",
+      "youtube_url": "https://www.youtube.com/watch?v=jyrX1KFkJGg",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-cook-together-4",
+      "recipeId": "bc61db78-4441-4898-983a-2cc9d558bbed",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[이연복] 초콜릿 딤섬",
+      "youtube_url": "https://www.youtube.com/watch?v=F09SZClm_oY",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-cook-together-5",
+      "recipeId": "8f8ce6ae-effb-4e91-8f2a-59f059f4dacf",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "Real Mukbang:) Spicy Tteokbokki & Homemade Fried Dish ☆ Comfort Korean Streetfood",
+      "youtube_url": "https://www.youtube.com/watch?v=gYCEBb99C8Q",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-cook-together-6",
+      "recipeId": "a4100840-32dc-41ed-8f14-65dcf0a8a20f",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[SUB] 곰돌이 마카롱 만들기 :베이킹&baking: How to make italian meringue macaron",
+      "youtube_url": "https://www.youtube.com/watch?v=VjV48EMjgkM",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-cook-together-7",
+      "recipeId": "e104fa31-813e-4d67-a140-2db772b5d079",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "[4K] Squid Ink Gorgonzola pizza : 오징어먹물 도우로 만든 고르곤졸라피자 | Honeykki 꿀키",
+      "youtube_url": "https://www.youtube.com/watch?v=JPYwffTuEuo",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-lunchbox-1",
+      "recipeId": "7ad0976c-0a65-4448-b7fa-96e523a8b651",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "누구나 대성공✔️ 이렇게 썰고 볶아야 부드럽고 입에 살살 녹는 대박집 소불고기!! 누린내없이 맛있어요🥇",
+      "youtube_url": "https://www.youtube.com/watch?v=0tFQaJ3XeVw",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-lunchbox-2",
+      "recipeId": "4d49559c-e9ce-4acd-925f-4359f67ef30c",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "팔아도 되는 역대급 [스팸주먹밥] 간단요리 끝판왕👍도시락으로 최고에요💯",
+      "youtube_url": "https://www.youtube.com/watch?v=uAm6L_6g7pY",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-lunchbox-3",
+      "recipeId": "0860c5c7-cdaa-4e75-9f31-6cd84fcb6e75",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "무조건 맛있는 치킨 데리야끼 / 간단한 데리야끼 소스",
+      "youtube_url": "https://www.youtube.com/watch?v=D0-5UD4TrY4",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-lunchbox-4",
+      "recipeId": "c1a3ef29-f0e9-4db2-bbcb-56aa2cd3f39b",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "들어가는 건 별거 없는데 왜 이렇게 맛있지? 3분 계란말이 비법 | 전국집밥자랑 ep.39",
+      "youtube_url": "https://www.youtube.com/watch?v=sXLkKIXE05Q",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-lunchbox-5",
+      "recipeId": "d2ae61e5-c1f1-4da9-a1a6-0966e95534b2",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "리얼먹방:) 흔들어주세요~~옛날도시락🍱ㅣOld School Korean Lunch BoxㅣREAL SOUNDㅣASMR MUKBANGㅣEATING SHOWㅣ",
+      "youtube_url": "https://www.youtube.com/watch?v=d93PSdtdaso",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-lunchbox-6",
+      "recipeId": "5f485acb-4335-4cef-b712-8a28b56eb9fc",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "신입사원 들어왔을때 해주는 직원식 (대나무 도시락 정식)",
+      "youtube_url": "https://www.youtube.com/watch?v=bPnyjFErXgc",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "love-meal",
+      "dishId": "love-lunchbox-7",
+      "recipeId": "44d92a0c-12b4-4367-9ce2-13c881a22c98",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "황태채무침 보들보들하고 촉촉하게 고급반찬 아끼고 아낀 비법 알려드릴게요",
+      "youtube_url": "https://www.youtube.com/watch?v=-sxyXlAFEhM",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "butter-tteok",
+      "dishId": "bt-1",
+      "recipeId": "aced1ad4-3fca-40e5-901d-df19cc1504ee",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "가래떡 구워 먹지마세요, 옆집 할머니가 뛰어와 내 것까지 두 접시 드셨습니다",
+      "youtube_url": "https://www.youtube.com/watch?v=gq4NxMCsjvw",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "butter-tteok",
+      "dishId": "bt-2",
+      "recipeId": "36ae184f-cb0f-49d4-93b2-07ec4d1536ff",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "달콤한 팥앙금에 버터의 풍미가 솔솔🤎 모카 앙버떡 만들기 How To Make Red Bean Paste & Butter Rice CakeㅣKorean Style Dessert",
+      "youtube_url": "https://www.youtube.com/watch?v=pLKeLxQ86Pg",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "butter-tteok",
+      "dishId": "bt-3",
+      "recipeId": "fbbc933c-c82b-4260-8da8-7fc41b75a3ff",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "3만개 판매한 겉바속쫀 버터떡 만들기 ",
+      "youtube_url": "https://www.youtube.com/watch?v=iNrybOy0YdM",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "butter-tteok",
+      "dishId": "bt-5",
+      "recipeId": "eeaedae6-7ffc-4666-91e7-a74dea46041c",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "요즘 난리난 '버터떡' 직접 구워봤습니다! 실패없는 레시피 공개",
+      "youtube_url": "https://www.youtube.com/watch?v=UOsuRvryNGY",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "bomdong",
+      "dishId": "bomdong-2",
+      "recipeId": "39e24ad7-97a1-4a81-ab3f-af569afe2fb2",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "봄동 제발 그냥 무치지 마세요! 양념 전 '이것'하면 밥솥이 거덜나게 맛있어요 [봄동비빔밥]",
+      "youtube_url": "https://www.youtube.com/watch?v=EFgeGeZnyIs",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "bomdong",
+      "dishId": "bomdong-3",
+      "recipeId": "2656e312-64fb-4ad1-be37-9261713e9b16",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "봄동겉절이 빠르고 쉽게 무치는 방법 #Shorts",
+      "youtube_url": "https://www.youtube.com/watch?v=JqsBejgTMOM",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "bomdong",
+      "dishId": "bomdong-4",
+      "recipeId": "c467ea18-7cf0-4bb1-b23e-90e40a0b0048",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "기은세의 봄동 비빔밥 레시피 👀 | 한그릇 뚝딱",
+      "youtube_url": "https://www.youtube.com/watch?v=n8CYy_Kyh9I",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "bomdong",
+      "dishId": "bomdong-5",
+      "recipeId": "7fe2fad5-f062-4bea-99a8-b25ef08240f5",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "태어나서 먹어본 봄동 비빔밥 중 단연 최고네요",
+      "youtube_url": "https://www.youtube.com/watch?v=ZFhQAW6EPKs",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "bomdong",
+      "dishId": "bomdong-6",
+      "recipeId": "f4d62c9e-18a8-4eb7-9ef2-6a330d93dc2b",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "평생 한가지만 먹고 살아야한다면 난 이거!! 강호동도 고기보다 맛있다는 봄동비빔밥!!",
+      "youtube_url": "https://www.youtube.com/watch?v=X3p5RwD5yCQ",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "bomdong",
+      "dishId": "bomdong-7",
+      "recipeId": "eb391f2f-1b0d-42ee-b06f-11adaf93dbd6",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "봄동비빔밥 된장찌개",
+      "youtube_url": "https://www.youtube.com/watch?v=CJMxD3-6Z7o",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "bomdong",
+      "dishId": "bomdong-8",
+      "recipeId": "756d63fb-ad48-403a-bd0b-a75e172f829a",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "따끈한 밥에 쓱쓱! 초간단 봄동비빔밥",
+      "youtube_url": "https://www.youtube.com/watch?v=rzwzeIRxFkw",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "bomdong",
+      "dishId": "bomdong-9",
+      "recipeId": "4c8984be-5161-47a5-b51a-97ab281ff3c8",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "요즘 SNS에서💥난리난 그 레시피! 너~무 쉬운데 너무맛있다! [봄동비빔밥]",
+      "youtube_url": "https://www.youtube.com/watch?v=gqdcrYDj_b4",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "bomdong",
+      "dishId": "bomdong-10",
+      "recipeId": "c04d579d-af1a-4ddf-a3e0-257229a1fb78",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "71년 인생 봄동무침 레시피입니다.(feat.봄동비빔밥) | 전국집밥자랑 ep.78",
+      "youtube_url": "https://www.youtube.com/watch?v=nN1sUv8xCp8",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "bomdong",
+      "dishId": "bomdong-11",
+      "recipeId": "4d795f58-38e5-44f2-824c-48016b32b8d3",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "강호동이 먹고 반한 봄동비빔밥 류수영님 레시피",
+      "youtube_url": "https://www.youtube.com/watch?v=hJhgfp5XMe0",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "bomdong",
+      "dishId": "bomdong-12",
+      "recipeId": "648fdadf-7398-4826-a5cb-c818c02cba32",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "봄동비빔밥 \"이게\" 가장 중요합니다! 씹는맛 꼬소함 대박!",
+      "youtube_url": "https://www.youtube.com/watch?v=QDkuDmOhL9I",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-17",
+      "recipeId": "d487cea4-60c9-4b24-bff7-2ac7213e18d5",
+      "status": 400,
+      "errorCode": "RECIPE_INFO_002",
+      "title": "3분 완성 '계란마요 토스트'",
+      "youtube_url": "https://www.youtube.com/watch?v=0kFqX_L9G7I",
+      "error": "POST 400: {\"errorCode\":\"RECIPE_002\",\"message\":\"접근할 수 없는 레시피 입니다.\"}"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-21",
+      "recipeId": "15a94765-0569-442f-9a4d-d8c6448f3b2b",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "5분 완성 '간장버터우동' 자취 야식",
+      "youtube_url": "https://www.youtube.com/watch?v=KkSiTh7wx5M",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-22",
+      "recipeId": "9d342932-277a-4a6c-b43b-3cab77f87395",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "백종원의 '콘치즈' 인생 안주 레시피",
+      "youtube_url": "https://www.youtube.com/watch?v=zS_o6psOt9g",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-23",
+      "recipeId": "27774a31-8207-41c3-bd5a-1bbf4612913e",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "일주일 세 번 먹는 '버터 누룽지 치즈밥'",
+      "youtube_url": "https://www.youtube.com/watch?v=5vRSQcUfAM8",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-24",
+      "recipeId": "31744922-2cea-49bd-a1f4-f4290533c583",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "감칠맛 폭발 '새우젓 계란찜' 5분 야식",
+      "youtube_url": "https://www.youtube.com/watch?v=27MfMpvfAPw",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-25",
+      "recipeId": "b5a03ccf-bd08-4145-bb56-794183f6d01b",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "다이어트 중 떡볶이 땡길 때 '두부 떡볶이'",
+      "youtube_url": "https://www.youtube.com/watch?v=Vk73tNxwV6U",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-26",
+      "recipeId": "ecea9392-a33a-4aaa-a81b-3b0856eae1eb",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "감칠맛 폭발 '곤약면 비빔국수' 다이어트 야식",
+      "youtube_url": "https://www.youtube.com/watch?v=Hi-ikD3bLKU",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-27",
+      "recipeId": "071cab39-9943-461a-a2fa-abe58e75413e",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "김신영 야식 '38kg 감량' 또띠아 케사디아",
+      "youtube_url": "https://www.youtube.com/watch?v=CZlwG_dVGJ4",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-28",
+      "recipeId": "9f448712-e26a-427b-ba52-3cae0691c884",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "1분다이어터 '오트밀 한 그릇' 야식",
+      "youtube_url": "https://www.youtube.com/watch?v=rzCYWhimwNs",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-29",
+      "recipeId": "56710a02-b187-4c21-99bd-85c9aa9aeb25",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "치즈 품은 '단호박 구이' 죄책감 ZERO 야식",
+      "youtube_url": "https://www.youtube.com/watch?v=LtK32RnfgDA",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-30",
+      "recipeId": "70e029ad-fc9d-48eb-b947-30062bd7cf41",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "건두부 올린 '마라 짜파게티' 끝판왕",
+      "youtube_url": "https://www.youtube.com/watch?v=4nZSgfgACWM",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-31",
+      "recipeId": "6542412b-8b36-4834-96a0-ee8885fdb4d6",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "백종원의 '부대찌개맛 뿌햄라면' 꿀팁",
+      "youtube_url": "https://www.youtube.com/watch?v=qWI4b7BL2eA",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-32",
+      "recipeId": "3076a022-d27e-4b50-a9b2-b68a35119fe0",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "치즈 폭탄 '까르보 불닭' 분식집 맛",
+      "youtube_url": "https://www.youtube.com/watch?v=NXNIDr_glr8",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-33",
+      "recipeId": "28d905b5-7fbd-4d32-828f-ac8ba94f8b4a",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "진짜 분식집 '떡라면' 끓이는 법",
+      "youtube_url": "https://www.youtube.com/watch?v=T289nNqfxt4",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-34",
+      "recipeId": "c066c80f-6d09-4a13-a46e-f7a12a04250f",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "성시경의 '극강 치즈 라면' 꾸덕 야식",
+      "youtube_url": "https://www.youtube.com/watch?v=nS6bs5hDB50",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-35",
+      "recipeId": "a1edace1-0e76-4820-a258-033241179870",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "편의점 끝판왕 '마크정식' 6470원 야식",
+      "youtube_url": "https://www.youtube.com/watch?v=S7P7m_zcf3s",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-36",
+      "recipeId": "88ecc440-94f2-4bab-9aba-6c2a05d93751",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "겨울 필수 '오모리 김치찌개 컵라면' 꿀조합",
+      "youtube_url": "https://www.youtube.com/watch?v=S7qaHSyz-kY",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-37",
+      "recipeId": "ff7b3062-1eec-4d5e-8f88-0cdc85d9bbd8",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "편의점 환상조합 '사리곰탕 만둣국' 1분 컷",
+      "youtube_url": "https://www.youtube.com/watch?v=Tt9cA1Cj9hw",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-38",
+      "recipeId": "006bf070-47eb-415d-9648-3c3b96eb258c",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "삼각김밥으로 '불닭 치즈 리조또' 변신",
+      "youtube_url": "https://www.youtube.com/watch?v=bIFPlKelCtI",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-39",
+      "recipeId": "22af51e0-2d25-4c0c-b36d-f1d5e488e3e2",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "참깨라면X짜파게티 '마법의 야식' 꿀조합",
+      "youtube_url": "https://www.youtube.com/watch?v=1B7fznAgm2g",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-40",
+      "recipeId": "a1cf7554-ae26-4638-be32-32a508b624fd",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "에어프라이어 '백종원 양념치킨' 옛날통닭",
+      "youtube_url": "https://www.youtube.com/watch?v=wjsAegsB4hg",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-41",
+      "recipeId": "4291416f-e8ec-402d-8948-42a98caa7060",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "백종원 닭강정 '장사천재 백사장' 레시피",
+      "youtube_url": "https://www.youtube.com/watch?v=YxamhygmEKY",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-42",
+      "recipeId": "513787e3-46b7-4956-98ee-870baecf0999",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "유쿡의 홈메이드 '뿌링클 치킨' 배달비 절약",
+      "youtube_url": "https://www.youtube.com/watch?v=kIzGCxIRR-Q",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-43",
+      "recipeId": "5a0515dd-7d03-414e-842c-c61ac3f51493",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "에어프라이어 15분 '또띠아 피자' 야식",
+      "youtube_url": "https://www.youtube.com/watch?v=G1icdJN9TNI",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "night-snack",
+      "dishId": "night-snack-44",
+      "recipeId": "58f5a183-f61b-4995-baa1-e376300fc3b7",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "염정아의 '피자토스트' 새벽 길티 야식",
+      "youtube_url": "https://www.youtube.com/watch?v=e3xcF4QQ9M0",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "dubai-cookie",
+      "dishId": "dc-1",
+      "recipeId": "758907fe-5f4a-4b8f-bc03-c98300754dbe",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "두바이쫀득쿠키 실제 판매 레시피 풉니다 (feat. 뉴저지)",
+      "youtube_url": "https://www.youtube.com/watch?v=jq83v2Ii-1U",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "dubai-cookie",
+      "dishId": "dc-2",
+      "recipeId": "5cc9185c-5f57-4bee-bf6c-407a368c0c43",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "두바이 초콜릿 쿠키 만들기 | 피스타치오 카다이프 토핑 디저트 베이킹 | Dubai Chocolate Cookies Recipe | Pistachio Kadayif Dessert",
+      "youtube_url": "https://www.youtube.com/watch?v=XqWImD7G5Ng",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "dubai-cookie",
+      "dishId": "dc-4",
+      "recipeId": "d51b7611-dc15-45f1-80ad-1a0474bc92f3",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "\"두바이 찰떡쿠키\" 이 조합 대박!!! (구운 카다이프 구매하면 더 쉬움)",
+      "youtube_url": "https://www.youtube.com/watch?v=0dyJbFy_QHQ",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "dubai-cookie",
+      "dishId": "dc-5",
+      "recipeId": "2eece6c6-94c4-4980-ab80-a73d34be2563",
+      "status": 400,
+      "errorCode": "RECIPE_INFO_002",
+      "title": "\"이게 얼마라고요?\" 찐 아랍인도 당황시킨 두바이 디저트 근황 [갓나온 맛도리 EP.157] / 스브스뉴스",
+      "youtube_url": "https://www.youtube.com/watch?v=EH6Sg9LPgMc",
+      "error": "POST 400: {\"errorCode\":\"RECIPE_002\",\"message\":\"접근할 수 없는 레시피 입니다.\"}"
+    },
+    {
+      "themeId": "dubai-cookie",
+      "dishId": "dc-7",
+      "recipeId": "d592d9fc-3910-4005-826c-f1b410e6e1da",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "피스타치오 크림치즈 쿠키 만들기 Pistachio Cream Cheese Cookie Recipe",
+      "youtube_url": "https://www.youtube.com/watch?v=UC5YHv1ijx4",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "dubai-cookie",
+      "dishId": "dc-9",
+      "recipeId": "9e1ee8bb-2ef8-4d3f-86c8-ef9bd84aab33",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "진한~🍫 초코칩 쿠키 만드는법! (초간단, 촉촉! 쫀득! 뉴욕 르뱅쿠키,The Best Chocolate Chip Cookies , Levain Style)",
+      "youtube_url": "https://www.youtube.com/watch?v=e4xz9pNuX6w",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "dubai-cookie",
+      "dishId": "dc-10",
+      "recipeId": "1eb206bb-377e-483d-ba3b-0cca181e3eaa",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "초대형 두바이 쫀득쿠키 만들었습니다.. 재료비 100만원!?",
+      "youtube_url": "https://www.youtube.com/watch?v=Z1L5FHdyJ9s",
+      "reason": "same id returned"
+    },
+    {
+      "themeId": "dubai-cookie",
+      "dishId": "dc-11",
+      "recipeId": "370743cf-c0a5-4e74-96bf-1ee9d6f939a9",
+      "status": 500,
+      "errorCode": "RECIPE_008",
+      "title": "입소문 타고 품절 대란 🍫 #두바이초콜릿 레시피 대공개❗꼭 만들어 드셔보세요❗",
+      "youtube_url": "https://www.youtube.com/watch?v=biMePren1hw",
+      "reason": "same id returned"
+    }
+  ]
+}

@@ -5,18 +5,18 @@ import {
   TermsAndConditionsModal,
 } from "@/src/pages/login/ui/button";
 import { Image } from "expo-image";
-import { COLORS } from "@/src/modules/shared/constants/colors";
-import logoStyle from "@/src/modules/shared/splash/logo/style/logostyle";
+import { COLORS } from "@/src/shared/constants/colors";
+import logoStyle from "@/src/shared/splash/logo/style/logostyle";
 import {
   responsiveWidth,
   responsiveHeight,
   responsiveFontSize,
-} from "@/src/modules/shared/utils/responsiveUI";
+} from "@/src/shared/utils/responsiveUI";
 
 import { useEffect } from "react";
-import { client } from "@/src/modules/shared/api/client";
-import { useMarketStore } from "@/src/modules/shared/store/marketStore";
-import { getMarketLogo } from "@/src/modules/shared/constants/marketAssets";
+import { client } from "@/src/shared/api/client";
+import { useMarketStore } from "@/src/shared/store/marketStore";
+import { getMarketLogo } from "@/src/shared/constants/marketAssets";
 
 Image.prefetch("@/assets/images/mainCharacter.png", "disk");
 Image.prefetch("@/assets/images/voiceNear.png", "disk");

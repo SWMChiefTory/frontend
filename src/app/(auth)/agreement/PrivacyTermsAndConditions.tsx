@@ -1,6 +1,6 @@
 import PrivacyTermsAndConditionsPage from "@/src/pages/privacy-terms-and-condition/PrivacyTermsAndCondition";
 import { useEffect } from "react";
-import { track } from "@/src/modules/shared/utils/analytics";
+import { track } from "@/src/shared/utils/analytics";
 
 function PrivacyTermsAndConditions() {
   useEffect(() => {

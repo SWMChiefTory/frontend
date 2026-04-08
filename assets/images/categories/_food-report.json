@@ -1,0 +1,12 @@
+[
+  {
+    "key": "night-snack:ramen-mod",
+    "success": true,
+    "ok": true,
+    "score": 8,
+    "matches": true,
+    "issues": [
+      "Background is white, not a pastel solid color."
+    ]
+  }
+]

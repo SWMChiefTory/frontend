@@ -24,8 +24,13 @@ export const colors = {
 
   semantic: {
     success: '#22C55E',
+    successLight: '#DCFCE7',
     error: '#EF4444',
+    errorLight: '#FEE2E2',
     warning: '#F59E0B',
+    warningLight: '#FEF3C7',
+    info: '#3B82F6',
+    infoLight: '#DBEAFE',
   },
 
   card: {
@@ -37,6 +42,23 @@ export const colors = {
   tab: {
     active: '#C4632B',
     inactive: '#9CA3AF',
+  },
+
+  surfaceLight: '#FAFAFA',
+  chip: '#F3F4F6',
+
+  dark: {
+    background: '#1A1A1A',
+    surface: '#2A2A2A',
+    surfaceElevated: '#333333',
+    surfaceActive: '#3A3A3A',
+    chipActive: '#444444',
+    text: {
+      primary: '#FFFFFF',
+      secondary: 'rgba(255,255,255,0.6)',
+      disabled: 'rgba(255,255,255,0.4)',
+      muted: 'rgba(255,255,255,0.5)',
+    },
   },
 } as const;
 

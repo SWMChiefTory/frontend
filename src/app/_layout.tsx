@@ -1,4 +1,4 @@
-import { CustomBackButton } from "@/src/modules/shared/components/layout/CustomBackButton";
+import { CustomBackButton } from "@/src/shared/components/layout/CustomBackButton";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import {
   QueryClient,
@@ -9,10 +9,10 @@ import {
 import { Stack } from "expo-router";
 import * as ExpoSplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
-import { GlobalErrorBoundary } from "../modules/shared/components/error/GlobalErrorBoundary";
-import { SplashScreenController } from "../modules/shared/splash/SplashScreenController";
+import { GlobalErrorBoundary } from "@/src/shared/components/error/GlobalErrorBoundary";
+import { SplashScreenController } from "@/src/shared/splash/SplashScreenController";
 import { useEffect } from "react";
-import { useAppBootstrap } from "../modules/shared/hooks/useAppBootstrap";
+import { useAppBootstrap } from "@/src/shared/hooks/useAppBootstrap";
 
 import * as Network from "expo-network";
 import { AppState, AppStateStatus, Platform } from "react-native";
@@ -23,12 +23,11 @@ import {
 } from "react-native-paper";
 
 import * as Notifications from "expo-notifications";
-import { useNotificationObserver } from "@/src/pages/webview/timer/notifications/useNotificationObserver";
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { initAmplitude, trackNative } from "../modules/shared/analytics";
-import { AmplitudeEvent } from "../modules/shared/analytics/amplitudeEvents";
+import { initAmplitude, trackNative } from "@/src/shared/analytics";
+import { AmplitudeEvent } from "@/src/shared/analytics/amplitudeEvents";
 import { initExpoPush, syncExpoPushRegistration } from "../modules/notifications/expo-push";
 
 ExpoSplashScreen.preventAutoHideAsync();
@@ -128,7 +127,6 @@ export default function RootLayout() {
 
   useOnlineManager();
   useAppState(onAppStateChange);
-  useNotificationObserver();
 
   useEffect(() => {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP).catch(() => {});

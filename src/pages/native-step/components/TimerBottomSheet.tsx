@@ -143,8 +143,6 @@ export const TimerSheet = forwardRef<TimerSheetRef, TimerBottomSheetProps>(
     const [selectedMinutes, setSelectedMinutes] = useState(5);
     const [selectedSeconds, setSelectedSeconds] = useState(0);
 
-    const snapPoints = useMemo(() => timer ? ['38%'] : ['42%'], [timer]);
-
     const isSheetOpen = useTimerStore((s) => s.isSheetOpen);
     const closeSheet = useTimerStore((s) => s.closeSheet);
 
@@ -157,7 +155,6 @@ export const TimerSheet = forwardRef<TimerSheetRef, TimerBottomSheetProps>(
       },
     }));
 
-    // 웹뷰에서 OPEN_TIMER_SHEET 메시지 오면 자동으로 열기
     useEffect(() => {
       if (isSheetOpen) {
         bottomSheetRef.current?.expand();
@@ -197,9 +194,11 @@ export const TimerSheet = forwardRef<TimerSheetRef, TimerBottomSheetProps>(
       <BottomSheet
         ref={bottomSheetRef}
         index={-1}
-        snapPoints={snapPoints}
+        enableDynamicSizing
         enablePanDownToClose
-        enableDynamicSizing={false}
+        detached
+        bottomInset={24}
+        style={{ marginHorizontal: 16 }}
         backdropComponent={(props) => (
           <BottomSheetBackdrop
             {...props}
