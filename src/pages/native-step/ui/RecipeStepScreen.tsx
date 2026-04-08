@@ -19,6 +19,7 @@ import { IntentFeedbackToast } from '@/src/pages/native-step/components/IntentFe
 import { PawFeedback } from '@/src/pages/native-step/components/PawFeedback';
 import { useStepTimer } from '@/src/pages/native-step/hooks/useStepTimer';
 import { HeaderTimer, TimerSheet, type TimerSheetRef } from '@/src/pages/native-step/components/TimerBottomSheet';
+import { track, CookingModeEvents } from '@/src/shared/analytics';
 
 const YOUTUBE_URL = process.env.EXPO_PUBLIC_YOUTUBE_URL ?? 'http://localhost:3000';
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -86,6 +87,76 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
     return () => { deactivateKeepAwake('native-step'); };
   }, []);
 
+  // ─── Cooking mode 트래킹 (웹뷰 컨벤션: start / command / end) ───
+  const recipeIdForTrack = String(recipe?.id ?? videoId);
+  const currentStepIndexRef = useRef(0);
+  const currentSceneIndexRef = useRef(0);
+  const sessionStartRef = useRef(0);
+  const visitedStepsRef = useRef<Set<number>>(new Set());
+  const voiceCommandCountRef = useRef(0);
+  const touchCommandCountRef = useRef(0);
+
+  useEffect(() => {
+    currentStepIndexRef.current = currentStepIndex;
+    visitedStepsRef.current.add(currentStepIndex);
+  });
+  useEffect(() => {
+    currentSceneIndexRef.current = activeSceneIndex ?? 0;
+  });
+
+  const totalDetails = useMemo(
+    () => steps.reduce((acc: number, s: any) => acc + (s?.scenes?.length ?? 0), 0),
+    [steps],
+  );
+
+  useEffect(() => {
+    sessionStartRef.current = Date.now();
+    visitedStepsRef.current = new Set([0]);
+    voiceCommandCountRef.current = 0;
+    touchCommandCountRef.current = 0;
+    track(CookingModeEvents.START, {
+      recipe_id: recipeIdForTrack,
+      total_steps: totalSteps,
+      total_details: totalDetails,
+    });
+    return () => {
+      const visited = visitedStepsRef.current.size;
+      track(CookingModeEvents.END, {
+        recipe_id: recipeIdForTrack,
+        duration_seconds: Math.round((Date.now() - sessionStartRef.current) / 1000),
+        total_steps: totalSteps,
+        visited_steps_unique: visited,
+        step_completion_rate:
+          totalSteps > 0 ? Math.round((visited / totalSteps) * 100) : 0,
+        voice_command_count: voiceCommandCountRef.current,
+        touch_command_count: touchCommandCountRef.current,
+        command_count: voiceCommandCountRef.current + touchCommandCountRef.current,
+        last_step_index: currentStepIndexRef.current,
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recipeIdForTrack]);
+
+  const trackCookingCommand = useCallback(
+    (
+      commandType: 'navigation' | 'video_control' | 'timer' | 'info',
+      commandDetail: string,
+      triggerMethod: 'voice' | 'touch',
+    ) => {
+      if (triggerMethod === 'voice') voiceCommandCountRef.current++;
+      else touchCommandCountRef.current++;
+      track(CookingModeEvents.COMMAND, {
+        recipe_id: recipeIdForTrack,
+        command_type: commandType,
+        command_detail: commandDetail,
+        trigger_method: triggerMethod,
+        current_step: currentStepIndexRef.current,
+        current_detail: currentSceneIndexRef.current,
+      });
+    },
+    [recipeIdForTrack],
+  );
+
   // ─── YouTube WebView 명령 ───
   const postToYouTube = useCallback((msg: object) => {
     webviewRef.current?.postMessage(JSON.stringify(msg));
@@ -116,6 +187,89 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
     if (currentStepIndex < totalSteps - 1) navigateStep(currentStepIndex + 1);
   }, [currentStepIndex, totalSteps, navigateStep]);
 
+  // ─── Trigger-aware wrappers (트래킹 후 실제 동작 호출) ───
+  const handleManualPrev = useCallback(() => {
+    trackCookingCommand('navigation', 'PREV', 'touch');
+    goToPrevStep();
+  }, [goToPrevStep, trackCookingCommand]);
+
+  const handleManualNext = useCallback(() => {
+    trackCookingCommand('navigation', 'NEXT', 'touch');
+    goToNextStep();
+  }, [goToNextStep, trackCookingCommand]);
+
+  const voiceGoToNext = useCallback(() => {
+    trackCookingCommand('navigation', 'NEXT', 'voice');
+    goToNextStep();
+  }, [goToNextStep, trackCookingCommand]);
+
+  const voiceGoToPrev = useCallback(() => {
+    trackCookingCommand('navigation', 'PREV', 'voice');
+    goToPrevStep();
+  }, [goToPrevStep, trackCookingCommand]);
+
+  const voiceGoToStep = useCallback((stepNumber: number) => {
+    trackCookingCommand('navigation', 'STEP', 'voice');
+    const idx = stepNumber - 1;
+    if (idx >= 0 && idx < totalSteps) navigateStep(idx);
+  }, [totalSteps, navigateStep, trackCookingCommand]);
+
+  const voiceSeekToScene = useCallback((i: number) => {
+    trackCookingCommand('navigation', 'GO_TO_SCENE', 'voice');
+    const scene = currentStep?.scenes?.[i];
+    if (scene) {
+      postToYouTube({ type: 'SEEK_TO', seconds: parseTime(scene.start) });
+      postToYouTube({ type: 'PLAY_VIDEO' });
+      setActiveSceneIndex(i);
+    }
+  }, [currentStep, postToYouTube, parseTime, trackCookingCommand]);
+
+  // 음성: "1번 장면", "2번", "장면 3" → 1-indexed
+  const voiceSeekToSceneNumber = useCallback((sceneNum: number) => {
+    trackCookingCommand('navigation', 'GO_TO_SCENE_NUMBER', 'voice');
+    const idx = sceneNum - 1;
+    const scene = currentStep?.scenes?.[idx];
+    if (scene) {
+      postToYouTube({ type: 'SEEK_TO', seconds: parseTime(scene.start) });
+      postToYouTube({ type: 'PLAY_VIDEO' });
+      setActiveSceneIndex(idx);
+    }
+  }, [currentStep, postToYouTube, parseTime, trackCookingCommand]);
+
+  // 타이머 음성 액션
+  const voiceStartTimer = useCallback((durationSec: number) => {
+    trackCookingCommand('timer', 'TIMER_START', 'voice');
+    const stepName = currentStep?.title ?? `${currentStepIndex + 1}단계`;
+    timerResult.addTimer(stepName, durationSec);
+  }, [currentStep, currentStepIndex, timerResult, trackCookingCommand]);
+
+  const voiceCancelTimer = useCallback(() => {
+    trackCookingCommand('timer', 'TIMER_CANCEL', 'voice');
+    timerResult.cancelTimer();
+  }, [timerResult, trackCookingCommand]);
+
+  const voicePauseTimer = useCallback(() => {
+    trackCookingCommand('timer', 'TIMER_PAUSE', 'voice');
+    timerResult.pauseTimer();
+  }, [timerResult, trackCookingCommand]);
+
+  const voiceResumeTimer = useCallback(() => {
+    trackCookingCommand('timer', 'TIMER_RESUME', 'voice');
+    timerResult.resumeTimer();
+  }, [timerResult, trackCookingCommand]);
+
+  const voicePlayVideo = useCallback(() => {
+    trackCookingCommand('video_control', 'VIDEO_PLAY', 'voice');
+    postToYouTube({ type: 'PLAY_VIDEO' });
+    setIsPlaying(true);
+  }, [postToYouTube, trackCookingCommand]);
+
+  const voicePauseVideo = useCallback(() => {
+    trackCookingCommand('video_control', 'VIDEO_STOP', 'voice');
+    postToYouTube({ type: 'PAUSE_VIDEO' });
+    setIsPlaying(false);
+  }, [postToYouTube, trackCookingCommand]);
+
   const goToStep = useCallback((stepNumber: number) => {
     const idx = stepNumber - 1;
     if (idx >= 0 && idx < totalSteps) navigateStep(idx);
@@ -141,9 +295,19 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
   }, [postToYouTube]);
 
   const togglePlay = useCallback(() => {
-    if (isPlaying) pauseVideo();
-    else playVideo();
-  }, [isPlaying, playVideo, pauseVideo]);
+    if (isPlaying) {
+      trackCookingCommand('video_control', 'VIDEO_STOP', 'touch');
+      pauseVideo();
+    } else {
+      trackCookingCommand('video_control', 'VIDEO_PLAY', 'touch');
+      playVideo();
+    }
+  }, [isPlaying, playVideo, pauseVideo, trackCookingCommand]);
+
+  const handleManualSeekScene = useCallback((i: number) => {
+    trackCookingCommand('navigation', 'GO_TO_SCENE', 'touch');
+    seekToScene(i);
+  }, [seekToScene, trackCookingCommand]);
 
   // ─── Volume Ducking (음성 인식 중 영상 볼륨 줄이기) ───
   const setVideoVolume = useCallback((volume: number) => {
@@ -169,12 +333,17 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
     handleWebViewMessage: voiceHandleMessage,
     onWebViewReady,
   } = useVoiceCommand({
-    goToNextStep,
-    goToPrevStep,
-    goToStep,
-    seekToScene,
-    play: playVideo,
-    pause: pauseVideo,
+    goToNextStep: voiceGoToNext,
+    goToPrevStep: voiceGoToPrev,
+    goToStep: voiceGoToStep,
+    seekToScene: voiceSeekToScene,
+    seekToSceneNumber: voiceSeekToSceneNumber,
+    play: voicePlayVideo,
+    pause: voicePauseVideo,
+    startTimer: voiceStartTimer,
+    cancelTimer: voiceCancelTimer,
+    pauseTimer: voicePauseTimer,
+    resumeTimer: voiceResumeTimer,
     sceneLabels,
     totalSteps,
     isFirstStep,
@@ -183,6 +352,19 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
     onVoiceStart,
     onVoiceEnd,
   });
+
+  // 영상 로드 완료 + STT 준비되면 자동으로 음성 인식 켜기 (1회)
+  const autoStartedRef = useRef(false);
+  useEffect(() => {
+    if (isVideoLoaded && !autoStartedRef.current && !isListening) {
+      autoStartedRef.current = true;
+      // WebView ready 이후에 toggle (onWebViewReady 1.5s 딜레이와 정렬)
+      const t = setTimeout(() => {
+        toggleListening();
+      }, 1800);
+      return () => clearTimeout(t);
+    }
+  }, [isVideoLoaded, isListening, toggleListening]);
 
   // ─── WebView Message ───
   const handleYouTubeMessage = useCallback((event: WebViewMessageEvent) => {
@@ -198,6 +380,10 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
   // ─── Swipe Gesture ───
   const translateX = useSharedValue(0);
 
+  const triggerSwipeHaptic = useCallback(() => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  }, []);
+
   const swipeGesture = Gesture.Pan()
     .activeOffsetX([-20, 20])
     .failOffsetY([-10, 10])
@@ -206,12 +392,15 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
     })
     .onEnd((e) => {
       if (e.translationX > SWIPE_THRESHOLD && !isFirstStep) {
+        runOnJS(triggerSwipeHaptic)();
         runOnJS(goToPrevStep)();
       } else if (e.translationX < -SWIPE_THRESHOLD && !isLastStep) {
+        runOnJS(triggerSwipeHaptic)();
         runOnJS(goToNextStep)();
       }
       translateX.value = withSpring(0, { damping: 20, stiffness: 200 });
     });
+
 
   const swipeAnimStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
@@ -239,7 +428,9 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
       const text = typeof item === 'string' ? item : item.content;
       return (
         <View key={i} style={styles.descRow}>
-          <Text style={styles.descDot}>·</Text>
+          <View style={styles.descNumber}>
+            <Text style={styles.descNumberText}>{i + 1}</Text>
+          </View>
           <Text style={styles.descText}>{text}</Text>
         </View>
       );
@@ -250,10 +441,11 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
 
   // ─── Shorts 레이아웃 ───
   if (isShorts) {
+    const VIDEO_HEIGHT = screenHeight * 0.8;
     return (
       <GestureHandlerRootView style={styles.root}>
-        {/* 영상 — 화면 70% (safe area 포함) */}
-        <View style={{ height: screenHeight * 0.7, backgroundColor: '#000' }}>
+        {/* 영상 — 위에서부터 80% */}
+        <View style={{ height: VIDEO_HEIGHT, backgroundColor: '#000' }}>
           <WebView
             ref={webviewRef}
             source={{ uri: youtubeUri }}
@@ -273,66 +465,127 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
               setTimeout(() => onWebViewReady(), 1500);
             }}
           />
+        </View>
 
-          {/* 오버레이 — 백 버튼 + 진행바 */}
-          <View style={{ position: 'absolute', top: insets.top + 8, left: 0, right: 0, zIndex: 10, paddingHorizontal: 12 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Pressable
-                onPress={handleBack}
-                style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' }}
-              >
-                <Ionicons name="chevron-back" size={20} color="#fff" />
-              </Pressable>
-              <Text style={{ flex: 1, color: '#fff', fontSize: 13, fontWeight: '600', textAlign: 'center' }} numberOfLines={1}>
-                {currentStepIndex + 1}/{totalSteps}
-              </Text>
-              <View style={{ width: 36 }} />
-            </View>
-            <View style={{ flexDirection: 'row', gap: 3, marginTop: 6 }}>
-              {steps.map((_: any, i: number) => (
-                <View key={i} style={{ flex: 1, height: 3, borderRadius: 2, backgroundColor: i === currentStepIndex ? '#C4632B' : i < currentStepIndex ? 'rgba(249,115,22,0.4)' : 'rgba(255,255,255,0.15)' }} />
-              ))}
-            </View>
+        {/* 상단 — 백 버튼 + 진행바 */}
+        <View style={{ position: 'absolute', top: insets.top + 8, left: 0, right: 0, zIndex: 10, paddingHorizontal: 12 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Pressable
+              onPress={handleBack}
+              style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' }}
+            >
+              <Ionicons name="chevron-back" size={20} color="#fff" />
+            </Pressable>
+            <Text style={{ flex: 1, color: '#fff', fontSize: 13, fontWeight: '600', textAlign: 'center', textShadowColor: 'rgba(0,0,0,0.6)', textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 3 }} numberOfLines={1}>
+              {currentStepIndex + 1}/{totalSteps}
+            </Text>
+            <View style={{ width: 36 }} />
+          </View>
+          <View style={{ flexDirection: 'row', gap: 3, marginTop: 6 }}>
+            {steps.map((_: any, i: number) => (
+              <View key={i} style={{ flex: 1, height: 3, borderRadius: 2, backgroundColor: i === currentStepIndex ? '#C4632B' : i < currentStepIndex ? 'rgba(249,115,22,0.4)' : 'rgba(255,255,255,0.15)' }} />
+            ))}
           </View>
         </View>
 
-        {/* 하단 — 스텝 설명 */}
-        <View style={{ flex: 1, backgroundColor: '#000', paddingHorizontal: 16, paddingTop: 12, paddingRight: 64 }}>
-          <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-            <Text style={{ color: '#fff', fontSize: 20, fontWeight: '700' }}>
+        {/* 하단 텍스트 오버레이 — 배경 없음, 스크롤 가능 */}
+        <View
+          style={{
+            position: 'absolute',
+            left: 16,
+            right: 72,
+            bottom: Math.max(insets.bottom, 12) + (isListening ? 28 : 0),
+            zIndex: 25,
+          }}
+        >
+          <ScrollView
+            style={{ maxHeight: screenHeight - insets.top - 100 }}
+            showsVerticalScrollIndicator
+            contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}
+            nestedScrollEnabled
+            bounces={true}
+          >
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: 26,
+                fontWeight: '700',
+                lineHeight: 32,
+                textShadowColor: 'rgba(0,0,0,0.85)',
+                textShadowOffset: { width: 0, height: 1 },
+                textShadowRadius: 6,
+              }}
+            >
               {currentStep?.title}
             </Text>
             {currentStep?.description && (
-              <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 15, marginTop: 8, lineHeight: 22 }}>
-                {Array.isArray(currentStep.description)
-                  ? currentStep.description.map((d: any) => d.content).join('\n')
-                  : currentStep.description}
-              </Text>
+              <View style={{ marginTop: 8, gap: 6 }}>
+                {(Array.isArray(currentStep.description)
+                  ? currentStep.description
+                  : [currentStep.description]
+                ).map((d: any, i: number) => {
+                  const text = typeof d === 'string' ? d : d.content;
+                  return (
+                    <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 8 }}>
+                      <View
+                        style={{
+                          width: 22,
+                          height: 22,
+                          borderRadius: 11,
+                          backgroundColor: '#C4632B',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginTop: 2,
+                        }}
+                      >
+                        <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>
+                          {i + 1}
+                        </Text>
+                      </View>
+                      <Text
+                        style={{
+                          flex: 1,
+                          color: 'rgba(255,255,255,0.95)',
+                          fontSize: 18,
+                          lineHeight: 26,
+                          textShadowColor: 'rgba(0,0,0,0.85)',
+                          textShadowOffset: { width: 0, height: 1 },
+                          textShadowRadius: 6,
+                        }}
+                      >
+                        {text}
+                      </Text>
+                    </View>
+                  );
+                })}
+              </View>
             )}
           </ScrollView>
-          {isListening && (
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, paddingBottom: Math.max(insets.bottom, 12) }}>
-              <View style={[styles.sttDot, pipelineState === 'TRANSCRIBING' ? styles.sttDotActive : styles.sttDotIdle]} />
-              <Text style={[styles.sttText, pipelineState === 'TRANSCRIBING' ? styles.sttTextActive : styles.sttTextIdle]} numberOfLines={1}>
-                {pipelineState === 'TRANSCRIBING' ? transcript || '듣고 있어요...' : '대기 중'}
-              </Text>
-            </View>
-          )}
         </View>
 
-        {/* 오른쪽 버튼 — 전체 화면 absolute 오버레이 */}
+        {/* STT 인디케이터 — 안전영역 위 */}
+        {isListening && (
+          <View style={{ position: 'absolute', left: 16, right: 72, bottom: Math.max(insets.bottom, 12), flexDirection: 'row', alignItems: 'center', gap: 6, zIndex: 16 }}>
+            <View style={[styles.sttDot, pipelineState === 'TRANSCRIBING' ? styles.sttDotActive : styles.sttDotIdle]} />
+            <Text style={[styles.sttText, pipelineState === 'TRANSCRIBING' ? styles.sttTextActive : styles.sttTextIdle, { textShadowColor: 'rgba(0,0,0,0.8)', textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 4 }]} numberOfLines={1}>
+              {pipelineState === 'TRANSCRIBING' ? transcript || '듣고 있어요...' : '대기 중'}
+            </Text>
+          </View>
+        )}
+
+        {/* 오른쪽 버튼 — 영상 영역 우측 하단 안쪽 */}
         <View
           style={{
             position: 'absolute',
             right: 8,
-            bottom: Math.max(insets.bottom, 16),
+            bottom: (screenHeight - VIDEO_HEIGHT) + 12,
             alignItems: 'center',
             gap: 10,
             zIndex: 20,
           }}
         >
-          {/* 타이머 */}
-          <View style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: '#333', alignItems: 'center', justifyContent: 'center' }}>
+          {/* 타이머 — 활성 시 시간 텍스트 길이만큼 자동 확장 */}
+          <View style={{ minWidth: 44, height: 44, paddingHorizontal: 10, borderRadius: 12, backgroundColor: '#333', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end' }}>
             <HeaderTimer
               timer={timerResult.timer}
               displayTime={timerResult.displayTime}
@@ -343,7 +596,7 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
 
           {/* 재생/정지 */}
           <View style={{ overflow: 'visible', position: 'relative' }}>
-            <PawFeedback visible={intentFeedback?.intent === 'PLAY' || intentFeedback?.intent === 'PAUSE'} size={28} />
+            <PawFeedback visible={intentFeedback?.intent === 'PLAY' || intentFeedback?.intent === 'PAUSE'} size={28} direction="right" />
             <Pressable
               onPress={togglePlay}
               style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: '#333', alignItems: 'center', justifyContent: 'center' }}
@@ -354,7 +607,7 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
 
           {/* 마이크 */}
           <View style={{ overflow: 'visible', position: 'relative' }}>
-            <PawFeedback visible={intentFeedback?.intent === 'GO_TO_SCENE' || intentFeedback?.intent === 'GO_TO_STEP'} size={28} />
+            <PawFeedback visible={intentFeedback?.intent === 'GO_TO_SCENE' || intentFeedback?.intent === 'GO_TO_STEP'} size={28} direction="right" />
             <Pressable
               onPress={isVideoLoaded ? toggleListening : undefined}
               style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: isListening ? 'rgba(74,222,128,0.3)' : '#333', alignItems: 'center', justifyContent: 'center' }}
@@ -366,9 +619,9 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
           {/* 이전 + 다음 붙어있게 */}
           <View style={{ gap: 2 }}>
             <View style={{ overflow: 'visible', position: 'relative' }}>
-              <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={28} />
+              <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={28} direction="right" />
               <Pressable
-                onPress={goToPrevStep}
+                onPress={handleManualPrev}
                 disabled={isFirstStep}
                 style={{ width: 44, height: 44, borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomLeftRadius: 2, borderBottomRightRadius: 2, backgroundColor: isFirstStep ? '#2a2a2a' : '#333', alignItems: 'center', justifyContent: 'center' }}
               >
@@ -376,13 +629,13 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
               </Pressable>
             </View>
             <View style={{ overflow: 'visible', position: 'relative' }}>
-              <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={28} />
+              <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={28} direction="right" />
               {isLastStep ? (
                 <Pressable onPress={handleBack} style={{ width: 44, height: 44, borderTopLeftRadius: 2, borderTopRightRadius: 2, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, backgroundColor: '#16a34a', alignItems: 'center', justifyContent: 'center' }}>
                   <Ionicons name="checkmark" size={20} color="#fff" />
                 </Pressable>
               ) : (
-                <Pressable onPress={goToNextStep} style={{ width: 44, height: 44, borderTopLeftRadius: 2, borderTopRightRadius: 2, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, backgroundColor: '#C4632B', alignItems: 'center', justifyContent: 'center' }}>
+                <Pressable onPress={handleManualNext} style={{ width: 44, height: 44, borderTopLeftRadius: 2, borderTopRightRadius: 2, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, backgroundColor: '#C4632B', alignItems: 'center', justifyContent: 'center' }}>
                   <Ionicons name="chevron-down" size={20} color="#fff" />
                 </Pressable>
               )}
@@ -391,7 +644,9 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
         </View>
 
         <IntentFeedbackToast message={intentFeedback?.text ?? null} />
-        <TimerSheet ref={timerSheetRef} timerResult={timerResult} stepName={currentStep?.title ?? '타이머'} />
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, elevation: 9999 }} pointerEvents="box-none">
+          <TimerSheet ref={timerSheetRef} timerResult={timerResult} stepName={currentStep?.title ?? '타이머'} />
+        </View>
       </GestureHandlerRootView>
     );
   }
@@ -509,29 +764,6 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
               {renderDescription(currentStep.description)}
             </View>
 
-            {scenes.length > 0 && (
-              <View style={styles.scenesWrap}>
-                <View style={styles.scenesRow}>
-                  {scenes.map((scene: Scene, i: number) => {
-                    const isActive = i === activeSceneIndex;
-                    return (
-                      <Pressable
-                        key={i}
-                        onPress={() => seekToScene(i)}
-                        style={[
-                          styles.sceneChip,
-                          isActive ? styles.sceneChipActive : styles.sceneChipInactive,
-                        ]}
-                      >
-                        <Text style={[styles.sceneChipText, isActive && styles.sceneChipTextActive]}>
-                          {i + 1}. {scene.label}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
-                </View>
-              </View>
-            )}
           </ScrollView>
         </Animated.View>
       </GestureDetector>
@@ -548,7 +780,7 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
           <View style={{ position: 'relative', overflow: 'visible', zIndex: 100 }}>
             <PawFeedback visible={intentFeedback?.intent === 'PREV_STEP'} size={32} />
             <Pressable
-              onPress={goToPrevStep}
+              onPress={handleManualPrev}
               disabled={isFirstStep}
               style={[styles.navBtn, isFirstStep && styles.navBtnHidden]}
               hitSlop={8}
@@ -566,7 +798,7 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
           ) : (
             <View style={{ position: 'relative', overflow: 'visible', zIndex: 100 }}>
               <PawFeedback visible={intentFeedback?.intent === 'NEXT_STEP'} size={32} />
-              <Pressable onPress={goToNextStep} style={styles.navBtn} hitSlop={8}>
+              <Pressable onPress={handleManualNext} style={styles.navBtn} hitSlop={8}>
                 <Text style={styles.navBtnText}>다음</Text>
                 <Ionicons name="chevron-forward" size={18} color="rgba(255,255,255,0.8)" />
               </Pressable>
@@ -589,12 +821,14 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
           )}
         </View>
       </View>
-      {/* ─── Timer Bottom Sheet ─── */}
-      <TimerSheet
-        ref={timerSheetRef}
-        timerResult={timerResult}
-        stepName={currentStep?.title ?? '타이머'}
-      />
+      {/* ─── Timer Bottom Sheet (최상위 z) ─── */}
+      <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, elevation: 9999 }} pointerEvents="box-none">
+        <TimerSheet
+          ref={timerSheetRef}
+          timerResult={timerResult}
+          stepName={currentStep?.title ?? '타이머'}
+        />
+      </View>
     </GestureHandlerRootView>
   );
 }
@@ -687,20 +921,27 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
 
-  descList: { gap: 8 },
-  descRow: { flexDirection: 'row', alignItems: 'flex-start' },
-  descDot: {
-    color: '#C4632B',
-    fontSize: 20,
+  descList: { gap: 10 },
+  descRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 10 },
+  descNumber: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: '#C4632B',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 1,
+  },
+  descNumberText: {
+    color: '#fff',
+    fontSize: 12,
     fontWeight: '700',
-    marginRight: 8,
-    marginTop: 0,
   },
   descText: {
     flex: 1,
     color: 'rgba(255,255,255,0.95)',
-    fontSize: 18,
-    lineHeight: 26,
+    fontSize: 16,
+    lineHeight: 23,
   },
 
   scenesWrap: {

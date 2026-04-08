@@ -1,0 +1,218 @@
+{
+  "category_id": "lunchbox",
+  "category_name": "출근 도시락",
+  "category_emoji": "🍱",
+  "concept": "남친이 출근할 때 챙겨주는 도시락. 전날 밤 준비 가능, 보온/식어도 맛있음, 색감 균형, 새벽에 빨리 만들 수 있는 메뉴.",
+  "dishes": [
+    {
+      "id": "love-lunchbox-1",
+      "title": "누구나 대성공✔️ 이렇게 썰고 볶아야 부드럽고 입에 살살 녹는 대박집 소불고기!! 누린내없이 맛있어요🥇",
+      "channel": "딸을 위한 레시피 Recipes for daughters",
+      "youtube_url": "https://www.youtube.com/watch?v=0tFQaJ3XeVw",
+      "thumbnail": "https://i.ytimg.com/vi/0tFQaJ3XeVw/hqdefault.jpg",
+      "estimated_duration": "6:58",
+      "tags": {
+        "mood": [],
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "고기"
+        ],
+        "budget": "보통"
+      },
+      "hook": "아침마다 챙겨주고 싶은",
+      "why_recommended": "식어도 맛이 변하지 않는 양념 소불고기는 도시락의 기본기입니다. 전날 양념해두면 아침에 굽기만 하면 됩니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-lunchbox-2",
+      "title": "팔아도 되는 역대급 [스팸주먹밥] 간단요리 끝판왕👍도시락으로 최고에요💯",
+      "channel": "소소황 Cook & Eat",
+      "youtube_url": "https://www.youtube.com/watch?v=uAm6L_6g7pY",
+      "thumbnail": "https://i.ytimg.com/vi/uAm6L_6g7pY/hqdefault.jpg",
+      "estimated_duration": "2:42",
+      "tags": {
+        "mood": [],
+        "difficulty": "초보",
+        "time": "10분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "밥"
+        ],
+        "budget": "보통"
+      },
+      "hook": "한 손에 쏙, 든든한 한 끼",
+      "why_recommended": "점심에 자리를 비우기 어려운 직장인을 위한 가장 실용적인 도시락 메뉴입니다. 모양과 속재료만 바꿔도 매일 새롭습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-lunchbox-3",
+      "title": "무조건 맛있는 치킨 데리야끼 / 간단한 데리야끼 소스",
+      "channel": "꾸리 Kkuri",
+      "youtube_url": "https://www.youtube.com/watch?v=D0-5UD4TrY4",
+      "thumbnail": "https://i.ytimg.com/vi/D0-5UD4TrY4/hqdefault.jpg",
+      "estimated_duration": "1:18",
+      "tags": {
+        "mood": [],
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트"
+        ],
+        "style": [
+          "일식"
+        ],
+        "ingredient_focus": [
+          "고기"
+        ],
+        "budget": "보통"
+      },
+      "hook": "도시락 열면 환호 보장",
+      "why_recommended": "식어도 맛있고 색감까지 예뻐서 도시락 메뉴의 챔피언입니다. 양념을 미리 재워두면 아침이 편합니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-lunchbox-4",
+      "title": "들어가는 건 별거 없는데 왜 이렇게 맛있지? 3분 계란말이 비법 | 전국집밥자랑 ep.39",
+      "channel": "전국집밥자랑",
+      "youtube_url": "https://www.youtube.com/watch?v=sXLkKIXE05Q",
+      "thumbnail": "https://i.ytimg.com/vi/sXLkKIXE05Q/hqdefault.jpg",
+      "estimated_duration": "전국집밥자랑",
+      "tags": {
+        "mood": [],
+        "difficulty": "초보",
+        "time": "10분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "달걀"
+        ],
+        "budget": "보통"
+      },
+      "hook": "5분이면 도시락 완성",
+      "why_recommended": "5분 안에 완성되는 도시락 필수 반찬입니다. 색감과 영양 균형까지 한 번에 챙길 수 있습니다.",
+      "is_curator_pick": false
+    },
+    {
+      "id": "love-lunchbox-5",
+      "title": "리얼먹방:) 흔들어주세요~~옛날도시락🍱ㅣOld School Korean Lunch BoxㅣREAL SOUNDㅣASMR MUKBANGㅣEATING SHOWㅣ",
+      "channel": "[햄지]Hamzy",
+      "youtube_url": "https://www.youtube.com/watch?v=d93PSdtdaso",
+      "thumbnail": "https://i.ytimg.com/vi/d93PSdtdaso/hqdefault.jpg",
+      "estimated_duration": "10:38",
+      "tags": {
+        "mood": [],
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "밥"
+        ],
+        "budget": "보통"
+      },
+      "hook": "햄지표 정성 도시락",
+      "why_recommended": "한 끼를 정성껏 챙기는 햄지의 도시락 브이로그는 따라하기 좋은 모범입니다. 사랑이 담긴 한 끼의 정석을 보여줍니다.",
+      "is_curator_pick": false
+    },
+    {
+      "id": "love-lunchbox-6",
+      "title": "신입사원 들어왔을때 해주는 직원식 (대나무 도시락 정식)",
+      "channel": "승우아빠",
+      "youtube_url": "https://www.youtube.com/watch?v=bPnyjFErXgc",
+      "thumbnail": "https://i.ytimg.com/vi/bPnyjFErXgc/hqdefault.jpg",
+      "estimated_duration": "12:00",
+      "tags": {
+        "mood": [],
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "밥"
+        ],
+        "budget": "보통"
+      },
+      "hook": "매일 챙기는 그 마음",
+      "why_recommended": "평일 아침 매일 도시락을 챙기는 영상으로, 메뉴 구성과 시간 관리 노하우가 가득합니다. 따라하면 누구나 매일 챙길 수 있습니다.",
+      "is_curator_pick": false
+    },
+    {
+      "id": "love-lunchbox-7",
+      "title": "황태채무침 보들보들하고 촉촉하게 고급반찬 아끼고 아낀 비법 알려드릴게요",
+      "channel": "아재도 요리한다",
+      "youtube_url": "https://www.youtube.com/watch?v=-sxyXlAFEhM",
+      "thumbnail": "https://i.ytimg.com/vi/-sxyXlAFEhM/hqdefault.jpg",
+      "estimated_duration": "3:34",
+      "tags": {
+        "mood": [],
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "채소"
+        ],
+        "budget": "보통"
+      },
+      "hook": "식어도 맛있는 한식 도시락",
+      "why_recommended": "식어도 맛있는 한식 반찬의 정석입니다. 미리 만들어 두고 며칠씩 활용할 수 있어 아침이 여유로워집니다.",
+      "is_curator_pick": false
+    }
+  ]
+}

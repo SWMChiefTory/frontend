@@ -1,19 +1,22 @@
 import { ScrollView, View, Alert, Modal, Text, Pressable, ActivityIndicator } from 'react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { CreditRechargeSheet, type CreditRechargeSheetRef } from '@/src/widgets/credit-recharge/credit-recharge-sheet';
+import { CreatingRecipeWatcher } from '@/src/pages/home/components/creating-recipe-watcher';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { HomeHeader } from '@/src/pages/home/components/home-header';
 import { FeatureCards } from '@/src/pages/home/components/feature-cards';
-import { ThemeCardsSection, RecipeListSection, RecentRecipeSection, RecentRecipeSkeleton, RecipeListSkeleton } from '@/src/pages/home/components/recipe-section';
+import { ThemeCardsSection, RecipeListSection, RecentRecipeSection, RecentRecipeSkeleton, RecipeListSkeleton, CreatingRecipeSection } from '@/src/pages/home/components/recipe-section';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import {
   MOCK_THEME_CARDS,
   MOCK_HOT_RECIPES,
   MOCK_RECENT_RECIPES,
 } from '@/src/shared/data/mock';
-import { useRecommendRecipes } from '@/src/entities/recipe/hooks/use-recommend-recipes';
+import { useRecommendRecipes, useMyRecipes } from '@/src/entities/recipe';
 import { RecommendType } from '@/src/entities/recipe/api/recommend-api';
 import type { RecipeCard } from '@/src/shared/data/mock';
+import { track, RechargeEvents, RecipeEvents } from '@/src/shared/analytics';
 
 function toRecipeCards(data: any[] | undefined): RecipeCard[] {
   if (!data) return [];
@@ -35,9 +38,10 @@ interface HomeScreenProps {
 
 export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenProps) {
   const [lockedModal, setLockedModal] = useState<string | null>(null);
+  const rechargeSheetRef = useRef<CreditRechargeSheetRef>(null);
 
   const { data: popularData, isLoading: popularLoading } = useRecommendRecipes(RecommendType.POPULAR);
-  const { data: trendingData, isLoading: trendingLoading } = useRecommendRecipes(RecommendType.TRENDING);
+  const { data: myRecipesData, isLoading: myRecipesLoading } = useMyRecipes();
 
   const hotRecipes = useMemo(() => {
     const apiCards = toRecipeCards(popularData?.data);
@@ -45,12 +49,13 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
   }, [popularData]);
 
   const recentRecipes = useMemo(() => {
-    const apiCards = toRecipeCards(trendingData?.data);
-    return apiCards.length > 0 ? apiCards : MOCK_RECENT_RECIPES;
-  }, [trendingData]);
+    const apiCards = toRecipeCards(myRecipesData?.data);
+    return apiCards;
+  }, [myRecipesData]);
 
   const handleBerryPress = useCallback(() => {
-    Alert.alert('베리', '베리 잔액: 32');
+    track(RechargeEvents.CLICK, { source: 'home_header' });
+    rechargeSheetRef.current?.open();
   }, []);
 
   const handleSearchPress = useCallback(() => {
@@ -70,10 +75,15 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
   }, []);
 
   const handleThemePress = useCallback((card: any) => {
-    Alert.alert(card.title, '테마 레시피 페이지(웹뷰)로 이동');
+    router.push(`/theme/${card.id}`);
   }, []);
 
   const handleRecipePress = useCallback((recipe: any) => {
+    track(RecipeEvents.USER_RECIPE_CLICK, {
+      source: 'home',
+      recipe_id: String(recipe.id),
+      recipe_title: recipe.title,
+    });
     router.push(`/recipe/${recipe.id}`);
   }, []);
 
@@ -107,7 +117,8 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120, paddingTop: spacing.xl, gap: spacing.lg }}
       >
-        {trendingLoading ? (
+        <CreatingRecipeSection />
+        {myRecipesLoading ? (
           <RecentRecipeSkeleton />
         ) : recentRecipes.length > 0 ? (
           <>
@@ -208,6 +219,8 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
         </Pressable>
       </Modal>
 
+      <CreditRechargeSheet ref={rechargeSheetRef} />
+      <CreatingRecipeWatcher />
     </View>
   );
 }

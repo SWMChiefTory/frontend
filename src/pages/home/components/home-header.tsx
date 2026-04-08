@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { colors, spacing, radius } from '@/src/shared/design/tokens';
-import { MOCK_BERRY_BALANCE } from '@/src/shared/data/mock';
+import { useBalance } from '@/src/entities/balance';
 
 const BERRY_ICON = require('@/assets/images/berry-icon.png');
 
@@ -15,6 +15,7 @@ interface HomeHeaderProps {
 
 export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: HomeHeaderProps) {
   const insets = useSafeAreaInsets();
+  const { data: balance } = useBalance();
 
   return (
     <View style={{ paddingTop: insets.top }}>
@@ -51,7 +52,7 @@ export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: Hom
             }}
           >
             <Text style={{ fontSize: 10, fontWeight: '700', color: colors.text.primary }}>
-              {MOCK_BERRY_BALANCE}
+              {balance?.balance ?? 0}
             </Text>
           </View>
         </Pressable>

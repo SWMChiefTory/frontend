@@ -9,6 +9,11 @@ export default {
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     owner: "cheftory",
+    runtimeVersion: { policy: "appVersion" },
+    updates: {
+      url: "https://u.expo.dev/f02c958a-c473-4a51-829c-3ff1ad8fd256",
+      fallbackToCacheTimeout: 0,
+    },
     ios: {
       buildNumber: "4",
       entitlements: {

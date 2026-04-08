@@ -11,8 +11,22 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import type { WebView } from 'react-native-webview';
 import { useWebAudioPipeline } from './useWebAudioPipeline';
-import { classifyLocal } from './useLocalNLU';
+import { classifyLocal, extractSlots, normalize, type LocalNLUPayload } from './useLocalNLU';
 import { createNLU, type IntentLabel } from './onnxNLU';
+
+function formatDuration(sec: number): string {
+  if (sec >= 3600) {
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    return m > 0 ? `${h}시간 ${m}분` : `${h}시간`;
+  }
+  if (sec >= 60) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return s > 0 ? `${m}분 ${s}초` : `${m}분`;
+  }
+  return `${sec}초`;
+}
 import { useSceneMatcher } from './useSceneMatcher';
 
 
@@ -23,8 +37,13 @@ interface UseVoiceCommandOptions {
   goToPrevStep: () => void;
   goToStep: (stepNumber: number) => void;
   seekToScene: (sceneIndex: number) => void;
+  seekToSceneNumber: (sceneNumber: number) => void; // 1-indexed
   play: () => void;
   pause: () => void;
+  startTimer: (durationSec: number) => void;
+  cancelTimer: () => void;
+  pauseTimer: () => void;
+  resumeTimer: () => void;
   sceneLabels: string[];
   totalSteps: number;
   isFirstStep: boolean;
@@ -39,8 +58,13 @@ export function useVoiceCommand({
   goToPrevStep,
   goToStep,
   seekToScene,
+  seekToSceneNumber,
   play,
   pause,
+  startTimer,
+  cancelTimer,
+  pauseTimer,
+  resumeTimer,
   sceneLabels,
   totalSteps,
   isFirstStep,
@@ -81,7 +105,7 @@ export function useVoiceCommand({
   }, []);
 
   const executeIntent = useCallback(
-    (intent: IntentLabel, stepNumber?: number) => {
+    (intent: IntentLabel, payload: LocalNLUPayload = {}) => {
       if (intent === 'EXTRA') return false;
       switch (intent) {
         case 'NEXT_STEP':
@@ -92,10 +116,47 @@ export function useVoiceCommand({
           if (isFirstStep) { showFeedback('첫 번째 단계예요', 'PREV_STEP'); }
           else { goToPrevStep(); showFeedback('← 이전 단계', 'PREV_STEP'); }
           break;
-        case 'GO_TO_STEP':
-          if (stepNumber && stepNumber >= 1 && stepNumber <= totalSteps) {
-            goToStep(stepNumber); showFeedback(`${stepNumber}단계로 이동`, 'GO_TO_STEP');
-          } else { showFeedback(`${stepNumber}단계는 없어요`, 'GO_TO_STEP'); }
+        case 'GO_TO_STEP': {
+          const n = payload.stepNumber;
+          if (n && n >= 1 && n <= totalSteps) {
+            goToStep(n); showFeedback(`${n}단계로 이동`, 'GO_TO_STEP');
+          } else {
+            showFeedback(`${n}단계는 없어요`, 'GO_TO_STEP');
+          }
+          break;
+        }
+        case 'GO_TO_SCENE_NUMBER': {
+          const n = payload.sceneNumber;
+          if (n && n >= 1 && n <= sceneLabels.length) {
+            seekToSceneNumber(n);
+            showFeedback(`${n}번 장면`, 'GO_TO_SCENE_NUMBER');
+          } else {
+            showFeedback(`${n}번 장면은 없어요`, 'GO_TO_SCENE_NUMBER');
+          }
+          break;
+        }
+        case 'TIMER_START': {
+          const sec = payload.durationSec;
+          if (sec && sec > 0) {
+            startTimer(sec);
+            showFeedback(`⏱ ${formatDuration(sec)} 타이머`, 'TIMER_START');
+          } else {
+            showFeedback('몇 분 타이머인가요?', 'TIMER_START');
+            return false;
+          }
+          break;
+        }
+        case 'TIMER_CANCEL':
+          cancelTimer();
+          showFeedback('⏱ 타이머 취소', 'TIMER_CANCEL');
+          break;
+        case 'TIMER_PAUSE':
+          pauseTimer();
+          showFeedback('⏱ 타이머 일시정지', 'TIMER_PAUSE');
+          break;
+        case 'TIMER_RESUME':
+          resumeTimer();
+          showFeedback('⏱ 타이머 재개', 'TIMER_RESUME');
           break;
         case 'PLAY':
           play(); showFeedback('▶ 재생', 'PLAY');
@@ -108,21 +169,18 @@ export function useVoiceCommand({
       }
       return true;
     },
-    [isLastStep, isFirstStep, goToNextStep, goToPrevStep, goToStep, play, pause, totalSteps, showFeedback],
+    [
+      isLastStep, isFirstStep, totalSteps, sceneLabels.length,
+      goToNextStep, goToPrevStep, goToStep, seekToSceneNumber,
+      play, pause, startTimer, cancelTimer, pauseTimer, resumeTimer,
+      showFeedback,
+    ],
   );
 
-  const extractStepNumber = useCallback((text: string): number | undefined => {
-    const digitMatch = text.match(/(\d+)/);
-    if (digitMatch) return parseInt(digitMatch[1], 10);
-    const KOREAN_NUMBERS: Record<string, number> = {
-      첫: 1, 하나: 1, 한: 1, 일: 1, 두: 2, 둘: 2, 이: 2,
-      세: 3, 셋: 3, 삼: 3, 네: 4, 넷: 4, 사: 4, 다섯: 5, 오: 5,
-      여섯: 6, 육: 6, 일곱: 7, 칠: 7, 여덟: 8, 팔: 8, 아홉: 9, 구: 9, 열: 10, 십: 10,
-    };
-    for (const [word, num] of Object.entries(KOREAN_NUMBERS)) {
-      if (text.includes(word)) return num;
-    }
-    return undefined;
+  // ONNX 폴백에서 GO_TO_STEP 받았을 때 슬롯 추출용
+  const extractStepNumberForOnnx = useCallback((text: string): number | undefined => {
+    const slots = extractSlots(normalize(text));
+    return slots.stepNumber;
   }, []);
 
   // ─── interim/final handlers ───
@@ -140,7 +198,7 @@ export function useVoiceCommand({
       const tKeyword1 = performance.now();
       if (localResult) {
         console.log(`[Perf:keyword] interim "${text}" → ${localResult.intent} | ${(tKeyword1 - tKeyword0).toFixed(1)}ms`);
-        const executed = executeIntent(localResult.intent, localResult.stepNumber);
+        const executed = executeIntent(localResult.intent, localResult.payload);
         if (executed) {
           console.log(`[Perf:E2E] interim "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
           handledInInterimRef.current = true;
@@ -174,8 +232,8 @@ export function useVoiceCommand({
                 return;
               }
             } else {
-              const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumber(text) : undefined;
-              const executed = executeIntent(result.intent, stepNum);
+              const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumberForOnnx(text) : undefined;
+              const executed = executeIntent(result.intent, { stepNumber: stepNum });
               if (executed) {
                 console.log(`[Perf:E2E] interim "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
                 handledInInterimRef.current = true;
@@ -187,7 +245,7 @@ export function useVoiceCommand({
         } catch (e) { console.warn('[VoiceCommand] NLU interim error:', e); }
       }
     },
-    [executeIntent, extractStepNumber, findBestScene, seekToScene, showFeedback],
+    [executeIntent, extractStepNumberForOnnx, findBestScene, seekToScene, showFeedback],
   );
 
   const handleFinalResult = useCallback(
@@ -206,7 +264,7 @@ export function useVoiceCommand({
       const tKeyword1 = performance.now();
       if (localResult) {
         console.log(`[Perf:keyword] final "${text}" → ${localResult.intent} | ${(tKeyword1 - tKeyword0).toFixed(1)}ms`);
-        executeIntent(localResult.intent, localResult.stepNumber);
+        executeIntent(localResult.intent, localResult.payload);
         console.log(`[Perf:E2E] final "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
         return;
       }
@@ -223,8 +281,8 @@ export function useVoiceCommand({
             if (result.intent === 'GO_TO_SCENE') {
               setSceneSearching(true);
             } else {
-              const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumber(text) : undefined;
-              executeIntent(result.intent, stepNum);
+              const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumberForOnnx(text) : undefined;
+              executeIntent(result.intent, { stepNumber: stepNum });
               console.log(`[Perf:E2E] final "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
               return;
             }
@@ -246,26 +304,29 @@ export function useVoiceCommand({
         console.log(`[Perf:E2E] final "${text}" → no match | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
       }
     },
-    [executeIntent, extractStepNumber, findBestScene, seekToScene, showFeedback],
+    [executeIntent, extractStepNumberForOnnx, findBestScene, seekToScene, showFeedback],
   );
 
-  // ─── boost words ───
+  // ─── boost words (고정 키워드만) ───
   const boostWords = useMemo(() => {
-    const words = new Set<string>([
+    return [
+      // 영상/네비 명령
       '다음', '이전', '재생', '정지', '멈춰', '넘어가', '뒤로', '단계', '플레이', '스탑',
+      '중지', '완료', '끝',
+      // 인덱스 키워드
       '장면', '스텝',
+      // 숫자 (한자)
       '일', '이', '삼', '사', '오', '육', '칠', '팔', '구', '십',
+      // 숫자 (순우리말)
       '하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열',
+      // 서수
       '첫', '첫번째', '두번째', '세번째', '네번째', '다섯번째',
-    ]);
-    for (const label of sceneLabels) {
-      for (const word of label.split(/\s+/)) {
-        const trimmed = word.trim();
-        if (trimmed.length >= 2) words.add(trimmed);
-      }
-    }
-    return Array.from(words).slice(0, 100);
-  }, [sceneLabels]);
+      // 타이머
+      '타이머', '시작', '취소', '일시정지', '일시 정지', '재개', '종료',
+      // 시간 단위
+      '분', '초', '시간',
+    ];
+  }, []);
 
   // ─── Web Audio Pipeline ───
   const {

@@ -1,17 +1,59 @@
-import { client } from '@/src/modules/shared/api/client';
 import { z } from 'zod';
+import { client } from '@/src/shared/api';
 
-const CategorySchema = z.object({
-  categoryId: z.string(),
-  count: z.number(),
-  name: z.string(),
-});
+// ─── Raw schemas ─────────────────────────────────────────────────
 
-const CategoriesResponseSchema = z.object({
-  categories: z.array(CategorySchema),
-  total_count: z.number().optional(),
-  totalCount: z.number().optional(),
-});
+const RawUserRecipeSchema = z
+  .object({
+    recipe_id: z.string(),
+    recipe_title: z.string(),
+    video_id: z.string().nullish(),
+    video_thumbnail_url: z.string().nullish(),
+    video_type: z.enum(['SHORTS', 'NORMAL']).nullish(),
+    channel_title: z.string().nullish(),
+    cook_time: z.number().nullish(),
+    cooking_time: z.number().nullish(),
+    servings: z.number().nullish(),
+    description: z.string().nullish(),
+    recipe_status: z.string().nullish(),
+  })
+  .passthrough();
+
+const RawRecentRecipesResponseSchema = z
+  .object({
+    recent_recipes: z.array(RawUserRecipeSchema).default([]),
+    next_cursor: z.string().nullish(),
+    has_next: z.boolean().nullish(),
+  })
+  .passthrough();
+
+const RawCategorizedRecipesResponseSchema = z
+  .object({
+    categorized_recipes: z.array(RawUserRecipeSchema).default([]),
+    next_cursor: z.string().nullish(),
+    has_next: z.boolean().nullish(),
+  })
+  .passthrough();
+
+const RawCategorySchema = z
+  .object({
+    category_id: z.string(),
+    name: z.string(),
+    count: z.number().default(0),
+  })
+  .passthrough();
+
+const RawCategoriesResponseSchema = z
+  .object({
+    categories: z.array(RawCategorySchema).default([]),
+    total_count: z.number().nullish(),
+  })
+  .passthrough();
+
+type RawUserRecipe = z.infer<typeof RawUserRecipeSchema>;
+type RawCategory = z.infer<typeof RawCategorySchema>;
+
+// ─── Client types ────────────────────────────────────────────────
 
 export interface UserRecipe {
   recipeId: string;
@@ -32,21 +74,51 @@ export interface Category {
   count: number;
 }
 
-// ─── 나의 레시피 (최근) ───
-export async function fetchMyRecipes(cursor?: string | null): Promise<{
+export interface UserRecipesPage {
   data: UserRecipe[];
   nextCursor: string | null;
   hasNext: boolean;
-}> {
+}
+
+// ─── Transformers ────────────────────────────────────────────────
+
+function toUserRecipe(raw: RawUserRecipe): UserRecipe {
+  return {
+    recipeId: raw.recipe_id,
+    recipeTitle: raw.recipe_title,
+    videoId: raw.video_id ?? '',
+    videoThumbnailUrl: raw.video_thumbnail_url ?? '',
+    videoType: raw.video_type ?? 'NORMAL',
+    channelTitle: raw.channel_title ?? '',
+    cookingTime: raw.cook_time ?? raw.cooking_time ?? 0,
+    servings: raw.servings ?? 0,
+    description: raw.description ?? '',
+    recipeStatus: raw.recipe_status ?? '',
+  };
+}
+
+function toCategory(raw: RawCategory): Category {
+  return {
+    categoryId: raw.category_id,
+    name: raw.name,
+    count: raw.count,
+  };
+}
+
+// ─── APIs ────────────────────────────────────────────────────────
+
+export async function fetchMyRecipes(cursor?: string | null): Promise<UserRecipesPage> {
   try {
     const res = await client.get('/recipes/recent', { params: cursor ? { cursor } : {} });
-    const raw = res.data;
-    const recipes = raw.recent_recipes ?? raw.recipes ?? raw.data ?? [];
-
+    const parsed = RawRecentRecipesResponseSchema.safeParse(res.data);
+    if (!parsed.success) {
+      console.warn('[UserRecipeAPI] my recipes schema error:', parsed.error.issues);
+      return { data: [], nextCursor: null, hasNext: false };
+    }
     return {
-      nextCursor: raw.next_cursor ?? raw.nextCursor ?? null,
-      hasNext: raw.has_next ?? raw.hasNext ?? false,
-      data: recipes.map((r: any) => mapUserRecipe(r)),
+      data: parsed.data.recent_recipes.map(toUserRecipe),
+      nextCursor: parsed.data.next_cursor ?? null,
+      hasNext: parsed.data.has_next ?? false,
     };
   } catch (err: any) {
     console.warn('[UserRecipeAPI] fetchMyRecipes error:', err?.response?.status, err?.message);
@@ -54,21 +126,23 @@ export async function fetchMyRecipes(cursor?: string | null): Promise<{
   }
 }
 
-// ─── 카테고리별 레시피 ───
-export async function fetchCategorizedRecipes(categoryId: string, cursor?: string | null): Promise<{
-  data: UserRecipe[];
-  nextCursor: string | null;
-  hasNext: boolean;
-}> {
+export async function fetchCategorizedRecipes(
+  categoryId: string,
+  cursor?: string | null,
+): Promise<UserRecipesPage> {
   try {
-    const res = await client.get(`/recipes/categorized/${categoryId}`, { params: cursor ? { cursor } : {} });
-    const raw = res.data;
-    const recipes = raw.categorized_recipes ?? raw.recent_recipes ?? raw.recipes ?? raw.data ?? [];
-
+    const res = await client.get(`/recipes/categorized/${categoryId}`, {
+      params: cursor ? { cursor } : {},
+    });
+    const parsed = RawCategorizedRecipesResponseSchema.safeParse(res.data);
+    if (!parsed.success) {
+      console.warn('[UserRecipeAPI] categorized schema error:', parsed.error.issues);
+      return { data: [], nextCursor: null, hasNext: false };
+    }
     return {
-      nextCursor: raw.next_cursor ?? raw.nextCursor ?? null,
-      hasNext: raw.has_next ?? raw.hasNext ?? false,
-      data: recipes.map((r: any) => mapUserRecipe(r)),
+      data: parsed.data.categorized_recipes.map(toUserRecipe),
+      nextCursor: parsed.data.next_cursor ?? null,
+      hasNext: parsed.data.has_next ?? false,
     };
   } catch (err: any) {
     console.warn('[UserRecipeAPI] fetchCategorizedRecipes error:', err?.response?.status, err?.message);
@@ -76,35 +150,21 @@ export async function fetchCategorizedRecipes(categoryId: string, cursor?: strin
   }
 }
 
-// ─── 카테고리 목록 ───
 export async function fetchCategories(): Promise<Category[]> {
   try {
     const res = await client.get('/recipes/categories');
-    const raw = res.data;
-
-    // snake_case → camelCase 변환
-    const normalized = {
-      categories: (raw.categories ?? []).map((c: any) => ({
-        categoryId: c.category_id ?? c.categoryId ?? '',
-        name: c.name ?? '',
-        count: c.count ?? 0,
-      })),
-      totalCount: raw.total_count ?? raw.totalCount ?? 0,
-    };
-
-    const parsed = CategoriesResponseSchema.safeParse(normalized);
+    const parsed = RawCategoriesResponseSchema.safeParse(res.data);
     if (!parsed.success) {
-      console.warn('[UserRecipeAPI] categories zod error:', parsed.error.issues);
+      console.warn('[UserRecipeAPI] categories schema error:', parsed.error.issues);
+      return [];
     }
-
-    return normalized.categories;
+    return parsed.data.categories.map(toCategory);
   } catch (err: any) {
     console.warn('[UserRecipeAPI] fetchCategories error:', err?.response?.status, err?.message);
     return [];
   }
 }
 
-// ─── 카테고리 생성/삭제 ───
 export async function createCategory(name: string): Promise<void> {
   await client.post('/recipes/categories', { name });
 }
@@ -113,17 +173,10 @@ export async function deleteCategory(categoryId: string): Promise<void> {
   await client.delete(`/recipes/categories/${categoryId}`);
 }
 
-function mapUserRecipe(r: any): UserRecipe {
-  return {
-    recipeId: r.recipe_id ?? r.recipeId ?? '',
-    recipeTitle: r.recipe_title ?? r.recipeTitle ?? '',
-    videoId: r.video_id ?? r.videoId ?? '',
-    videoThumbnailUrl: r.video_thumbnail_url ?? r.videoThumbnailUrl ?? '',
-    videoType: r.video_type ?? r.videoType ?? 'NORMAL',
-    channelTitle: r.channel_title ?? r.channelTitle ?? '',
-    cookingTime: r.cook_time ?? r.cooking_time ?? r.cookingTime ?? 0,
-    servings: r.servings ?? 0,
-    description: r.description ?? '',
-    recipeStatus: r.recipe_status ?? r.recipeStatus ?? '',
-  };
+/**
+ * 내 레시피에서 제거 = 북마크 해제
+ * (실제 레시피 자체를 삭제하는 게 아니라 내 목록에서 빼는 것)
+ */
+export async function deleteUserRecipe(recipeId: string): Promise<void> {
+  await client.delete(`/recipes/${recipeId}/bookmark`);
 }

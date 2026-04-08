@@ -1,12 +1,15 @@
 import { forwardRef, useCallback, useImperativeHandle, useRef, useState } from 'react';
-import { View, Text, Pressable, Alert, ActivityIndicator, Linking, Keyboard, ScrollView } from 'react-native';
+import { View, Text, Pressable, Alert, ActivityIndicator, Linking, Keyboard, ScrollView, Platform } from 'react-native';
 import BottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
-import { client } from '@/src/modules/shared/api/client';
-import { MOCK_BERRY_BALANCE } from '@/src/shared/data/mock';
-import { useCategories } from '@/src/entities/recipe/hooks/use-my-recipes';
+import { client } from '@/src/shared/api/client';
+import { useBalance } from '@/src/entities/balance';
+import { useCategories, useCreateRecipe } from '@/src/entities/recipe';
+import { useRecipeCreateStore } from '@/src/pages/home/model/recipe-create-store';
+import * as Haptics from 'expo-haptics';
+import { track, RecipeCreateEvents } from '@/src/shared/analytics';
 
 const BERRY_ICON = require('@/assets/images/berry-icon.png');
 
@@ -26,7 +29,7 @@ function extractVideoId(url: string): string | null {
 }
 
 export interface RecipeCreateSheetRef {
-  open: () => void;
+  open: (initialUrl?: string) => void;
   close: () => void;
 }
 
@@ -36,10 +39,24 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const entryPointRef = useRef<'home' | 'external_share' | 'deep_link'>('home');
   const { data: categories } = useCategories();
+  const { data: balance } = useBalance();
+  const addCreating = useRecipeCreateStore((s) => s.addCreating);
+  const { mutateAsync: createRecipeAsync } = useCreateRecipe();
 
   useImperativeHandle(ref, () => ({
-    open: () => sheetRef.current?.expand(),
+    open: (initialUrl?: string) => {
+      if (initialUrl) setUrl(initialUrl);
+      const entryPoint: 'home' | 'external_share' = initialUrl ? 'external_share' : 'home';
+      entryPointRef.current = entryPoint;
+      sheetRef.current?.expand();
+      track(RecipeCreateEvents.START_URL, {
+        entry_point: entryPoint,
+        has_prefilled_url: !!initialUrl,
+        is_from_share: !!initialUrl,
+      });
+    },
     close: () => {
       sheetRef.current?.close();
       setUrl('');
@@ -54,13 +71,28 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
   const handleSubmit = useCallback(async () => {
     if (!videoId) return;
 
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setLoading(true);
     setError(null);
 
+    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+    track(RecipeCreateEvents.SUBMIT_URL, {
+      entry_point: entryPointRef.current,
+      has_target_category: !!selectedCategoryId,
+      target_category_id: selectedCategoryId ?? undefined,
+      video_url: videoUrl,
+      video_id: videoId,
+    });
+
     try {
-      const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-      const res = await client.post('/recipes', { video_url: videoUrl });
-      const recipeId = res.data?.recipe_id ?? res.data?.recipeId;
+      const recipeId = await createRecipeAsync(videoUrl);
+      track(RecipeCreateEvents.SUCCESS_URL, {
+        entry_point: entryPointRef.current,
+        recipe_id: String(recipeId ?? ''),
+        has_target_category: !!selectedCategoryId,
+        video_url: videoUrl,
+        video_id: videoId,
+      });
 
       // 카테고리 선택했으면 등록
       if (selectedCategoryId && recipeId) {
@@ -69,17 +101,29 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
         } catch {}
       }
 
+      // 생성 중 목록에 추가 → 홈에서 progress 표시
+      addCreating(recipeId, videoUrl);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
       setLoading(false);
       sheetRef.current?.close();
       setUrl('');
       setSelectedCategoryId(null);
-      Alert.alert('레시피 생성 완료!', `레시피가 생성되었어요. 잠시 후 확인할 수 있습니다.`);
     } catch (err: any) {
       setLoading(false);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       const msg = err?.response?.data?.message ?? err?.message ?? '레시피 생성에 실패했어요';
+      const errorType = err?.response?.data?.errorCode ?? err?.name ?? 'unknown_error';
+      track(RecipeCreateEvents.FAIL_URL, {
+        entry_point: entryPointRef.current,
+        error_type: String(errorType),
+        error_message: msg,
+        video_url: videoUrl,
+        video_id: videoId,
+      });
       setError(msg);
     }
-  }, [videoId]);
+  }, [videoId, selectedCategoryId, createRecipeAsync, addCreating]);
 
   return (
     <BottomSheet
@@ -90,7 +134,15 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
       keyboardBehavior="interactive"
       keyboardBlurBehavior="restore"
       android_keyboardInputMode="adjustResize"
-      onChange={(index) => { if (index === -1) Keyboard.dismiss(); }}
+      onChange={(index) => {
+        if (index === -1) {
+          Keyboard.dismiss();
+          // 닫힐 때 입력 상태 초기화 (제스처/백드롭/명시적 close 모두 포함)
+          setUrl('');
+          setError(null);
+          setSelectedCategoryId(null);
+        }
+      }}
       backdropComponent={(props) => (
         <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} />
       )}
@@ -110,7 +162,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.xs }}>
             <Image source={BERRY_ICON} style={{ width: 16, height: 16 }} contentFit="contain" />
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.primary, fontWeight: '600' }}>
-              보유 {MOCK_BERRY_BALANCE}개
+              보유 {balance?.balance ?? 0}개
             </Text>
           </View>
         </View>
@@ -141,7 +193,22 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
               />
             </View>
             <Pressable
-              onPress={() => Linking.openURL('https://www.youtube.com')}
+              onPress={async () => {
+                const youtubeAppUrl = Platform.select({
+                  ios: 'youtube://',
+                  android: 'vnd.youtube://',
+                }) as string;
+                try {
+                  const canOpen = await Linking.canOpenURL(youtubeAppUrl);
+                  if (canOpen) {
+                    await Linking.openURL(youtubeAppUrl);
+                  } else {
+                    await Linking.openURL('https://www.youtube.com');
+                  }
+                } catch {
+                  await Linking.openURL('https://www.youtube.com');
+                }
+              }}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',

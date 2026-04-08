@@ -8,13 +8,15 @@ import { router } from 'expo-router';
 import { BottomSheetModal, BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useQueryClient } from '@tanstack/react-query';
 import { CategoryChips } from '@/src/pages/bookmark/components/category-chips';
+import { CreatingRecipeSection } from '@/src/pages/home/components/recipe-section';
 import { RecipeGrid } from '@/src/pages/bookmark/components/recipe-grid';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
-import { useMyRecipes, useCategorizedRecipes, useCategories } from '@/src/entities/recipe/hooks/use-my-recipes';
-import { createCategory, deleteCategory } from '@/src/entities/recipe/api/user-recipe-api';
-import { client } from '@/src/modules/shared/api/client';
+import { useMyRecipes, useCategorizedRecipes, useCategories } from '@/src/entities/recipe';
+import { createCategory, deleteCategory, deleteUserRecipe } from '@/src/entities/recipe/api/user-recipe-api';
+import { client } from '@/src/shared/api/client';
 import type { UserRecipe } from '@/src/entities/recipe/api/user-recipe-api';
 import type { RecipeCard } from '@/src/shared/data/mock';
+import { track, RecipeEvents, CategoryEvents } from '@/src/shared/analytics';
 
 const EMPTY_STATE = require('@/assets/images/empty-state.png');
 
@@ -65,8 +67,23 @@ export function BookmarkScreen() {
   const isLoading = selectedCategory === 'all' ? allLoading : catLoading;
 
   const handleRecipePress = useCallback((recipe: RecipeCard) => {
+    track(RecipeEvents.USER_RECIPE_CLICK, {
+      source: 'user_recipe',
+      recipe_id: String(recipe.id),
+      recipe_title: recipe.title,
+    });
     router.push(`/recipe/${recipe.id}`);
   }, []);
+
+  const handleSelectCategoryChip = useCallback((id: string) => {
+    setSelectedCategory(id);
+    const cat = categories.find((c) => c.id === id);
+    track(CategoryEvents.SELECT, {
+      source: 'user_recipe',
+      category_id: id,
+      category_name: cat?.name,
+    });
+  }, [categories]);
 
   const handleRecipeLongPress = useCallback((recipe: RecipeCard) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -75,14 +92,23 @@ export function BookmarkScreen() {
   }, []);
 
   const handleChangeCategory = useCallback(() => {
+    if (selectedRecipe) {
+      track(CategoryEvents.MOVE_OPEN, { recipe_id: String(selectedRecipe.id) });
+    }
     recipeActionSheetRef.current?.dismiss();
     setTimeout(() => changeCategorySheetRef.current?.present(), 300);
-  }, []);
+  }, [selectedRecipe]);
 
   const handleSelectCategory = useCallback(async (categoryId: string) => {
     if (!selectedRecipe) return;
     try {
       await client.put(`/recipes/${selectedRecipe.id}/categories`, { category_id: categoryId });
+      const target = categories.find((c) => c.id === categoryId);
+      track(CategoryEvents.MOVE_SUCCESS, {
+        recipe_id: String(selectedRecipe.id),
+        target_category_id: categoryId,
+        target_category_name: target?.name ?? '',
+      });
       queryClient.invalidateQueries({ queryKey: ['myRecipes'] });
       queryClient.invalidateQueries({ queryKey: ['categorizedRecipes'] });
       changeCategorySheetRef.current?.dismiss();
@@ -90,9 +116,10 @@ export function BookmarkScreen() {
     } catch {
       Alert.alert('오류', '카테고리 변경에 실패했어요');
     }
-  }, [selectedRecipe, queryClient]);
+  }, [selectedRecipe, categories, queryClient]);
 
   const handleAddCategory = useCallback(() => {
+    track(CategoryEvents.CREATE_OPEN);
     setNewCategoryName('');
     addCategorySheetRef.current?.present();
   }, []);
@@ -102,6 +129,7 @@ export function BookmarkScreen() {
     if (!name) return;
     try {
       await createCategory(name);
+      track(CategoryEvents.CREATE_SUCCESS, { category_name: name });
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       addCategorySheetRef.current?.dismiss();
       setNewCategoryName('');
@@ -115,6 +143,12 @@ export function BookmarkScreen() {
   }, []);
 
   const handleDeleteCategory = useCallback(async (cat: { id: string; name: string }) => {
+    track(CategoryEvents.DELETE_OPEN, {
+      category_id: cat.id,
+      category_name: cat.name,
+    });
+    const recipeCount =
+      categoriesData?.find((c) => c.categoryId === cat.id)?.count ?? 0;
     Alert.alert('삭제', `"${cat.name}" 카테고리를 삭제할까요?`, [
       { text: '취소', style: 'cancel' },
       {
@@ -123,6 +157,11 @@ export function BookmarkScreen() {
         onPress: async () => {
           try {
             await deleteCategory(cat.id);
+            track(CategoryEvents.DELETE_SUCCESS, {
+              category_id: cat.id,
+              category_name: cat.name,
+              recipe_count: recipeCount,
+            });
             queryClient.invalidateQueries({ queryKey: ['categories'] });
             if (selectedCategory === cat.id) setSelectedCategory('all');
           } catch {
@@ -131,7 +170,7 @@ export function BookmarkScreen() {
         },
       },
     ]);
-  }, [queryClient, selectedCategory]);
+  }, [queryClient, selectedCategory, categoriesData]);
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -155,11 +194,14 @@ export function BookmarkScreen() {
         </View>
       </View>
 
+      {/* 생성 중 레시피 섹션 */}
+      <CreatingRecipeSection />
+
       {/* 카테고리 칩 */}
       <CategoryChips
         categories={categories}
         selected={selectedCategory}
-        onSelect={setSelectedCategory}
+        onSelect={handleSelectCategoryChip}
         onAdd={handleAddCategory}
       />
 
@@ -170,10 +212,15 @@ export function BookmarkScreen() {
         </View>
       ) : recipes.length === 0 ? (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: spacing.md, paddingBottom: 80 }}>
-          <Image source={EMPTY_STATE} style={{ width: 120, height: 120 }} contentFit="contain" />
-          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 15, color: colors.text.disabled }}>
-            {selectedCategory === 'all' ? '아직 저장된 레시피가 없어요' : '이 카테고리에 레시피가 없어요'}
-          </Text>
+          <Image source={EMPTY_STATE} style={{ width: 140, height: 140 }} contentFit="contain" />
+          <View style={{ alignItems: 'center', gap: spacing.xs }}>
+            <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 16, fontWeight: '700', color: colors.text.primary }}>
+              {selectedCategory === 'all' ? '아직 저장된 레시피가 없어요' : '이 카테고리에 레시피가 없어요'}
+            </Text>
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
+              유튜브 URL로 첫 레시피를 만들어보세요!
+            </Text>
+          </View>
         </View>
       ) : (
         <ScrollView
@@ -302,7 +349,13 @@ export function BookmarkScreen() {
             </Text>
           )}
           <Pressable
-            onPress={() => { recipeActionSheetRef.current?.dismiss(); if (selectedRecipe) router.push(`/native-step/${selectedRecipe.id}`); }}
+            onPress={() => {
+              recipeActionSheetRef.current?.dismiss();
+              if (selectedRecipe) {
+                // cooking_mode_start는 RecipeStepScreen mount 시 totals 포함해서 발화됨
+                router.push(`/native-step/${selectedRecipe.id}`);
+              }
+            }}
             style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md }}
           >
             <Ionicons name="mic" size={20} color={colors.primary} />
@@ -316,7 +369,32 @@ export function BookmarkScreen() {
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>카테고리 변경</Text>
           </Pressable>
           <Pressable
-            onPress={() => { recipeActionSheetRef.current?.dismiss(); Alert.alert('삭제', `${selectedRecipe?.title} 삭제`); }}
+            onPress={() => {
+              const recipe = selectedRecipe;
+              recipeActionSheetRef.current?.dismiss();
+              if (!recipe) return;
+              Alert.alert(
+                '레시피 삭제',
+                `"${recipe.title}"을(를) 삭제할까요?`,
+                [
+                  { text: '취소', style: 'cancel' },
+                  {
+                    text: '삭제',
+                    style: 'destructive',
+                    onPress: async () => {
+                      try {
+                        await deleteUserRecipe(recipe.id);
+                        track(RecipeEvents.UNENROLL_BOOKMARK, { recipe_id: String(recipe.id) });
+                        queryClient.invalidateQueries({ queryKey: ['myRecipes'] });
+                        queryClient.invalidateQueries({ queryKey: ['categorizedRecipes'] });
+                      } catch {
+                        Alert.alert('오류', '삭제에 실패했어요');
+                      }
+                    },
+                  },
+                ],
+              );
+            }}
             style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md }}
           >
             <Ionicons name="trash-outline" size={20} color={colors.semantic.error} />
