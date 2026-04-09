@@ -1,4 +1,4 @@
-import { client } from "@/src/modules/shared/api/client";
+import { client } from "@/src/shared/api/client";
 
 export type RegisterExpoPushTokenRequest = {
   token: string;

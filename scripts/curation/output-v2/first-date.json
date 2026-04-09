@@ -1,0 +1,223 @@
+{
+  "category_id": "first-date",
+  "category_name": "처음 한끼",
+  "category_emoji": "✨",
+  "concept": "썸타는 사람한테 처음 해주는 한 끼. 30분 이내, 재료 5개 이하, 실패 거의 없음, 부담 없음.",
+  "dishes": [
+    {
+      "id": "love-first-date-1",
+      "title": "백종원표 알리오올리오 파스타 만드는 법 aglio e olio pasta recipe [꾸미채식TV]",
+      "channel": "꾸미 스튜디오",
+      "youtube_url": "https://www.youtube.com/watch?v=hpJqKJFteTg",
+      "thumbnail": "https://i.ytimg.com/vi/hpJqKJFteTg/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "와인"
+        ],
+        "occasion": [
+          "데이트",
+          "평일저녁"
+        ],
+        "style": [
+          "이탈리안"
+        ],
+        "ingredient_focus": [
+          "면"
+        ],
+        "budget": "가성비"
+      },
+      "hook": "처음이라도 괜찮아!",
+      "why_recommended": "마늘과 올리브 오일만으로 근사한 파스타를 완성할 수 있어 요리 초보도 실패 없이 만들 수 있습니다. 간단한 재료로 센스 있는 첫 만남을 위한 메뉴로 제격입니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-first-date-2",
+      "title": "[#편셰프의점메추] 오늘은 어린이날🎵 파스타 세상~🍝🧡 남녀노소 입맛 모두 사로잡는 류수영의 파스타 레시피😎ㅣ KBS방송",
+      "channel": "KBS Entertain",
+      "youtube_url": "https://www.youtube.com/watch?v=L2pd2ux9dio",
+      "thumbnail": "https://i.ytimg.com/vi/L2pd2ux9dio/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "와인"
+        ],
+        "occasion": [
+          "데이트",
+          "평일저녁"
+        ],
+        "style": [
+          "퓨전"
+        ],
+        "ingredient_focus": [
+          "면"
+        ],
+        "budget": "보통"
+      },
+      "hook": "5재료로 완성하는 센스",
+      "why_recommended": "류수영 셰프의 꿀팁으로 명란과 파스타만으로도 깊은 맛을 내어 요리 실력을 뽐내기 좋습니다. 짧은 시간 안에 특별한 한 끼를 완성할 수 있어 첫 만남의 부담을 덜어줍니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-first-date-3",
+      "title": "[#편셰프의점메추] 오늘은 어린이날🎵 파스타 세상~🍝🧡 남녀노소 입맛 모두 사로잡는 류수영의 파스타 레시피😎ㅣ KBS방송",
+      "channel": "KBS Entertain",
+      "youtube_url": "https://www.youtube.com/watch?v=L2pd2ux9dio",
+      "thumbnail": "https://i.ytimg.com/vi/L2pd2ux9dio/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "와인"
+        ],
+        "occasion": [
+          "데이트",
+          "주말브런치"
+        ],
+        "style": [
+          "이탈리안"
+        ],
+        "ingredient_focus": [
+          "면"
+        ],
+        "budget": "보통"
+      },
+      "hook": "상큼하게, 처음 한입",
+      "why_recommended": "상큼한 레몬 향이 어우러진 크림 파스타는 특별하면서도 부담 없는 메뉴입니다. 복잡한 과정 없이 누구나 쉽게 근사한 요리를 만들 수 있습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-first-date-4",
+      "title": "요리사는 쉬는 시간에도 쉬지 않쥐(feat. 세이지) | 정호영의 오늘도 요리",
+      "channel": "정호영의 오늘도 요리 Kitchen Caden",
+      "youtube_url": "https://www.youtube.com/watch?v=KgmTyVmneHE",
+      "thumbnail": "https://i.ytimg.com/vi/KgmTyVmneHE/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "초보",
+        "time": "10분",
+        "format": "롱폼",
+        "pairing": [
+          "와인",
+          "논알콜"
+        ],
+        "occasion": [
+          "데이트",
+          "주말브런치"
+        ],
+        "style": [
+          "이탈리안"
+        ],
+        "ingredient_focus": [
+          "채소",
+          "치즈"
+        ],
+        "budget": "보통"
+      },
+      "hook": "실패 없는 센스 만점!",
+      "why_recommended": "불 없이 만드는 간단한 샐러드로, 신선한 재료의 조화가 돋보여 실패할 걱정이 없습니다. 가볍고 센스 있는 식전 메뉴나 사이드 메뉴로 완벽합니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-first-date-5",
+      "title": "아보카도 토스트와 망고파인애플 스무디(with 옥션) : 3 ways avocado toast with mango pineapple smoothie | Honeykki 꿀키",
+      "channel": "꿀키honeykki",
+      "youtube_url": "https://www.youtube.com/watch?v=683SYFktYFw",
+      "thumbnail": "https://i.ytimg.com/vi/683SYFktYFw/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "초보",
+        "time": "10분",
+        "format": "롱폼",
+        "pairing": [
+          "논알콜"
+        ],
+        "occasion": [
+          "데이트",
+          "주말브런치"
+        ],
+        "style": [
+          "퓨전"
+        ],
+        "ingredient_focus": [
+          "빵",
+          "채소"
+        ],
+        "budget": "보통"
+      },
+      "hook": "브런치 감성, 처음 한 끼",
+      "why_recommended": "간단하지만 비주얼이 뛰어나 브런치 메뉴로 손색이 없으며, 건강하고 부담 없는 식사를 선사합니다. 재료 준비부터 플레이팅까지 짧은 시간 안에 완성할 수 있습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-first-date-6",
+      "title": "🔥이런피자 들어나 봤나 이색피자 1탄 피자레시피 15가지🔥 [만개의레시피]",
+      "channel": "만개의레시피 10K Recipe",
+      "youtube_url": "https://www.youtube.com/watch?v=XiuQ8idnrlA",
+      "thumbnail": "https://i.ytimg.com/vi/XiuQ8idnrlA/hqdefault.jpg",
+      "estimated_duration": "12:11",
+      "tags": {
+        "difficulty": "초보",
+        "time": "10분",
+        "format": "롱폼",
+        "pairing": [
+          "맥주",
+          "논알콜"
+        ],
+        "occasion": [
+          "데이트",
+          "야식"
+        ],
+        "style": [
+          "퓨전"
+        ],
+        "ingredient_focus": [
+          "빵",
+          "치즈"
+        ],
+        "budget": "가성비"
+      },
+      "hook": "5재료로 완성하는 피자",
+      "why_recommended": "전자레인지로도 만들 수 있을 만큼 간편하여 요리 초보도 실패 없이 만들 수 있습니다. 5가지 이하의 재료로 빠르고 맛있게 특별한 한 끼를 준비할 수 있습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-first-date-7",
+      "title": "홈메이드 감성 요리 백종원 감바스 레시피",
+      "channel": "하츠",
+      "youtube_url": "https://www.youtube.com/watch?v=3ps1ZyWsRtc",
+      "thumbnail": "https://i.ytimg.com/vi/3ps1ZyWsRtc/hqdefault.jpg",
+      "estimated_duration": "",
+      "tags": {
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "와인"
+        ],
+        "occasion": [
+          "데이트",
+          "홈파티"
+        ],
+        "style": [
+          "스페인"
+        ],
+        "ingredient_focus": [
+          "해산물"
+        ],
+        "budget": "보통"
+      },
+      "hook": "처음, 실패 없는 감바스",
+      "why_recommended": "보기에도 근사하고 만들기도 쉬워 첫 만남에서 좋은 인상을 남기기 좋습니다. 올리브오일에 재료를 익히기만 하면 되는 간단한 과정으로 실패할 확률이 적습니다.",
+      "is_curator_pick": true
+    }
+  ]
+}

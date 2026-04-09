@@ -1,0 +1,188 @@
+{
+  "category_id": "home-invite",
+  "category_name": "우리집 초대",
+  "category_emoji": "🍷",
+  "concept": "집에 초대해서 한 상 차리는 호스트 메뉴. 와인 페어링, 여러 접시 조합, 분위기 좋고 뽐낼 수 있는 요리.",
+  "dishes": [
+    {
+      "id": "love-home-invite-1",
+      "title": "[Sub] 집에서 만든 새우감바스?? '감바스 알 아히요'",
+      "channel": "백종원 PAIK JONG WON",
+      "youtube_url": "https://www.youtube.com/watch?v=jBdQ65yHB_U",
+      "thumbnail": "https://i.ytimg.com/vi/jBdQ65yHB_U/hqdefault.jpg",
+      "estimated_duration": "8:50",
+      "tags": {
+        "mood": [],
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트"
+        ],
+        "style": [
+          "이탈리안"
+        ],
+        "ingredient_focus": [
+          "해산물"
+        ],
+        "budget": "보통"
+      },
+      "hook": "한 상 차리면 박수 터져요",
+      "why_recommended": "레스토랑 분위기를 집에서 그대로 재현할 수 있는 가장 인기 있는 호스트 메뉴입니다. 와인 한 잔과 완벽한 페어링으로 손님을 매료시킵니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-home-invite-2",
+      "title": "평생 써먹는 스테이크 굽는 법",
+      "channel": " 고기남자",
+      "youtube_url": "https://www.youtube.com/watch?v=sWN2dxP4Vtw",
+      "thumbnail": "https://i.ytimg.com/vi/sWN2dxP4Vtw/hqdefault.jpg",
+      "estimated_duration": "9:25",
+      "tags": {
+        "mood": [],
+        "difficulty": "중급",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트"
+        ],
+        "style": [
+          "양식"
+        ],
+        "ingredient_focus": [
+          "고기"
+        ],
+        "budget": "보통"
+      },
+      "hook": "호스트의 자존심, 스테이크",
+      "why_recommended": "집들이의 메인을 책임지는 스테이크를 실패 없이 굽는 법을 배웁니다. 한 점의 완성도로 손님이 박수치게 만듭니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-home-invite-3",
+      "title": "[크림감자뇨끼] 레스토랑보다 더 깊은 맛 소스로 만드는 고급 요리ㅣ감자뇨끼 이렇게만 만드시면 실패하지 않아요ㅣ양은 풍부하게 맛은 진하고 더 맛있게ㅣ감자로 만든 고급감자요리 뇨끼",
+      "channel": "우리집맛선생_평범한재료를 특별한요리로",
+      "youtube_url": "https://www.youtube.com/watch?v=WXk13SeMdEo",
+      "thumbnail": "https://i.ytimg.com/vi/WXk13SeMdEo/hqdefault.jpg",
+      "estimated_duration": "2:39",
+      "tags": {
+        "mood": [],
+        "difficulty": "중급",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트"
+        ],
+        "style": [
+          "이탈리안"
+        ],
+        "ingredient_focus": [
+          "밥"
+        ],
+        "budget": "보통"
+      },
+      "hook": "어남선생표 고급 뇨끼",
+      "why_recommended": "평범한 감자가 고급 이탈리안 메뉴로 변신하는 과정 자체가 손님 앞에서 보여줄 만한 쇼입니다. 비주얼과 맛 둘 다 잡았습니다.",
+      "is_curator_pick": false
+    },
+    {
+      "id": "love-home-invite-4",
+      "title": "이번 크리스마스엔 집에서 간단히 즐기는 찹! 스테이크",
+      "channel": "백종원 PAIK JONG WON",
+      "youtube_url": "https://www.youtube.com/watch?v=7cCAlN06WPc",
+      "thumbnail": "https://i.ytimg.com/vi/7cCAlN06WPc/hqdefault.jpg",
+      "estimated_duration": "11:43",
+      "tags": {
+        "mood": [],
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트"
+        ],
+        "style": [
+          "양식"
+        ],
+        "ingredient_focus": [
+          "고기"
+        ],
+        "budget": "보통"
+      },
+      "hook": "푸짐한 메인, 누구나 만족",
+      "why_recommended": "비싸게 사먹지 않아도 집에서 푸짐하게 만들 수 있는 인기 파티 메인입니다. 호불호 없이 모두가 좋아합니다.",
+      "is_curator_pick": false
+    },
+    {
+      "id": "love-home-invite-5",
+      "title": "30분 완성 원샷 후라이팬 라자니아",
+      "channel": "승우아빠",
+      "youtube_url": "https://www.youtube.com/watch?v=MuBri8uDSvw",
+      "thumbnail": "https://i.ytimg.com/vi/MuBri8uDSvw/hqdefault.jpg",
+      "estimated_duration": "8:51",
+      "tags": {
+        "mood": [],
+        "difficulty": "중급",
+        "time": "1시간이상",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트"
+        ],
+        "style": [
+          "이탈리안"
+        ],
+        "ingredient_focus": [
+          "면"
+        ],
+        "budget": "보통"
+      },
+      "hook": "한 판이면 식탁이 가득",
+      "why_recommended": "한 판으로 여러 명을 든든하게 먹일 수 있어 홈파티에 최적인 메뉴입니다. 만들어 두면 손님 도착 후 데우기만 하면 됩니다.",
+      "is_curator_pick": false
+    },
+    {
+      "id": "love-home-invite-6",
+      "title": "라따뚜이 속 바로 그 요리?? 라따뚜이 만들기 : Ratatouille inspired by the Pixar film Ratatouille | Honeykki 꿀키",
+      "channel": "꿀키honeykki",
+      "youtube_url": "https://www.youtube.com/watch?v=V5xf5M3axHE",
+      "thumbnail": "https://i.ytimg.com/vi/V5xf5M3axHE/hqdefault.jpg",
+      "estimated_duration": "꿀키honeykki",
+      "tags": {
+        "mood": [],
+        "difficulty": "중급",
+        "time": "1시간이상",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트"
+        ],
+        "style": [
+          "프렌치"
+        ],
+        "ingredient_focus": [
+          "채소"
+        ],
+        "budget": "보통"
+      },
+      "hook": "예쁘게 한 상 뽐내기",
+      "why_recommended": "비주얼이 압도적이라 사진부터 찍게 되는 프랑스 시골 메뉴입니다. 채식 손님까지 만족시키는 호스트 비책입니다.",
+      "is_curator_pick": false
+    }
+  ]
+}

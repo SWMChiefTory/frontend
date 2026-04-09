@@ -1,4 +1,4 @@
-import type { Market } from "@/src/modules/shared/types/market";
+import type { Market } from "@/src/shared/types/market";
 
 export interface TermsOfServiceDetail {
   letter: string;
