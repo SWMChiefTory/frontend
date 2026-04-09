@@ -10,7 +10,7 @@
 
 export type PipelineState = 'IDLE' | 'LISTENING' | 'TRANSCRIBING';
 
-export interface AudioPipelineResult {
+export type AudioPipelineResult = {
   state: PipelineState;
   start: () => Promise<void>;
   stop: () => void;

@@ -30,7 +30,7 @@ const APP_DETAIL_2_1 = require('@/assets/images/onboarding/app-detail-2_1.png');
 const APP_DETAIL_2_2 = require('@/assets/images/onboarding/app-detail-2_2.png');
 const APP_COOKING = require('@/assets/images/onboarding/app-cooking_home.png');
 
-interface OnboardingScreenProps {
+type OnboardingScreenProps = {
   onComplete: () => void;
 }
 

@@ -1,11 +1,11 @@
 import type { Market } from "@/src/shared/types/market";
 
-export interface PrivacyPolicyDetail {
+export type PrivacyPolicyDetail = {
   letter: string;
   content: string;
 }
 
-export interface PrivacyPolicySubsection {
+export type PrivacyPolicySubsection = {
   number: number;
   content: string;
   details?: PrivacyPolicyDetail[];
@@ -17,7 +17,7 @@ export interface PrivacyPolicySubsection {
   additionalInfo?: string;
 }
 
-export interface PrivacyPolicyCategory {
+export type PrivacyPolicyCategory = {
   category: string;
   items: Array<{
     detail: string;
@@ -25,7 +25,7 @@ export interface PrivacyPolicyCategory {
   }>;
 }
 
-export interface PrivacyPolicySection {
+export type PrivacyPolicySection = {
   article: number;
   title: string;
   content?: string;
@@ -41,7 +41,7 @@ export interface PrivacyPolicySection {
   };
 }
 
-export interface PrivacyPolicyData {
+export type PrivacyPolicyData = {
   title: string;
   effectiveDate: string;
   effectiveDatePrefix: string;

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { client } from '@/src/shared/api';
+import { client, parseOrNull } from '@/src/shared/api';
 
 // ─── Raw schemas ─────────────────────────────────────────────────
 const RawCoupangProductSchema = z
@@ -13,8 +13,7 @@ const RawCoupangProductSchema = z
     productName: z.string(),
     productPrice: z.number(),
     productUrl: z.string(),
-  })
-  .passthrough();
+  });
 
 const RawCoupangSearchResponseSchema = z
   .object({
@@ -23,13 +22,12 @@ const RawCoupangSearchResponseSchema = z
         coupangProducts: z.array(RawCoupangProductSchema).default([]),
       })
       .nullish(),
-  })
-  .passthrough();
+  });
 
 type RawCoupangProduct = z.infer<typeof RawCoupangProductSchema>;
 
 // ─── Client type ─────────────────────────────────────────────────
-export interface IngredientProduct {
+export type IngredientProduct = {
   id: string;
   name: string; // 재료명
   description: string; // 상품명
@@ -62,12 +60,9 @@ export async function searchCoupangCheapest(ingredientName: string): Promise<Ing
     const res = await client.get('/affiliate/search/coupang', {
       params: { keyword: ingredientName },
     });
-    const parsed = RawCoupangSearchResponseSchema.safeParse(res.data);
-    if (!parsed.success) {
-      console.warn('[CoupangAPI] schema error:', parsed.error.issues);
-      return null;
-    }
-    const products = parsed.data.coupangProducts?.coupangProducts ?? [];
+    const parsed = parseOrNull(RawCoupangSearchResponseSchema, res.data, 'CoupangAPI');
+    if (!parsed) return null;
+    const products = parsed.coupangProducts?.coupangProducts ?? [];
     if (products.length === 0) return null;
 
     const cheapest = products.reduce((prev, curr) =>

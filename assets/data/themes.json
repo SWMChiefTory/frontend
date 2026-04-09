@@ -82,8 +82,7 @@
           "is_curator_pick": true,
           "category": "boyfriend",
           "dish_name": "소고기 덮밥",
-          "recipe_id": "00ae3c64-e77e-473a-b4fc-e9133a877353",
-          "failed": true
+          "recipe_id": "00ae3c64-e77e-473a-b4fc-e9133a877353"
         },
         {
           "id": "love-boyfriend-3",
@@ -121,8 +120,7 @@
           "is_curator_pick": true,
           "category": "boyfriend",
           "dish_name": "중화 비빔당면",
-          "recipe_id": "da51f3d2-3a4c-48ca-84a0-1f19d73f8a7a",
-          "failed": true
+          "recipe_id": "da51f3d2-3a4c-48ca-84a0-1f19d73f8a7a"
         },
         {
           "id": "love-boyfriend-4",
@@ -159,8 +157,7 @@
           "is_curator_pick": true,
           "category": "boyfriend",
           "dish_name": "부대찌개",
-          "recipe_id": "b5015637-4cb5-49d5-a365-dde8ba9d4a14",
-          "failed": true
+          "recipe_id": "b5015637-4cb5-49d5-a365-dde8ba9d4a14"
         },
         {
           "id": "love-boyfriend-5",
@@ -199,8 +196,7 @@
           "is_curator_pick": true,
           "category": "boyfriend",
           "dish_name": "스테이크 덮밥",
-          "recipe_id": "3cac6b4c-8f71-4234-b9df-99ddbefce9fc",
-          "failed": true
+          "recipe_id": "3cac6b4c-8f71-4234-b9df-99ddbefce9fc"
         },
         {
           "id": "love-boyfriend-6",
@@ -307,8 +303,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "프렌치 토스트",
-          "recipe_id": "c976e1ad-8a4e-4d76-9421-b396796dd370",
-          "failed": true
+          "recipe_id": "c976e1ad-8a4e-4d76-9421-b396796dd370"
         },
         {
           "id": "love-girlfriend-3",
@@ -343,8 +338,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "버터 감바스",
-          "recipe_id": "60b21e77-0cc7-46f3-a9f6-3e65ba596248",
-          "failed": true
+          "recipe_id": "60b21e77-0cc7-46f3-a9f6-3e65ba596248"
         },
         {
           "id": "love-girlfriend-4",
@@ -379,8 +373,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "크리미 오므라이스",
-          "recipe_id": "d7817dc2-4914-4418-a26c-d7f124efc714",
-          "failed": true
+          "recipe_id": "d7817dc2-4914-4418-a26c-d7f124efc714"
         },
         {
           "id": "love-girlfriend-5",
@@ -449,8 +442,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "폭신 팬케이크",
-          "recipe_id": "9ae11781-1cd0-4909-806c-8823b7e58ccd",
-          "failed": true
+          "recipe_id": "9ae11781-1cd0-4909-806c-8823b7e58ccd"
         },
         {
           "id": "love-girlfriend-7",
@@ -484,8 +476,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "참간초 파스타",
-          "recipe_id": "6f15d2c0-104a-44e1-be5b-2b4875b03cba",
-          "failed": true
+          "recipe_id": "6f15d2c0-104a-44e1-be5b-2b4875b03cba"
         },
         {
           "id": "love-first-date-1",
@@ -518,8 +509,7 @@
           "is_curator_pick": true,
           "category": "first-date",
           "dish_name": "알리오올리오",
-          "recipe_id": "73e6683a-fce3-46ac-9155-9941b6653190",
-          "failed": true
+          "recipe_id": "73e6683a-fce3-46ac-9155-9941b6653190"
         },
         {
           "id": "love-first-date-2",
@@ -654,8 +644,7 @@
           "is_curator_pick": true,
           "category": "first-date",
           "dish_name": "감바스",
-          "recipe_id": "3f555dfc-16fb-40df-8fca-3adcb57ed98c",
-          "failed": true
+          "recipe_id": "3f555dfc-16fb-40df-8fca-3adcb57ed98c"
         },
         {
           "id": "love-home-invite-1",
@@ -722,8 +711,7 @@
           "is_curator_pick": true,
           "category": "home-invite",
           "dish_name": "스테이크",
-          "recipe_id": "70b7db1b-25d5-4b9c-a705-a4980552ac19",
-          "failed": true
+          "recipe_id": "70b7db1b-25d5-4b9c-a705-a4980552ac19"
         },
         {
           "id": "love-home-invite-3",
@@ -756,8 +744,7 @@
           "is_curator_pick": false,
           "category": "home-invite",
           "dish_name": "크림 감자 뇨끼",
-          "recipe_id": "36c98ed8-8025-4ffe-bc40-a2c9bca3db90",
-          "failed": true
+          "recipe_id": "36c98ed8-8025-4ffe-bc40-a2c9bca3db90"
         },
         {
           "id": "love-home-invite-4",
@@ -790,8 +777,7 @@
           "is_curator_pick": false,
           "category": "home-invite",
           "dish_name": "찹스테이크",
-          "recipe_id": "bbc4e9e9-9eb1-411b-b916-4b31f5132f68",
-          "failed": true
+          "recipe_id": "bbc4e9e9-9eb1-411b-b916-4b31f5132f68"
         },
         {
           "id": "love-home-invite-5",
@@ -857,8 +843,7 @@
           "is_curator_pick": false,
           "category": "home-invite",
           "dish_name": "라따뚜이",
-          "recipe_id": "0848ffa7-7cd8-4e9d-bab1-bad382c2d6a2",
-          "failed": true
+          "recipe_id": "0848ffa7-7cd8-4e9d-bab1-bad382c2d6a2"
         },
         {
           "id": "love-cook-together-1",
@@ -891,8 +876,7 @@
           "is_curator_pick": true,
           "category": "cook-together",
           "dish_name": "고기만두",
-          "recipe_id": "3de171b2-6a1e-4630-ab51-89bfb93ad208",
-          "failed": true
+          "recipe_id": "3de171b2-6a1e-4630-ab51-89bfb93ad208"
         },
         {
           "id": "love-cook-together-2",
@@ -925,8 +909,7 @@
           "is_curator_pick": true,
           "category": "cook-together",
           "dish_name": "김밥",
-          "recipe_id": "5b769f33-da96-4a22-9bb7-89c8164c2a17",
-          "failed": true
+          "recipe_id": "5b769f33-da96-4a22-9bb7-89c8164c2a17"
         },
         {
           "id": "love-cook-together-3",
@@ -959,8 +942,7 @@
           "is_curator_pick": true,
           "category": "cook-together",
           "dish_name": "수제 버거",
-          "recipe_id": "5b5ec22a-92cb-496e-aa4e-d26f1a250a78",
-          "failed": true
+          "recipe_id": "5b5ec22a-92cb-496e-aa4e-d26f1a250a78"
         },
         {
           "id": "love-cook-together-4",
@@ -993,8 +975,7 @@
           "is_curator_pick": false,
           "category": "cook-together",
           "dish_name": "초콜릿 딤섬",
-          "recipe_id": "bc61db78-4441-4898-983a-2cc9d558bbed",
-          "failed": true
+          "recipe_id": "bc61db78-4441-4898-983a-2cc9d558bbed"
         },
         {
           "id": "love-cook-together-5",
@@ -1061,8 +1042,7 @@
           "is_curator_pick": false,
           "category": "cook-together",
           "dish_name": "곰돌이 마카롱",
-          "recipe_id": "a4100840-32dc-41ed-8f14-65dcf0a8a20f",
-          "failed": true
+          "recipe_id": "a4100840-32dc-41ed-8f14-65dcf0a8a20f"
         },
         {
           "id": "love-cook-together-7",
@@ -1095,8 +1075,7 @@
           "is_curator_pick": false,
           "category": "cook-together",
           "dish_name": "먹물 피자",
-          "recipe_id": "e104fa31-813e-4d67-a140-2db772b5d079",
-          "failed": true
+          "recipe_id": "e104fa31-813e-4d67-a140-2db772b5d079"
         },
         {
           "id": "love-lunchbox-1",
@@ -1129,8 +1108,7 @@
           "is_curator_pick": true,
           "category": "lunchbox",
           "dish_name": "소불고기",
-          "recipe_id": "7ad0976c-0a65-4448-b7fa-96e523a8b651",
-          "failed": true
+          "recipe_id": "7ad0976c-0a65-4448-b7fa-96e523a8b651"
         },
         {
           "id": "love-lunchbox-2",
@@ -1163,8 +1141,7 @@
           "is_curator_pick": true,
           "category": "lunchbox",
           "dish_name": "스팸주먹밥",
-          "recipe_id": "4d49559c-e9ce-4acd-925f-4359f67ef30c",
-          "failed": true
+          "recipe_id": "4d49559c-e9ce-4acd-925f-4359f67ef30c"
         },
         {
           "id": "love-lunchbox-3",
@@ -1231,8 +1208,7 @@
           "is_curator_pick": false,
           "category": "lunchbox",
           "dish_name": "3분 계란말이",
-          "recipe_id": "c1a3ef29-f0e9-4db2-bbcb-56aa2cd3f39b",
-          "failed": true
+          "recipe_id": "c1a3ef29-f0e9-4db2-bbcb-56aa2cd3f39b"
         },
         {
           "id": "love-lunchbox-5",
@@ -1265,8 +1241,7 @@
           "is_curator_pick": false,
           "category": "lunchbox",
           "dish_name": "옛날도시락",
-          "recipe_id": "d2ae61e5-c1f1-4da9-a1a6-0966e95534b2",
-          "failed": true
+          "recipe_id": "d2ae61e5-c1f1-4da9-a1a6-0966e95534b2"
         },
         {
           "id": "love-lunchbox-6",
@@ -1333,8 +1308,7 @@
           "is_curator_pick": false,
           "category": "lunchbox",
           "dish_name": "황태채무침",
-          "recipe_id": "44d92a0c-12b4-4367-9ce2-13c881a22c98",
-          "failed": true
+          "recipe_id": "44d92a0c-12b4-4367-9ce2-13c881a22c98"
         }
       ],
       "categories": [
@@ -1373,6 +1347,905 @@
           "name": "출근 도시락",
           "emoji": "🍱",
           "concept": "남친이 출근할 때 챙겨주는 도시락. 전날 밤 준비 가능, 보온/식어도 맛있음, 색감 균형, 새벽에 빨리 만들 수 있는 메뉴."
+        }
+      ]
+    },
+    {
+      "id": "night-snack",
+      "title": "밤에 땡기는",
+      "subtitle": "오늘 밤, 천사도 악마도 만족시키는 야식",
+      "color": "#6A4C93",
+      "mode": "dark",
+      "curator_quote": "오늘 밤, 천사도 악마도 만족시키는 야식",
+      "dishes": [
+        {
+          "id": "night-snack-17",
+          "title": "3분 완성 '계란마요 토스트'",
+          "channel": "자취요리신",
+          "youtube_url": "https://www.youtube.com/watch?v=0kFqX_L9G7I",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "새벽 한 시"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "디저트"
+            ],
+            "ingredient_focus": [
+              "달걀"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "따뜻한 한 조각이 마음을 채워.",
+          "hook": "배고프다고? 3분이면 충분해!",
+          "category": "quick-3",
+          "dish_name": "마요계란토스트",
+          "recipe_id": "d487cea4-60c9-4b24-bff7-2ac7213e18d5",
+          "failed": true
+        },
+        {
+          "id": "night-snack-21",
+          "title": "5분 완성 '간장버터우동' 자취 야식",
+          "channel": "간단한 맛남",
+          "youtube_url": "https://www.youtube.com/watch?v=KkSiTh7wx5M",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "일식"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "짭조름한 풍미가 입안 가득 춤춘다.",
+          "hook": "5분 만에 면 요리를 해내다니!",
+          "category": "quick-3",
+          "dish_name": "우동버터간장",
+          "recipe_id": "15a94765-0569-442f-9a4d-d8c6448f3b2b",
+          "failed": true
+        },
+        {
+          "id": "night-snack-22",
+          "title": "백종원의 '콘치즈' 인생 안주 레시피",
+          "channel": "백종원 PAIK JONG WON",
+          "youtube_url": "https://www.youtube.com/watch?v=zS_o6psOt9g",
+          "estimated_duration": "8분",
+          "tags": {
+            "mood": [
+              "혼술 한 잔",
+              "주말 밤"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "한 입에 톡 터지는 달콤 짭짤함.",
+          "hook": "치즈 폭포 속 옥수수! 이거지!",
+          "category": "quick-3",
+          "dish_name": "치즈듬뿍콘",
+          "recipe_id": "9d342932-277a-4a6c-b43b-3cab77f87395"
+        },
+        {
+          "id": "night-snack-23",
+          "title": "일주일 세 번 먹는 '버터 누룽지 치즈밥'",
+          "channel": "꾸니로그",
+          "youtube_url": "https://www.youtube.com/watch?v=5vRSQcUfAM8",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "밥"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "딱 5분, 구수한 치즈 향에 위로받아.",
+          "hook": "식사? 야식? 바삭한 누룽지 치즈밥!",
+          "category": "quick-3",
+          "dish_name": "버터치즈누룽지",
+          "recipe_id": "27774a31-8207-41c3-bd5a-1bbf4612913e"
+        },
+        {
+          "id": "night-snack-24",
+          "title": "감칠맛 폭발 '새우젓 계란찜' 5분 야식",
+          "channel": "나의 작은 부엌",
+          "youtube_url": "https://www.youtube.com/watch?v=27MfMpvfAPw",
+          "estimated_duration": "3분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "달걀"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "부드러운 한 입, 지친 나를 토닥여줘.",
+          "hook": "이 촉촉함, 무려 5분만에 완성?",
+          "category": "quick-3",
+          "dish_name": "새우젓계란찜",
+          "recipe_id": "31744922-2cea-49bd-a1f4-f4290533c583"
+        },
+        {
+          "id": "night-snack-25",
+          "title": "다이어트 중 떡볶이 땡길 때 '두부 떡볶이'",
+          "channel": "김미푸드",
+          "youtube_url": "https://www.youtube.com/watch?v=Vk73tNxwV6U",
+          "estimated_duration": "2분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "말랑한 두부로 맵달하게 즐기는 건강 간식",
+          "hook": "떡볶이 유혹, 더 이상 참지 마!",
+          "category": "guilt-free",
+          "dish_name": "두부 떡볶이",
+          "recipe_id": "b5a03ccf-bd08-4145-bb56-794183f6d01b",
+          "failed": true
+        },
+        {
+          "id": "night-snack-26",
+          "title": "감칠맛 폭발 '곤약면 비빔국수' 다이어트 야식",
+          "channel": "또먹",
+          "youtube_url": "https://www.youtube.com/watch?v=Hi-ikD3bLKU",
+          "estimated_duration": "3분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "숏폼",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "탱글한 면발에 폭발하는 산뜻한 만족감",
+          "hook": "매콤새콤! 이 감칠맛은 못 참지",
+          "category": "guilt-free",
+          "dish_name": "곤약 비빔국수",
+          "recipe_id": "ecea9392-a33a-4aaa-a81b-3b0856eae1eb",
+          "failed": true
+        },
+        {
+          "id": "night-snack-27",
+          "title": "김신영 야식 '38kg 감량' 또띠아 케사디아",
+          "channel": "초이쿡",
+          "youtube_url": "https://www.youtube.com/watch?v=CZlwG_dVGJ4",
+          "estimated_duration": "2분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "바삭 촉촉한데 건강까지 챙긴 치즈 간식",
+          "hook": "38kg 감량, 그 비법 간식이 여기?",
+          "category": "guilt-free",
+          "dish_name": "또띠아 케사디아",
+          "recipe_id": "071cab39-9943-461a-a2fa-abe58e75413e"
+        },
+        {
+          "id": "night-snack-28",
+          "title": "1분다이어터 '오트밀 한 그릇' 야식",
+          "channel": "1분다이어터 1mindiet",
+          "youtube_url": "https://www.youtube.com/watch?v=rzCYWhimwNs",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "밥"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "빠르게 뚝딱 만들어 속 편하게 채우는 꿀조합",
+          "hook": "단 5분이면 나만의 건강 야식 완성!",
+          "category": "guilt-free",
+          "dish_name": "든든 오트밀",
+          "recipe_id": "9f448712-e26a-427b-ba52-3cae0691c884"
+        },
+        {
+          "id": "night-snack-29",
+          "title": "치즈 품은 '단호박 구이' 죄책감 ZERO 야식",
+          "channel": "워킹맘의 집밥",
+          "youtube_url": "https://www.youtube.com/watch?v=LtK32RnfgDA",
+          "estimated_duration": "10분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "채소"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "달콤짭짤한 맛으로 하루의 피로를 녹이는 위로",
+          "hook": "달콤 촉촉한 단호박에 고소한 치즈가 쏙!",
+          "category": "guilt-free",
+          "dish_name": "치즈 단호박구이",
+          "recipe_id": "56710a02-b187-4c21-99bd-85c9aa9aeb25"
+        },
+        {
+          "id": "night-snack-30",
+          "title": "건두부 올린 '마라 짜파게티' 끝판왕",
+          "channel": "모루",
+          "youtube_url": "https://www.youtube.com/watch?v=4nZSgfgACWM",
+          "estimated_duration": "2분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "평범함에 더해지는 이국적인 매력.",
+          "hook": "이국적 향신료가 부르는 짜파게티의 변주",
+          "category": "ramen-mod",
+          "dish_name": "마라 짜파게티",
+          "recipe_id": "70e029ad-fc9d-48eb-b947-30062bd7cf41"
+        },
+        {
+          "id": "night-snack-31",
+          "title": "백종원의 '부대찌개맛 뿌햄라면' 꿀팁",
+          "channel": "백종원 PAIK JONG WON",
+          "youtube_url": "https://www.youtube.com/watch?v=qWI4b7BL2eA",
+          "estimated_duration": "3분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "퇴근길"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "숏폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "끓이면 바로 든든한 한 끼.",
+          "hook": "이거야말로 라면의 진화!",
+          "category": "ramen-mod",
+          "dish_name": "부대찌개맛 라면",
+          "recipe_id": "6542412b-8b36-4834-96a0-ee8885fdb4d6"
+        },
+        {
+          "id": "night-snack-32",
+          "title": "치즈 폭탄 '까르보 불닭' 분식집 맛",
+          "channel": "FFAST FOOD",
+          "youtube_url": "https://www.youtube.com/watch?v=NXNIDr_glr8",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "혼술 한 잔"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "매운맛을 고소함으로 감싸다.",
+          "hook": "크림 소스처럼 꾸덕한 한 입?",
+          "category": "ramen-mod",
+          "dish_name": "까르보 불닭",
+          "recipe_id": "3076a022-d27e-4b50-a9b2-b68a35119fe0"
+        },
+        {
+          "id": "night-snack-33",
+          "title": "진짜 분식집 '떡라면' 끓이는 법",
+          "channel": "한끼대첩:간단한 요리 레시피",
+          "youtube_url": "https://www.youtube.com/watch?v=T289nNqfxt4",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "롱폼",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "추억의 맛이 그리울 때 딱.",
+          "hook": "집에서 이 맛을 재현한다고?",
+          "category": "ramen-mod",
+          "dish_name": "분식집 떡라면",
+          "recipe_id": "28d905b5-7fbd-4d32-828f-ac8ba94f8b4a"
+        },
+        {
+          "id": "night-snack-34",
+          "title": "성시경의 '극강 치즈 라면' 꾸덕 야식",
+          "channel": "모트리",
+          "youtube_url": "https://www.youtube.com/watch?v=nS6bs5hDB50",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "혼술 한 잔",
+              "주말 밤"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "입안 가득 채우는 깊은 고소함.",
+          "hook": "치즈 여섯 장은 넣어야 이 정도!",
+          "category": "ramen-mod",
+          "dish_name": "꾸덕 치즈 라면",
+          "recipe_id": "c066c80f-6d09-4a13-a46e-f7a12a04250f"
+        },
+        {
+          "id": "night-snack-35",
+          "title": "편의점 끝판왕 '마크정식' 6470원 야식",
+          "channel": "헬로푸드",
+          "youtube_url": "https://www.youtube.com/watch?v=S7P7m_zcf3s",
+          "estimated_duration": "3분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "숏폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "모두가 인정하는 특별한 식사, 오늘 어때?",
+          "hook": "이게 바로 편의점 만찬의 정석!",
+          "category": "cvs-combo",
+          "dish_name": "마크정식",
+          "recipe_id": "a1edace1-0e76-4820-a258-033241179870"
+        },
+        {
+          "id": "night-snack-36",
+          "title": "겨울 필수 '오모리 김치찌개 컵라면' 꿀조합",
+          "channel": "20대 뭐 하지?",
+          "youtube_url": "https://www.youtube.com/watch?v=S7qaHSyz-kY",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "혼술 한 잔"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "소주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "그릇 가득 추위 녹이는 든든한 포만감.",
+          "hook": "싸늘한 날, 뜨끈한 위로가 필요하다면?",
+          "category": "cvs-combo",
+          "dish_name": "오모리 라면죽",
+          "recipe_id": "88ecc440-94f2-4bab-9aba-6c2a05d93751",
+          "failed": true
+        },
+        {
+          "id": "night-snack-37",
+          "title": "편의점 환상조합 '사리곰탕 만둣국' 1분 컷",
+          "channel": "라면아저씨 Ramyun Ahjussi",
+          "youtube_url": "https://www.youtube.com/watch?v=Tt9cA1Cj9hw",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "놀랍도록 빠르게 완성되는 고급진 별미.",
+          "hook": "1분 만에 뚝딱! 이런 환상의 궁합 봤어?",
+          "category": "cvs-combo",
+          "dish_name": "사리곰탕 만둣국",
+          "recipe_id": "ff7b3062-1eec-4d5e-8f88-0cdc85d9bbd8"
+        },
+        {
+          "id": "night-snack-38",
+          "title": "삼각김밥으로 '불닭 치즈 리조또' 변신",
+          "channel": "직딩쿠킹",
+          "youtube_url": "https://www.youtube.com/watch?v=bIFPlKelCtI",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "혼술 한 잔"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "흔한 재료로 탄생하는 미슐랭급 변신.",
+          "hook": "평범한 삼김의 반전! 이거 진짜 레스토랑?",
+          "category": "cvs-combo",
+          "dish_name": "불닭 치즈 리조또",
+          "recipe_id": "006bf070-47eb-415d-9648-3c3b96eb258c"
+        },
+        {
+          "id": "night-snack-39",
+          "title": "참깨라면X짜파게티 '마법의 야식' 꿀조합",
+          "channel": "잇햅",
+          "youtube_url": "https://www.youtube.com/watch?v=1B7fznAgm2g",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "혼술 한 잔"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "각기 다른 면이 섞여 더욱 깊어진 중독성.",
+          "hook": "어떻게 이런 풍미가? 라면 두 개로 역대급!",
+          "category": "cvs-combo",
+          "dish_name": "참짜라면",
+          "recipe_id": "22af51e0-2d25-4c0c-b36d-f1d5e488e3e2"
+        },
+        {
+          "id": "night-snack-40",
+          "title": "에어프라이어 '백종원 양념치킨' 옛날통닭",
+          "channel": "푼스",
+          "youtube_url": "https://www.youtube.com/watch?v=wjsAegsB4hg",
+          "estimated_duration": "30분",
+          "tags": {
+            "mood": [
+              "주말 밤",
+              "혼술 한 잔"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "바삭한 옛날 맛에 죄책감도 녹아내려.",
+          "hook": "에어프라이어로 갓 튀긴 치킨이라니?",
+          "category": "guilty",
+          "dish_name": "에어프라이어 양념통닭",
+          "recipe_id": "a1cf7554-ae26-4638-be32-32a508b624fd",
+          "failed": true
+        },
+        {
+          "id": "night-snack-41",
+          "title": "백종원 닭강정 '장사천재 백사장' 레시피",
+          "channel": "스푼비 SpoonB",
+          "youtube_url": "https://www.youtube.com/watch?v=YxamhygmEKY",
+          "estimated_duration": "15분",
+          "tags": {
+            "mood": [
+              "주말 밤",
+              "혼술 한 잔"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "이 맛은 배달보다 더 완벽할 거야.",
+          "hook": "유명 셰프 레시피로 만드는 달콤 바삭 한 입!",
+          "category": "guilty",
+          "dish_name": "백종원 닭강정",
+          "recipe_id": "4291416f-e8ec-402d-8948-42a98caa7060"
+        },
+        {
+          "id": "night-snack-42",
+          "title": "유쿡의 홈메이드 '뿌링클 치킨' 배달비 절약",
+          "channel": "유쿡",
+          "youtube_url": "https://www.youtube.com/watch?v=kIzGCxIRR-Q",
+          "estimated_duration": "20분",
+          "tags": {
+            "mood": [
+              "주말 밤",
+              "혼술 한 잔"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "비싼 배달비 없이 나만의 치킨 파티.",
+          "hook": "오늘은 집에서 뿌링클 가루 맘껏 뿌려보자!",
+          "category": "guilty",
+          "dish_name": "홈메이드 뿌링클",
+          "recipe_id": "513787e3-46b7-4956-98ee-870baecf0999",
+          "failed": true
+        },
+        {
+          "id": "night-snack-43",
+          "title": "에어프라이어 15분 '또띠아 피자' 야식",
+          "channel": "인콕",
+          "youtube_url": "https://www.youtube.com/watch?v=G1icdJN9TNI",
+          "estimated_duration": "15분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "혼자 보는 영화"
+            ],
+            "difficulty": "초보",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "복잡한 주말 야식, 이 한 판으로 끝!",
+          "hook": "단 15분! 이 정도면 충분히 행복하지 않을까?",
+          "category": "guilty",
+          "dish_name": "15분 또띠아 피자",
+          "recipe_id": "5a0515dd-7d03-414e-842c-c61ac3f51493"
+        },
+        {
+          "id": "night-snack-44",
+          "title": "염정아의 '피자토스트' 새벽 길티 야식",
+          "channel": "오오밥상",
+          "youtube_url": "https://www.youtube.com/watch?v=e3xcF4QQ9M0",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "숏폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "토스트에 피자를 얹는 건 최고의 선택이야.",
+          "hook": "잠 못 드는 새벽, 피자토스트로 위로받자!",
+          "category": "guilty",
+          "dish_name": "염정아 피자토스트",
+          "recipe_id": "58f5a183-f61b-4995-baa1-e376300fc3b7"
+        }
+      ],
+      "categories": [
+        {
+          "id": "quick-3",
+          "name": "3재료 5분",
+          "emoji": "🍳",
+          "concept": "재료 3개, 시간 5분. 자취생도 새벽에 부담 없이 만드는 초간단 야식."
+        },
+        {
+          "id": "guilt-free",
+          "name": "죄책감 0%",
+          "emoji": "🥗",
+          "concept": "다이어트 중에도 마음 편하게. 두부·곤약·오트밀·단호박으로 만드는 가벼운 야식."
+        },
+        {
+          "id": "ramen-mod",
+          "name": "라면 변신",
+          "emoji": "🍜",
+          "concept": "봉지 라면 하나로 새로운 한 그릇. 5분 만에 끝나는 라면 모디파이."
+        },
+        {
+          "id": "cvs-combo",
+          "name": "편의점 꿀조합",
+          "emoji": "🏪",
+          "concept": "편의점 갔다가 즉흥적으로 만드는 꿀조합. 가성비·간편함·중독성."
+        },
+        {
+          "id": "guilty",
+          "name": "길티 치킨피자",
+          "emoji": "🍗",
+          "concept": "내일은 운동! 오늘 밤은 진하게 가는 치킨·피자·튀김. 죄책감은 내일."
         }
       ]
     },
@@ -2023,923 +2896,6 @@
           "hook": "봄동의 진가는 양념 직전에 결정된다",
           "recipe_id": "648fdadf-7398-4826-a5cb-c818c02cba32",
           "failed": true
-        }
-      ]
-    },
-    {
-      "id": "night-snack",
-      "title": "밤에 땡기는",
-      "subtitle": "오늘 밤, 천사도 악마도 만족시키는 야식",
-      "color": "#6A4C93",
-      "mode": "dark",
-      "curator_quote": "오늘 밤, 천사도 악마도 만족시키는 야식",
-      "dishes": [
-        {
-          "id": "night-snack-17",
-          "title": "3분 완성 '계란마요 토스트'",
-          "channel": "자취요리신",
-          "youtube_url": "https://www.youtube.com/watch?v=0kFqX_L9G7I",
-          "estimated_duration": "1분",
-          "tags": {
-            "mood": [
-              "이불 속",
-              "새벽 한 시"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "논알콜"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "디저트"
-            ],
-            "ingredient_focus": [
-              "달걀"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "따뜻한 한 조각이 마음을 채워.",
-          "hook": "배고프다고? 3분이면 충분해!",
-          "category": "quick-3",
-          "dish_name": "마요계란토스트",
-          "recipe_id": "d487cea4-60c9-4b24-bff7-2ac7213e18d5",
-          "failed": true
-        },
-        {
-          "id": "night-snack-21",
-          "title": "5분 완성 '간장버터우동' 자취 야식",
-          "channel": "간단한 맛남",
-          "youtube_url": "https://www.youtube.com/watch?v=KkSiTh7wx5M",
-          "estimated_duration": "5분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "없음"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "일식"
-            ],
-            "ingredient_focus": [
-              "면"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "짭조름한 풍미가 입안 가득 춤춘다.",
-          "hook": "5분 만에 면 요리를 해내다니!",
-          "category": "quick-3",
-          "dish_name": "우동버터간장",
-          "recipe_id": "15a94765-0569-442f-9a4d-d8c6448f3b2b",
-          "failed": true
-        },
-        {
-          "id": "night-snack-22",
-          "title": "백종원의 '콘치즈' 인생 안주 레시피",
-          "channel": "백종원 PAIK JONG WON",
-          "youtube_url": "https://www.youtube.com/watch?v=zS_o6psOt9g",
-          "estimated_duration": "8분",
-          "tags": {
-            "mood": [
-              "혼술 한 잔",
-              "주말 밤"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "롱폼",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "퓨전"
-            ],
-            "ingredient_focus": [
-              "치즈"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "한 입에 톡 터지는 달콤 짭짤함.",
-          "hook": "치즈 폭포 속 옥수수! 이거지!",
-          "category": "quick-3",
-          "dish_name": "치즈듬뿍콘",
-          "recipe_id": "9d342932-277a-4a6c-b43b-3cab77f87395",
-          "failed": true
-        },
-        {
-          "id": "night-snack-23",
-          "title": "일주일 세 번 먹는 '버터 누룽지 치즈밥'",
-          "channel": "꾸니로그",
-          "youtube_url": "https://www.youtube.com/watch?v=5vRSQcUfAM8",
-          "estimated_duration": "5분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "없음"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "한식"
-            ],
-            "ingredient_focus": [
-              "밥"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "딱 5분, 구수한 치즈 향에 위로받아.",
-          "hook": "식사? 야식? 바삭한 누룽지 치즈밥!",
-          "category": "quick-3",
-          "dish_name": "버터치즈누룽지",
-          "recipe_id": "27774a31-8207-41c3-bd5a-1bbf4612913e",
-          "failed": true
-        },
-        {
-          "id": "night-snack-24",
-          "title": "감칠맛 폭발 '새우젓 계란찜' 5분 야식",
-          "channel": "나의 작은 부엌",
-          "youtube_url": "https://www.youtube.com/watch?v=27MfMpvfAPw",
-          "estimated_duration": "3분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "없음"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "한식"
-            ],
-            "ingredient_focus": [
-              "달걀"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "부드러운 한 입, 지친 나를 토닥여줘.",
-          "hook": "이 촉촉함, 무려 5분만에 완성?",
-          "category": "quick-3",
-          "dish_name": "새우젓계란찜",
-          "recipe_id": "31744922-2cea-49bd-a1f4-f4290533c583",
-          "failed": true
-        },
-        {
-          "id": "night-snack-25",
-          "title": "다이어트 중 떡볶이 땡길 때 '두부 떡볶이'",
-          "channel": "김미푸드",
-          "youtube_url": "https://www.youtube.com/watch?v=Vk73tNxwV6U",
-          "estimated_duration": "2분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "없음"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "한식"
-            ],
-            "ingredient_focus": [
-              "떡"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "말랑한 두부로 맵달하게 즐기는 건강 간식",
-          "hook": "떡볶이 유혹, 더 이상 참지 마!",
-          "category": "guilt-free",
-          "dish_name": "두부 떡볶이",
-          "recipe_id": "b5a03ccf-bd08-4145-bb56-794183f6d01b",
-          "failed": true
-        },
-        {
-          "id": "night-snack-26",
-          "title": "감칠맛 폭발 '곤약면 비빔국수' 다이어트 야식",
-          "channel": "또먹",
-          "youtube_url": "https://www.youtube.com/watch?v=Hi-ikD3bLKU",
-          "estimated_duration": "3분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "숏폼",
-            "pairing": [
-              "없음"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "한식"
-            ],
-            "ingredient_focus": [
-              "면"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "탱글한 면발에 폭발하는 산뜻한 만족감",
-          "hook": "매콤새콤! 이 감칠맛은 못 참지",
-          "category": "guilt-free",
-          "dish_name": "곤약 비빔국수",
-          "recipe_id": "ecea9392-a33a-4aaa-a81b-3b0856eae1eb",
-          "failed": true
-        },
-        {
-          "id": "night-snack-27",
-          "title": "김신영 야식 '38kg 감량' 또띠아 케사디아",
-          "channel": "초이쿡",
-          "youtube_url": "https://www.youtube.com/watch?v=CZlwG_dVGJ4",
-          "estimated_duration": "2분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "없음"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "퓨전"
-            ],
-            "ingredient_focus": [
-              "치즈"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "바삭 촉촉한데 건강까지 챙긴 치즈 간식",
-          "hook": "38kg 감량, 그 비법 간식이 여기?",
-          "category": "guilt-free",
-          "dish_name": "또띠아 케사디아",
-          "recipe_id": "071cab39-9943-461a-a2fa-abe58e75413e",
-          "failed": true
-        },
-        {
-          "id": "night-snack-28",
-          "title": "1분다이어터 '오트밀 한 그릇' 야식",
-          "channel": "1분다이어터 1mindiet",
-          "youtube_url": "https://www.youtube.com/watch?v=rzCYWhimwNs",
-          "estimated_duration": "1분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "없음"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "한식"
-            ],
-            "ingredient_focus": [
-              "밥"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "빠르게 뚝딱 만들어 속 편하게 채우는 꿀조합",
-          "hook": "단 5분이면 나만의 건강 야식 완성!",
-          "category": "guilt-free",
-          "dish_name": "든든 오트밀",
-          "recipe_id": "9f448712-e26a-427b-ba52-3cae0691c884",
-          "failed": true
-        },
-        {
-          "id": "night-snack-29",
-          "title": "치즈 품은 '단호박 구이' 죄책감 ZERO 야식",
-          "channel": "워킹맘의 집밥",
-          "youtube_url": "https://www.youtube.com/watch?v=LtK32RnfgDA",
-          "estimated_duration": "10분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "없음"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "퓨전"
-            ],
-            "ingredient_focus": [
-              "채소"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "달콤짭짤한 맛으로 하루의 피로를 녹이는 위로",
-          "hook": "달콤 촉촉한 단호박에 고소한 치즈가 쏙!",
-          "category": "guilt-free",
-          "dish_name": "치즈 단호박구이",
-          "recipe_id": "56710a02-b187-4c21-99bd-85c9aa9aeb25",
-          "failed": true
-        },
-        {
-          "id": "night-snack-30",
-          "title": "건두부 올린 '마라 짜파게티' 끝판왕",
-          "channel": "모루",
-          "youtube_url": "https://www.youtube.com/watch?v=4nZSgfgACWM",
-          "estimated_duration": "2분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "퓨전"
-            ],
-            "ingredient_focus": [
-              "면"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "평범함에 더해지는 이국적인 매력.",
-          "hook": "이국적 향신료가 부르는 짜파게티의 변주",
-          "category": "ramen-mod",
-          "dish_name": "마라 짜파게티",
-          "recipe_id": "70e029ad-fc9d-48eb-b947-30062bd7cf41",
-          "failed": true
-        },
-        {
-          "id": "night-snack-31",
-          "title": "백종원의 '부대찌개맛 뿌햄라면' 꿀팁",
-          "channel": "백종원 PAIK JONG WON",
-          "youtube_url": "https://www.youtube.com/watch?v=qWI4b7BL2eA",
-          "estimated_duration": "3분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "퇴근길"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "숏폼",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "한식"
-            ],
-            "ingredient_focus": [
-              "면"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "끓이면 바로 든든한 한 끼.",
-          "hook": "이거야말로 라면의 진화!",
-          "category": "ramen-mod",
-          "dish_name": "부대찌개맛 라면",
-          "recipe_id": "6542412b-8b36-4834-96a0-ee8885fdb4d6",
-          "failed": true
-        },
-        {
-          "id": "night-snack-32",
-          "title": "치즈 폭탄 '까르보 불닭' 분식집 맛",
-          "channel": "FFAST FOOD",
-          "youtube_url": "https://www.youtube.com/watch?v=NXNIDr_glr8",
-          "estimated_duration": "5분",
-          "tags": {
-            "mood": [
-              "이불 속",
-              "혼술 한 잔"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "퓨전"
-            ],
-            "ingredient_focus": [
-              "치즈"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "매운맛을 고소함으로 감싸다.",
-          "hook": "크림 소스처럼 꾸덕한 한 입?",
-          "category": "ramen-mod",
-          "dish_name": "까르보 불닭",
-          "recipe_id": "3076a022-d27e-4b50-a9b2-b68a35119fe0",
-          "failed": true
-        },
-        {
-          "id": "night-snack-33",
-          "title": "진짜 분식집 '떡라면' 끓이는 법",
-          "channel": "한끼대첩:간단한 요리 레시피",
-          "youtube_url": "https://www.youtube.com/watch?v=T289nNqfxt4",
-          "estimated_duration": "5분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "롱폼",
-            "pairing": [
-              "없음"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "한식"
-            ],
-            "ingredient_focus": [
-              "떡"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "추억의 맛이 그리울 때 딱.",
-          "hook": "집에서 이 맛을 재현한다고?",
-          "category": "ramen-mod",
-          "dish_name": "분식집 떡라면",
-          "recipe_id": "28d905b5-7fbd-4d32-828f-ac8ba94f8b4a",
-          "failed": true
-        },
-        {
-          "id": "night-snack-34",
-          "title": "성시경의 '극강 치즈 라면' 꾸덕 야식",
-          "channel": "모트리",
-          "youtube_url": "https://www.youtube.com/watch?v=nS6bs5hDB50",
-          "estimated_duration": "5분",
-          "tags": {
-            "mood": [
-              "혼술 한 잔",
-              "주말 밤"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "롱폼",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "퓨전"
-            ],
-            "ingredient_focus": [
-              "치즈"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "입안 가득 채우는 깊은 고소함.",
-          "hook": "치즈 여섯 장은 넣어야 이 정도!",
-          "category": "ramen-mod",
-          "dish_name": "꾸덕 치즈 라면",
-          "recipe_id": "c066c80f-6d09-4a13-a46e-f7a12a04250f",
-          "failed": true
-        },
-        {
-          "id": "night-snack-35",
-          "title": "편의점 끝판왕 '마크정식' 6470원 야식",
-          "channel": "헬로푸드",
-          "youtube_url": "https://www.youtube.com/watch?v=S7P7m_zcf3s",
-          "estimated_duration": "3분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "숏폼",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "퓨전"
-            ],
-            "ingredient_focus": [
-              "떡"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "모두가 인정하는 특별한 식사, 오늘 어때?",
-          "hook": "이게 바로 편의점 만찬의 정석!",
-          "category": "cvs-combo",
-          "dish_name": "마크정식",
-          "recipe_id": "a1edace1-0e76-4820-a258-033241179870",
-          "failed": true
-        },
-        {
-          "id": "night-snack-36",
-          "title": "겨울 필수 '오모리 김치찌개 컵라면' 꿀조합",
-          "channel": "20대 뭐 하지?",
-          "youtube_url": "https://www.youtube.com/watch?v=S7qaHSyz-kY",
-          "estimated_duration": "1분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "혼술 한 잔"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "소주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "한식"
-            ],
-            "ingredient_focus": [
-              "면"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "그릇 가득 추위 녹이는 든든한 포만감.",
-          "hook": "싸늘한 날, 뜨끈한 위로가 필요하다면?",
-          "category": "cvs-combo",
-          "dish_name": "오모리 라면죽",
-          "recipe_id": "88ecc440-94f2-4bab-9aba-6c2a05d93751",
-          "failed": true
-        },
-        {
-          "id": "night-snack-37",
-          "title": "편의점 환상조합 '사리곰탕 만둣국' 1분 컷",
-          "channel": "라면아저씨 Ramyun Ahjussi",
-          "youtube_url": "https://www.youtube.com/watch?v=Tt9cA1Cj9hw",
-          "estimated_duration": "1분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "없음"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "한식"
-            ],
-            "ingredient_focus": [
-              "면"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "놀랍도록 빠르게 완성되는 고급진 별미.",
-          "hook": "1분 만에 뚝딱! 이런 환상의 궁합 봤어?",
-          "category": "cvs-combo",
-          "dish_name": "사리곰탕 만둣국",
-          "recipe_id": "ff7b3062-1eec-4d5e-8f88-0cdc85d9bbd8",
-          "failed": true
-        },
-        {
-          "id": "night-snack-38",
-          "title": "삼각김밥으로 '불닭 치즈 리조또' 변신",
-          "channel": "직딩쿠킹",
-          "youtube_url": "https://www.youtube.com/watch?v=bIFPlKelCtI",
-          "estimated_duration": "5분",
-          "tags": {
-            "mood": [
-              "이불 속",
-              "혼술 한 잔"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "퓨전"
-            ],
-            "ingredient_focus": [
-              "치즈"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "흔한 재료로 탄생하는 미슐랭급 변신.",
-          "hook": "평범한 삼김의 반전! 이거 진짜 레스토랑?",
-          "category": "cvs-combo",
-          "dish_name": "불닭 치즈 리조또",
-          "recipe_id": "006bf070-47eb-415d-9648-3c3b96eb258c",
-          "failed": true
-        },
-        {
-          "id": "night-snack-39",
-          "title": "참깨라면X짜파게티 '마법의 야식' 꿀조합",
-          "channel": "잇햅",
-          "youtube_url": "https://www.youtube.com/watch?v=1B7fznAgm2g",
-          "estimated_duration": "1분",
-          "tags": {
-            "mood": [
-              "이불 속",
-              "혼술 한 잔"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "쇼츠",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "퓨전"
-            ],
-            "ingredient_focus": [
-              "면"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "각기 다른 면이 섞여 더욱 깊어진 중독성.",
-          "hook": "어떻게 이런 풍미가? 라면 두 개로 역대급!",
-          "category": "cvs-combo",
-          "dish_name": "참짜라면",
-          "recipe_id": "22af51e0-2d25-4c0c-b36d-f1d5e488e3e2",
-          "failed": true
-        },
-        {
-          "id": "night-snack-40",
-          "title": "에어프라이어 '백종원 양념치킨' 옛날통닭",
-          "channel": "푼스",
-          "youtube_url": "https://www.youtube.com/watch?v=wjsAegsB4hg",
-          "estimated_duration": "30분",
-          "tags": {
-            "mood": [
-              "주말 밤",
-              "혼술 한 잔"
-            ],
-            "difficulty": "중급",
-            "time": "30분",
-            "format": "롱폼",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "한식"
-            ],
-            "ingredient_focus": [
-              "고기"
-            ],
-            "budget": "보통"
-          },
-          "why_recommended": "바삭한 옛날 맛에 죄책감도 녹아내려.",
-          "hook": "에어프라이어로 갓 튀긴 치킨이라니?",
-          "category": "guilty",
-          "dish_name": "에어프라이어 양념통닭",
-          "recipe_id": "a1cf7554-ae26-4638-be32-32a508b624fd",
-          "failed": true
-        },
-        {
-          "id": "night-snack-41",
-          "title": "백종원 닭강정 '장사천재 백사장' 레시피",
-          "channel": "스푼비 SpoonB",
-          "youtube_url": "https://www.youtube.com/watch?v=YxamhygmEKY",
-          "estimated_duration": "15분",
-          "tags": {
-            "mood": [
-              "주말 밤",
-              "혼술 한 잔"
-            ],
-            "difficulty": "중급",
-            "time": "30분",
-            "format": "롱폼",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "한식"
-            ],
-            "ingredient_focus": [
-              "고기"
-            ],
-            "budget": "보통"
-          },
-          "why_recommended": "이 맛은 배달보다 더 완벽할 거야.",
-          "hook": "유명 셰프 레시피로 만드는 달콤 바삭 한 입!",
-          "category": "guilty",
-          "dish_name": "백종원 닭강정",
-          "recipe_id": "4291416f-e8ec-402d-8948-42a98caa7060",
-          "failed": true
-        },
-        {
-          "id": "night-snack-42",
-          "title": "유쿡의 홈메이드 '뿌링클 치킨' 배달비 절약",
-          "channel": "유쿡",
-          "youtube_url": "https://www.youtube.com/watch?v=kIzGCxIRR-Q",
-          "estimated_duration": "20분",
-          "tags": {
-            "mood": [
-              "주말 밤",
-              "혼술 한 잔"
-            ],
-            "difficulty": "중급",
-            "time": "30분",
-            "format": "롱폼",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "퓨전"
-            ],
-            "ingredient_focus": [
-              "고기"
-            ],
-            "budget": "보통"
-          },
-          "why_recommended": "비싼 배달비 없이 나만의 치킨 파티.",
-          "hook": "오늘은 집에서 뿌링클 가루 맘껏 뿌려보자!",
-          "category": "guilty",
-          "dish_name": "홈메이드 뿌링클",
-          "recipe_id": "513787e3-46b7-4956-98ee-870baecf0999",
-          "failed": true
-        },
-        {
-          "id": "night-snack-43",
-          "title": "에어프라이어 15분 '또띠아 피자' 야식",
-          "channel": "인콕",
-          "youtube_url": "https://www.youtube.com/watch?v=G1icdJN9TNI",
-          "estimated_duration": "15분",
-          "tags": {
-            "mood": [
-              "이불 속",
-              "혼자 보는 영화"
-            ],
-            "difficulty": "초보",
-            "time": "30분",
-            "format": "롱폼",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "양식"
-            ],
-            "ingredient_focus": [
-              "치즈"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "복잡한 주말 야식, 이 한 판으로 끝!",
-          "hook": "단 15분! 이 정도면 충분히 행복하지 않을까?",
-          "category": "guilty",
-          "dish_name": "15분 또띠아 피자",
-          "recipe_id": "5a0515dd-7d03-414e-842c-c61ac3f51493",
-          "failed": true
-        },
-        {
-          "id": "night-snack-44",
-          "title": "염정아의 '피자토스트' 새벽 길티 야식",
-          "channel": "오오밥상",
-          "youtube_url": "https://www.youtube.com/watch?v=e3xcF4QQ9M0",
-          "estimated_duration": "5분",
-          "tags": {
-            "mood": [
-              "새벽 한 시",
-              "이불 속"
-            ],
-            "difficulty": "초보",
-            "time": "10분",
-            "format": "숏폼",
-            "pairing": [
-              "맥주"
-            ],
-            "occasion": [
-              "야식"
-            ],
-            "style": [
-              "양식"
-            ],
-            "ingredient_focus": [
-              "치즈"
-            ],
-            "budget": "가성비"
-          },
-          "why_recommended": "토스트에 피자를 얹는 건 최고의 선택이야.",
-          "hook": "잠 못 드는 새벽, 피자토스트로 위로받자!",
-          "category": "guilty",
-          "dish_name": "염정아 피자토스트",
-          "recipe_id": "58f5a183-f61b-4995-baa1-e376300fc3b7",
-          "failed": true
-        }
-      ],
-      "categories": [
-        {
-          "id": "quick-3",
-          "name": "3재료 5분",
-          "emoji": "🍳",
-          "concept": "재료 3개, 시간 5분. 자취생도 새벽에 부담 없이 만드는 초간단 야식."
-        },
-        {
-          "id": "guilt-free",
-          "name": "죄책감 0%",
-          "emoji": "🥗",
-          "concept": "다이어트 중에도 마음 편하게. 두부·곤약·오트밀·단호박으로 만드는 가벼운 야식."
-        },
-        {
-          "id": "ramen-mod",
-          "name": "라면 변신",
-          "emoji": "🍜",
-          "concept": "봉지 라면 하나로 새로운 한 그릇. 5분 만에 끝나는 라면 모디파이."
-        },
-        {
-          "id": "cvs-combo",
-          "name": "편의점 꿀조합",
-          "emoji": "🏪",
-          "concept": "편의점 갔다가 즉흥적으로 만드는 꿀조합. 가성비·간편함·중독성."
-        },
-        {
-          "id": "guilty",
-          "name": "길티 치킨피자",
-          "emoji": "🍗",
-          "concept": "내일은 운동! 오늘 밤은 진하게 가는 치킨·피자·튀김. 죄책감은 내일."
         }
       ]
     },

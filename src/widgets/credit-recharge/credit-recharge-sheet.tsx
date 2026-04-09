@@ -17,7 +17,7 @@ const SHARE_TEXT = `🍳 셰프토리에서 레시피 공유하고 맛있는 요
 const TORY_LOGO = require('@/assets/images/tory-logo.png');
 const BERRY_ICON = require('@/assets/images/berry-icon.png');
 
-export interface CreditRechargeSheetRef {
+export type CreditRechargeSheetRef = {
   open: () => void;
   close: () => void;
 }

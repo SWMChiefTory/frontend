@@ -32,7 +32,7 @@ import { useSceneMatcher } from './useSceneMatcher';
 
 const NLU_CONFIDENCE_THRESHOLD = 0.7;
 
-interface UseVoiceCommandOptions {
+type UseVoiceCommandOptions = {
   goToNextStep: () => void;
   goToPrevStep: () => void;
   goToStep: (stepNumber: number) => void;

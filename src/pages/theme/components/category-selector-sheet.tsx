@@ -9,12 +9,12 @@ import { typography, spacing, radius } from '@/src/shared/design/tokens';
 import type { ThemeCategory } from '@/src/entities/theme';
 import { getCategoryImage } from './category-images';
 
-export interface CategorySelectorSheetRef {
+export type CategorySelectorSheetRef = {
   open: () => void;
   close: () => void;
 }
 
-interface CategorySelectorSheetProps {
+type CategorySelectorSheetProps = {
   themeId: string;
   categories: ThemeCategory[];
   themeColor: string;

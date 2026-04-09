@@ -3,12 +3,12 @@ import { DateOnly } from "../utils/dateOnly";
 
 //레거시 코드
 
-export interface LoginInfo {
+export type LoginInfo = {
   id_token: string;
   provider: OauthProvider;
 }
 
-export interface SignupData {
+export type SignupData = {
   provider: string;
   id_token: string;
   nickname: string;
@@ -19,7 +19,7 @@ export interface SignupData {
   is_terms_of_use_agreed: boolean;
 }
 
-export interface AuthContextType {
+export type AuthContextType = {
   user: any;
   isLoggedIn: boolean;
   loading: boolean;

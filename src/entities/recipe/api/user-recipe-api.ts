@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { client } from '@/src/shared/api';
+import { client, parseOrNull } from '@/src/shared/api';
 
 // ─── Raw schemas ─────────────────────────────────────────────────
 
@@ -12,50 +12,44 @@ const RawUserRecipeSchema = z
     video_type: z.enum(['SHORTS', 'NORMAL']).nullish(),
     channel_title: z.string().nullish(),
     cook_time: z.number().nullish(),
-    cooking_time: z.number().nullish(),
     servings: z.number().nullish(),
     description: z.string().nullish(),
     recipe_status: z.string().nullish(),
-  })
-  .passthrough();
+  });
 
 const RawRecentRecipesResponseSchema = z
   .object({
     recent_recipes: z.array(RawUserRecipeSchema).default([]),
     next_cursor: z.string().nullish(),
     has_next: z.boolean().nullish(),
-  })
-  .passthrough();
+  });
 
 const RawCategorizedRecipesResponseSchema = z
   .object({
     categorized_recipes: z.array(RawUserRecipeSchema).default([]),
     next_cursor: z.string().nullish(),
     has_next: z.boolean().nullish(),
-  })
-  .passthrough();
+  });
 
 const RawCategorySchema = z
   .object({
     category_id: z.string(),
     name: z.string(),
     count: z.number().default(0),
-  })
-  .passthrough();
+  });
 
 const RawCategoriesResponseSchema = z
   .object({
     categories: z.array(RawCategorySchema).default([]),
     total_count: z.number().nullish(),
-  })
-  .passthrough();
+  });
 
 type RawUserRecipe = z.infer<typeof RawUserRecipeSchema>;
 type RawCategory = z.infer<typeof RawCategorySchema>;
 
 // ─── Client types ────────────────────────────────────────────────
 
-export interface UserRecipe {
+export type UserRecipe = {
   recipeId: string;
   recipeTitle: string;
   videoId: string;
@@ -68,13 +62,13 @@ export interface UserRecipe {
   recipeStatus: string;
 }
 
-export interface Category {
+export type Category = {
   categoryId: string;
   name: string;
   count: number;
 }
 
-export interface UserRecipesPage {
+export type UserRecipesPage = {
   data: UserRecipe[];
   nextCursor: string | null;
   hasNext: boolean;
@@ -90,7 +84,7 @@ function toUserRecipe(raw: RawUserRecipe): UserRecipe {
     videoThumbnailUrl: raw.video_thumbnail_url ?? '',
     videoType: raw.video_type ?? 'NORMAL',
     channelTitle: raw.channel_title ?? '',
-    cookingTime: raw.cook_time ?? raw.cooking_time ?? 0,
+    cookingTime: raw.cook_time ?? 0,
     servings: raw.servings ?? 0,
     description: raw.description ?? '',
     recipeStatus: raw.recipe_status ?? '',
@@ -110,15 +104,12 @@ function toCategory(raw: RawCategory): Category {
 export async function fetchMyRecipes(cursor?: string | null): Promise<UserRecipesPage> {
   try {
     const res = await client.get('/recipes/recent', { params: cursor ? { cursor } : {} });
-    const parsed = RawRecentRecipesResponseSchema.safeParse(res.data);
-    if (!parsed.success) {
-      console.warn('[UserRecipeAPI] my recipes schema error:', parsed.error.issues);
-      return { data: [], nextCursor: null, hasNext: false };
-    }
+    const parsed = parseOrNull(RawRecentRecipesResponseSchema, res.data, 'UserRecipeAPI/my');
+    if (!parsed) return { data: [], nextCursor: null, hasNext: false };
     return {
-      data: parsed.data.recent_recipes.map(toUserRecipe),
-      nextCursor: parsed.data.next_cursor ?? null,
-      hasNext: parsed.data.has_next ?? false,
+      data: parsed.recent_recipes.map(toUserRecipe),
+      nextCursor: parsed.next_cursor ?? null,
+      hasNext: parsed.has_next ?? false,
     };
   } catch (err: any) {
     console.warn('[UserRecipeAPI] fetchMyRecipes error:', err?.response?.status, err?.message);
@@ -134,15 +125,12 @@ export async function fetchCategorizedRecipes(
     const res = await client.get(`/recipes/categorized/${categoryId}`, {
       params: cursor ? { cursor } : {},
     });
-    const parsed = RawCategorizedRecipesResponseSchema.safeParse(res.data);
-    if (!parsed.success) {
-      console.warn('[UserRecipeAPI] categorized schema error:', parsed.error.issues);
-      return { data: [], nextCursor: null, hasNext: false };
-    }
+    const parsed = parseOrNull(RawCategorizedRecipesResponseSchema, res.data, 'UserRecipeAPI/categorized');
+    if (!parsed) return { data: [], nextCursor: null, hasNext: false };
     return {
-      data: parsed.data.categorized_recipes.map(toUserRecipe),
-      nextCursor: parsed.data.next_cursor ?? null,
-      hasNext: parsed.data.has_next ?? false,
+      data: parsed.categorized_recipes.map(toUserRecipe),
+      nextCursor: parsed.next_cursor ?? null,
+      hasNext: parsed.has_next ?? false,
     };
   } catch (err: any) {
     console.warn('[UserRecipeAPI] fetchCategorizedRecipes error:', err?.response?.status, err?.message);
@@ -153,12 +141,9 @@ export async function fetchCategorizedRecipes(
 export async function fetchCategories(): Promise<Category[]> {
   try {
     const res = await client.get('/recipes/categories');
-    const parsed = RawCategoriesResponseSchema.safeParse(res.data);
-    if (!parsed.success) {
-      console.warn('[UserRecipeAPI] categories schema error:', parsed.error.issues);
-      return [];
-    }
-    return parsed.data.categories.map(toCategory);
+    const parsed = parseOrNull(RawCategoriesResponseSchema, res.data, 'UserRecipeAPI/categories');
+    if (!parsed) return [];
+    return parsed.categories.map(toCategory);
   } catch (err: any) {
     console.warn('[UserRecipeAPI] fetchCategories error:', err?.response?.status, err?.message);
     return [];

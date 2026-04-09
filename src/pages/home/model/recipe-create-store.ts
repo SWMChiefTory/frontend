@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 
-interface CreatingRecipe {
+type CreatingRecipe = {
   recipeId: string;
   videoUrl: string;
   startedAt: number;
 }
 
-interface RecipeCreateStore {
+type RecipeCreateStore = {
   /** 딥링크로 받은 URL — 다음 마운트 시 시트 자동 오픈 */
   pendingVideoUrl: string | null;
   requestOpen: (videoUrl?: string) => void;

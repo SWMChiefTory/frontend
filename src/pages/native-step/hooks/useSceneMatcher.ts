@@ -8,7 +8,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createEmbedding, cosineSimilarity, type EmbeddingInstance } from './onnxEmbedding';
 
-export interface SceneMatchResult {
+export type SceneMatchResult = {
   index: number;
   score: number;
   label: string;

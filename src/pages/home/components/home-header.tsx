@@ -7,7 +7,7 @@ import { useBalance } from '@/src/entities/balance';
 
 const BERRY_ICON = require('@/assets/images/berry-icon.png');
 
-interface HomeHeaderProps {
+type HomeHeaderProps = {
   onBerryPress: () => void;
   onSearchPress: () => void;
   onSettingsPress: () => void;

@@ -40,18 +40,18 @@ const INJECTED_JS_BRIDGE = `
   })();
 `;
 
-interface DescriptionItem {
+type DescriptionItem = {
   content: string;
   start?: string;
 }
 
-interface Scene {
+type Scene = {
   label: string;
   start: string;
   end: string;
 }
 
-interface RecipeStepScreenProps {
+type RecipeStepScreenProps = {
   videoId: string;
   recipe: any;
   isShorts?: boolean;

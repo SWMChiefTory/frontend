@@ -10,7 +10,7 @@ export const RecipeReportReasonSchema = z.enum([
 
 export type RecipeReportReason = z.infer<typeof RecipeReportReasonSchema>;
 
-export interface RecipeReportRequest {
+export type RecipeReportRequest = {
   reason: RecipeReportReason;
   description: string | null;
 }

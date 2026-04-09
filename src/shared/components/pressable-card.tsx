@@ -9,7 +9,7 @@ import Animated, {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-interface PressableCardProps extends PressableProps {
+type PressableCardProps = PressableProps & {
   hapticIntensity?: 'light' | 'medium' | 'none';
   scaleTo?: number;
 }

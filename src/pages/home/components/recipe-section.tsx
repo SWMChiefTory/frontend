@@ -8,7 +8,7 @@ import type { RecipeCard, ThemeCard } from '@/src/shared/data/mock';
 import { useRecipeCreateStore } from '@/src/pages/home/model/recipe-create-store';
 import { useRecipeProgress, RecipeStatus } from '@/src/entities/recipe';
 
-interface ThemeCardsSectionProps {
+type ThemeCardsSectionProps = {
   cards: ThemeCard[];
   onPress: (card: ThemeCard) => void;
 }
@@ -116,7 +116,7 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
   );
 }
 
-interface RecentRecipeSectionProps {
+type RecentRecipeSectionProps = {
   recipes: RecipeCard[];
   onPress: (recipe: RecipeCard) => void;
 }
@@ -345,7 +345,7 @@ function CreatingRecipeCard({ recipeId }: { recipeId: string }) {
   );
 }
 
-interface RecipeListSectionProps {
+type RecipeListSectionProps = {
   title: string;
   icon?: string;
   recipes: RecipeCard[];

@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { radius, spacing } from '@/src/shared/design/tokens';
 
-interface Tab {
+type Tab = {
   key: string;
   icon: keyof typeof MaterialCommunityIcons.glyphMap;
   iconActive: keyof typeof MaterialCommunityIcons.glyphMap;
@@ -14,7 +14,7 @@ const TABS: Tab[] = [
   { key: 'bookmark', icon: 'bookmark-outline', iconActive: 'bookmark' },
 ];
 
-interface FloatingTabBarProps {
+type FloatingTabBarProps = {
   activeTab: string;
   onTabPress: (key: string) => void;
 }

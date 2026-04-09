@@ -8,7 +8,7 @@ import { useCoupangSearch, type IngredientProduct } from '@/src/entities/affilia
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { track, CoupangEvents } from '@/src/shared/analytics';
 
-export interface IngredientPurchaseSheetRef {
+export type IngredientPurchaseSheetRef = {
   open: (ingredientNames: string[], recipeId?: string) => void;
   close: () => void;
 }

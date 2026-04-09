@@ -5,12 +5,12 @@ import type { DateOnly } from '@/src/shared/utils/dateOnly';
 export type { Gender } from './gender';
 export type { OauthProvider } from './oauth-provider';
 
-export interface LoginInfo {
+export type LoginInfo = {
   id_token: string;
   provider: OauthProvider;
 }
 
-export interface SignupData {
+export type SignupData = {
   id_token: string;
   provider: OauthProvider;
   nickname: string;
@@ -21,7 +21,7 @@ export interface SignupData {
   is_terms_of_use_agreed: boolean;
 }
 
-export interface UserResponse {
+export type UserResponse = {
   provider_sub: string;
   gender: Gender | null;
   nickname: string;
@@ -31,7 +31,7 @@ export interface UserResponse {
   is_terms_of_use_agreed: boolean;
 }
 
-export interface AuthResponse {
+export type AuthResponse = {
   access_token: string;
   refresh_token: string;
   user_info: UserResponse;

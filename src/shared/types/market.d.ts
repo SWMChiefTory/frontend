@@ -1,11 +1,11 @@
 export type Market = "KOREA" | "GLOBAL";
 
-export interface MarketResponse {
+export type MarketResponse = {
   market: Market;
   country_code: string;
 }
 
-export interface MarketConfig {
+export type MarketConfig = {
   market: Market;
   countryCode: string;
   webviewPath: "/ko" | "/en";

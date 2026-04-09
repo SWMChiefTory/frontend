@@ -2,7 +2,7 @@ import { client } from '@/src/shared/api';
 import { DateOnly } from '@/src/shared/utils/dateOnly';
 import type { Gender } from './gender';
 
-export interface MeResponse {
+export type MeResponse = {
   provider_sub: string;
   gender: Gender | null;
   nickname: string;
@@ -12,7 +12,7 @@ export interface MeResponse {
   is_terms_of_use_agreed: boolean;
 }
 
-interface RawMeResponse {
+type RawMeResponse = {
   provider_sub: string;
   gender: Gender | null;
   nickname: string;

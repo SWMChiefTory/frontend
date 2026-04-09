@@ -1,10 +1,10 @@
-interface ErrorResponse {
+type ErrorResponse = {
   code: number;
   message: string;
   error: string;
 }
 
-interface ErrorData {
+type ErrorData = {
   message: string;
   error: string;
 }

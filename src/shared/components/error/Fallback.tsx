@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { errorStyles } from "@/src/shared/styles/error";
 
-interface GlobalErrorProps {
+type GlobalErrorProps = {
   error?: Error;
   resetErrorBoundary: () => void;
 }

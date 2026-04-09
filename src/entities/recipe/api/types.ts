@@ -1,31 +1,31 @@
-export interface IngredientAmount {
+export type IngredientAmount = {
   value: number | null;
   unit: string | null;
 }
 
-export interface Ingredient {
+export type Ingredient = {
   name: string;
   amount: IngredientAmount;
   substitute?: string | null;
   selectionTip?: string | null;
 }
 
-export interface Tool {
+export type Tool = {
   name: string;
 }
 
-export interface Scene {
+export type Scene = {
   label: string;
   start: string;
   end: string;
 }
 
-export interface DescriptionItem {
+export type DescriptionItem = {
   content: string;
   start: string;
 }
 
-export interface Step {
+export type Step = {
   order: number;
   title: string;
   description: string | DescriptionItem[];
@@ -36,7 +36,7 @@ export interface Step {
   heatLevel?: string | null;
 }
 
-export interface Recipe {
+export type Recipe = {
   title: string;
   description: string | null;
   servings: number | null;
@@ -49,7 +49,7 @@ export interface Recipe {
   servingTip?: string | null;
 }
 
-export interface RecipeEntry {
+export type RecipeEntry = {
   recipe: Recipe;
   videoId: string;
   videoType?: 'SHORTS' | 'NORMAL';

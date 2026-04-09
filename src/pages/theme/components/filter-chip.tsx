@@ -1,7 +1,7 @@
 import { Pressable, Text } from 'react-native';
 import { colors, radius, typography } from '@/src/shared/design/tokens';
 
-interface FilterChipProps {
+type FilterChipProps = {
   label: string;
   active: boolean;
   isDark: boolean;

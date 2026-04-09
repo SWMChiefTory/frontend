@@ -108,7 +108,7 @@ class RingBuffer {
 }
 
 // ─── Hook ───
-interface UseWebAudioPipelineOptions {
+type UseWebAudioPipelineOptions = {
   onInterimResult: (text: string) => void;
   onFinalResult: (text: string) => void;
   onVoiceStart?: () => void;
@@ -117,7 +117,7 @@ interface UseWebAudioPipelineOptions {
   webViewRef: React.RefObject<WebView | null>;
 }
 
-export interface WebAudioPipelineResult extends AudioPipelineResult {
+export type WebAudioPipelineResult = AudioPipelineResult & {
   handleWebViewMessage: (event: WebViewMessageEvent) => void;
   vadSpeechStartRef: React.RefObject<number>;
 }

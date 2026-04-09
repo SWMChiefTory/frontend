@@ -8,7 +8,7 @@ import { colors, radius, typography } from '@/src/shared/design/tokens';
 import { type ThemeDish, youtubeThumbnailUrl } from '@/src/entities/theme';
 import { track, ThemeEvents } from '@/src/shared/analytics';
 
-interface DishListCardProps {
+type DishListCardProps = {
   dish: ThemeDish;
   isDark: boolean;
   themeId?: string;

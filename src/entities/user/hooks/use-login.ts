@@ -6,7 +6,7 @@ import { storeTokens, useAuthStore } from '@/src/shared/api';
 import { DateOnly } from '@/src/shared/utils/dateOnly';
 import type { AuthResponse, LoginInfo } from '../api/types';
 
-interface UseLoginOptions {
+type UseLoginOptions = {
   onSuccess?: (data: AuthResponse, variables: LoginInfo) => void;
   onError?: (error: Error, variables: LoginInfo) => void;
 }

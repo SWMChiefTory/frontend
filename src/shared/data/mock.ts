@@ -2,7 +2,7 @@
  * 목데이터 — 개발/프로토타입용
  */
 
-export interface ThemeCard {
+export type ThemeCard = {
   id: string;
   title: string;
   subtitle: string;
@@ -10,7 +10,7 @@ export interface ThemeCard {
   image?: any;
 }
 
-export interface RecipeCard {
+export type RecipeCard = {
   id: string;
   title: string;
   thumbnailUrl: string;
@@ -21,7 +21,7 @@ export interface RecipeCard {
   cookingTime?: number;
 }
 
-export interface Category {
+export type Category = {
   id: string;
   name: string;
 }

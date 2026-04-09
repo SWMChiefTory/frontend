@@ -233,6 +233,47 @@ const res = await client.get('/recipes');
 const res = await client.post('/account/login/oauth', data, { skipAuth: true });
 ```
 
+## TypeScript 타입 선언 ⭐
+
+**객체 shape은 항상 `type`. `interface` 금지.**
+
+```ts
+// ❌ 나쁨
+export interface Recipe {
+  id: string;
+  title: string;
+}
+
+// ✅ 좋음
+export type Recipe = {
+  id: string;
+  title: string;
+};
+```
+
+확장은 intersection으로:
+
+```ts
+// ❌ 나쁨
+interface PressableCardProps extends PressableProps {
+  variant: 'primary' | 'secondary';
+}
+
+// ✅ 좋음
+type PressableCardProps = PressableProps & {
+  variant: 'primary' | 'secondary';
+};
+```
+
+### 이유
+- 같은 이름의 `interface`는 자동 **선언 병합(declaration merging)** → 모르게 누가 끼워넣어도 에러 안 남, 위험
+- `type`은 union/intersection/매핑/조건부 등 표현력이 더 넓고 일관됨
+- 같은 이름 두 번 선언 시 즉시 에러로 잡힘
+
+### 예외 (이때만 `interface` 허용)
+1. 외부 라이브러리 타입 augment (`declare module ...`)
+2. 클래스가 `implements` 해야 하고 선언 병합이 진짜로 필요한 경우
+
 ## 컴포넌트 작성
 
 - **inline style 사용** (StyleSheet 거의 안 씀)
@@ -251,6 +292,7 @@ const res = await client.post('/account/login/oauth', data, { skipAuth: true });
 - ❌ entities 내부 파일 직접 import (반드시 barrel 경유)
 - ❌ shared가 entities/pages를 import
 - ❌ 이모지를 UI 텍스트로 사용
+- ❌ `interface` 사용 (예외: 라이브러리 augment, 클래스 implements + 병합 필요)
 
 ## 새 기능 추가 시 체크리스트
 

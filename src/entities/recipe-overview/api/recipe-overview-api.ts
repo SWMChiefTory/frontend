@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { client } from '@/src/shared/api';
+import { client, parseOrNull } from '@/src/shared/api';
 
 /**
  * 단일 레시피의 가벼운 메타데이터.
@@ -13,7 +13,7 @@ import { client } from '@/src/shared/api';
 
 const RawRecipeTagSchema = z.object({
   name: z.string(),
-}).passthrough();
+});
 
 const RawRecipeOverviewSchema = z
   .object({
@@ -31,12 +31,11 @@ const RawRecipeOverviewSchema = z
     videoThumbnailUrl: z.string(),
     videoSeconds: z.number().int(),
     creditCost: z.number().nullish(),
-  })
-  .passthrough();
+  });
 
 type RawRecipeOverview = z.infer<typeof RawRecipeOverviewSchema>;
 
-export interface RecipeOverview {
+export type RecipeOverview = {
   recipeId: string;
   recipeTitle: string;
   description: string;
@@ -77,12 +76,9 @@ export async function fetchRecipeOverview(
 ): Promise<RecipeOverview | null> {
   try {
     const res = await client.get(`/recipes/overview/${recipeId}`);
-    const parsed = RawRecipeOverviewSchema.safeParse(res.data);
-    if (!parsed.success) {
-      console.warn('[RecipeOverviewAPI] schema error:', parsed.error.issues);
-      return null;
-    }
-    return toRecipeOverview(parsed.data);
+    const parsed = parseOrNull(RawRecipeOverviewSchema, res.data, 'RecipeOverviewAPI');
+    if (!parsed) return null;
+    return toRecipeOverview(parsed);
   } catch (err: any) {
     console.warn(
       '[RecipeOverviewAPI] fetch error:',

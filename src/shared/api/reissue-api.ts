@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-interface ReissueResponse {
+type ReissueResponse = {
   access_token: string;
   refresh_token: string;
 }

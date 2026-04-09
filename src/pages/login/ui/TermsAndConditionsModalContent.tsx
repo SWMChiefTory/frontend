@@ -13,7 +13,7 @@ import useRandomName from "@/src/pages/login/model/useRandomName";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useMarketStore } from "@/src/shared/store/marketStore";
 
-export interface AgreeValue {
+export type AgreeValue = {
   isServiceAgree: boolean;
   isPrivacyAgree: boolean;
   isMarketingAgree: boolean;

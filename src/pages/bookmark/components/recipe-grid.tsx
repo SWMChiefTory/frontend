@@ -14,7 +14,7 @@ import Animated, {
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import type { RecipeCard } from '@/src/shared/data/mock';
 
-interface RecipeGridProps {
+type RecipeGridProps = {
   recipes: RecipeCard[];
   onPress: (recipe: RecipeCard) => void;
   onLongPress: (recipe: RecipeCard) => void;

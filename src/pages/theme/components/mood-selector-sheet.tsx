@@ -5,12 +5,12 @@ import BottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetScrollVie
 import { typography, spacing, radius } from '@/src/shared/design/tokens';
 import { getMoodImage } from './mood-images';
 
-export interface MoodSelectorSheetRef {
+export type MoodSelectorSheetRef = {
   open: () => void;
   close: () => void;
 }
 
-interface MoodSelectorSheetProps {
+type MoodSelectorSheetProps = {
   moods: string[];
   themeColor: string;
   themeTitle: string;

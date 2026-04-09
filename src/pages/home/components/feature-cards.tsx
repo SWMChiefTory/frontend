@@ -9,7 +9,7 @@ const CARD_IMAGES = {
   calendar: require('@/assets/images/card-calendar.png'),
 };
 
-interface FeatureCard {
+type FeatureCard = {
   id: keyof typeof CARD_IMAGES;
   title: string;
   subtitle: string;
@@ -23,7 +23,7 @@ const FEATURES: FeatureCard[] = [
   { id: 'calendar', title: '캘린더', subtitle: '', backgroundColor: colors.card.calendar, locked: true },
 ];
 
-interface FeatureCardsProps {
+type FeatureCardsProps = {
   onCreatePress: () => void;
   onLockedPress: (feature: string) => void;
 }

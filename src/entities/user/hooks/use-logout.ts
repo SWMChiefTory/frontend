@@ -4,7 +4,7 @@ import { useUserStore } from '../store/user-store';
 import { findRefreshToken, clearTokens, useAuthStore } from '@/src/shared/api';
 import { unregisterExpoPushOnLogout } from '@/src/modules/notifications/expo-push';
 
-interface UseLogoutOptions {
+type UseLogoutOptions = {
   onSuccess?: () => void;
   onError?: (error: Error) => void;
   onSettled?: () => void;

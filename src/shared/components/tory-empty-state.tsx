@@ -18,7 +18,7 @@ const TORY_CHARACTERS = {
   logo: require('@/assets/images/tory-logo.png'),
 };
 
-interface ToryEmptyStateProps {
+type ToryEmptyStateProps = {
   variant?: keyof typeof TORY_CHARACTERS;
   title: string;
   description?: string;

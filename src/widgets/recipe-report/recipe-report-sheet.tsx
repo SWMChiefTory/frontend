@@ -16,7 +16,7 @@ const REASONS: { id: RecipeReportReason; label: string; icon: keyof typeof Ionic
   { id: 'OTHER', label: '기타', icon: 'chatbubble-outline', color: '#6B7280' },
 ];
 
-export interface RecipeReportSheetRef {
+export type RecipeReportSheetRef = {
   open: (recipeId: string) => void;
   close: () => void;
 }
