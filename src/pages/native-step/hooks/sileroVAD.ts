@@ -14,7 +14,7 @@ import { Asset } from 'expo-asset';
 export const SAMPLE_RATE = 16000;
 export const WINDOW_SIZE = 512; // Silero VAD v4: 512 samples = 32ms @ 16kHz
 
-export interface SileroVADInstance {
+export type SileroVADInstance = {
   process: (frame: Float32Array) => Promise<number>;
   reset: () => void;
   dispose: () => void;

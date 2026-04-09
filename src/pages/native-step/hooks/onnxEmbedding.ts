@@ -13,14 +13,14 @@ import { Asset } from 'expo-asset';
 let _instance: EmbeddingInstance | null = null;
 let _loading: Promise<EmbeddingInstance> | null = null;
 
-export interface EmbeddingInstance {
+export type EmbeddingInstance = {
   embed: (text: string) => Promise<number[] | null>;
   dispose: () => Promise<void>;
 }
 
 // ─── Unigram (SentencePiece) Tokenizer ───
 
-interface UnigramTokenizerJSON {
+type UnigramTokenizerJSON = {
   model: {
     type: string;
     vocab: [string, number][];

@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { colors, radius } from '@/src/shared/design/tokens';
 
-interface SkeletonProps {
+type SkeletonProps = {
   width: number | string;
   height: number;
   borderRadius?: number;

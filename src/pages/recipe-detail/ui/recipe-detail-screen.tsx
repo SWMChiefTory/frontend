@@ -17,7 +17,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 import { track, RecipeDetailEvents, RecipeEnrollEvents } from '@/src/shared/analytics';
 
-interface RecipeDetailScreenProps {
+type RecipeDetailScreenProps = {
   recipeId: string;
 }
 

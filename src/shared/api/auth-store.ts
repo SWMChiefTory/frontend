@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface AuthState {
+type AuthState = {
   isAuthenticated: boolean;
   setAuthenticated: () => void;
   clearAuth: () => void;

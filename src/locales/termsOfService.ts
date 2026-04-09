@@ -1,24 +1,24 @@
 import type { Market } from "@/src/shared/types/market";
 
-export interface TermsOfServiceDetail {
+export type TermsOfServiceDetail = {
   letter: string;
   content: string;
 }
 
-export interface TermsOfServiceSubsection {
+export type TermsOfServiceSubsection = {
   number: number;
   content: string;
   details?: TermsOfServiceDetail[];
 }
 
-export interface TermsOfServiceSection {
+export type TermsOfServiceSection = {
   article: number;
   title: string;
   content?: string;
   subsections?: TermsOfServiceSubsection[];
 }
 
-export interface TermsOfServiceData {
+export type TermsOfServiceData = {
   title: string;
   effectiveDate: string;
   effectiveDatePrefix: string;

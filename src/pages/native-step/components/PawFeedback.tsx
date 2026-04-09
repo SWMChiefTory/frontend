@@ -11,7 +11,7 @@ import Animated, {
 
 const PAW_IMAGE = require('@/assets/images/paw-print.png');
 
-interface PawFeedbackProps {
+type PawFeedbackProps = {
   visible: boolean;
   onDone?: () => void;
   size?: number;

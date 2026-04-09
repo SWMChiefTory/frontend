@@ -7,7 +7,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import type { PipelineState } from '../hooks/useAudioPipeline';
 
-interface SpeechCaptionBarProps {
+type SpeechCaptionBarProps = {
   isListening: boolean;
   transcript: string;
   pipelineState: PipelineState;

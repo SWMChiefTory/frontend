@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface CreatingCategoryViewStore {
+type CreatingCategoryViewStore = {
   isCreatingOpened: boolean;
   openCreatingView: () => void;
   closeCreatingView: () => void;

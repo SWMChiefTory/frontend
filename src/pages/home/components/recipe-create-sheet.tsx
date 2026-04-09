@@ -28,7 +28,7 @@ function extractVideoId(url: string): string | null {
   return null;
 }
 
-export interface RecipeCreateSheetRef {
+export type RecipeCreateSheetRef = {
   open: (initialUrl?: string) => void;
   close: () => void;
 }

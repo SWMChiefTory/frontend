@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/react-native";
 import React from "react";
 import { AxiosError } from "axios";
 
-interface Props {
+type Props = {
   children: React.ReactNode;
 }
 

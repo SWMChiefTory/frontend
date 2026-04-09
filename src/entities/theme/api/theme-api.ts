@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { parseOrNull } from '@/src/shared/api';
 import type { ThemeData, ThemeDish, DishTags, ThemeCategory } from './types';
 import { extractYoutubeVideoId } from './types';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -22,8 +23,7 @@ const RawDishTagsSchema = z
     style: z.array(z.string()).default([]),
     ingredient_focus: z.array(z.string()).default([]),
     budget: z.string(),
-  })
-  .passthrough();
+  });
 
 const RawThemeDishSchema = z
   .object({
@@ -41,8 +41,7 @@ const RawThemeDishSchema = z
     thumbnail: z.string().optional(),
     dish_name: z.string().optional(),
     failed: z.boolean().optional(),
-  })
-  .passthrough();
+  });
 
 const RawThemeCategorySchema = z
   .object({
@@ -51,8 +50,7 @@ const RawThemeCategorySchema = z
     emoji: z.string().default(''),
     concept: z.string().default(''),
     hook: z.string().optional(),
-  })
-  .passthrough();
+  });
 
 const RawThemeSchema = z
   .object({
@@ -64,14 +62,12 @@ const RawThemeSchema = z
     curator_quote: z.string().optional(),
     categories: z.array(RawThemeCategorySchema).optional(),
     dishes: z.array(RawThemeDishSchema).default([]),
-  })
-  .passthrough();
+  });
 
 const RawThemesResponseSchema = z
   .object({
     themes: z.array(RawThemeSchema).default([]),
-  })
-  .passthrough();
+  });
 
 // ─── Transformer ───
 
@@ -122,12 +118,9 @@ function toTheme(raw: z.infer<typeof RawThemeSchema>): ThemeData {
 export async function fetchThemes(): Promise<ThemeData[]> {
   if (!__DEV__ && cachedThemes) return cachedThemes;
 
-  const parsed = RawThemesResponseSchema.safeParse(themesJson);
-  if (!parsed.success) {
-    console.warn('[ThemeAPI] schema error:', JSON.stringify(parsed.error.issues, null, 2));
-    return [];
-  }
-  const themes = parsed.data.themes.map(toTheme);
+  const parsed = parseOrNull(RawThemesResponseSchema, themesJson, 'ThemeAPI');
+  if (!parsed) return [];
+  const themes = parsed.themes.map(toTheme);
   if (!__DEV__) cachedThemes = themes;
   console.log('[ThemeAPI] loaded themes:', themes.map(t => ({
     id: t.id,

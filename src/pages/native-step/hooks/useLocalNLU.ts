@@ -18,13 +18,13 @@
 
 import type { IntentLabel } from './onnxNLU';
 
-export interface LocalNLUPayload {
+export type LocalNLUPayload = {
   stepNumber?: number;
   sceneNumber?: number;
   durationSec?: number;
 }
 
-export interface LocalNLUResult {
+export type LocalNLUResult = {
   intent: IntentLabel;
   payload: LocalNLUPayload;
 }
@@ -117,7 +117,7 @@ function findInWindow(
   return window.match(slotRe);
 }
 
-interface Slots {
+type Slots = {
   timerDurationSec?: number;  // 0 = 숫자 없는 타이머 명령(취소/멈춤 등)
   hasTimerAnchor: boolean;
   stepNumber?: number;

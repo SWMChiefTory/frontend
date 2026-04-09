@@ -45,7 +45,7 @@ export type AmplitudeEventName =
  * 이벤트별 프로퍼티 타입 매핑.
  * 웹뷰(`webview-v2`)와 동일한 이름/타입을 유지 → funnel 공유.
  */
-export interface EventPropsMap {
+export type EventPropsMap = {
   // ─── Auth (네이티브 전용) ───
   [AuthEvents.LOGIN_SUCCESS]: { provider: string };
   [AuthEvents.SIGNUP_SUCCESS]: { provider: string };

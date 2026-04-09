@@ -5,7 +5,7 @@ import type { ThemeData, ThemeCategory } from '@/src/entities/theme';
 import { THEME_IMAGES } from './theme-images';
 import { getCategoryImage } from './category-images';
 
-interface ThemeBannerProps {
+type ThemeBannerProps = {
   theme: ThemeData;
   /** 카테고리가 선택된 상태면 히어로를 카테고리 컨셉으로 교체 */
   selectedCategory?: ThemeCategory | null;

@@ -15,7 +15,7 @@ import { useMarketStore } from '@/src/shared/store/marketStore';
 
 export type TimerState = 'IDLE' | 'ACTIVE' | 'PAUSED' | 'FINISHED';
 
-export interface Timer {
+export type Timer = {
   id: string;
   name: string;
   duration: number;        // 총 시간 (초)
@@ -25,7 +25,7 @@ export interface Timer {
 }
 
 // ─── Zustand Store ───
-interface TimerStore {
+type TimerStore = {
   timer: Timer | null;
   isSheetOpen: boolean;
 
@@ -137,7 +137,7 @@ export function dismissFinishedAction() {
 }
 
 // ─── Hook (컴포넌트에서 사용) ───
-export interface StepTimerResult {
+export type StepTimerResult = {
   timer: Timer | null;
   displayTime: string;
   progress: number;

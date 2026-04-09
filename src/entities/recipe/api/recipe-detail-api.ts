@@ -10,54 +10,45 @@ const RawVideoInfoSchema = z
     video_seconds: z.number().nullish(),
     video_title: z.string().nullish(),
     channel_title: z.string().nullish(),
-  })
-  .passthrough();
+  });
 
 const RawIngredientAmountSchema = z
   .object({
     value: z.number().nullish(),
     unit: z.string().nullish(),
-  })
-  .passthrough();
+  });
 
 const RawIngredientSchema = z
   .object({
     name: z.string(),
     amount: z.union([z.number(), RawIngredientAmountSchema]).nullish(),
     unit: z.string().nullish(),
-  })
-  .passthrough();
+  });
 
 const RawStepDetailSchema = z
   .object({
     text: z.string().nullish(),
-    content: z.string().nullish(),
     start: z.number().nullish(),
-  })
-  .passthrough();
+  });
 
 const RawStepSchema = z
   .object({
     step_order: z.number().nullish(),
-    order: z.number().nullish(),
     subtitle: z.string().nullish(),
-    title: z.string().nullish(),
     start_time: z.number().nullish(),
     details: z.array(RawStepDetailSchema).default([]),
-  })
-  .passthrough();
+  });
 
 const RawRecipeDetailMetaSchema = z
   .object({
     description: z.string().nullish(),
     cooking_time: z.number().nullish(),
     servings: z.number().nullish(),
-  })
-  .passthrough();
+  });
 
 const RawRecipeTagSchema = z.union([
   z.string(),
-  z.object({ name: z.string() }).passthrough(),
+  z.object({ name: z.string() }),
 ]);
 
 const RawRecipeDetailResponseSchema = z
@@ -68,8 +59,7 @@ const RawRecipeDetailResponseSchema = z
     recipe_steps: z.array(RawStepSchema).default([]),
     recipe_tags: z.array(RawRecipeTagSchema).default([]),
     view_status: z.any().nullish(),
-  })
-  .passthrough();
+  });
 
 type RawIngredient = z.infer<typeof RawIngredientSchema>;
 type RawStep = z.infer<typeof RawStepSchema>;
@@ -78,7 +68,7 @@ type RawVideoInfo = z.infer<typeof RawVideoInfoSchema>;
 
 // ─── Client types ────────────────────────────────────────────────
 
-export interface VideoInfo {
+export type VideoInfo = {
   videoId: string;
   videoThumbnailUrl: string;
   videoSeconds: number;
@@ -86,25 +76,25 @@ export interface VideoInfo {
   channelTitle: string;
 }
 
-export interface Ingredient {
+export type Ingredient = {
   name: string;
   amount: number | null;
   unit: string | null;
 }
 
-export interface StepDetail {
+export type StepDetail = {
   text: string;
   start: number;
 }
 
-export interface RecipeStep {
+export type RecipeStep = {
   stepOrder: number;
   subtitle: string;
   startTime: number;
   details: StepDetail[];
 }
 
-export interface RecipeDetail {
+export type RecipeDetail = {
   recipeId: string;
   videoInfo: VideoInfo;
   description: string;
@@ -144,15 +134,15 @@ function toIngredient(raw: RawIngredient): Ingredient {
 
 function toStepDetail(raw: RawStepDetail): StepDetail {
   return {
-    text: raw.text ?? raw.content ?? '',
+    text: raw.text ?? '',
     start: raw.start ?? 0,
   };
 }
 
 function toStep(raw: RawStep): RecipeStep {
   return {
-    stepOrder: raw.step_order ?? raw.order ?? 0,
-    subtitle: raw.subtitle ?? raw.title ?? '',
+    stepOrder: raw.step_order ?? 0,
+    subtitle: raw.subtitle ?? '',
     startTime: raw.start_time ?? 0,
     details: (raw.details ?? []).map(toStepDetail),
   };

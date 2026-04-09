@@ -12,7 +12,7 @@ import Animated, {
   withSequence,
 } from 'react-native-reanimated';
 
-interface IntentFeedbackToastProps {
+type IntentFeedbackToastProps = {
   message: string | null;
 }
 

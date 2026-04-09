@@ -126,12 +126,12 @@ export function TimerMiniBar({
 }
 
 // ─── 바텀시트 ───
-export interface TimerSheetRef {
+export type TimerSheetRef = {
   open: () => void;
   close: () => void;
 }
 
-interface TimerBottomSheetProps {
+type TimerBottomSheetProps = {
   timerResult: StepTimerResult;
   stepName: string;
 }

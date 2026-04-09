@@ -32,7 +32,7 @@ function toRecipeCards(data: any[] | undefined): RecipeCard[] {
   }));
 }
 
-interface HomeScreenProps {
+type HomeScreenProps = {
   onCreatePress?: () => void;
 }
 

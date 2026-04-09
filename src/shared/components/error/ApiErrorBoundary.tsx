@@ -2,7 +2,7 @@ import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import * as Sentry from "@sentry/react-native";
 import React from "react";
 
-interface Props {
+type Props = {
   children: React.ReactNode;
   fallbackComponent: React.ComponentType<any>;
 }

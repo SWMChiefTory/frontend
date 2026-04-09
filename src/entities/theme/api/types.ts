@@ -63,7 +63,7 @@ export type DishIngredientFocus =
 
 export type DishBudget = '가성비' | '보통' | '프리미엄';
 
-export interface DishTags {
+export type DishTags = {
   mood: DishMood[];
   difficulty: DishDifficulty;
   time: DishTime;
@@ -82,7 +82,7 @@ export interface DishTags {
 
 export type DishCategoryId = string;
 
-export interface ThemeCategory {
+export type ThemeCategory = {
   id: DishCategoryId;           // ex: "boyfriend", "girlfriend", "lunchbox"
   name: string;                 // 8자 이내 표시명. ex: "남친한테"
   emoji: string;                // ex: "💪"
@@ -92,7 +92,7 @@ export interface ThemeCategory {
 
 // ─── Dish (큐레이션 영상 단위) ───
 
-export interface ThemeDish {
+export type ThemeDish = {
   id: string;                   // 클라이언트 키 (예: "love-1")
   title: string;
   channel: string;
@@ -112,7 +112,7 @@ export interface ThemeDish {
 
 // ─── Theme ───
 
-export interface ThemeData {
+export type ThemeData = {
   id: string;
   title: string;
   subtitle: string;

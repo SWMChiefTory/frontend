@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { isAxiosError } from 'axios';
-import { client } from '@/src/shared/api';
+import { client, parseOrNull } from '@/src/shared/api';
 
 // ─── Constants ───────────────────────────────────────────────────
 export const SHARE_LIMIT = 5;
@@ -10,22 +10,19 @@ export const CREDIT_PER_SHARE = 5;
 const RawBalanceSchema = z
   .object({
     balance: z.number().nullish(),
-  })
-  .passthrough();
+  });
 
 const RawShareResponseSchema = z
   .object({
     share_count: z.number().nullish(),
-    shareCount: z.number().nullish(),
-  })
-  .passthrough();
+  });
 
 // ─── Client types ────────────────────────────────────────────────
-export interface Balance {
+export type Balance = {
   balance: number;
 }
 
-export interface RechargeResponse {
+export type RechargeResponse = {
   amount: number;
   remainingCount: number;
 }
@@ -48,12 +45,9 @@ const ERROR_CODES = {
 export async function fetchBalance(): Promise<Balance> {
   try {
     const res = await client.get('/credit/balance');
-    const parsed = RawBalanceSchema.safeParse(res.data);
-    if (!parsed.success) {
-      console.warn('[BalanceAPI] schema error:', parsed.error.issues);
-      return { balance: 0 };
-    }
-    return { balance: parsed.data.balance ?? 0 };
+    const parsed = parseOrNull(RawBalanceSchema, res.data, 'BalanceAPI');
+    if (!parsed) return { balance: 0 };
+    return { balance: parsed.balance ?? 0 };
   } catch (err: any) {
     console.warn('[BalanceAPI] fetchBalance error:', err?.response?.status, err?.message);
     return { balance: 0 };
@@ -63,12 +57,9 @@ export async function fetchBalance(): Promise<Balance> {
 export async function completeRecharge(): Promise<RechargeResponse> {
   try {
     const res = await client.post('/users/share');
-    const parsed = RawShareResponseSchema.safeParse(res.data);
-    if (!parsed.success) {
-      console.warn('[BalanceAPI] share schema error:', parsed.error.issues);
-      throw new Error('충전 응답 형식이 올바르지 않아요.');
-    }
-    const shareCount = parsed.data.share_count ?? parsed.data.shareCount ?? 0;
+    const parsed = parseOrNull(RawShareResponseSchema, res.data, 'BalanceAPI/share');
+    if (!parsed) throw new Error('충전 응답 형식이 올바르지 않아요.');
+    const shareCount = parsed.share_count ?? 0;
     return {
       amount: CREDIT_PER_SHARE,
       remainingCount: Math.max(SHARE_LIMIT - shareCount, 0),

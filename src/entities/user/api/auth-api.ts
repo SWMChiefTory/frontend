@@ -1,7 +1,7 @@
 import { client } from '@/src/shared/api';
 import type { LoginInfo, SignupData, AuthResponse, UserResponse } from './types';
 
-interface RawUserResponse {
+type RawUserResponse = {
   provider_sub: string;
   gender: any;
   nickname: string;
@@ -11,7 +11,7 @@ interface RawUserResponse {
   terms_of_use_agreed_at: string | null;
 }
 
-interface RawAuthResponse {
+type RawAuthResponse = {
   access_token: string;
   refresh_token: string;
   user_info: RawUserResponse;

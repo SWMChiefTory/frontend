@@ -9,7 +9,7 @@ import { MoodSelectorSheet, type MoodSelectorSheetRef } from '../components/mood
 import { CategorySelectorSheet, type CategorySelectorSheetRef } from '../components/category-selector-sheet';
 import { track, ThemeEvents } from '@/src/shared/analytics';
 
-interface ThemeDetailScreenProps {
+type ThemeDetailScreenProps = {
   theme: ThemeData;
 }
 

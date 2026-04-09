@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { User } from '../model/user';
 
-interface UserStore {
+type UserStore = {
   user: User | null;
   setUser: (user: User) => void;
   removeUser: () => void;

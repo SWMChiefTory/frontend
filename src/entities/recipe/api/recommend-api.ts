@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { client } from '@/src/shared/api';
+import { client, parseOrNull } from '@/src/shared/api';
 
 export enum RecommendType {
   CHEF = 'CHEF',
@@ -20,22 +20,20 @@ const RawRecommendRecipeSchema = z
     servings: z.number().nullish(),
     description: z.string().nullish(),
     credit_cost: z.number().nullish(),
-  })
-  .passthrough();
+  });
 
 const RawRecommendResponseSchema = z
   .object({
     recommend_recipes: z.array(RawRecommendRecipeSchema).default([]),
     next_cursor: z.string().nullish(),
     has_next: z.boolean().nullish(),
-  })
-  .passthrough();
+  });
 
 type RawRecommendRecipe = z.infer<typeof RawRecommendRecipeSchema>;
 
 // ─── Client type ─────────────────────────────────────────────────
 
-export interface RecommendRecipe {
+export type RecommendRecipe = {
   recipeId: string;
   recipeTitle: string;
   videoThumbnailUrl: string;
@@ -47,7 +45,7 @@ export interface RecommendRecipe {
   creditCost: number;
 }
 
-export interface RecommendRecipesPage {
+export type RecommendRecipesPage = {
   data: RecommendRecipe[];
   nextCursor: string | null;
   hasNext: boolean;
@@ -79,16 +77,13 @@ export async function fetchRecommendRecipes(
       params: { query: 'ALL' },
     });
 
-    const parsed = RawRecommendResponseSchema.safeParse(res.data);
-    if (!parsed.success) {
-      console.warn(`[RecommendAPI] schema error for ${recommendType}:`, parsed.error.issues);
-      return { data: [], nextCursor: null, hasNext: false };
-    }
+    const parsed = parseOrNull(RawRecommendResponseSchema, res.data, `RecommendAPI/${recommendType}`);
+    if (!parsed) return { data: [], nextCursor: null, hasNext: false };
 
     return {
-      data: parsed.data.recommend_recipes.map(toRecommendRecipe),
-      nextCursor: parsed.data.next_cursor ?? null,
-      hasNext: parsed.data.has_next ?? false,
+      data: parsed.recommend_recipes.map(toRecommendRecipe),
+      nextCursor: parsed.next_cursor ?? null,
+      hasNext: parsed.has_next ?? false,
     };
   } catch (err: any) {
     console.error(`[RecommendAPI] ${recommendType} error:`, err?.response?.status, err?.message);

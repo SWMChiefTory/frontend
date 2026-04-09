@@ -33,7 +33,7 @@ const ID2LABEL: Record<number, IntentLabel> = {
   6: 'GO_TO_SCENE',
 };
 
-export interface NLUResult {
+export type NLUResult = {
   intent: IntentLabel;
   confidence: number;
   allScores: Record<IntentLabel, number>;
@@ -41,7 +41,7 @@ export interface NLUResult {
 
 // ─── WordPiece Tokenizer ───
 
-interface TokenizerJSON {
+type TokenizerJSON = {
   model: {
     type: string;
     vocab: Record<string, number>;
@@ -136,7 +136,7 @@ class WordPieceTokenizer {
 let _instance: NLUInstance | null = null;
 let _loading: Promise<NLUInstance> | null = null;
 
-interface NLUInstance {
+type NLUInstance = {
   classify: (text: string) => Promise<NLUResult | null>;
   dispose: () => Promise<void>;
 }
