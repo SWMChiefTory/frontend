@@ -49,7 +49,14 @@ export async function initExpoPush({
 }
 
 export async function unregisterExpoPushOnLogout(): Promise<void> {
-  const token = getRememberedExpoPushToken();
+  let token = getRememberedExpoPushToken();
+  if (!token) {
+    try {
+      token = await getExpoPushToken();
+    } catch {
+      return;
+    }
+  }
   if (!token) {
     return;
   }

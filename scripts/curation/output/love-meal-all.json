@@ -1,0 +1,965 @@
+[
+  {
+    "category_id": "boyfriend",
+    "category_name": "남친한테",
+    "category_emoji": "💪",
+    "concept": "양 많고 든든한 한 그릇. 푸짐·고기·면·매콤·자극적. 남자친구가 환장하는 메뉴.",
+    "dishes": [
+      {
+        "title": "백종원 제육덮밥 레시피 간단한 한그릇요리 [백종원의 쿠킹로그]",
+        "channel": "백종원 PAIK JONG WON",
+        "youtube_url": "https://www.youtube.com/watch?v=R9_1v756R1I",
+        "estimated_duration": "8분",
+        "hook": "남친이 두 그릇 비워요!",
+        "why_recommended": "백종원 셰프의 검증된 레시피로, 매콤달콤한 제육덮밥은 한 끼 식사로 푸짐하고 든든합니다. 고기와 밥이 어우러져 남자친구의 입맛을 확실히 사로잡을 수 있는 대표적인 한식 메뉴입니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "맥주",
+            "소주",
+            "논알콜"
+          ],
+          "occasion": [
+            "평일저녁",
+            "주말브런치",
+            "혼밥"
+          ],
+          "style": "한식",
+          "ingredient_focus": [
+            "고기",
+            "밥"
+          ],
+          "budget": "가성비"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "평생 써먹는 차돌된장찌개 정착레시피",
+        "channel": "쿠킹하루 Cooking Haru",
+        "youtube_url": "https://www.youtube.com/watch?v=FjI1v1sP76k",
+        "estimated_duration": "8분",
+        "hook": "고깃집 된장찌개 맛 그대로!",
+        "why_recommended": "고소한 차돌박이가 듬뿍 들어가 국물 맛이 깊고 진한 된장찌개입니다. 밥과 함께 먹으면 속까지 든든해져 남자친구의 만족도가 높은 메뉴가 될 것입니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "소주",
+            "막걸리",
+            "없음"
+          ],
+          "occasion": [
+            "평일저녁",
+            "주말브런치",
+            "혼밥"
+          ],
+          "style": "한식",
+          "ingredient_focus": [
+            "고기",
+            "채소",
+            "밥"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": false
+      },
+      {
+        "title": "통삼겹 김치찜! 고기가 입에서 살살 녹는 부드러운 김치찜!",
+        "channel": "고기남자 MeatMan",
+        "youtube_url": "https://www.youtube.com/watch?v=525j2zB3B28",
+        "estimated_duration": "10분",
+        "hook": "입에서 살살 녹는 통삼겹!",
+        "why_recommended": "고기남자 채널의 시그니처답게 통삼겹살이 부드럽게 익어 김치와 환상의 조화를 이룹니다. 푸짐한 고기와 매콤한 김치의 조합은 남자친구가 감탄할 만한 든든한 한 끼를 선사합니다.",
+        "tags": {
+          "difficulty": "중급",
+          "time": "1시간이상",
+          "format": "롱폼",
+          "pairing": [
+            "소주",
+            "막걸리",
+            "맥주"
+          ],
+          "occasion": [
+            "기념일",
+            "홈파티",
+            "평일저녁",
+            "주말브런치"
+          ],
+          "style": "한식",
+          "ingredient_focus": [
+            "고기",
+            "채소"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "배떡 로제떡볶이보다 맛있는 로제떡볶이 만들기",
+        "channel": "만개의레시피",
+        "youtube_url": "https://www.youtube.com/watch?v=iYw3r9i44bE",
+        "estimated_duration": "7분",
+        "hook": "남친 입덕 보장 로제!",
+        "why_recommended": "매콤하면서도 부드러운 크림 소스가 매력적인 로제 떡볶이는 젊은 층에게 특히 인기 있는 자극적인 메뉴입니다. 트렌디하면서도 맛있는 로제 떡볶이로 남자친구의 취향을 저격할 수 있습니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "맥주",
+            "하이볼",
+            "논알콜"
+          ],
+          "occasion": [
+            "야식",
+            "평일저녁",
+            "데이트"
+          ],
+          "style": "퓨전",
+          "ingredient_focus": [
+            "떡",
+            "치즈"
+          ],
+          "budget": "가성비"
+        },
+        "is_curator_pick": false
+      },
+      {
+        "title": "10분만에 뚝딱! 이연복 셰프의 초간단 중화 비빔당면 레시피",
+        "channel": "이연복의 복주머니",
+        "youtube_url": "https://www.youtube.com/watch?v=vV1pG15X5W0",
+        "estimated_duration": "11분",
+        "hook": "이연복 셰프의 매콤 비법!",
+        "why_recommended": "이연복 셰프의 특급 비법이 담긴 중화 비빔당면은 매콤하고 자극적인 맛으로 면 요리를 좋아하는 남자친구에게 완벽합니다. 간단하지만 깊은 맛으로 특별한 한 끼를 선물할 수 있습니다.",
+        "tags": {
+          "difficulty": "중급",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "맥주",
+            "소주",
+            "하이볼"
+          ],
+          "occasion": [
+            "평일저녁",
+            "야식",
+            "혼밥"
+          ],
+          "style": "중식",
+          "ingredient_focus": [
+            "면",
+            "채소"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "진짜, 규동 : 초초간단!!! 현지 대박 전문점 레시피 공개!!!",
+        "channel": "어남선생",
+        "youtube_url": "https://www.youtube.com/watch?v=Yf_G7V6hP1U",
+        "estimated_duration": "10분",
+        "hook": "처음인데 센스 있다는 말 들음",
+        "why_recommended": "어남선생의 규동은 부드러운 소고기와 달콤 짭짤한 소스가 밥과 어우러져 한 그릇 요리로 최고입니다. 간단하면서도 깊은 맛으로 남자친구에게 든든하고 만족스러운 식사를 제공할 수 있습니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "맥주",
+            "논알콜",
+            "없음"
+          ],
+          "occasion": [
+            "평일저녁",
+            "주말브런치",
+            "혼밥"
+          ],
+          "style": "일식",
+          "ingredient_focus": [
+            "고기",
+            "밥"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      }
+    ]
+  },
+  {
+    "category_id": "girlfriend",
+    "category_name": "여친한테",
+    "category_emoji": "💖",
+    "concept": "예쁘고 사랑스러운 한 접시. 비주얼·플레이팅·달콤. 사진부터 찍게 되는 요리.",
+    "dishes": [
+      {
+        "title": "백종원 오므라이스 소스 이젠 직접 만드세요! [백종원 레시피]",
+        "channel": "백종원Paiik's Cuisine",
+        "youtube_url": "https://www.youtube.com/watch?v=F0S250Q6cO4",
+        "estimated_duration": "11분",
+        "hook": "남친이 두 그릇 비워요",
+        "why_recommended": "부드러운 달걀과 깊은 데미글라스 소스의 조화가 완벽해요. 근사한 비주얼로 특별한 날 데이트 요리로 제격입니다.",
+        "tags": {
+          "difficulty": "중급",
+          "time": "1시간이상",
+          "format": "롱폼",
+          "pairing": [
+            "논알콜",
+            "없음"
+          ],
+          "occasion": [
+            "데이트",
+            "평일저녁"
+          ],
+          "style": [
+            "퓨전"
+          ],
+          "ingredient_focus": [
+            "밥",
+            "달걀"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "햄지표 겉바속촉 프렌치토스트 만들기 / Hamzy's French Toast Recipe",
+        "channel": "햄지 (Hamzy)",
+        "youtube_url": "https://www.youtube.com/watch?v=oV85g85-b-Y",
+        "estimated_duration": "3분",
+        "hook": "여친이 사진부터 찍어요",
+        "why_recommended": "겉바속촉의 정석으로, 달콤하고 부드러운 맛이 일품입니다. 예쁜 플레이팅으로 브런치 분위기를 한껏 낼 수 있어요.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "10분",
+          "format": "롱폼",
+          "pairing": [
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "주말브런치"
+          ],
+          "style": [
+            "양식"
+          ],
+          "ingredient_focus": [
+            "빵",
+            "달걀"
+          ],
+          "budget": "가성비"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "집에서 만드는 딸기 생크림케이크 | 스트로베리 케이크 만들기",
+        "channel": "아리키친 ArisKitchen",
+        "youtube_url": "https://www.youtube.com/watch?v=k_l25h6bF9c",
+        "estimated_duration": "12분",
+        "hook": "여친 입덕 보장 디저트",
+        "why_recommended": "상큼한 딸기와 부드러운 생크림이 어우러져 달콤함의 극치를 보여줘요. 기념일에 직접 만들어주면 감동이 두 배가 될 거예요.",
+        "tags": {
+          "difficulty": "상급",
+          "time": "1시간이상",
+          "format": "롱폼",
+          "pairing": [
+            "논알콜"
+          ],
+          "occasion": [
+            "기념일",
+            "데이트"
+          ],
+          "style": [
+            "디저트"
+          ],
+          "ingredient_focus": [
+            "빵",
+            "달걀"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "트러플 파스타, 그냥 찢어버렸습니다. [승우아빠]",
+        "channel": "승우아빠",
+        "youtube_url": "https://www.youtube.com/watch?v=0w516WkR38o",
+        "estimated_duration": "12분",
+        "hook": "고급 레스토랑 분위기",
+        "why_recommended": "트러플 향이 가득한 파스타로, 집에서도 고급 레스토랑의 맛을 즐길 수 있어요. 특별한 날 와인과 함께 분위기를 내기 좋습니다.",
+        "tags": {
+          "difficulty": "중급",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "와인"
+          ],
+          "occasion": [
+            "데이트",
+            "기념일"
+          ],
+          "style": [
+            "이탈리안"
+          ],
+          "ingredient_focus": [
+            "면"
+          ],
+          "budget": "프리미엄"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "연어포케볼 레시피 : 밖에서 사먹지 마세요! 집에서 만드는 건강하고 맛있는 연어포케볼",
+        "channel": "쿠킹트리 Cooking Tree",
+        "youtube_url": "https://www.youtube.com/watch?v=vVjQv4fW-qE",
+        "estimated_duration": "9분",
+        "hook": "예쁘고 건강한 한 끼",
+        "why_recommended": "신선한 연어와 다채로운 채소의 색감이 시선을 사로잡아요. 맛과 비주얼, 건강까지 챙길 수 있는 완벽한 한 끼입니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "평일저녁",
+            "주말브런치"
+          ],
+          "style": [
+            "퓨전"
+          ],
+          "ingredient_focus": [
+            "해산물",
+            "밥",
+            "채소"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "에그인헬 | 정호영의 요리보고",
+        "channel": "정호영의 요리보고",
+        "youtube_url": "https://www.youtube.com/watch?v=H6s-3QzR0j8",
+        "estimated_duration": "12분",
+        "hook": "이국적인 브런치",
+        "why_recommended": "토마토 소스와 달걀, 치즈가 어우러져 풍부한 맛을 선사해요. 빵과 함께 곁들이면 든든하고 이국적인 브런치를 즐길 수 있습니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "와인",
+            "맥주"
+          ],
+          "occasion": [
+            "데이트",
+            "주말브런치",
+            "평일저녁"
+          ],
+          "style": [
+            "퓨전"
+          ],
+          "ingredient_focus": [
+            "달걀",
+            "채소"
+          ],
+          "budget": "가성비"
+        },
+        "is_curator_pick": true
+      }
+    ]
+  },
+  {
+    "category_id": "first-date",
+    "category_name": "처음 한끼",
+    "category_emoji": "✨",
+    "concept": "썸타는 사람한테 처음 해주는 한 끼. 30분 이내, 재료 5개 이하, 실패 거의 없음, 적당히 예쁨, 부담 없음.",
+    "dishes": [
+      {
+        "title": "알리오올리오 진작 이렇게 만들걸!!오일파스타 초간단레시피.",
+        "channel": "김주부일상",
+        "youtube_url": "https://www.youtube.com/watch?v=Jm03VlY4K4Y",
+        "estimated_duration": "8분",
+        "hook": "남친이 두 그릇 비워요",
+        "why_recommended": "초보도 실패 없이 만들 수 있는 알리오올리오 레시피로, 면에 소스가 잘 감기게 하는 유화 꿀팁까지 알려줘서 처음인데도 레스토랑 퀄리티를 낼 수 있습니다. 재료도 마늘, 페페론치노, 파스타면, 올리브 오일 등 5가지 이내로 간단합니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "10분",
+          "format": "롱폼",
+          "pairing": [
+            "와인",
+            "맥주"
+          ],
+          "occasion": [
+            "데이트",
+            "평일저녁"
+          ],
+          "style": [
+            "이탈리안"
+          ],
+          "ingredient_focus": [
+            "면"
+          ],
+          "budget": "가성비"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "10분 완성! 친구들이 극찬한 명란파스타 레시피! 이것만 꼭 보세요! #명란파스타 #파스타레시피 #pasta",
+        "channel": "손송키",
+        "youtube_url": "https://www.youtube.com/watch?v=d_2yR1W2f5Y",
+        "estimated_duration": "5분",
+        "hook": "여친 입덕 보장",
+        "why_recommended": "10분 만에 완성되는 초간단 명란 파스타로, 명란젓만 있으면 특별한 재료 없이도 만들 수 있어 요리 초보도 쉽게 도전할 수 있습니다. 비린 맛 없이 고소하고 맛있어 센스 있는 첫 요리로 제격입니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "10분",
+          "format": "롱폼",
+          "pairing": [
+            "와인",
+            "맥주",
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "평일저녁"
+          ],
+          "style": [
+            "퓨전"
+          ],
+          "ingredient_focus": [
+            "해산물",
+            "면"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "Super simple! Caprese salad that's ready with just a quick slice! Try making it like this!",
+        "channel": "샘플 간편식당",
+        "youtube_url": "https://www.youtube.com/watch?v=rKj-o9l1K6s",
+        "estimated_duration": "3분",
+        "hook": "5재료로 분위기 잡기",
+        "why_recommended": "불 없이 자르기만 하면 완성되는 초간단 카프레제 샐러드로, 토마토, 생모짜렐라, 바질, 올리브유, 소금 등 5가지 재료로 근사하고 예쁜 플레이팅을 연출할 수 있습니다. 와인과 곁들이기 좋은 부담 없는 메뉴입니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "10분",
+          "format": "숏폼",
+          "pairing": [
+            "와인",
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "기념일",
+            "홈파티"
+          ],
+          "style": [
+            "이탈리안",
+            "퓨전"
+          ],
+          "ingredient_focus": [
+            "채소",
+            "치즈"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "우아한 브런치메뉴 아보카도 새우 오픈샌드위치 오픈 토스트",
+        "channel": "요리다락방",
+        "youtube_url": "https://www.youtube.com/watch?v=1F5S8iLhY3w",
+        "estimated_duration": "5분",
+        "hook": "카페 분위기 그대로",
+        "why_recommended": "간단하게 재료만 올려도 카페에서 사 먹는 듯한 비주얼과 맛을 낼 수 있는 새우 아보카도 토스트입니다. 신선한 재료들로 가볍고 우아한 브런치 분위기를 연출하기 좋습니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "10분",
+          "format": "롱폼",
+          "pairing": [
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "주말브런치"
+          ],
+          "style": [
+            "퓨전"
+          ],
+          "ingredient_focus": [
+            "해산물",
+            "빵",
+            "채소"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": false
+      },
+      {
+        "title": "A very normal cooking tip that comes up once in a while.",
+        "channel": "승우아빠",
+        "youtube_url": "https://www.youtube.com/watch?v=i9S16h1pP5Y",
+        "estimated_duration": "14분",
+        "hook": "승우아빠도 인정한 맛",
+        "why_recommended": "승우아빠 채널에서 소개된 브루스케타는 간단하면서도 근사한 홈파티 요리로, 바게트 빵 위에 신선한 재료를 얹기만 하면 되어 실패 확률이 적습니다. 짧은 시간에 예쁜 플레이팅을 완성할 수 있어 첫 요리로 인상 깊은 메뉴입니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "와인",
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "홈파티"
+          ],
+          "style": [
+            "이탈리안"
+          ],
+          "ingredient_focus": [
+            "빵",
+            "채소"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "[1분영상] 부드럽고 고소하고 상큼한 레몬크림파스타 만들기 - 만개의레시피",
+        "channel": "만개의레시피",
+        "youtube_url": "https://www.youtube.com/watch?v=sKQ0cWVc984",
+        "estimated_duration": "1분",
+        "hook": "상큼함으로 매력 발산",
+        "why_recommended": "단 5가지 재료(레몬, 버터, 생크림, 치즈, 스파게티)로 15분 이내에 완성되는 초간단 레몬 크림 파스타입니다. 상큼하고 부드러운 맛으로 깔끔하면서도 특별한 인상을 줄 수 있어 처음 해주는 요리로 적합합니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "10분",
+          "format": "쇼츠",
+          "pairing": [
+            "와인",
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "평일저녁"
+          ],
+          "style": [
+            "이탈리안"
+          ],
+          "ingredient_focus": [
+            "면",
+            "치즈"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": false
+      }
+    ]
+  },
+  {
+    "category_id": "home-invite",
+    "category_name": "우리집 초대",
+    "category_emoji": "🍷",
+    "concept": "집에 초대해서 한 상 차리는 호스트 메뉴. 와인 페어링, 여러 접시 조합, 분위기 좋고 뽐낼 수 있는 요리.",
+    "dishes": [
+      {
+        "title": "[백종원] 감바스 알 아히요! 집에서 이태리 레스토랑 분위기 내세요! [백종원의 쿠킹로그]",
+        "channel": "백종원 PAIK JONG WON",
+        "youtube_url": "https://www.youtube.com/watch?v=sO3g0t0x_7M",
+        "estimated_duration": "8분",
+        "hook": "남친 입덕 보장! 실패 없는 감바스",
+        "why_recommended": "간단하면서도 비주얼이 뛰어나 홈파티 시작을 알리는 애피타이저로 최고입니다. 백종원 특유의 쉬운 설명으로 초보자도 근사한 와인 안주를 만들 수 있습니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "10분",
+          "format": "롱폼",
+          "pairing": [
+            "와인",
+            "맥주",
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "홈파티",
+            "평일저녁"
+          ],
+          "style": [
+            "양식",
+            "퓨전"
+          ],
+          "ingredient_focus": [
+            "해산물",
+            "달걀"
+          ],
+          "budget": "가성비"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "스테이크 완벽하게 굽는법 (집에서)",
+        "channel": "고기남자 MeatMan",
+        "youtube_url": "https://www.youtube.com/watch?v=d_k67uX677Q",
+        "estimated_duration": "11분",
+        "hook": "레스토랑 뺨치는 스테이크, 이걸로 끝!",
+        "why_recommended": "고기 남자의 전문적인 팁으로 집에서도 완벽한 스테이크를 구울 수 있어 손님들에게 깊은 인상을 남길 수 있습니다. 메인 요리로 손색없으며, 와인과의 페어링도 훌륭합니다.",
+        "tags": {
+          "difficulty": "중급",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "와인",
+            "하이볼"
+          ],
+          "occasion": [
+            "데이트",
+            "홈파티",
+            "기념일"
+          ],
+          "style": [
+            "양식"
+          ],
+          "ingredient_focus": [
+            "고기"
+          ],
+          "budget": "프리미엄"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "🌟밀푀유나베는 이렇게 만드세요! 집들이, 손님초대요리 이걸로 끝! [만개의레시피]",
+        "channel": "만개의레시피",
+        "youtube_url": "https://www.youtube.com/watch?v=FjI5jY1WfA0",
+        "estimated_duration": "6분",
+        "hook": "비주얼 끝판왕! 끓이면서 즐기는 요리",
+        "why_recommended": "화려한 비주얼로 테이블을 풍성하게 만들어주며, 따뜻한 국물 요리로 여럿이 함께 즐기기 좋습니다. 복잡해 보이지만 생각보다 간단하게 만들 수 있어 호스트의 센스를 뽐내기 좋습니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "소주",
+            "막걸리",
+            "논알콜"
+          ],
+          "occasion": [
+            "홈파티",
+            "집들이",
+            "평일저녁"
+          ],
+          "style": [
+            "한식",
+            "퓨전"
+          ],
+          "ingredient_focus": [
+            "고기",
+            "채소"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "류수영 '감자뇨끼' 으깨고 섞으면 끝! 바삭 쫄깃한 감자뇨끼 레시피 [편스토랑/Stars' Top Recipe at Fun-Staurant]",
+        "channel": "KBS Entertain",
+        "youtube_url": "https://www.youtube.com/watch?v=0wQn6cQyR2Y",
+        "estimated_duration": "10분",
+        "hook": "어남선생표, 뇨끼로 고급진 홈파티",
+        "why_recommended": "류수영 셰프의 감자 뇨끼는 이탈리안 레스토랑에서 맛볼 법한 고급스러운 메뉴로, 손님들에게 특별한 경험을 선사합니다. 와인과도 잘 어울려 분위기 있는 식사를 완성할 수 있습니다.",
+        "tags": {
+          "difficulty": "중급",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "와인"
+          ],
+          "occasion": [
+            "데이트",
+            "홈파티",
+            "기념일"
+          ],
+          "style": [
+            "이탈리안"
+          ],
+          "ingredient_focus": [
+            "채소",
+            "치즈"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": false
+      },
+      {
+        "title": "[백종원] 찹스테이크! 비싸게 사먹지 말고 집에서 푸짐하게 만들어 먹어요! [백종원의 쿠킹로그]",
+        "channel": "백종원 PAIK JONG WON",
+        "youtube_url": "https://www.youtube.com/watch?v=LqWdYhY0r_g",
+        "estimated_duration": "9분",
+        "hook": "뚝딱 만들고 칭찬받는 파티 메인",
+        "why_recommended": "화려한 비주얼과 풍성한 맛으로 홈파티 메인 요리로 제격입니다. 백종원 셰프의 쉽고 따라 하기 좋은 레시피로 요리 초보도 근사한 찹스테이크를 만들 수 있습니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "와인",
+            "맥주",
+            "하이볼"
+          ],
+          "occasion": [
+            "홈파티",
+            "평일저녁",
+            "기념일"
+          ],
+          "style": [
+            "양식",
+            "퓨전"
+          ],
+          "ingredient_focus": [
+            "고기",
+            "채소"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": false
+      },
+      {
+        "title": "손님초대요리, 홈파티에 딱! 닭가슴살 샐러드 (집에서 만드는 레스토랑 샐러드) [승우아빠]",
+        "channel": "승우아빠",
+        "youtube_url": "https://www.youtube.com/watch?v=uK1X_v-mXk0",
+        "estimated_duration": "13분",
+        "hook": "메인 요리 돋보이게 하는 특급 샐러드",
+        "why_recommended": "메인 요리들과 잘 어울리는 상큼하고 고급스러운 샐러드로, 홈파티 식탁의 균형을 잡아줍니다. 승우아빠의 센스 있는 드레싱과 재료 조합으로 평범한 샐러드도 특별하게 변신합니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "와인",
+            "논알콜"
+          ],
+          "occasion": [
+            "홈파티",
+            "주말브런치",
+            "평일저녁"
+          ],
+          "style": [
+            "양식",
+            "퓨전"
+          ],
+          "ingredient_focus": [
+            "채소",
+            "고기"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": false
+      }
+    ]
+  },
+  {
+    "category_id": "cook-together",
+    "category_name": "같이 만들기",
+    "category_emoji": "👫",
+    "concept": "둘이 함께 손이 많이 가는 메뉴. 재료 분담, 만드는 과정 자체가 데이트. 추억이 남는 요리.",
+    "dishes": [
+      {
+        "title": "백종원 김밥 꿀팁! 김밥은 이렇게 해야 맛있는 겁니다! (feat.백종원김밥)",
+        "channel": "백종원",
+        "youtube_url": "https://www.youtube.com/watch?v=R9_1q_hM_6k",
+        "estimated_duration": "11분",
+        "hook": "김밥은 같이 빚어야 제맛!",
+        "why_recommended": "다양한 재료 준비와 김밥 마는 과정에서 자연스럽게 역할을 분담하며 즐거운 시간을 보낼 수 있습니다. 완성된 김밥을 함께 맛보며 성취감을 나누기에도 좋습니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "1시간이상",
+          "format": "롱폼",
+          "pairing": [
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "평일저녁"
+          ],
+          "style": [
+            "한식"
+          ],
+          "ingredient_focus": [
+            "밥",
+            "채소"
+          ],
+          "budget": "가성비"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "만두는 이렇게 만들어야 맛있는 겁니다! 백종원 만두 레시피 (feat.만두속)",
+        "channel": "백종원",
+        "youtube_url": "https://www.youtube.com/watch?v=r08QoK6L3oM",
+        "estimated_duration": "16분",
+        "hook": "둘이 빚으면 더 맛있어요!",
+        "why_recommended": "만두소를 만들고 만두피에 속을 채워 빚는 과정 자체가 협동심을 기르고 추억을 만들기에 더없이 좋습니다. 함께 만든 만두를 쪄 먹으며 따뜻한 시간을 보낼 수 있습니다.",
+        "tags": {
+          "difficulty": "중급",
+          "time": "1시간이상",
+          "format": "롱폼",
+          "pairing": [
+            "막걸리",
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "주말브런치",
+            "평일저녁"
+          ],
+          "style": [
+            "한식"
+          ],
+          "ingredient_focus": [
+            "고기",
+            "채소"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "수제버거, 집에서 만들면 이런게 가능합니다! (feat.치즈버거) - 승우아빠",
+        "channel": "승우아빠",
+        "youtube_url": "https://www.youtube.com/watch?v=3-M1x-a-v5E",
+        "estimated_duration": "13분",
+        "hook": "이색 데이트 요리 끝판왕!",
+        "why_recommended": "패티부터 굽고 재료를 쌓아 올리는 과정이 마치 퍼즐 맞추기 같아 둘이 함께 만들기 좋습니다. 각자의 취향대로 버거를 조합하며 재미를 더할 수 있습니다.",
+        "tags": {
+          "difficulty": "중급",
+          "time": "1시간이상",
+          "format": "롱폼",
+          "pairing": [
+            "맥주",
+            "하이볼"
+          ],
+          "occasion": [
+            "데이트",
+            "주말브런치",
+            "홈파티"
+          ],
+          "style": [
+            "양식"
+          ],
+          "ingredient_focus": [
+            "고기",
+            "빵",
+            "치즈"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "밀푀유나베 황금레시피 (feat.알고보면 간단한 요리, 밀푀유나베 만드는법)",
+        "channel": "꿀키honeykki",
+        "youtube_url": "https://www.youtube.com/watch?v=8lJd49-V7f4",
+        "estimated_duration": "5분",
+        "hook": "비주얼 끝판왕, 추억 덤!",
+        "why_recommended": "재료를 겹겹이 쌓는 과정이 시각적으로 즐거워 함께 만들며 사진을 남기기 좋습니다. 복잡해 보이지만 생각보다 간단하여 요리 초보 커플도 쉽게 도전할 수 있습니다.",
+        "tags": {
+          "difficulty": "초보",
+          "time": "30분",
+          "format": "롱폼",
+          "pairing": [
+            "와인",
+            "소주",
+            "맥주",
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "기념일",
+            "홈파티",
+            "평일저녁"
+          ],
+          "style": [
+            "퓨전"
+          ],
+          "ingredient_focus": [
+            "채소",
+            "고기"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "심플한데 완벽한 떡갈비 레시피! ★어남선생 류수영의 떡갈비★ [신상출시 편스토랑/Stars Top Recipe at Fun-Staurant] | KBS 220311 방송",
+        "channel": "KBS Entertain",
+        "youtube_url": "https://www.youtube.com/watch?v=B9J-P1y_Q4w",
+        "estimated_duration": "10분",
+        "hook": "정성 담아 사랑 더하기!",
+        "why_recommended": "고기를 치대고 모양을 잡는 과정에서 서로의 손길이 닿으며 애정을 표현하기 좋습니다. 손이 많이 가는 만큼 완성 후의 만족감이 커 함께 만든 추억을 더욱 소중하게 만듭니다.",
+        "tags": {
+          "difficulty": "중급",
+          "time": "1시간이상",
+          "format": "롱폼",
+          "pairing": [
+            "와인",
+            "소주",
+            "맥주"
+          ],
+          "occasion": [
+            "데이트",
+            "기념일",
+            "평일저녁"
+          ],
+          "style": [
+            "한식"
+          ],
+          "ingredient_focus": [
+            "고기"
+          ],
+          "budget": "보통"
+        },
+        "is_curator_pick": true
+      },
+      {
+        "title": "이연복 셰프가 알려주는 '딤섬' 레시피",
+        "channel": "올리브 Olive",
+        "youtube_url": "https://www.youtube.com/watch?v=3gXG_uH0vK0",
+        "estimated_duration": "5분",
+        "hook": "함께 빚는 아시아의 맛!",
+        "why_recommended": "딤섬은 피를 빚고 속을 넣어 모양을 만드는 섬세한 작업이 필요해 둘이 함께 집중하며 특별한 경험을 할 수 있습니다. 완성된 딤섬을 찜기에 쪄내며 이국적인 분위기를 즐기기 좋습니다.",
+        "tags": {
+          "difficulty": "상급",
+          "time": "1시간이상",
+          "format": "롱폼",
+          "pairing": [
+            "맥주",
+            "와인",
+            "논알콜"
+          ],
+          "occasion": [
+            "데이트",
+            "홈파티",
+            "기념일"
+          ],
+          "style": [
+            "중식"
+          ],
+          "ingredient_focus": [
+            "고기",
+            "해산물",
+            "면"
+          ],
+          "budget": "프리미엄"
+        },
+        "is_curator_pick": false
+      }
+    ]
+  }
+]

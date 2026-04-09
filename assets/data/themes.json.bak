@@ -1,0 +1,2761 @@
+{
+  "themes": [
+    {
+      "id": "love-meal",
+      "title": "사랑 한 끼",
+      "subtitle": "연인과의 특별한 한 끼를 위한 큐레이션",
+      "color": "#F5D5D5",
+      "mode": "light",
+      "curator_quote": "처음 만드는 데이트 요리부터 기념일까지, 분위기 따라 골라보세요.",
+      "dishes": [
+        {
+          "id": "love-1",
+          "title": "평생 써먹는 스테이크 굽는 법",
+          "channel": "고기남자",
+          "youtube_url": "https://www.youtube.com/watch?v=sWN2dxP4Vtw",
+          "estimated_duration": "9분",
+          "is_curator_pick": true,
+          "tags": {
+            "mood": [
+              "홈데이트",
+              "오늘 너랑"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "와인",
+              "맥주"
+            ],
+            "occasion": [
+              "기념일",
+              "데이트"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "기념일의 상징과도 같은 스테이크를 실패 없이 굽는 핵심 비법을 전수합니다. 육즙을 가두는 완벽한 시어링 기법으로 연인에게 감동을 선사할 수 있습니다.",
+          "hook": "처음 굽는 한 점이 단골이 되는 순간"
+        },
+        {
+          "id": "love-2",
+          "title": "👍200만💕 스테이크! 이렇게 구우면 레스토랑 안 가도 됩니다!!!",
+          "channel": "정호영의 오늘도 요리 Kitchen Caden",
+          "youtube_url": "https://www.youtube.com/watch?v=VJvR7ZcW36M",
+          "estimated_duration": "10분",
+          "is_curator_pick": true,
+          "tags": {
+            "mood": [
+              "노을 시간",
+              "홈데이트"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "와인"
+            ],
+            "occasion": [
+              "기념일",
+              "홈파티"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "정호영 셰프가 알려주는 레스토랑 퀄리티의 스테이크 굽기입니다. 집에서도 근사한 분위기를 내며 특별한 날을 기념하기에 최적입니다.",
+          "hook": "레스토랑 향기, 우리 집 식탁 위로"
+        },
+        {
+          "id": "love-3",
+          "title": "👍800만💕 기름이 펄펄 끓을 때 물을 넣어주세요 (감바스)",
+          "channel": "정호영의 오늘도 요리 Kitchen Caden",
+          "youtube_url": "https://www.youtube.com/watch?v=gctwUpNhPrY",
+          "estimated_duration": "56초",
+          "is_curator_pick": true,
+          "tags": {
+            "mood": [
+              "와인 한 잔"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "와인",
+              "맥주",
+              "하이볼"
+            ],
+            "occasion": [
+              "홈파티",
+              "야식"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "해산물"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "비주얼 대비 난이도가 매우 낮아 요리 초보자도 쉽게 성공할 수 있습니다. 빵을 곁들여 와인 한 잔과 함께 즐기면 로맨틱한 야식 타임이 완성됩니다.",
+          "hook": "기름이 끓는 만큼 분위기도 끓는다"
+        },
+        {
+          "id": "love-4",
+          "title": "원팬 알리오올리오 파스타",
+          "channel": "아들의추천",
+          "youtube_url": "https://www.youtube.com/watch?v=rFAnlXueVRs",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "노을 시간",
+              "주말 브런치"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "와인"
+            ],
+            "occasion": [
+              "주말브런치",
+              "평일저녁"
+            ],
+            "style": [
+              "이탈리안"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "팬 하나로 끝내는 초간단 파스타로 설거지 부담 없이 사랑하는 사람과 시간을 더 보낼 수 있습니다. 마늘 향 가득한 풍미가 일품입니다.",
+          "hook": "팬 하나, 마늘 향, 그리고 너"
+        },
+        {
+          "id": "love-5",
+          "title": "박수갈채받는 집들이 메뉴! 와인안주",
+          "channel": "푸디젠 Foodie Jen",
+          "youtube_url": "https://www.youtube.com/watch?v=ZiagxDJqOwU",
+          "estimated_duration": "46초",
+          "tags": {
+            "mood": [
+              "홈데이트",
+              "기념일 저녁"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "와인",
+              "논알콜"
+            ],
+            "occasion": [
+              "데이트",
+              "기념일"
+            ],
+            "style": [
+              "양식",
+              "디저트"
+            ],
+            "ingredient_focus": [
+              "채소",
+              "치즈"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "에피타이저로 손색없는 비주얼 깡패 레시피입니다. 예쁜 플레이팅으로 식사 시작 전부터 기분을 설레게 만들어줍니다.",
+          "hook": "와인을 따르는 순간 박수가 따라온다"
+        },
+        {
+          "id": "love-6",
+          "title": "누구나 만들 수 있는 원팬크림파스타",
+          "channel": "살림팝",
+          "youtube_url": "https://www.youtube.com/watch?v=pbgZbPbcPLo",
+          "estimated_duration": "51초",
+          "tags": {
+            "mood": [
+              "노을 시간",
+              "오늘 너랑"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "와인",
+              "논알콜"
+            ],
+            "occasion": [
+              "평일저녁",
+              "주말브런치"
+            ],
+            "style": [
+              "이탈리안"
+            ],
+            "ingredient_focus": [
+              "면",
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "고소한 크림 풍미가 가득해 아이부터 어른까지 가족 모두가 좋아할 맛입니다. 간단한 재료로 정성 가득한 느낌을 줄 수 있습니다.",
+          "hook": "한 입은 부드럽게, 두 입은 사르르"
+        },
+        {
+          "id": "love-7",
+          "title": "홈파티 요리, 손님초대요리 메뉴",
+          "channel": "정미야밥먹자 jungmi Kitchen",
+          "youtube_url": "https://www.youtube.com/watch?v=4ENI1QmguSQ",
+          "estimated_duration": "12분",
+          "tags": {
+            "mood": [
+              "기념일 저녁",
+              "주말 브런치"
+            ],
+            "difficulty": "중급",
+            "time": "1시간이상",
+            "format": "롱폼",
+            "pairing": [
+              "소주",
+              "맥주",
+              "하이볼"
+            ],
+            "occasion": [
+              "홈파티",
+              "기념일"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "고기",
+              "채소"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "여러 가지 요리를 동시에 준비하는 팁을 배울 수 있어 가족 파티 준비에 유용합니다. 비주얼과 맛 모두 챙긴 정성 한 끼를 완성해보세요.",
+          "hook": "정성 한 상, 사진보다 맛으로 남기다"
+        },
+        {
+          "id": "love-8",
+          "title": "집들이 음식 이걸로 끝냈습니다",
+          "channel": "요새끼",
+          "youtube_url": "https://www.youtube.com/watch?v=xR4sOQIzom4",
+          "estimated_duration": "40초",
+          "tags": {
+            "mood": [
+              "오늘 너랑"
+            ],
+            "difficulty": "중급",
+            "time": "1시간이상",
+            "format": "쇼츠",
+            "pairing": [
+              "소주",
+              "막걸리"
+            ],
+            "occasion": [
+              "홈파티",
+              "주말브런치"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "한국인이라면 누구나 사랑하는 수육 레시피로 부모님이나 가족을 위한 보양 한 끼로 추천합니다. 냄비를 활용한 쉬운 조리법이 장점입니다.",
+          "hook": "푹 삶아낸 다정함, 한 점이면 충분해"
+        },
+        {
+          "id": "love-9",
+          "title": "내가 만든 감바스가 세계 최강인 이유",
+          "channel": "1분요리 뚝딱이형",
+          "youtube_url": "https://www.youtube.com/watch?v=FJzO2BrhWKk",
+          "estimated_duration": "49초",
+          "tags": {
+            "mood": [
+              "와인 한 잔"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주",
+              "와인"
+            ],
+            "occasion": [
+              "야식",
+              "데이트"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "해산물"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "실패 없는 '뚝딱이형' 레시피로 짧은 시간 안에 강력한 맛을 보장합니다. 연인과 가볍게 술 한잔 곁들이고 싶을 때 최고의 안주가 됩니다.",
+          "hook": "1분이면 충분한, 우리만의 야식"
+        },
+        {
+          "id": "love-10",
+          "title": "집들이 메뉴 고민 끝! 홈파티 BEST 메뉴 5가지",
+          "channel": "나타샤블루 Natashablue",
+          "youtube_url": "https://www.youtube.com/watch?v=ASjpn6t2x8Y",
+          "estimated_duration": "14분",
+          "tags": {
+            "mood": [
+              "노을 시간",
+              "홈데이트"
+            ],
+            "difficulty": "중급",
+            "time": "1시간이상",
+            "format": "롱폼",
+            "pairing": [
+              "와인",
+              "하이볼"
+            ],
+            "occasion": [
+              "홈파티",
+              "기념일"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "고기",
+              "면"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "호불호 없는 홈파티 인기 메뉴들을 한 번에 배울 수 있습니다. 체계적인 준비 과정을 통해 서툴지 않게 완벽한 한 끼를 대접할 수 있습니다.",
+          "hook": "고민하지 마요, 다섯 가지면 끝나니까"
+        },
+        {
+          "id": "love-11",
+          "title": "어남선생 류수영 원팬 크림 파스타",
+          "channel": "87아빠",
+          "youtube_url": "https://www.youtube.com/watch?v=s8p9dcp9du8",
+          "estimated_duration": "21초",
+          "tags": {
+            "mood": [
+              "주말 브런치",
+              "노을 시간"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "혼밥",
+              "주말브런치"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "면",
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "검증된 '어남선생' 레시피를 핵심만 요약했습니다. 부드러운 맛이 일품이라 주말 아침 가족을 위한 메뉴로 안성맞춤입니다.",
+          "hook": "21초 만에 외워지는 인생 파스타"
+        },
+        {
+          "id": "love-12",
+          "title": "연말·크리스마스에 딱 좋은 홈파티 요리 12가지",
+          "channel": "찹찹키친 ChopChop Kitchen",
+          "youtube_url": "https://www.youtube.com/watch?v=d8SWYTGANDU",
+          "estimated_duration": "23분",
+          "tags": {
+            "mood": [
+              "기념일 저녁",
+              "와인 한 잔"
+            ],
+            "difficulty": "상급",
+            "time": "1시간이상",
+            "format": "롱폼",
+            "pairing": [
+              "와인",
+              "맥주"
+            ],
+            "occasion": [
+              "기념일",
+              "홈파티"
+            ],
+            "style": [
+              "양식",
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "고기",
+              "채소"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "고급스러운 닭다리살 스테이크부터 다양한 메뉴를 다룹니다. 특별한 기념일에 연인을 위해 실력을 발휘하고 싶을 때 최고의 교과서가 됩니다.",
+          "hook": "올해 그 사람에게 건네는 열두 가지 약속"
+        },
+        {
+          "id": "love-13",
+          "title": "집에 파스타면이 있다면 꼭 보세요",
+          "channel": "자취요리신 simple cooking",
+          "youtube_url": "https://www.youtube.com/watch?v=lKoeEYCOHeM",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "와인 한 잔",
+              "오늘 너랑"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "혼밥",
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "익숙한 파스타를 색다르게 변주하는 법을 알려줍니다. 바쁜 평일 저녁, 사랑하는 사람과 가볍지만 맛있는 한 끼를 나누기 좋습니다.",
+          "hook": "있는 재료로, 없던 분위기를 만든다"
+        },
+        {
+          "id": "love-14",
+          "title": "요린이도 무조건터지는 집들이메뉴 3가지",
+          "channel": "백반집첫째딸, 달별",
+          "youtube_url": "https://www.youtube.com/watch?v=jUId0H0E6Ss",
+          "estimated_duration": "36초",
+          "tags": {
+            "mood": [
+              "주말 브런치"
+            ],
+            "difficulty": "초보",
+            "time": "30분",
+            "format": "쇼츠",
+            "pairing": [
+              "하이볼",
+              "소주"
+            ],
+            "occasion": [
+              "홈파티",
+              "도시락"
+            ],
+            "style": [
+              "한식",
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "고기",
+              "밥"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "손님 초대 시 가장 반응이 좋았던 핵심 메뉴만 쏙쏙 뽑았습니다. 짧은 영상 안에 실전 꿀팁이 가득해 초보자도 고수로 거듭날 수 있습니다.",
+          "hook": "처음이라도 박수받는 그 메뉴"
+        },
+        {
+          "id": "love-15",
+          "title": "쉬운데 고급진 홈파티음식 l 생일상에도 좋아요",
+          "channel": "우아블(우아한 테이블)",
+          "youtube_url": "https://www.youtube.com/watch?v=OVToQlePJho",
+          "estimated_duration": "19분",
+          "tags": {
+            "mood": [
+              "홈데이트",
+              "노을 시간"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "와인"
+            ],
+            "occasion": [
+              "기념일",
+              "홈파티"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "채소",
+              "해산물"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "이름처럼 '우아한' 테이블 세팅과 요리를 동시에 배울 수 있습니다. 시각적인 즐거움이 큰 요리들로 특별한 감동을 전하세요.",
+          "hook": "테이블이 먼저 말을 거는 저녁"
+        },
+        {
+          "id": "love-16",
+          "title": "원팬 토마토 버터 파스타 만들기",
+          "channel": "아들의추천",
+          "youtube_url": "https://www.youtube.com/watch?v=iOYTO3qSFTk",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "주말 브런치",
+              "오늘 너랑"
+            ],
+            "difficulty": "초보",
+            "time": "30분",
+            "format": "쇼츠",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "주말브런치",
+              "도시락"
+            ],
+            "style": [
+              "이탈리안"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "버터의 풍미가 토마토 소스와 어우러져 깊은 맛을 냅니다. 누구나 좋아하는 대중적인 맛으로 가족을 위한 따뜻한 한 끼로 제격입니다.",
+          "hook": "버터가 토마토를 만나면 일이 벌어진다"
+        },
+        {
+          "id": "love-17",
+          "title": "라면만큼 쉽고 간단한 원팬 파스타",
+          "channel": "자취생 수라간",
+          "youtube_url": "https://www.youtube.com/watch?v=UKYODyk9Mqk",
+          "estimated_duration": "17초",
+          "tags": {
+            "mood": [
+              "와인 한 잔"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식",
+              "혼밥"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "면",
+              "해산물"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "매우 짧고 직관적인 설명으로 바로 따라 하기 좋습니다. 바쁜 일상 속에서도 사랑하는 사람에게 파스타 한 그릇 뚝딱 만들어주고 싶을 때 유용합니다.",
+          "hook": "라면 끓이듯 만들고 데이트처럼 먹기"
+        },
+        {
+          "id": "love-18",
+          "title": "[꿀팁] 집에서 육즙 콸콸 부드러운 '스테이크' 만들기",
+          "channel": "쿠캣매거진",
+          "youtube_url": "https://www.youtube.com/watch?v=61BwtTZbyss",
+          "estimated_duration": "4분",
+          "tags": {
+            "mood": [
+              "홈데이트",
+              "기념일 저녁"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "숏폼",
+            "pairing": [
+              "와인"
+            ],
+            "occasion": [
+              "데이트",
+              "기념일"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "초보자가 실수하기 쉬운 포인트들을 콕 짚어줍니다. 고기를 굽는 아름다운 소리와 함께 완벽한 레벨의 스테이크를 경험할 수 있습니다.",
+          "hook": "육즙이 흐르는 첫 한 점의 무게"
+        },
+        {
+          "id": "love-19",
+          "title": "컬리에서 장보고 1시간만에 뚝딱 홈파티 요리 6가지",
+          "channel": "류니키친 Ryuniii Kitchen",
+          "youtube_url": "https://www.youtube.com/watch?v=XVMjzm87grU",
+          "estimated_duration": "14분",
+          "tags": {
+            "mood": [
+              "와인 한 잔",
+              "노을 시간"
+            ],
+            "difficulty": "상급",
+            "time": "1시간이상",
+            "format": "롱폼",
+            "pairing": [
+              "와인",
+              "하이볼"
+            ],
+            "occasion": [
+              "홈파티",
+              "기념일"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "고기",
+              "치즈"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "장보기부터 조리까지 한 흐름으로 보여주어 계획적인 요리를 돕습니다. 세련된 감성의 요리들로 트렌디한 사랑 한 끼를 완성할 수 있습니다.",
+          "hook": "장보기부터 디저트까지, 한 시간의 마법"
+        },
+        {
+          "id": "love-20",
+          "title": "안성재 셰프가 알려준 이븐하게 스테이크 굽는 법",
+          "channel": "너튜브레시피",
+          "youtube_url": "https://www.youtube.com/watch?v=QVbguNmpVCw",
+          "estimated_duration": "1분 34초",
+          "tags": {
+            "mood": [
+              "와인 한 잔",
+              "홈데이트"
+            ],
+            "difficulty": "상급",
+            "time": "30분",
+            "format": "숏폼",
+            "pairing": [
+              "와인"
+            ],
+            "occasion": [
+              "기념일",
+              "데이트"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "화제의 안성재 셰프가 전수하는 스테이크 팁을 짧게 배울 수 있습니다. '이븐하게' 구워진 스테이크로 연인에게 프로 셰프의 향기를 느껴보게 하세요.",
+          "hook": "이븐하게 익힌 한 점의 자존심"
+        }
+      ]
+    },
+    {
+      "id": "butter-tteok",
+      "title": "버터떡",
+      "subtitle": "버터와 떡의 환상적인 만남",
+      "color": "#F4A261",
+      "mode": "light",
+      "curator_quote": "트렌디한 버터떡 변주를 모았어요.",
+      "dishes": [
+        {
+          "id": "butter-tteok-1",
+          "title": "가래떡 구워 먹지마세요, 옆집 할머니가 뛰어와 내 것까지 두 접시 드셨습니다",
+          "channel": "집나간아들 Runaway Son",
+          "youtube_url": "https://www.youtube.com/watch?v=gq4NxMCsjvw",
+          "estimated_duration": "2분 22초",
+          "tags": {
+            "mood": [
+              "간식 시간",
+              "한 입 쉼표"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "숏폼",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "평일저녁"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "버터와 설탕물 소스를 활용해 겉은 바삭하고 속은 촉촉한 '겉바속촉'의 정석을 보여주는 레시피입니다. 간단한 재료로 고급스러운 풍미를 낼 수 있어 평일 저녁 간식으로 안성맞춤입니다.",
+          "hook": "겉은 바삭, 속은 촉촉, 마음은 둥실"
+        },
+        {
+          "id": "butter-tteok-2",
+          "title": "에어프라이어 가래떡 구이 카라멜팝떡",
+          "channel": "원더어멈",
+          "youtube_url": "https://www.youtube.com/watch?v=nWabRTREolw",
+          "estimated_duration": "22초",
+          "tags": {
+            "mood": [
+              "오후 3시",
+              "달콤한 휴식"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "혼밥"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "에어프라이어를 이용해 손쉽게 만드는 카라멜 버터 떡 구이입니다. 영화관 팝콘 같은 달콤한 향과 쫄깃한 식감이 어우러져 오후 시간대 기분 전환용 디저트로 훌륭합니다.",
+          "hook": "에어프라이어 한 번, 영화관 한 봉지"
+        },
+        {
+          "id": "butter-tteok-3",
+          "title": "집에서 간편하고 저렴하게 맛보는 한국식 디저트! 인절미토스트 [만개의레시피]",
+          "channel": "만개의레시피 10K Recipe",
+          "youtube_url": "https://www.youtube.com/watch?v=a46DnWBVOwc",
+          "estimated_duration": "49초",
+          "tags": {
+            "mood": [
+              "홈카페",
+              "티타임"
+            ],
+            "difficulty": "중급",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "주말브런치"
+            ],
+            "style": [
+              "디저트"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "카페의 인기 메뉴인 인절미 토스트를 집에서 구현한 레시피입니다. 버터를 두른 식빵 사이에 쫄깃한 인절미가 녹아들어 따뜻한 커피나 차와 완벽한 조화를 이룹니다.",
+          "hook": "버터와 콩가루가 만나는 오후 3시"
+        },
+        {
+          "id": "butter-tteok-4",
+          "title": "앙버터 + 가래떡 = 앙버떡 만들기!#shorts",
+          "channel": "예굴몬",
+          "youtube_url": "https://www.youtube.com/watch?v=dDZvY6vRElU",
+          "estimated_duration": "50초",
+          "tags": {
+            "mood": [
+              "홈카페",
+              "달콤한 휴식"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "주말브런치"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "트렌디한 '앙버터' 조합을 빵 대신 떡으로 재해석한 기발한 레시피입니다. 차가운 무염 버터와 달콤한 팥앙금이 따끈한 가래떡과 만나 SNS 감성을 자극하는 비주얼과 맛을 선사합니다.",
+          "hook": "차가운 버터, 따끈한 떡, 그 사이 팥"
+        },
+        {
+          "id": "butter-tteok-5",
+          "title": "떡볶이 속에 빠진 콘치즈, 콘치즈떡볶이",
+          "channel": "만개의레시피 10K Recipe",
+          "youtube_url": "https://www.youtube.com/watch?v=vZJU2NFtSus",
+          "estimated_duration": "1분 31초",
+          "tags": {
+            "mood": [
+              "간식 시간",
+              "한 입 쉼표"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "숏폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "고소한 버터로 볶은 옥수수와 치즈가 매콤한 떡볶이 위에 듬뿍 올라간 레시피입니다. 단짠의 조화가 뛰어나 스트레스 풀리는 야식 메뉴로 강력 추천합니다.",
+          "hook": "매운 떡 위에 내리는 노란 눈"
+        },
+        {
+          "id": "butter-tteok-6",
+          "title": "한번 먹으면 멈출 수 없는 마약 토스트 인절미 버터 토스트 레시피",
+          "channel": "시코 키친 cico's kitchen",
+          "youtube_url": "https://www.youtube.com/watch?v=2kFD6rUhciE",
+          "estimated_duration": "4분 16초",
+          "tags": {
+            "mood": [
+              "티타임",
+              "오후 3시"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "숏폼",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "주말브런치"
+            ],
+            "style": [
+              "디저트"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "버터의 풍미를 극대화하여 구운 식빵과 고소한 인절미의 조합이 일품입니다. 상세한 설명이 포함되어 있어 홈카페 무드를 즐기고 싶은 초보자도 쉽게 따라 할 수 있습니다.",
+          "hook": "한 번 베어 물면 멈출 수 없다는 그 토스트"
+        },
+        {
+          "id": "butter-tteok-7",
+          "title": "버터로 구워서 더! 부드럽고 쫀득해서 맛있는 가래떡구이",
+          "channel": "못말리는 수호",
+          "youtube_url": "https://www.youtube.com/watch?v=aQbvmKSjROc",
+          "estimated_duration": "2분 12초",
+          "tags": {
+            "mood": [
+              "간식 시간",
+              "오후 3시"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "숏폼",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "혼밥"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "냉동실에 잠들어 있는 가래떡을 버터 하나로 환상적인 영양 간식으로 탈바꿈시킵니다. 굽는 과정이 직관적이며 아이들 간식으로도 손색이 없습니다.",
+          "hook": "버터 한 조각이 떡을 살린다"
+        },
+        {
+          "id": "butter-tteok-8",
+          "title": "인절미토스트 후라이팬으로 만드는 방법 : Injeolmi toast [밥타임]",
+          "channel": "밥타임 BobTime",
+          "youtube_url": "https://www.youtube.com/watch?v=g8zOxYrQA18",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "한 입 쉼표",
+              "홈카페"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "평일저녁"
+            ],
+            "style": [
+              "디저트"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "오븐이나 에어프라이어 없이 프라이팬만으로 버터 인절미 토스트를 만드는 실용적인 레시피입니다. 간단한 조리법 덕분에 언제든 부담 없이 즐길 수 있습니다.",
+          "hook": "오븐 없이도, 부엌이 카페가 된다"
+        },
+        {
+          "id": "butter-tteok-9",
+          "title": "넘 맛있는 인절미토스트 만들기,집에서 간식만들기",
+          "channel": "Mom,I'm hungry.엄마!배고파",
+          "youtube_url": "https://www.youtube.com/watch?v=Kc8NyXE3VfE",
+          "estimated_duration": "1분 59초",
+          "tags": {
+            "mood": [
+              "달콤한 휴식",
+              "티타임"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "숏폼",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "주말브런치"
+            ],
+            "style": [
+              "디저트"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "엄마의 마음으로 정성스럽게 담아낸 인절미 토스트 레시피입니다. 버터의 고소함과 콩가루의 고소함이 겹쳐져 남녀노소 누구나 좋아할 맛을 보장합니다.",
+          "hook": "엄마가 구워주던 그 고소함"
+        },
+        {
+          "id": "butter-tteok-10",
+          "title": "세 가지 소스로 즐기는, 팝팝 가래떡 요리",
+          "channel": "밍레시피 | 간단하고 맛있는 레시피 모음",
+          "youtube_url": "https://www.youtube.com/watch?v=Gdc_52ySfXs",
+          "estimated_duration": "14초",
+          "tags": {
+            "mood": [
+              "간식 시간",
+              "한 입 쉼표"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "하이볼"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "버터에 구운 떡을 다양한 소스에 찍어 먹는 재미가 있는 영상입니다. 짧지만 강렬한 비주얼로 간단한 야식이나 안주를 찾는 분들에게 영감을 줍니다.",
+          "hook": "한 입 떡, 세 가지 기분"
+        }
+      ]
+    },
+    {
+      "id": "bomdong",
+      "title": "봄동 비빔밥",
+      "subtitle": "제철 봄동의 신선함",
+      "color": "#52B788",
+      "mode": "light",
+      "curator_quote": "봄철 제철 재료로 차리는 한 그릇.",
+      "dishes": [
+        {
+          "id": "bomdong-1",
+          "title": "이 비빔밥이 두쫀쿠보다 요즘 유행이라면서요?",
+          "channel": "이상한 과자가게 weird sweets shop",
+          "youtube_url": "https://www.youtube.com/watch?v=YdBYVJqy4jU",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "제철 한 상",
+              "평일 저녁"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "혼밥"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "채소",
+              "밥"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "요즘 SNS에서 가장 핫한 봄동 비빔밥 트렌드를 가장 감각적이고 빠르게 보여줍니다. 복잡한 과정 없이 누구나 따라 할 수 있는 초간단 구성이 매력적입니다.",
+          "hook": "올봄, 한 그릇이 트렌드가 되다"
+        },
+        {
+          "id": "bomdong-2",
+          "title": "봄동 제발 그냥 무치지 마세요! 양념 전 '이것'하면 밥솥이 거덜나게 맛있어요 [봄동비빔밥]",
+          "channel": "딸을 위한 레시피 Recipes for daughters",
+          "youtube_url": "https://www.youtube.com/watch?v=EFgeGeZnyIs",
+          "estimated_duration": "6분",
+          "tags": {
+            "mood": [
+              "엄마 손맛",
+              "봄 한 그릇"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "평일 저녁"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "채소",
+              "밥"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "단순한 비빔밥을 넘어 깊은 맛을 내는 '한 끗' 차이 비법을 전수해줍니다. 엄마가 해주는 정성 가득한 집밥의 맛을 제대로 느낄 수 있습니다.",
+          "hook": "양념 전 한 끗으로, 밥솥이 거덜난다"
+        },
+        {
+          "id": "bomdong-3",
+          "title": "봄동겉절이 빠르고 쉽게 무치는 방법 #Shorts",
+          "channel": "신미부엌",
+          "youtube_url": "https://www.youtube.com/watch?v=JqsBejgTMOM",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "소박한 한 끼",
+              "평일 저녁"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "막걸리"
+            ],
+            "occasion": [
+              "혼밥"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "채소"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "비빔밥의 핵심인 겉절이를 가장 효율적으로 만드는 법을 보여줍니다. 퇴근 후 빠르게 한 끼 해결하고 싶은 직장인들에게 최적화된 영상입니다.",
+          "hook": "퇴근길 10분, 밥상 위의 봄"
+        },
+        {
+          "id": "bomdong-4",
+          "title": "기은세의 봄동 비빔밥 레시피 👀 | 한그릇 뚝딱",
+          "channel": "기은세의 집 Kieunse Home",
+          "youtube_url": "https://www.youtube.com/watch?v=n8CYy_Kyh9I",
+          "estimated_duration": "8분",
+          "tags": {
+            "mood": [
+              "늦은 점심",
+              "제철 한 상"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "주말브런치"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "채소",
+              "달걀"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "비주얼까지 완벽한 봄동 비빔밥을 제안하며, 여유로운 주말 점심에 어울리는 감각적인 레시피입니다. 세련된 상차림을 원하는 분들께 추천합니다.",
+          "hook": "예쁜 그릇이 더 맛있어지는 점심"
+        },
+        {
+          "id": "bomdong-5",
+          "title": "태어나서 먹어본 봄동 비빔밥 중 단연 최고네요",
+          "channel": "맛나요리",
+          "youtube_url": "https://www.youtube.com/watch?v=ZFhQAW6EPKs",
+          "estimated_duration": "9분",
+          "tags": {
+            "mood": [
+              "엄마 손맛",
+              "제철 한 상"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "평일 저녁"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "채소",
+              "밥"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "조회수로 증명된 믿고 보는 레시피로, 봄동의 아삭한 식감을 극대화하는 양념 배합이 훌륭합니다. 실패 없는 전통적인 맛을 보장합니다.",
+          "hook": "한 입에 봄, 두 입에 또 한 그릇"
+        },
+        {
+          "id": "bomdong-6",
+          "title": "평생 한가지만 먹고 살아야한다면 난 이거!! 강호동도 고기보다 맛있다는 봄동비빔밥!!",
+          "channel": "억지요리",
+          "youtube_url": "https://www.youtube.com/watch?v=X3p5RwD5yCQ",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "봄 한 그릇",
+              "소박한 한 끼"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "소주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "채소"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "강한 식욕을 자극하는 편집과 함께 봄동의 매력을 1분 안에 농축해 보여줍니다. 입맛 없는 봄철에 식욕을 돋우기에 최고의 영상입니다.",
+          "hook": "고기보다 손이 가는, 봄의 풀 한 잎"
+        },
+        {
+          "id": "bomdong-7",
+          "title": "봄동비빔밥 된장찌개",
+          "channel": "던워리비햇님",
+          "youtube_url": "https://www.youtube.com/watch?v=CJMxD3-6Z7o",
+          "estimated_duration": "10분",
+          "tags": {
+            "mood": [
+              "제철 한 상",
+              "엄마 손맛"
+            ],
+            "difficulty": "상급",
+            "time": "1시간이상",
+            "format": "롱폼",
+            "pairing": [
+              "소주"
+            ],
+            "occasion": [
+              "홈파티"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "채소",
+              "고기"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "비빔밥과 찰떡궁합인 된장찌개까지 함께 배우는 완벽한 한 상 차림 가이드입니다. 제대로 된 식사를 대접하고 싶을 때 참고하기 좋습니다.",
+          "hook": "한 상이 통째로 봄이 된다"
+        },
+        {
+          "id": "bomdong-8",
+          "title": "따끈한 밥에 쓱쓱! 초간단 봄동비빔밥",
+          "channel": "오메추 : 오늘의 메뉴를 추천합니다.",
+          "youtube_url": "https://www.youtube.com/watch?v=rzwzeIRxFkw",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "평일 저녁",
+              "소박한 한 끼"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "혼밥"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "밥"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "군더더기 없는 깔끔한 진행으로 비빔밥의 핵심 과정만 짚어줍니다. 요리 초보자가 가장 편하게 시도해볼 수 있는 가이드입니다.",
+          "hook": "이름 그대로, 망설일 새가 없다"
+        },
+        {
+          "id": "bomdong-9",
+          "title": "요즘 SNS에서💥난리난 그 레시피! 너~무 쉬운데 너무맛있다! [봄동비빔밥]",
+          "channel": "소소황 Cook & Eat",
+          "youtube_url": "https://www.youtube.com/watch?v=gqdcrYDj_b4",
+          "estimated_duration": "2분",
+          "tags": {
+            "mood": [
+              "봄 한 그릇",
+              "늦은 점심"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "숏폼",
+            "pairing": [
+              "하이볼"
+            ],
+            "occasion": [
+              "데이트"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "채소",
+              "치즈"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "2분이라는 적절한 길이 안에 팁을 꽉 채워 전달합니다. 전통 비빔밥에 지루함을 느끼는 분들을 위한 변주가 돋보입니다.",
+          "hook": "올해의 비빔밥, 2분이면 외워진다"
+        },
+        {
+          "id": "bomdong-10",
+          "title": "71년 인생 봄동무침 레시피입니다.(feat.봄동비빔밥) | 전국집밥자랑 ep.78",
+          "channel": "전국집밥자랑",
+          "youtube_url": "https://www.youtube.com/watch?v=nN1sUv8xCp8",
+          "estimated_duration": "3분",
+          "tags": {
+            "mood": [
+              "엄마 손맛",
+              "소박한 한 끼"
+            ],
+            "difficulty": "상급",
+            "time": "30분",
+            "format": "숏폼",
+            "pairing": [
+              "막걸리"
+            ],
+            "occasion": [
+              "기념일"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "채소"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "할머니의 노하우가 담긴 깊은 맛의 겉절이 비법을 배울 수 있습니다. 시간이 지나도 변치 않는 클래식한 한식의 정석을 보여줍니다.",
+          "hook": "할머니의 손맛, 한 평생의 양념"
+        },
+        {
+          "id": "bomdong-11",
+          "title": "강호동이 먹고 반한 봄동비빔밥 류수영님 레시피",
+          "channel": "중꺾레 Endless Recipe",
+          "youtube_url": "https://www.youtube.com/watch?v=hJhgfp5XMe0",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "평일 저녁",
+              "봄 한 그릇"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "혼밥"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "채소"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "유명 방송 레시피를 짧고 굵게 요약하여 실용성이 높습니다. 검증된 맛을 빠르게 재현하고 싶은 분들께 추천합니다.",
+          "hook": "검증된 한 그릇, 1분이면 충분해"
+        },
+        {
+          "id": "bomdong-12",
+          "title": "봄동비빔밥 \"이게\" 가장 중요합니다! 씹는맛 꼬소함 대박!",
+          "channel": "영자씨의 부엌Young-Ja's Kitchen",
+          "youtube_url": "https://www.youtube.com/watch?v=QDkuDmOhL9I",
+          "estimated_duration": "3분",
+          "tags": {
+            "mood": [
+              "엄마 손맛",
+              "제철 한 상"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "숏폼",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "평일 저녁"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "채소",
+              "밥"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "베테랑 요리연구가의 디테일한 설명이 곁들여져 완성도를 높여줍니다. 고소함을 살리는 특별한 팁이 일품입니다.",
+          "hook": "봄동의 진가는 양념 직전에 결정된다"
+        }
+      ]
+    },
+    {
+      "id": "night-snack",
+      "title": "밤에 땡기는",
+      "subtitle": "야식으로 딱 좋은 한 끼",
+      "color": "#6A4C93",
+      "mode": "dark",
+      "curator_quote": "오늘 밤, 천사도 악마도 만족시키는 야식 🌙 죄책감 ZERO부터 길티 플레저까지, 너의 기분 따라 골라먹자 🤍",
+      "dishes": [
+        {
+          "id": "night-snack-1",
+          "title": "라면보다 쉬운 '신라면 볶음밥' 레시피",
+          "channel": "1분요리 뚝딱이형",
+          "youtube_url": "https://www.youtube.com/watch?v=D-xN9_v_z-U",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "밥"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "SNS를 강타했던 화제의 레시피로, 컵라면 용기를 활용해 설거지 걱정 없이 비주얼까지 챙길 수 있습니다. 새벽에 짧고 굵게 자극적인 맛을 원할 때 최고의 선택입니다.",
+          "hook": "한 줄 비빔에서 한 그릇 폭격으로"
+        },
+        {
+          "id": "night-snack-2",
+          "title": "집에서 만드는 '지코바 치킨' 100% 재현",
+          "channel": "1분요리 뚝딱이형",
+          "youtube_url": "https://www.youtube.com/watch?v=F3_8fV7n_f8",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "주말 밤",
+              "혼술 한 잔"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "배달 기다리기 지친 주말 밤, 닭다리살만 있으면 15분 만에 '치밥'의 대명사 지코바 맛을 낼 수 있습니다. 쟁여둔 맥주 한 캔과 가장 잘 어울리는 메뉴입니다.",
+          "hook": "배달 기사보다 빠르게 도착하는 그 맛"
+        },
+        {
+          "id": "night-snack-3",
+          "title": "진짜 맛있는 '간장비빔국수' 만들기",
+          "channel": "박막례 할머니 Korea Grandma",
+          "youtube_url": "https://www.youtube.com/watch?v=1C7snJVZWIs",
+          "estimated_duration": "11분",
+          "tags": {
+            "mood": [
+              "퇴근길",
+              "혼자 보는 영화"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "롱폼",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "혼밥"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "고추장 베이스가 지겨울 때, 단짠단짠의 정석인 할머니표 간장 국수는 최고의 위안이 됩니다. 집에 있는 소면과 채소만으로 뚝딱 완성되어 퇴근 후 지친 몸으로도 충분히 만들 수 있습니다.",
+          "hook": "고추장에 지친 밤, 간장의 위로"
+        },
+        {
+          "id": "night-snack-4",
+          "title": "어남선생 류수영의 '만원 족발' 레시피",
+          "channel": "KBS 골든채널",
+          "youtube_url": "https://www.youtube.com/watch?v=SRLWoE9jyAs",
+          "estimated_duration": "45분",
+          "tags": {
+            "mood": [
+              "주말 밤",
+              "혼술 한 잔"
+            ],
+            "difficulty": "상급",
+            "time": "1시간이상",
+            "format": "롱폼",
+            "pairing": [
+              "소주"
+            ],
+            "occasion": [
+              "홈파티"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "저렴한 뒷다리살을 프리미엄 족발로 변신시키는 마법 같은 레시피입니다. 조리 시간은 길지만 결과물의 만족도가 압도적이라 불금이나 주말 밤 큰 마음 먹고 도전하기 좋습니다.",
+          "hook": "한 솥 가득, 한 주의 보상"
+        },
+        {
+          "id": "night-snack-5",
+          "title": "5분 완성 '참치마요덮밥' 자취생 야식",
+          "channel": "자취요리신",
+          "youtube_url": "https://www.youtube.com/watch?v=_RjLGCkkEHo",
+          "estimated_duration": "3분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "새벽 한 시"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "숏폼",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "일식"
+            ],
+            "ingredient_focus": [
+              "밥"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "편의점 삼각김밥보다 훨씬 풍성한 맛을 5분 만에 낼 수 있습니다. 설거지가 거의 나오지 않는 구성이라 새벽에 이불 속에서 넷플릭스를 보며 먹기에 최적화되어 있습니다.",
+          "hook": "이불 밖은 위험해, 5분이면 충분해"
+        },
+        {
+          "id": "night-snack-6",
+          "title": "누구나 성공하는 '백종원 옥수수전'",
+          "channel": "백종원 PAIK JONG WON",
+          "youtube_url": "https://www.youtube.com/watch?v=7u7U36G_6-0",
+          "estimated_duration": "7분",
+          "tags": {
+            "mood": [
+              "혼술 한 잔",
+              "주말 밤"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "롱폼",
+            "pairing": [
+              "하이볼"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "채소"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "옥수수 통조림 한 캔으로 만드는 톡톡 터지는 식감의 안주입니다. 연유를 뿌려 완성하는 단짠의 조화가 하이볼이나 시원한 맥주와 환상적인 궁합을 자랑합니다.",
+          "hook": "톡톡 터지는 한 입, 캔 하나의 마법"
+        },
+        {
+          "id": "night-snack-7",
+          "title": "편의점 재료로 만드는 '로제 신라면'",
+          "channel": "만개의레시피",
+          "youtube_url": "https://www.youtube.com/watch?v=9ty6zUef23o",
+          "estimated_duration": "8분",
+          "tags": {
+            "mood": [
+              "퇴근길",
+              "혼자 보는 영화"
+            ],
+            "difficulty": "중급",
+            "time": "10분",
+            "format": "롱폼",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "우유와 슬라이스 치즈만 있으면 신라면의 매운맛을 부드러운 로제 소스로 바꿀 수 있습니다. 고된 하루 끝에 나를 위한 근사한 요리를 대접하고 싶은 퇴근길에 추천합니다.",
+          "hook": "매운 하루를 부드럽게 감싸안다"
+        },
+        {
+          "id": "night-snack-8",
+          "title": "맥주 도둑 '베이컨 치즈말이' 초간단 안주",
+          "channel": "쿠캣",
+          "youtube_url": "https://www.youtube.com/watch?v=hWqnY64Fazg",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "혼술 한 잔",
+              "새벽 한 시"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "베이컨 속에 치즈를 넣고 말아 굽기만 하면 끝나는 압도적 효율의 야식입니다. 짭조름한 베이컨과 녹아내리는 치즈의 풍미가 새벽에 깨어있는 미각을 강렬하게 자극합니다.",
+          "hook": "짭조름한 한 입에 새벽이 깬다"
+        },
+        {
+          "id": "night-snack-9",
+          "title": "성시경의 '고기짬뽕' 해장 겸 야식",
+          "channel": "성시경 SUNG SI KYUNG",
+          "youtube_url": "https://www.youtube.com/watch?v=vVwBJxZC6SE",
+          "estimated_duration": "15분",
+          "tags": {
+            "mood": [
+              "혼술 한 잔",
+              "주말 밤"
+            ],
+            "difficulty": "상급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "소주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "중식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "전문점 못지않은 불맛과 진한 고기 육수를 집에서 즐길 수 있습니다. 술 한 잔 곁들이다가 출출해진 주말 밤, 요리 솜씨를 발휘해 깊은 만족감을 느끼고 싶을 때 제격입니다.",
+          "hook": "불맛이 차오르는 그 새벽"
+        },
+        {
+          "id": "night-snack-10",
+          "title": "냉동만두의 변신 '유린만두' 레시피",
+          "channel": "1분요리 뚝딱이형",
+          "youtube_url": "https://www.youtube.com/watch?v=9O-xYjZ7Uis",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "퇴근길",
+              "주말 밤"
+            ],
+            "difficulty": "중급",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "중식"
+            ],
+            "ingredient_focus": [
+              "채소"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "흔한 냉동만두에 새콤달콤한 간장 소스와 채소를 곁들여 고급 요리로 격상시켰습니다. 기름진 만두의 맛을 아삭한 고추와 양파가 잡아주어 질리지 않고 계속 들어갑니다.",
+          "hook": "냉동만두의 멱살을 잡고 끌어올리다"
+        },
+        {
+          "id": "night-snack-11",
+          "title": "집에서 굽는 '대패삼겹살 숙주볶음'",
+          "channel": "전라도언니루비씨",
+          "youtube_url": "https://www.youtube.com/watch?v=m7H0o_lH_70",
+          "estimated_duration": "6분",
+          "tags": {
+            "mood": [
+              "혼자 보는 영화",
+              "혼술 한 잔"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "하이볼"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "일식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "빨리 익는 대패삼겹살을 활용해 조리 시간을 단축하면서도 훌륭한 일품 요리를 완성합니다. 아삭한 숙주와 고기 기름의 감칠맛이 영화 한 편 보며 천천히 즐기기에 좋습니다.",
+          "hook": "1분이면 익는 안주, 두 시간 가는 영화"
+        },
+        {
+          "id": "night-snack-12",
+          "title": "라이스페이퍼로 만드는 '치즈 김부각'",
+          "channel": "쿠캣",
+          "youtube_url": "https://www.youtube.com/watch?v=S9eW6mE8U58",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "혼자 보는 영화"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "번거로운 김부각을 라이스페이퍼와 전자레인지만으로 구현한 혁신적인 방법입니다. 바삭한 소리가 일품이라 밤늦게 조용히 영화를 보며 맥주 안주로 집어먹기 딱입니다.",
+          "hook": "라이스페이퍼 한 장이 부리는 마법"
+        },
+        {
+          "id": "night-snack-13",
+          "title": "전자레인지 3분 '불닭 만두그라탕'",
+          "channel": "만개의레시피",
+          "youtube_url": "https://www.youtube.com/watch?v=PULBM6E8_GM",
+          "estimated_duration": "10분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "퇴근길"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "롱폼",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "불닭 소스의 매운맛과 만두의 육즙, 치즈의 고소함이 한 그릇에 담겼습니다. 가스불 켜기조차 귀찮은 피곤한 밤, 전자레인지 하나로 모든 욕구를 충족할 수 있는 레시피입니다.",
+          "hook": "전자레인지 3분, 위로는 30분"
+        },
+        {
+          "id": "night-snack-14",
+          "title": "바삭함의 끝판왕 '감자채전' 레시피",
+          "channel": "백종원 PAIK JONG WON",
+          "youtube_url": "https://www.youtube.com/watch?v=68E6XlS9z6U",
+          "estimated_duration": "9분",
+          "tags": {
+            "mood": [
+              "주말 밤",
+              "혼술 한 잔"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "막걸리"
+            ],
+            "occasion": [
+              "주말브런치"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "채소"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "강판에 갈 필요 없이 칼로 채만 썰어 만드는 초간편 감자전입니다. 튀기듯 구워내어 감자칩 같은 바삭함을 느낄 수 있으며, 비 오는 주말 밤 막걸리 한 잔과 찰떡궁합입니다.",
+          "hook": "비 오는 밤, 채반보다 깊은 위로"
+        },
+        {
+          "id": "night-snack-15",
+          "title": "육식맨의 '스매쉬드 치즈버거' 홈메이드",
+          "channel": "육식맨 YOOXICMAN",
+          "youtube_url": "https://www.youtube.com/watch?v=m_x99E2-O8k",
+          "estimated_duration": "14분",
+          "tags": {
+            "mood": [
+              "주말 밤",
+              "혼자 보는 영화"
+            ],
+            "difficulty": "상급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "기념일"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "패티를 팬에 꾹 눌러 마이야르 반응을 극대화한 정통 미국식 버거입니다. 육즙 가득한 패티와 녹아내린 치즈의 비주얼은 '길티 플레저' 야식의 정점을 찍어줍니다.",
+          "hook": "꾹 누른 만큼 진해지는 그 풍미"
+        },
+        {
+          "id": "night-snack-17",
+          "title": "3분 완성 '계란마요 토스트'",
+          "channel": "자취요리신",
+          "youtube_url": "https://www.youtube.com/watch?v=0kFqX_L9G7I",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "새벽 한 시"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "논알콜"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "디저트"
+            ],
+            "ingredient_focus": [
+              "달걀"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "식빵 위에 마요네즈로 벽을 쌓고 계란을 넣어 굽는 전설적인 레시피입니다. 부드럽고 고소한 맛이 새벽에 빈속을 달래주기에 좋으며 조리 과정이 매우 직관적입니다.",
+          "hook": "마요 벽 안의 노른자 호수"
+        },
+        {
+          "id": "night-snack-18",
+          "title": "남은 족발로 만드는 '불족발' 재탄생",
+          "channel": "얌무YAMM_MOO",
+          "youtube_url": "https://www.youtube.com/watch?v=y3Z-f6L1Xk8",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "퇴근길",
+              "주말 밤"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "숏폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "어제 먹고 남은 차가운 족발을 화끈한 요리로 변신시킵니다. 매운 양념이 배어들어 훨씬 쫄깃해진 식감 덕분에 새롭게 배달시킨 요리 같은 만족감을 줍니다.",
+          "hook": "어제의 족발, 오늘의 새 메뉴"
+        },
+        {
+          "id": "night-snack-19",
+          "title": "바삭하고 쫄깃한 '라이스페이퍼 떡볶이'",
+          "channel": "1분요리 뚝딱이형",
+          "youtube_url": "https://www.youtube.com/watch?v=K1t9XzPj0iE",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "혼자 보는 영화"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "라이스페이퍼를 말아 떡을 만드는 신박한 방법으로, 일반 떡보다 훨씬 쫄깃한 식감을 선사합니다. 떡이 없어도 야밤에 떡볶이를 만들어 먹을 수 있는 생존형 레시피입니다.",
+          "hook": "떡 없이 떡볶이, 밤의 생존 비법"
+        },
+        {
+          "id": "night-snack-20",
+          "title": "집에서 만드는 '훈제오리 겨자무침'",
+          "channel": "고기남자 MeatMan",
+          "youtube_url": "https://www.youtube.com/watch?v=6P6v6rP0vF8",
+          "estimated_duration": "12분",
+          "tags": {
+            "mood": [
+              "퇴근길",
+              "혼술 한 잔"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "하이볼"
+            ],
+            "occasion": [
+              "평일저녁"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "프리미엄"
+          },
+          "why_recommended": "훈제오리를 굽기만 하는 게 아니라 신선한 채소와 톡 쏘는 소스로 버무려 고급 안주로 만들었습니다. 야식이지만 건강을 조금은 챙기고 싶은 분들께 추천하는 세련된 레시피입니다.",
+          "hook": "야식인데 죄책감은 살짝 덜어"
+        },
+        {
+          "id": "night-snack-16",
+          "title": "전자레인지 2분 컷 '이찬원 간장계란밥'",
+          "channel": "오늘 뭐 먹지?",
+          "youtube_url": "https://www.youtube.com/watch?v=NlnNkD1wHuM",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "달걀"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "불도 안 켜고 전자레인지 2분이면 끝나는데 든든함은 한 그릇 가득. 새벽 1시, 이불 밖이 위험할 때 가장 빠른 위로가 되어줍니다.",
+          "hook": "몽글한 밤의 위로 한 그릇"
+        },
+        {
+          "id": "night-snack-21",
+          "title": "5분 완성 '간장버터우동' 자취 야식",
+          "channel": "간단한 맛남",
+          "youtube_url": "https://www.youtube.com/watch?v=KkSiTh7wx5M",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "일식"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "냉동 우동에 버터와 간장만 있으면 끝나는데, 후루룩 면치기 욕구까지 채워줍니다. 설거지는 팬 하나, 시간은 5분이면 충분해요.",
+          "hook": "면치기 욕구, 5분이면 끝"
+        },
+        {
+          "id": "night-snack-22",
+          "title": "백종원의 '콘치즈' 인생 안주 레시피",
+          "channel": "백종원 PAIK JONG WON",
+          "youtube_url": "https://www.youtube.com/watch?v=zS_o6psOt9g",
+          "estimated_duration": "8분",
+          "tags": {
+            "mood": [
+              "혼술 한 잔",
+              "주말 밤"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "옥수수 통조림 한 캔과 치즈만 있으면 호프집 안주가 탄생합니다. 프라이팬과 에어프라이어 두 버전을 비교해줘서 집 환경에 맞춰 도전하기 좋습니다.",
+          "hook": "옥수수 한 캔의 마법"
+        },
+        {
+          "id": "night-snack-23",
+          "title": "일주일 세 번 먹는 '버터 누룽지 치즈밥'",
+          "channel": "꾸니로그",
+          "youtube_url": "https://www.youtube.com/watch?v=5vRSQcUfAM8",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "밥"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "찬밥에 버터 한 조각과 치즈만 올려도 누룽지처럼 바삭해지는 마법 같은 레시피입니다. 자취생이 일주일에 세 번씩 찾는 데에는 다 이유가 있습니다.",
+          "hook": "바삭한 새벽, 한 그릇의 사치"
+        },
+        {
+          "id": "night-snack-24",
+          "title": "감칠맛 폭발 '새우젓 계란찜' 5분 야식",
+          "channel": "나의 작은 부엌",
+          "youtube_url": "https://www.youtube.com/watch?v=27MfMpvfAPw",
+          "estimated_duration": "3분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "달걀"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "소금 대신 새우젓 한 큰술이 감칠맛을 폭발시켜주는데, 양파와 물을 듬뿍 넣어 부피는 두 배로 커집니다. 늦은 밤 위에 부담 없는 단백질 야식이에요.",
+          "hook": "몽글한 한 숟갈, 새벽의 평화"
+        },
+        {
+          "id": "night-snack-25",
+          "title": "다이어트 중 떡볶이 땡길 때 '두부 떡볶이'",
+          "channel": "김미푸드",
+          "youtube_url": "https://www.youtube.com/watch?v=Vk73tNxwV6U",
+          "estimated_duration": "2분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "떡 대신 두부를 넣어 쫀득함은 그대로인데 칼로리는 확 낮춘 마법 같은 레시피입니다. 새벽에 떡볶이가 간절한데 살은 찌기 싫은 다이어터들에게 가장 빠른 위로가 되어줍니다.",
+          "hook": "떡 없이 떡볶이, 죄책감도 없이"
+        },
+        {
+          "id": "night-snack-26",
+          "title": "감칠맛 폭발 '곤약면 비빔국수' 다이어트 야식",
+          "channel": "또먹",
+          "youtube_url": "https://www.youtube.com/watch?v=Hi-ikD3bLKU",
+          "estimated_duration": "3분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "숏폼",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "곤약면이라 거의 0칼로리에 가까운데, 양념장이 진짜 비빔국수 뺨치게 감칠맛이 폭발합니다. 후루룩 면치기 욕구도 채우고 살도 안 찌는, 새벽 다이어터의 구원 레시피예요.",
+          "hook": "면치기 욕구, 0칼로리로"
+        },
+        {
+          "id": "night-snack-27",
+          "title": "김신영 야식 '38kg 감량' 또띠아 케사디아",
+          "channel": "초이쿡",
+          "youtube_url": "https://www.youtube.com/watch?v=CZlwG_dVGJ4",
+          "estimated_duration": "2분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "빵 대신 또띠아에 달걀과 치즈만 올려 굽는 김신영 38kg 감량 야식입니다. 피자가 먹고 싶은데 죄책감 들 때, 비주얼은 그대로지만 칼로리는 절반인 마법의 레시피예요.",
+          "hook": "피자 욕구 0칼로리로 해결"
+        },
+        {
+          "id": "night-snack-28",
+          "title": "1분다이어터 '오트밀 한 그릇' 야식",
+          "channel": "1분다이어터 1mindiet",
+          "youtube_url": "https://www.youtube.com/watch?v=rzCYWhimwNs",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "밥"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "재료 두세 개로 1분이면 끝나는데, 든든함은 한 끼 식사급입니다. 새벽 1시에 폭식으로 가는 길을 막아주는 다이어터들의 비밀 야식이에요.",
+          "hook": "1분 컷, 새벽의 안전장치"
+        },
+        {
+          "id": "night-snack-29",
+          "title": "치즈 품은 '단호박 구이' 죄책감 ZERO 야식",
+          "channel": "워킹맘의 집밥",
+          "youtube_url": "https://www.youtube.com/watch?v=LtK32RnfgDA",
+          "estimated_duration": "10분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "채소"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "단호박 한 통에 치즈만 올려 구우면 끝인데, 단짠의 황금비율로 디저트 욕구까지 채워줍니다. 자연 단맛이라 새벽에 먹어도 죄책감이 거의 없어요.",
+          "hook": "달콤한 밤, 죄책감은 사양"
+        },
+        {
+          "id": "night-snack-30",
+          "title": "건두부 올린 '마라 짜파게티' 끝판왕",
+          "channel": "모루",
+          "youtube_url": "https://www.youtube.com/watch?v=4nZSgfgACWM",
+          "estimated_duration": "2분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "그냥 짜파게티에 마라 향만 더했을 뿐인데 분식집 마라떡볶이 뺨치는 맛이 납니다. 건두부까지 올리면 식감과 풍미가 두 배가 되는 새벽의 1티어 라면 모디파이.",
+          "hook": "마라 짜파게티, 너 혹시 천사니"
+        },
+        {
+          "id": "night-snack-31",
+          "title": "백종원의 '부대찌개맛 뿌햄라면' 꿀팁",
+          "channel": "백종원 PAIK JONG WON",
+          "youtube_url": "https://www.youtube.com/watch?v=qWI4b7BL2eA",
+          "estimated_duration": "3분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "퇴근길"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "숏폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "라면에 햄을 살짝 볶아 넣는 한 끗만 더하면 부대찌개 국물 맛이 그대로 납니다. 백종원이 알려주는 가장 게으른 부대찌개 레시피예요.",
+          "hook": "햄 한 조각의 마법"
+        },
+        {
+          "id": "night-snack-32",
+          "title": "치즈 폭탄 '까르보 불닭' 분식집 맛",
+          "channel": "FFAST FOOD",
+          "youtube_url": "https://www.youtube.com/watch?v=NXNIDr_glr8",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "혼술 한 잔"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "그냥 까르보 불닭에 슬라이스 치즈 두 장만 더 얹으면 매콤한 크림 파스타가 됩니다. 매운맛 잡고 꾸덕함은 두 배라 새벽에 한 번 시작하면 멈출 수 없어요.",
+          "hook": "매콤 크리미, 멈출 수 없는 한 입"
+        },
+        {
+          "id": "night-snack-33",
+          "title": "진짜 분식집 '떡라면' 끓이는 법",
+          "channel": "한끼대첩:간단한 요리 레시피",
+          "youtube_url": "https://www.youtube.com/watch?v=T289nNqfxt4",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "롱폼",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "떡만 넣는다고 떡라면이 되는 게 아니라는 작은 비밀을 알려주는 영상입니다. 분식집 맛을 집에서 재현하고 싶을 때 한 번만 따라하면 평생 써먹는 레시피예요.",
+          "hook": "떡 한 줌, 추억의 분식집"
+        },
+        {
+          "id": "night-snack-34",
+          "title": "성시경의 '극강 치즈 라면' 꾸덕 야식",
+          "channel": "모트리",
+          "youtube_url": "https://www.youtube.com/watch?v=nS6bs5hDB50",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "혼술 한 잔",
+              "주말 밤"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "집에 있는 치즈 다 털어 넣어 끓이는 성시경표 치즈 라면입니다. 꾸덕한 국물과 깊은 풍미가 라면 한 봉지를 미슐랭 한 그릇으로 만들어줘요.",
+          "hook": "치즈 한 장으론 부족해"
+        },
+        {
+          "id": "night-snack-35",
+          "title": "편의점 끝판왕 '마크정식' 6470원 야식",
+          "channel": "헬로푸드",
+          "youtube_url": "https://www.youtube.com/watch?v=S7P7m_zcf3s",
+          "estimated_duration": "3분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "숏폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "떡"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "치즈떡볶이에 콕콕 스파게티와 핫바, 모짜렐라까지 — 6470원으로 새벽 1시에 가장 푸짐한 한 그릇이 완성됩니다. 편의점만 다녀오면 끝나는 자취 야식의 끝판왕.",
+          "hook": "편의점 한 봉지, 새벽의 사치"
+        },
+        {
+          "id": "night-snack-36",
+          "title": "겨울 필수 '오모리 김치찌개 컵라면' 꿀조합",
+          "channel": "20대 뭐 하지?",
+          "youtube_url": "https://www.youtube.com/watch?v=S7qaHSyz-kY",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "혼술 한 잔"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "소주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "오모리 김치찌개 컵라면에 어묵 튀김만 더하면 두리 김치 우동이 부럽지 않은 국물이 완성됩니다. 추운 겨울 새벽 소주 한 잔 부르는 그 맛이에요.",
+          "hook": "겨울 새벽, 그 국물 한 모금"
+        },
+        {
+          "id": "night-snack-37",
+          "title": "편의점 환상조합 '사리곰탕 만둣국' 1분 컷",
+          "channel": "라면아저씨 Ramyun Ahjussi",
+          "youtube_url": "https://www.youtube.com/watch?v=Tt9cA1Cj9hw",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "없음"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "사리곰탕 컵라면에 냉동만두 몇 알을 퐁당 빠뜨리면 든든한 만둣국이 됩니다. 새벽 1시, 가장 게으른데 가장 든든한 한 그릇.",
+          "hook": "퐁당, 그 한 알의 위로"
+        },
+        {
+          "id": "night-snack-38",
+          "title": "삼각김밥으로 '불닭 치즈 리조또' 변신",
+          "channel": "직딩쿠킹",
+          "youtube_url": "https://www.youtube.com/watch?v=bIFPlKelCtI",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "혼술 한 잔"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "불닭볶음면에 삼각김밥과 치즈만 추가하면 분식집 리조또가 완성됩니다. 편의점 두 칸이면 끝나는데 비주얼은 호프집 안주 뺨치는 야식이에요.",
+          "hook": "치즈 쭉, 새벽이 늘어진다"
+        },
+        {
+          "id": "night-snack-39",
+          "title": "참깨라면X짜파게티 '마법의 야식' 꿀조합",
+          "channel": "잇햅",
+          "youtube_url": "https://www.youtube.com/watch?v=1B7fznAgm2g",
+          "estimated_duration": "1분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "혼술 한 잔"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "쇼츠",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "면"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "참깨라면 한 봉지와 짜파게티 한 봉지만 합치면 맵고 짠 황금 비율이 완성됩니다. 두 라면이 만나서 1+1이 3이 되는 새벽의 케미.",
+          "hook": "라면 두 봉지, 황금 케미"
+        },
+        {
+          "id": "night-snack-40",
+          "title": "에어프라이어 '백종원 양념치킨' 옛날통닭",
+          "channel": "푼스",
+          "youtube_url": "https://www.youtube.com/watch?v=wjsAegsB4hg",
+          "estimated_duration": "30분",
+          "tags": {
+            "mood": [
+              "주말 밤",
+              "혼술 한 잔"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "에어프라이어 하나면 옛날통닭처럼 속은 촉촉 겉은 바삭한 양념치킨이 완성됩니다. 배달비 0원, 만족도는 두 마리 분량인 길티 플레저의 정점.",
+          "hook": "배달비 대신 마리 두 배"
+        },
+        {
+          "id": "night-snack-41",
+          "title": "백종원 닭강정 '장사천재 백사장' 레시피",
+          "channel": "스푼비 SpoonB",
+          "youtube_url": "https://www.youtube.com/watch?v=YxamhygmEKY",
+          "estimated_duration": "15분",
+          "tags": {
+            "mood": [
+              "주말 밤",
+              "혼술 한 잔"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "한식"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "장사천재 백사장에 등장한 양념치킨 소스를 그대로 따라 만드는 레시피입니다. 한 번 만들면 시판 닭강정은 못 먹는다는 그 맛.",
+          "hook": "백사장의 그 소스, 그대로"
+        },
+        {
+          "id": "night-snack-42",
+          "title": "유쿡의 홈메이드 '뿌링클 치킨' 배달비 절약",
+          "channel": "유쿡",
+          "youtube_url": "https://www.youtube.com/watch?v=kIzGCxIRR-Q",
+          "estimated_duration": "20분",
+          "tags": {
+            "mood": [
+              "주말 밤",
+              "혼술 한 잔"
+            ],
+            "difficulty": "중급",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "퓨전"
+            ],
+            "ingredient_focus": [
+              "고기"
+            ],
+            "budget": "보통"
+          },
+          "why_recommended": "21000원 배달비 아끼면서 사 먹는 그 맛 그대로를 집에서 재현합니다. 한 번 성공하면 새벽 치킨 배달은 안 시키게 되는 위험한 레시피.",
+          "hook": "배달비 21000원의 자유"
+        },
+        {
+          "id": "night-snack-43",
+          "title": "에어프라이어 15분 '또띠아 피자' 야식",
+          "channel": "인콕",
+          "youtube_url": "https://www.youtube.com/watch?v=G1icdJN9TNI",
+          "estimated_duration": "15분",
+          "tags": {
+            "mood": [
+              "이불 속",
+              "혼자 보는 영화"
+            ],
+            "difficulty": "초보",
+            "time": "30분",
+            "format": "롱폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "또띠아 한 장에 토핑만 올려 에어프라이어에 돌리면 진짜 피자집 비주얼이 나옵니다. 도우 반죽 없이도 새벽 1시에 만들 수 있는 가장 빠른 피자.",
+          "hook": "도우 없이도 진짜 피자"
+        },
+        {
+          "id": "night-snack-44",
+          "title": "염정아의 '피자토스트' 새벽 길티 야식",
+          "channel": "오오밥상",
+          "youtube_url": "https://www.youtube.com/watch?v=e3xcF4QQ9M0",
+          "estimated_duration": "5분",
+          "tags": {
+            "mood": [
+              "새벽 한 시",
+              "이불 속"
+            ],
+            "difficulty": "초보",
+            "time": "10분",
+            "format": "숏폼",
+            "pairing": [
+              "맥주"
+            ],
+            "occasion": [
+              "야식"
+            ],
+            "style": [
+              "양식"
+            ],
+            "ingredient_focus": [
+              "치즈"
+            ],
+            "budget": "가성비"
+          },
+          "why_recommended": "식빵 한 장에 피자소스와 모짜렐라만 얹어 굽는 염정아표 피자토스트입니다. 5분이면 끝나는데 비주얼은 룸메이트 몰래 먹고 싶은 길티 플레저.",
+          "hook": "은밀한 새벽의 한 입"
+        }
+      ]
+    }
+  ]
+}

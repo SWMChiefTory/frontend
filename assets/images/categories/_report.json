@@ -1,0 +1,102 @@
+[
+  {
+    "key": "love-meal:boyfriend",
+    "success": true,
+    "ok": true,
+    "score": 10,
+    "issues": [],
+    "matches_scene": true
+  },
+  {
+    "key": "love-meal:girlfriend",
+    "success": true,
+    "ok": true,
+    "score": 9,
+    "issues": [],
+    "matches_scene": true
+  },
+  {
+    "key": "love-meal:first-date",
+    "success": true,
+    "ok": true,
+    "score": 10,
+    "issues": [],
+    "matches_scene": true
+  },
+  {
+    "key": "love-meal:home-invite",
+    "success": true,
+    "ok": true,
+    "score": 10,
+    "issues": [],
+    "matches_scene": true
+  },
+  {
+    "key": "love-meal:cook-together",
+    "success": true,
+    "ok": false,
+    "score": 0,
+    "issues": [
+      "parse fail"
+    ]
+  },
+  {
+    "key": "love-meal:lunchbox",
+    "success": true,
+    "ok": true,
+    "score": 10,
+    "issues": [],
+    "matches_scene": true
+  },
+  {
+    "key": "night-snack:classic",
+    "success": true,
+    "ok": true,
+    "score": 10,
+    "issues": [],
+    "matches_scene": true
+  },
+  {
+    "key": "night-snack:quick-3",
+    "success": true,
+    "ok": false,
+    "score": 0,
+    "issues": [
+      "parse fail"
+    ]
+  },
+  {
+    "key": "night-snack:guilt-free",
+    "success": true,
+    "ok": true,
+    "score": 10,
+    "issues": [],
+    "matches_scene": true
+  },
+  {
+    "key": "night-snack:ramen-mod",
+    "success": true,
+    "ok": true,
+    "score": 10,
+    "issues": [],
+    "matches_scene": true
+  },
+  {
+    "key": "night-snack:cvs-combo",
+    "success": true,
+    "ok": false,
+    "score": 0,
+    "issues": [
+      "parse fail"
+    ]
+  },
+  {
+    "key": "night-snack:guilty",
+    "success": true,
+    "ok": false,
+    "score": 0,
+    "issues": [
+      "parse fail"
+    ]
+  }
+]

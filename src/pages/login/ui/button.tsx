@@ -4,12 +4,14 @@ import {
   responsiveHeight,
   responsiveWidth,
   responsiveFontSize,
-} from "@/src/modules/shared/utils/responsiveUI";
-import { COLORS } from "@/src/modules/shared/constants/colors";
-import { SHADOW } from "@/src/modules/shared/constants/shadow";
-import { useLoginViewModel } from "@/src/modules/user/business/service/useAuthService";
+} from "@/src/shared/utils/responsiveUI";
+import { COLORS } from "@/src/shared/constants/colors";
+import { SHADOW } from "@/src/shared/constants/shadow";
+import { useLogin, OauthProvider } from "@/src/entities/user";
+import { trackNative } from "@/src/shared/analytics";
+import { AmplitudeEvent } from "@/src/shared/analytics/amplitudeEvents";
+import { setAmplitudeUserId } from "@/src/shared/analytics/amplitude";
 import * as AppleAuthentication from "expo-apple-authentication";
-import { OauthProvider } from "@/src/modules/user/enums/OauthProvider";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { AxiosError } from "axios";
 import { create } from "zustand";
@@ -21,7 +23,7 @@ import {
 import TermsAndConditionsModalContent from "@/src/pages/login/ui/TermsAndConditionsModalContent";
 import { useEffect, useRef, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import type { Market } from "@/src/modules/shared/types/market";
+import type { Market } from "@/src/shared/types/market";
 import { getErrorMessage } from "@/src/locales/errors";
 
 GoogleSignin.configure({
@@ -82,7 +84,14 @@ export function AppleLoginButton({ market }: { market: Market }) {
 }
 
 function useLoginWithGoogle(market: Market) {
-  const { login, isLoading, error } = useLoginViewModel();
+  const { mutate: login, isPending: isLoading, error } = useLogin({
+    onSuccess: (data, variables) => {
+      setAmplitudeUserId(data.user_info.provider_sub);
+      trackNative(AmplitudeEvent.LOGIN_SUCCESS, {
+        provider: variables.provider.toLowerCase(),
+      });
+    },
+  });
   console.log("isLoading!!", isLoading);
   console.log("error!!", error);
   const { openModal } = useSignupModalStore();
@@ -171,7 +180,14 @@ function isNotUserError(error: any) {
 }
 
 function useLoginWithApple(market: Market) {
-  const { login, isLoading, error } = useLoginViewModel();
+  const { mutate: login, isPending: isLoading, error } = useLogin({
+    onSuccess: (data, variables) => {
+      setAmplitudeUserId(data.user_info.provider_sub);
+      trackNative(AmplitudeEvent.LOGIN_SUCCESS, {
+        provider: variables.provider.toLowerCase(),
+      });
+    },
+  });
   const { openModal } = useSignupModalStore();
   const [idToken, setIdToken] = useState<string | null>(null);
 

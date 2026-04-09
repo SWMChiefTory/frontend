@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
-import { useMarketStore } from "@/src/modules/shared/store/marketStore";
+import { useMarketStore } from "@/src/shared/store/marketStore";
 import { getTermsOfServiceData } from "@/src/locales/termsOfService";
 
 export default function ServiceTermsAndConditionsPage() {

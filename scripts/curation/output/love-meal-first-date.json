@@ -1,0 +1,40 @@
+{
+  "category_id": "first-date",
+  "category_name": "처음 한끼",
+  "category_emoji": "✨",
+  "concept": "썸타는 사람한테 처음 해주는 한 끼. 30분 이내, 재료 5개 이하, 실패 거의 없음, 적당히 예쁨, 부담 없음.",
+  "dishes": [
+    {
+      "title": "[1분영상] 부드럽고 고소하고 상큼한 레몬크림파스타 만들기 - 만개의레시피",
+      "channel": "만개의레시피",
+      "youtube_url": "https://www.youtube.com/watch?v=sKQ0cWVc984",
+      "estimated_duration": "1분",
+      "hook": "상큼함으로 매력 발산",
+      "why_recommended": "단 5가지 재료(레몬, 버터, 생크림, 치즈, 스파게티)로 15분 이내에 완성되는 초간단 레몬 크림 파스타입니다. 상큼하고 부드러운 맛으로 깔끔하면서도 특별한 인상을 줄 수 있어 처음 해주는 요리로 적합합니다.",
+      "tags": {
+        "difficulty": "초보",
+        "time": "10분",
+        "format": "쇼츠",
+        "pairing": [
+          "와인",
+          "논알콜"
+        ],
+        "occasion": [
+          "데이트",
+          "평일저녁"
+        ],
+        "style": [
+          "이탈리안"
+        ],
+        "ingredient_focus": [
+          "면",
+          "치즈"
+        ],
+        "budget": "보통"
+      },
+      "is_curator_pick": false,
+      "_real_title": "(한 입에 3가지 맛이!) 부드럽고 고소하고 상큼한 레몬크림파스타 만들기 레시피 1분요리│LEMON CREAM PASTA│PASTA AL LIMONE RECIPE",
+      "_real_channel": "요리스 1분요리 / 1 min LLORIS"
+    }
+  ]
+}

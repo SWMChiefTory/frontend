@@ -1,0 +1,252 @@
+{
+  "category_id": "boyfriend",
+  "category_name": "남친한테",
+  "category_emoji": "💪",
+  "concept": "양 많고 든든한 한 그릇. 푸짐·고기·면·매콤·자극적. 남자친구가 환장하는 메뉴.",
+  "dishes": [
+    {
+      "id": "love-boyfriend-1",
+      "title": "[#강식당2] 👨‍🍳백종원 레전드 레시피👨‍🍳 5분 완성 제육 어묵 덮밥!! 백종원이 전수해 준 강식당 2의 다음 신메뉴는? | #지금꼭볼동영상",
+      "channel": "디글 :Diggle",
+      "youtube_url": "https://www.youtube.com/watch?v=Jk6cKrqCB-U",
+      "thumbnail": "https://i.ytimg.com/vi/Jk6cKrqCB-U/hqdefault.jpg",
+      "estimated_duration": "디글 :Diggle",
+      "tags": {
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "소주",
+          "맥주",
+          "논알콜",
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁",
+          "주말브런치",
+          "혼밥"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "고기",
+          "밥"
+        ],
+        "budget": "가성비"
+      },
+      "hook": "남친이 환장하는 맛!",
+      "why_recommended": "백종원 제육덮밥은 한국인이 사랑하는 대표적인 든든한 한 그릇 메뉴입니다. 매콤달콤한 양념과 푸짐한 고기로 남자친구의 입맛을 확실히 사로잡을 수 있습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-boyfriend-2",
+      "title": "김치로 만들 수 있는 최고의 메뉴! 밥은 두 그릇부터 시작입니다",
+      "channel": "백종원 PAIK JONG WON",
+      "youtube_url": "https://www.youtube.com/watch?v=RVfSeUZ8XkY",
+      "thumbnail": "https://i.ytimg.com/vi/RVfSeUZ8XkY/hqdefault.jpg",
+      "estimated_duration": "14:50",
+      "tags": {
+        "difficulty": "초보",
+        "time": "1시간이상",
+        "format": "롱폼",
+        "pairing": [
+          "소주",
+          "막걸리",
+          "맥주",
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁",
+          "주말브런치",
+          "홈파티"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "고기",
+          "채소"
+        ],
+        "budget": "보통"
+      },
+      "hook": "밥 두 그릇 순삭!",
+      "why_recommended": "푹 익은 김치와 부드러운 돼지고기가 어우러진 김치찜은 한국인의 소울푸드이자 든든함의 대명사입니다. 푸짐한 양으로 남자친구의 배를 든든하게 채워줄 것입니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-boyfriend-3",
+      "title": "소고기는 맛있소 6편, 소고기 덮밥 규동 [Gyudong] | 정호영의 오늘도 요리",
+      "channel": "정호영의 오늘도 요리 Kitchen Caden",
+      "youtube_url": "https://www.youtube.com/watch?v=zXpznElExPI",
+      "thumbnail": "https://i.ytimg.com/vi/zXpznElExPI/hqdefault.jpg",
+      "estimated_duration": "정호영의 오늘도 요리 Kitchen Caden",
+      "tags": {
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "맥주",
+          "하이볼",
+          "논알콜",
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁",
+          "주말브런치",
+          "혼밥"
+        ],
+        "style": [
+          "일식"
+        ],
+        "ingredient_focus": [
+          "고기",
+          "밥"
+        ],
+        "budget": "보통"
+      },
+      "hook": "고기 가득 든든함!",
+      "why_recommended": "달콤짭짤한 양념에 부드러운 소고기가 듬뿍 올라간 규동은 한 그릇으로도 충분히 푸짐하고 만족스러운 메뉴입니다. 정호영 셰프의 레시피로 근사한 한 끼를 선물할 수 있습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-boyfriend-4",
+      "title": "[이연복] 10분이면 만드는 중화비빔당면! 간단하게 만들 수 있는 여름철 초특급 별미 레시피!",
+      "channel": "이연복의 복주머니",
+      "youtube_url": "https://www.youtube.com/watch?v=8W6ONdRUc3k",
+      "thumbnail": "https://i.ytimg.com/vi/8W6ONdRUc3k/hqdefault.jpg",
+      "estimated_duration": "8:02",
+      "tags": {
+        "difficulty": "초보",
+        "time": "10분",
+        "format": "롱폼",
+        "pairing": [
+          "맥주",
+          "소주",
+          "논알콜",
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁",
+          "야식",
+          "혼밥"
+        ],
+        "style": [
+          "중식",
+          "퓨전"
+        ],
+        "ingredient_focus": [
+          "면"
+        ],
+        "budget": "가성비"
+      },
+      "hook": "매콤하게 확 당겨!",
+      "why_recommended": "이연복 셰프의 비빔당면은 매콤하고 중독적인 맛으로 면 요리를 좋아하는 남자친구에게 완벽한 메뉴입니다. 간단하지만 깊은 맛으로 특별한 한 끼를 선사할 수 있습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-boyfriend-5",
+      "title": "더 이상의 부대찌개는 없습니다! 이걸로 끝내겠습니다",
+      "channel": "백종원 PAIK JONG WON",
+      "youtube_url": "https://www.youtube.com/watch?v=-MvfUUPB5-Y",
+      "thumbnail": "https://i.ytimg.com/vi/-MvfUUPB5-Y/hqdefault.jpg",
+      "estimated_duration": "7:25",
+      "tags": {
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "소주",
+          "맥주",
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁",
+          "홈파티",
+          "주말브런치"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "고기",
+          "면"
+        ],
+        "budget": "보통"
+      },
+      "hook": "푸짐하게 끓여봐!",
+      "why_recommended": "햄, 소시지, 김치 등 푸짐한 재료가 들어가는 백종원 부대찌개는 얼큰하고 자극적인 맛으로 든든한 식사를 보장합니다. 함께 끓여 먹으며 즐거운 시간을 보낼 수 있습니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-boyfriend-6",
+      "title": "세상 간단한 스테이크덮밥 7가지",
+      "channel": "승우아빠",
+      "youtube_url": "https://www.youtube.com/watch?v=V0mLSqv4xm4",
+      "thumbnail": "https://i.ytimg.com/vi/V0mLSqv4xm4/hqdefault.jpg",
+      "estimated_duration": "10:12",
+      "tags": {
+        "difficulty": "중급",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "와인",
+          "맥주",
+          "하이볼",
+          "없음"
+        ],
+        "occasion": [
+          "데이트",
+          "기념일",
+          "평일저녁"
+        ],
+        "style": [
+          "퓨전",
+          "일식"
+        ],
+        "ingredient_focus": [
+          "고기",
+          "밥"
+        ],
+        "budget": "프리미엄"
+      },
+      "hook": "고급진 한 그릇!",
+      "why_recommended": "승우아빠의 스테이크 덮밥은 근사하면서도 든든한 한 끼를 선사합니다. 특별한 날 남자친구에게 대접하기 좋은 고급스러운 메뉴입니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-boyfriend-7",
+      "title": "한국은 치킨만 유명한 게 아닙니다! 한국 닭요리GOAT! 닭볶음탕",
+      "channel": "백종원 PAIK JONG WON",
+      "youtube_url": "https://www.youtube.com/watch?v=eeiqjyYgPew",
+      "thumbnail": "https://i.ytimg.com/vi/eeiqjyYgPew/hqdefault.jpg",
+      "estimated_duration": "18:44",
+      "tags": {
+        "difficulty": "초보",
+        "time": "1시간이상",
+        "format": "롱폼",
+        "pairing": [
+          "소주",
+          "맥주",
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁",
+          "주말브런치",
+          "홈파티"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "고기",
+          "채소"
+        ],
+        "budget": "보통"
+      },
+      "hook": "매콤한 밥도둑!",
+      "why_recommended": "백종원 닭볶음탕은 매콤달콤한 국물과 부드러운 닭고기가 어우러져 밥도둑으로 불리는 메뉴입니다. 푸짐하고 자극적인 맛으로 남자친구의 입맛을 돋우기에 충분합니다.",
+      "is_curator_pick": true
+    }
+  ]
+}

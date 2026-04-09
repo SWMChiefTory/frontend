@@ -2,19 +2,25 @@ export default {
   expo: {
     name: "쉐프토리",
     slug: "cheftory",
-    version: "1.0.12",
+    version: "1.0.13",
     orientation: "portrait",
     icon: "./assets/images/mainCharacter.png",
     scheme: "cheftory",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     owner: "cheftory",
+    runtimeVersion: { policy: "appVersion" },
+    updates: {
+      url: "https://u.expo.dev/f02c958a-c473-4a51-829c-3ff1ad8fd256",
+      fallbackToCacheTimeout: 0,
+    },
     ios: {
-      buildNumber: "3",
+      buildNumber: "4",
       entitlements: {
         "com.apple.security.application-groups": [
           "group.com.cheftory.cheftory",
         ],
+        "aps-environment": "production",
       },
       googleServicesFile:
         process.env.GOOGLE_SERVICES_PLIST ||
@@ -58,7 +64,7 @@ export default {
       },
     },
     android: {
-      versionCode: 44,
+      versionCode: 46,
       googleServicesFile:
         process.env.GOOGLE_SERVICES_JSON || "./firebase/google-services.json",
       permissions: [
@@ -94,7 +100,6 @@ export default {
       "expo-web-browser",
       "expo-apple-authentication",
       "@react-native-google-signin/google-signin",
-      "@react-native-firebase/app",
       "./plugins/android-share",
       "./plugins/android-keystore",
       "./plugins/android-kakaotalk-queries",
@@ -107,10 +112,15 @@ export default {
             useModularHeaders: true,
             deploymentTarget: "16.1",
           },
+          android: {
+            minSdkVersion: 26,
+          },
         },
       ],
       ["expo-screen-orientation", { initialOrientation: "PORTRAIT_UP" }],
       "./plugins/app-localization",
+      "expo-speech-transcriber",
+      "onnxruntime-react-native",
     ],
     experiments: {
       typedRoutes: true,

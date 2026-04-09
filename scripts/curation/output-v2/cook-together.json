@@ -1,0 +1,218 @@
+{
+  "category_id": "cook-together",
+  "category_name": "같이 만들기",
+  "category_emoji": "👫",
+  "concept": "둘이 함께 손이 많이 가는 메뉴. 재료 분담, 만드는 과정 자체가 데이트.",
+  "dishes": [
+    {
+      "id": "love-cook-together-1",
+      "title": "고기만두!! 비법이 들어 있습니다. 가족과 함께 집에서 만들어 보세요!!  ㅣ 백종원의 쿠킹로그",
+      "channel": "백종원 PAIK JONG WON",
+      "youtube_url": "https://www.youtube.com/watch?v=SZp5fTHZnmc",
+      "thumbnail": "https://i.ytimg.com/vi/SZp5fTHZnmc/hqdefault.jpg",
+      "estimated_duration": "15:51",
+      "tags": {
+        "mood": [],
+        "difficulty": "중급",
+        "time": "1시간이상",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "고기"
+        ],
+        "budget": "보통"
+      },
+      "hook": "둘이 빚으면 더 맛있어요",
+      "why_recommended": "재료 다지기와 빚기를 분담하면 자연스럽게 손이 닿고 대화가 늘어납니다. 결과물보다 과정이 추억으로 남는 대표 메뉴입니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-cook-together-2",
+      "title": "의외로 많은 분들이 틀리는 김밥 말기 핵심 포인트",
+      "channel": "백종원 PAIK JONG WON",
+      "youtube_url": "https://www.youtube.com/watch?v=10fl2mebYHs",
+      "thumbnail": "https://i.ytimg.com/vi/10fl2mebYHs/hqdefault.jpg",
+      "estimated_duration": "19:35",
+      "tags": {
+        "mood": [],
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "밥"
+        ],
+        "budget": "보통"
+      },
+      "hook": "재료 분담 데이트의 정석",
+      "why_recommended": "여러 가지 재료를 같이 준비하고 마는 과정에서 호흡이 맞아야 하는 협업형 요리입니다. 소풍 가는 느낌까지 덤으로 챙깁니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-cook-together-3",
+      "title": "이원일 셰프와 함께 완벽한 버거 레시피 찾기",
+      "channel": "승우아빠",
+      "youtube_url": "https://www.youtube.com/watch?v=jyrX1KFkJGg",
+      "thumbnail": "https://i.ytimg.com/vi/jyrX1KFkJGg/hqdefault.jpg",
+      "estimated_duration": "17:35",
+      "tags": {
+        "mood": [],
+        "difficulty": "중급",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트"
+        ],
+        "style": [
+          "양식"
+        ],
+        "ingredient_focus": [
+          "고기"
+        ],
+        "budget": "보통"
+      },
+      "hook": "패티 굽기는 누구 담당?",
+      "why_recommended": "패티, 빵, 토핑을 분담해서 만드는 재미가 있고 완성 후 자기 버거를 조립하는 즐거움까지 챙깁니다. 사진도 잘 나옵니다.",
+      "is_curator_pick": true
+    },
+    {
+      "id": "love-cook-together-4",
+      "title": "[이연복] 초콜릿 딤섬",
+      "channel": "이연복의 복주머니",
+      "youtube_url": "https://www.youtube.com/watch?v=F09SZClm_oY",
+      "thumbnail": "https://i.ytimg.com/vi/F09SZClm_oY/hqdefault.jpg",
+      "estimated_duration": "7:00",
+      "tags": {
+        "mood": [],
+        "difficulty": "상급",
+        "time": "1시간이상",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트"
+        ],
+        "style": [
+          "중식"
+        ],
+        "ingredient_focus": [
+          "고기"
+        ],
+        "budget": "보통"
+      },
+      "hook": "딤섬도 둘이서 척척",
+      "why_recommended": "난이도는 있지만 둘이 같이 빚으면 시간이 빨리 갑니다. 작은 손기술이 늘면서 함께 성장하는 느낌까지 챙깁니다.",
+      "is_curator_pick": false
+    },
+    {
+      "id": "love-cook-together-5",
+      "title": "Real Mukbang:) Spicy Tteokbokki & Homemade Fried Dish ☆ Comfort Korean Streetfood",
+      "channel": "[햄지]Hamzy",
+      "youtube_url": "https://www.youtube.com/watch?v=gYCEBb99C8Q",
+      "thumbnail": "https://i.ytimg.com/vi/gYCEBb99C8Q/hqdefault.jpg",
+      "estimated_duration": "11:56",
+      "tags": {
+        "mood": [],
+        "difficulty": "초보",
+        "time": "30분",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "평일저녁"
+        ],
+        "style": [
+          "한식"
+        ],
+        "ingredient_focus": [
+          "떡"
+        ],
+        "budget": "보통"
+      },
+      "hook": "같이 끓이며 수다 한판",
+      "why_recommended": "한 냄비에 둘이 같이 끓이며 간을 보는 그 시간이 핵심입니다. 부담 없는 메뉴라 어떤 둘이든 즐길 수 있습니다.",
+      "is_curator_pick": false
+    },
+    {
+      "id": "love-cook-together-6",
+      "title": "[SUB] 곰돌이 마카롱 만들기 :베이킹&baking: How to make italian meringue macaron",
+      "channel": "꿀키honeykki",
+      "youtube_url": "https://www.youtube.com/watch?v=VjV48EMjgkM",
+      "thumbnail": "https://i.ytimg.com/vi/VjV48EMjgkM/hqdefault.jpg",
+      "estimated_duration": "6:03",
+      "tags": {
+        "mood": [],
+        "difficulty": "상급",
+        "time": "1시간이상",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트"
+        ],
+        "style": [
+          "디저트"
+        ],
+        "ingredient_focus": [
+          "달걀"
+        ],
+        "budget": "보통"
+      },
+      "hook": "디저트도 같이 만들기",
+      "why_recommended": "예민한 디저트일수록 두 사람의 합이 중요합니다. 성공하면 짜릿하고, 실패해도 둘만의 추억이 남습니다.",
+      "is_curator_pick": false
+    },
+    {
+      "id": "love-cook-together-7",
+      "title": "[4K] Squid Ink Gorgonzola pizza : 오징어먹물 도우로 만든 고르곤졸라피자 | Honeykki 꿀키",
+      "channel": "꿀키honeykki",
+      "youtube_url": "https://www.youtube.com/watch?v=JPYwffTuEuo",
+      "thumbnail": "https://i.ytimg.com/vi/JPYwffTuEuo/hqdefault.jpg",
+      "estimated_duration": "꿀키honeykki",
+      "tags": {
+        "mood": [],
+        "difficulty": "중급",
+        "time": "1시간이상",
+        "format": "롱폼",
+        "pairing": [
+          "없음"
+        ],
+        "occasion": [
+          "데이트"
+        ],
+        "style": [
+          "이탈리안"
+        ],
+        "ingredient_focus": [
+          "빵"
+        ],
+        "budget": "보통"
+      },
+      "hook": "도우부터 둘이서 만들어요",
+      "why_recommended": "도우 반죽부터 토핑까지 모든 단계를 함께하는 진짜 집밥 데이트입니다. 둘이 만든 피자만큼 맛있는 건 없습니다.",
+      "is_curator_pick": false
+    }
+  ]
+}

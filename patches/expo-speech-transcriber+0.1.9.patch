@@ -1,0 +1,562 @@
+diff --git a/node_modules/expo-speech-transcriber/android/build.gradle b/node_modules/expo-speech-transcriber/android/build.gradle
+index ee23579..5a0ed91 100644
+--- a/node_modules/expo-speech-transcriber/android/build.gradle
++++ b/node_modules/expo-speech-transcriber/android/build.gradle
+@@ -31,6 +31,10 @@ if (useManagedAndroidSdkVersions) {
+   }
+ }
+ 
++dependencies {
++  implementation("com.google.mlkit:genai-speech-recognition:1.0.0-alpha1")
++}
++
+ android {
+   namespace "expo.modules.speechtranscriber"
+   defaultConfig {
+diff --git a/node_modules/expo-speech-transcriber/android/src/main/java/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.kt b/node_modules/expo-speech-transcriber/android/src/main/java/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.kt
+index 9857dc9..fdb57c9 100644
+--- a/node_modules/expo-speech-transcriber/android/src/main/java/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.kt
++++ b/node_modules/expo-speech-transcriber/android/src/main/java/expo/modules/speechtranscriber/ExpoSpeechTranscriberModule.kt
+@@ -3,9 +3,12 @@ package expo.modules.speechtranscriber
+ import android.Manifest
+ import android.content.Intent
+ import android.content.pm.PackageManager
++import android.media.AudioFormat
++import android.os.Build
+ import android.os.Bundle
+ import android.os.Handler
+ import android.os.Looper
++import android.os.ParcelFileDescriptor
+ import android.speech.RecognitionListener
+ import android.speech.RecognizerIntent
+ import android.speech.SpeechRecognizer
+@@ -15,6 +18,9 @@ import androidx.core.content.ContextCompat
+ import expo.modules.kotlin.Promise
+ import expo.modules.kotlin.modules.Module
+ import expo.modules.kotlin.modules.ModuleDefinition
++import java.io.IOException
++import java.nio.ByteBuffer
++import java.nio.ByteOrder
+ import java.util.Locale
+ 
+ class ExpoSpeechTranscriberModule : Module() {
+@@ -25,68 +31,262 @@ class ExpoSpeechTranscriberModule : Module() {
+   private var permissionPromise: Promise? = null
+   private val PERMISSION_REQUEST_CODE = 1001
+ 
++  // Pipe-based buffer transcription (네이티브 SpeechRecognizer + EXTRA_AUDIO_SOURCE)
++  private var pipeReadFd: ParcelFileDescriptor? = null
++  private var pipeSink: ParcelFileDescriptor.AutoCloseOutputStream? = null
++  private var pipeTranscribing = false
++  private var pipeReady = false  // onReadyForSpeech 후 true
++  private val pendingBuffers = mutableListOf<ByteArray>()  // ready 전 버퍼 큐
++
++  @Volatile
++  private var storedContextualStrings: List<String> = emptyList()
++
+   override fun definition() = ModuleDefinition {
+     Name("ExpoSpeechTranscriber")
+     Events("onTranscriptionProgress", "onTranscriptionError")
+ 
+     AsyncFunction("recordRealTimeAndTranscribe") { promise: Promise ->
+-      mainHandler.post {
+-        startListening(promise)
+-      }
++      mainHandler.post { startListening(promise) }
+     }
+ 
+     AsyncFunction("stopListening") {
++      mainHandler.post { stopListening() }
++    }
++
++    Function("isRecording") { isRecording }
++
++    AsyncFunction("requestMicrophonePermissions") { promise: Promise ->
++      mainHandler.post { requestMicrophonePermissionsInternal(promise) }
++    }
++
++    AsyncFunction("checkStatus") { promise: Promise ->
+       mainHandler.post {
+-        stopListening()
++        val context = appContext.reactContext
++        if (context == null) {
++          promise.resolve(mapOf("isAvailable" to false, "isOnDeviceAvailable" to false, "apiLevel" to Build.VERSION.SDK_INT))
++          return@post
++        }
++        promise.resolve(mapOf(
++          "isAvailable" to SpeechRecognizer.isRecognitionAvailable(context),
++          "isOnDeviceAvailable" to (Build.VERSION.SDK_INT >= 33),
++          "apiLevel" to Build.VERSION.SDK_INT
++        ))
+       }
+     }
+ 
+-    Function("isRecording") {
+-      return@Function isRecording
++    AsyncFunction("setContextualStrings") { strings: List<String>, promise: Promise ->
++      storedContextualStrings = strings
++      Log.d("ExpoSpeechTranscriber", "setContextualStrings: ${strings.size} words, first=${strings.firstOrNull()}")
++      promise.resolve(true)
+     }
+ 
+-    AsyncFunction("requestMicrophonePermissions") { promise: Promise ->
+-      mainHandler.post {
+-        requestMicrophonePermissionsInternal(promise)
++    AsyncFunction("realtimeBufferTranscribe") { buffer: List<Double>, sampleRate: Int, biasingWords: List<String>, promise: Promise ->
++      if (biasingWords.isNotEmpty()) {
++        storedContextualStrings = biasingWords
+       }
++      pipeBufferTranscribe(buffer, sampleRate)
++      promise.resolve(null)
+     }
+ 
+-    OnDestroy {
+-      mainHandler.post {
+-        cleanup()
++    Function("stopBufferTranscription") {
++      Log.d("ExpoSpeechTranscriber", "Pipe: closing sink")
++      try { pipeSink?.close() } catch (_: Exception) {}
++      pipeSink = null
++    }
++
++    OnDestroy { mainHandler.post { cleanup() } }
++  }
++
++  // ─── Pipe-based buffer transcription via native SpeechRecognizer + EXTRA_AUDIO_SOURCE ───
++  private fun pipeBufferTranscribe(buffer: List<Double>, sampleRate: Int) {
++    if (!pipeTranscribing) {
++      try {
++        val pipe = ParcelFileDescriptor.createPipe()
++        pipeReadFd = pipe[0]
++        pipeSink = ParcelFileDescriptor.AutoCloseOutputStream(pipe[1])
++
++        val lang = "${Locale.getDefault().language}-${Locale.getDefault().country}"
++        Log.d("ExpoSpeechTranscriber", "Pipe: starting, lang=$lang, biasing=${storedContextualStrings.size} words")
++
++        pipeTranscribing = true
++
++        mainHandler.post {
++          val context = appContext.reactContext ?: run {
++            Log.e("ExpoSpeechTranscriber", "Pipe: context not available")
++            cleanupPipe()
++            return@post
++          }
++
++          speechRecognizer?.destroy()
++          speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
++          speechRecognizer?.setRecognitionListener(createPipeRecognitionListener())
++
++          val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
++            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
++            putExtra(RecognizerIntent.EXTRA_LANGUAGE, lang)
++            putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, lang)
++            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
++            putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
++
++            // 온디바이스 강제
++            putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true)
++
++            // EPD: 무음 300ms면 결과 반환 (짧은 명령어용)
++            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 300L)
++            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 300L)
++            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 300L)
++
++            // API 33+: 외부 오디오 소스 (WebView AEC 오디오를 파이프로 전달)
++            if (Build.VERSION.SDK_INT >= 33) {
++              putExtra(RecognizerIntent.EXTRA_AUDIO_SOURCE, pipeReadFd)
++              putExtra(RecognizerIntent.EXTRA_AUDIO_SOURCE_ENCODING, AudioFormat.ENCODING_PCM_16BIT)
++              putExtra(RecognizerIntent.EXTRA_AUDIO_SOURCE_SAMPLING_RATE, sampleRate)
++              putExtra(RecognizerIntent.EXTRA_AUDIO_SOURCE_CHANNEL_COUNT, 1)
++
++              // Biasing: 인식 우선순위를 높일 단어 목록
++              if (storedContextualStrings.isNotEmpty()) {
++                putStringArrayListExtra(
++                  RecognizerIntent.EXTRA_BIASING_STRINGS,
++                  ArrayList(storedContextualStrings)
++                )
++              }
++            }
++          }
++
++          speechRecognizer?.startListening(intent)
++          Log.d("ExpoSpeechTranscriber", "Pipe: recognizer started")
++        }
++      } catch (e: Exception) {
++        Log.e("ExpoSpeechTranscriber", "Pipe setup failed: ${e.message}")
++        sendEvent("onTranscriptionError", mapOf("error" to "Pipe setup failed: ${e.message}"))
++        cleanupPipe()
++        return
++      }
++    }
++
++    // Float32 [-1,1] → Int16 LE
++    val byteBuffer = ByteBuffer.allocate(buffer.size * 2).order(ByteOrder.LITTLE_ENDIAN)
++    for (sample in buffer) {
++      val clamped = sample.coerceIn(-1.0, 1.0)
++      byteBuffer.putShort((clamped * 32767).toInt().toShort())
++    }
++    val bytes = byteBuffer.array()
++
++    if (pipeReady) {
++      // recognizer 준비 완료 → 바로 write
++      try {
++        pipeSink?.write(bytes)
++      } catch (e: IOException) {
++        Log.e("ExpoSpeechTranscriber", "Pipe write error: ${e.message}")
++      }
++    } else {
++      // recognizer 아직 준비 안 됨 → 큐에 쌓음
++      synchronized(pendingBuffers) {
++        pendingBuffers.add(bytes.copyOf())
++      }
++    }
++  }
++
++  private fun cleanupPipe() {
++    try { pipeSink?.close() } catch (_: Exception) {}
++    try { pipeReadFd?.close() } catch (_: Exception) {}
++    pipeSink = null
++    pipeReadFd = null
++    mainHandler.post {
++      speechRecognizer?.destroy()
++      speechRecognizer = null
++    }
++    pipeTranscribing = false
++    pipeReady = false
++    synchronized(pendingBuffers) { pendingBuffers.clear() }
++  }
++
++  private fun createPipeRecognitionListener(): RecognitionListener {
++    return object : RecognitionListener {
++      override fun onReadyForSpeech(params: Bundle?) {
++        // 온디바이스/클라우드 확인
++        val isOnDevice = params?.getBoolean("android.speech.extra.ON_DEVICE", false) ?: false
++        Log.d("ExpoSpeechTranscriber", "Pipe: ready for speech | onDevice=$isOnDevice | params=$params")
++        sendEvent("onTranscriptionProgress", mapOf(
++          "text" to "",
++          "isFinal" to false,
++          "pipeReady" to true,
++          "isOnDevice" to isOnDevice
++        ))
++        pipeReady = true
++        // 큐에 쌓인 버퍼를 한꺼번에 flush
++        synchronized(pendingBuffers) {
++          if (pendingBuffers.isNotEmpty()) {
++            Log.d("ExpoSpeechTranscriber", "Pipe: flushing ${pendingBuffers.size} pending buffers")
++            try {
++              for (buf in pendingBuffers) {
++                pipeSink?.write(buf)
++              }
++            } catch (e: IOException) {
++              Log.e("ExpoSpeechTranscriber", "Pipe flush error: ${e.message}")
++            }
++            pendingBuffers.clear()
++          }
++        }
++      }
++      override fun onBeginningOfSpeech() {
++        Log.d("ExpoSpeechTranscriber", "Pipe: beginning of speech")
++      }
++      override fun onRmsChanged(rmsdB: Float) {}
++      override fun onBufferReceived(buffer: ByteArray?) {}
++      override fun onEndOfSpeech() {
++        Log.d("ExpoSpeechTranscriber", "Pipe: end of speech")
++      }
++      override fun onPartialResults(partialResults: Bundle?) {
++        val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
++        if (!matches.isNullOrEmpty() && matches[0].isNotEmpty()) {
++          Log.d("ExpoSpeechTranscriber", "Pipe partial: ${matches[0]} | pipeReady=$pipeReady | pendingBuffers=${pendingBuffers.size}")
++          sendEvent("onTranscriptionProgress", mapOf("text" to matches[0], "isFinal" to false))
++        }
+       }
++      override fun onResults(results: Bundle?) {
++        val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
++        if (!matches.isNullOrEmpty()) {
++          Log.d("ExpoSpeechTranscriber", "Pipe final: ${matches[0]}")
++          sendEvent("onTranscriptionProgress", mapOf("text" to matches[0], "isFinal" to true))
++        }
++        cleanupPipe()
++      }
++      override fun onError(error: Int) {
++        Log.e("ExpoSpeechTranscriber", "Pipe error: ${getErrorMessage(error)}")
++        sendEvent("onTranscriptionError", mapOf("error" to getErrorMessage(error)))
++        cleanupPipe()
++      }
++      override fun onEvent(eventType: Int, params: Bundle?) {}
+     }
+   }
+ 
++  // ─── Native SpeechRecognizer (마이크 직접 사용, 기존 호환) ───
+   private fun startListening(promise: Promise) {
+     val context = appContext.reactContext ?: run {
+-      sendEvent("onTranscriptionError", mapOf("message" to "Context is not available"))
++      sendEvent("onTranscriptionError", mapOf("error" to "Context not available"))
+       promise.resolve(false)
+       return
+     }
+-
+     if (!SpeechRecognizer.isRecognitionAvailable(context)) {
+-      val message = "Speech recognition is not available on this device."
+-      Log.e("ExpoSpeechTranscriber", message)
+-      sendEvent("onTranscriptionError", mapOf("message" to message))
++      sendEvent("onTranscriptionError", mapOf("error" to "Speech recognition not available"))
+       promise.resolve(false)
+       return
+     }
+-
+     if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+-      sendEvent("onTranscriptionError", mapOf("message" to "Missing RECORD_AUDIO permission."))
++      sendEvent("onTranscriptionError", mapOf("error" to "Missing RECORD_AUDIO permission"))
+       promise.resolve(false)
+       return
+     }
+ 
+     speechRecognizer?.destroy()
+-    speechRecognizer = null
+-
+     speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
++    val lang = "${Locale.getDefault().language}-${Locale.getDefault().country}"
+ 
+     val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+       putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+-      putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
++      putExtra(RecognizerIntent.EXTRA_LANGUAGE, lang)
++      putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, lang)
+       putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+       putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
+     }
+@@ -98,108 +298,68 @@ class ExpoSpeechTranscriberModule : Module() {
+   }
+ 
+   private fun stopListening() {
+-    try {
+-      speechRecognizer?.stopListening()
+-      speechRecognizer?.destroy()
+-    } catch (e: Exception) {
+-      Log.e("ExpoSpeechTranscriber", "Error stopping recognizer: ${e.message}")
+-    } finally {
+-      speechRecognizer = null
+-      isRecording = false
+-    }
++    try { speechRecognizer?.stopListening(); speechRecognizer?.destroy() }
++    catch (_: Exception) {}
++    finally { speechRecognizer = null; isRecording = false }
+   }
+ 
+   private fun cleanup() {
+     stopListening()
++    cleanupPipe()
+   }
+ 
+   private fun createRecognitionListener(): RecognitionListener {
+     return object : RecognitionListener {
+-      override fun onReadyForSpeech(params: Bundle?) {
+-        Log.d("ExpoSpeechTranscriber", "Ready for speech")
+-      }
+-
++      override fun onReadyForSpeech(params: Bundle?) {}
+       override fun onBeginningOfSpeech() {
+-        Log.d("ExpoSpeechTranscriber", "Speech started")
++        sendEvent("onTranscriptionProgress", mapOf("text" to "", "isFinal" to false, "speechStart" to true))
+       }
+-
+       override fun onRmsChanged(rmsdB: Float) {}
+       override fun onBufferReceived(buffer: ByteArray?) {}
+-
+-      override fun onEndOfSpeech() {
+-        Log.d("ExpoSpeechTranscriber", "Speech ended")
+-      }
+-
++      override fun onEndOfSpeech() {}
+       override fun onPartialResults(partialResults: Bundle?) {
+         val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+-        if (!matches.isNullOrEmpty()) {
+-          Log.d("ExpoSpeechTranscriber", "Text: ${matches[0]}")
+-          sendEvent("onTranscriptionProgress", mapOf(
+-            "text" to matches[0],
+-            "isFinal" to false
+-          ))
++        if (!matches.isNullOrEmpty() && matches[0].isNotEmpty()) {
++          sendEvent("onTranscriptionProgress", mapOf("text" to matches[0], "isFinal" to false))
+         }
+       }
+-
+       override fun onResults(results: Bundle?) {
+         val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+         if (!matches.isNullOrEmpty()) {
+-           Log.d("ExpoSpeechTranscriber", "Text: ${matches[0]}")
+-          sendEvent("onTranscriptionProgress", mapOf(
+-            "text" to matches[0],
+-            "isFinal" to true
+-          ))
++          sendEvent("onTranscriptionProgress", mapOf("text" to matches[0], "isFinal" to true))
+         }
+         stopListening()
+       }
+-
+       override fun onError(error: Int) {
+-        val errorMessage = getErrorMessage(error)
+-        sendEvent("onTranscriptionError", mapOf("message" to errorMessage))
++        sendEvent("onTranscriptionError", mapOf("error" to getErrorMessage(error)))
+         stopListening()
+       }
+-
+       override fun onEvent(eventType: Int, params: Bundle?) {}
+     }
+   }
+ 
+-  private fun getErrorMessage(errorCode: Int): String {
+-    return when (errorCode) {
+-      SpeechRecognizer.ERROR_AUDIO -> "Audio recording error"
+-      SpeechRecognizer.ERROR_CLIENT -> "Client side error"
+-      SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions"
+-      SpeechRecognizer.ERROR_NETWORK -> "Network error"
+-      SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
+-      SpeechRecognizer.ERROR_NO_MATCH -> "No match found"
+-      SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Recognizer is busy"
+-      SpeechRecognizer.ERROR_SERVER -> "Error from server"
+-      SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "No speech input"
+-      else -> "An unknown error occurred"
+-    }
++  private fun getErrorMessage(errorCode: Int): String = when (errorCode) {
++    SpeechRecognizer.ERROR_AUDIO -> "Audio recording error"
++    SpeechRecognizer.ERROR_CLIENT -> "Client side error"
++    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions"
++    SpeechRecognizer.ERROR_NETWORK -> "Network error"
++    SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
++    SpeechRecognizer.ERROR_NO_MATCH -> "No match found"
++    SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Recognizer is busy"
++    SpeechRecognizer.ERROR_SERVER -> "Error from server"
++    SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "No speech input"
++    else -> "Unknown error ($errorCode)"
+   }
+ 
+   private fun requestMicrophonePermissionsInternal(promise: Promise) {
+-    val context = appContext.reactContext ?: run {
+-      promise.resolve("denied")
+-      return
++    val context = appContext.reactContext ?: run { promise.resolve("denied"); return }
++    if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
++      promise.resolve("granted"); return
+     }
+-
+-    if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) 
+-        == PackageManager.PERMISSION_GRANTED) {
+-      promise.resolve("granted")
+-      return
+-    }
+-
+     val activity = appContext.currentActivity
+     if (activity != null) {
+       permissionPromise = promise
+-      ActivityCompat.requestPermissions(
+-        activity,
+-        arrayOf(Manifest.permission.RECORD_AUDIO),
+-        PERMISSION_REQUEST_CODE
+-      )
+-    } else {
+-      promise.resolve("denied")
+-    }
++      ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.RECORD_AUDIO), PERMISSION_REQUEST_CODE)
++    } else promise.resolve("denied")
+   }
+ }
+diff --git a/node_modules/expo-speech-transcriber/build/index.js b/node_modules/expo-speech-transcriber/build/index.js
+index 3f06123..dc20f35 100644
+--- a/node_modules/expo-speech-transcriber/build/index.js
++++ b/node_modules/expo-speech-transcriber/build/index.js
+@@ -30,7 +30,7 @@ export function isAnalyzerAvailable() {
+ }
+ export function realtimeBufferTranscribe(buffer, sampleRate) {
+     const bufferArray = Array.isArray(buffer) ? buffer : Array.from(buffer);
+-    return ExpoSpeechTranscriberModule.realtimeBufferTranscribe(bufferArray, sampleRate);
++    return ExpoSpeechTranscriberModule.realtimeBufferTranscribe(bufferArray, sampleRate, globalThis.__sttBiasingWords || []);
+ }
+ export function stopBufferTranscription() {
+     return ExpoSpeechTranscriberModule.stopBufferTranscription();
+diff --git a/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift b/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift
+index e333bc5..1279b7e 100644
+--- a/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift
++++ b/node_modules/expo-speech-transcriber/ios/ExpoSpeechTranscriberModule.swift
+@@ -9,6 +9,7 @@ public class ExpoSpeechTranscriberModule: Module {
+     private var recognitionTask: SFSpeechRecognitionTask?
+     private var bufferRecognitionTask: SFSpeechRecognitionTask?
+     private var startedListening = false
++    private var storedContextualStrings: [String] = []
+ 
+     public func definition() -> ModuleDefinition {
+         Name("ExpoSpeechTranscriber")
+@@ -77,13 +78,29 @@ public class ExpoSpeechTranscriberModule: Module {
+             return false
+         }
+         
+-        AsyncFunction("realtimeBufferTranscribe") { (buffer: [Float32], sampleRate: Double) async -> Void in
++        AsyncFunction("realtimeBufferTranscribe") { (buffer: [Float32], sampleRate: Double, biasingWords: [String]) async -> Void in
++            if !biasingWords.isEmpty {
++                self.storedContextualStrings = biasingWords
++            }
+             await self.realtimeBufferTranscribe(buffer: buffer, sampleRate: sampleRate)
+         }
+         
+         Function("stopBufferTranscription") { () -> Void in
+             return self.stopBufferTranscription()
+         }
++
++        Function("setContextualStrings") { (strings: [String]) -> Void in
++            self.storedContextualStrings = strings
++        }
++
++        AsyncFunction("checkStatus") { () async -> [String: Any] in
++            let recognizer = SFSpeechRecognizer()
++            return [
++                "isAvailable": recognizer?.isAvailable ?? false,
++                "isOnDeviceAvailable": true,
++                "apiLevel": 0
++            ]
++        }
+     }
+     
+     // MARK: - Private Implementation Methods
+diff --git a/node_modules/expo-speech-transcriber/src/index.ts b/node_modules/expo-speech-transcriber/src/index.ts
+index d5731e3..8468751 100644
+--- a/node_modules/expo-speech-transcriber/src/index.ts
++++ b/node_modules/expo-speech-transcriber/src/index.ts
+@@ -52,6 +52,7 @@ export function realtimeBufferTranscribe(
+   return ExpoSpeechTranscriberModule.realtimeBufferTranscribe(
+     bufferArray,
+     sampleRate,
++    (globalThis as any).__sttBiasingWords || [],
+   );
+ }
+ 
+@@ -59,6 +60,18 @@ export function stopBufferTranscription(): void {
+   return ExpoSpeechTranscriberModule.stopBufferTranscription();
+ }
+ 
++export function setContextualStrings(strings: string[]): void {
++  return ExpoSpeechTranscriberModule.setContextualStrings(strings);
++}
++
++export function checkStatus(): Promise<{
++  isAvailable: boolean;
++  isOnDeviceAvailable: boolean;
++  apiLevel: number;
++}> {
++  return ExpoSpeechTranscriberModule.checkStatus();
++}
++
+ export function useRealTimeTranscription() {
+   const [text, setText] = useState('');
+   const [isFinal, setIsFinal] = useState(false);
+@@ -66,7 +79,10 @@ export function useRealTimeTranscription() {
+   const [isRecording, setIsRecording] = useState(false);
+ 
+   useEffect(() => {
+-    const progressListener = ExpoSpeechTranscriberModule.addListener('onTranscriptionProgress', (payload: TranscriptionProgressPayload) => {
++    const progressListener = ExpoSpeechTranscriberModule.addListener('onTranscriptionProgress', (payload: any) => {
++      if (payload.pipeReady) {
++        console.log(`[STT] Recognizer ready | onDevice: ${payload.isOnDevice}`);
++      }
+       setText(payload.text);
+       setIsFinal(payload.isFinal);
+     });

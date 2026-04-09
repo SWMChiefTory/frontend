@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { CustomBackButton } from "@/src/modules/shared/components/layout/CustomBackButton";
+import { CustomBackButton } from "@/src/shared/components/layout/CustomBackButton";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = {

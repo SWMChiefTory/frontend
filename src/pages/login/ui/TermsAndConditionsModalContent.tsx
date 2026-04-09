@@ -5,10 +5,13 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import SquareButton from "@/src/shared/components/textInputs/SquareButtonTemplate";
 import { useSignupModalStore } from "@/src/pages/login/ui/button";
-import { useSignupViewModel } from "@/src/modules/user/business/service/useAuthService";
+import { useSignup } from "@/src/entities/user";
+import { trackNative } from "@/src/shared/analytics";
+import { AmplitudeEvent } from "@/src/shared/analytics/amplitudeEvents";
+import { setAmplitudeUserId } from "@/src/shared/analytics/amplitude";
 import useRandomName from "@/src/pages/login/model/useRandomName";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useMarketStore } from "@/src/modules/shared/store/marketStore";
+import { useMarketStore } from "@/src/shared/store/marketStore";
 
 export interface AgreeValue {
   isServiceAgree: boolean;
@@ -43,7 +46,15 @@ const TERMS_TEXT = {
 
 export default function TermsAndConditionsModalContent() {
   const { idToken, provider, closeModal } = useSignupModalStore();
-  const { signup } = useSignupViewModel();
+  const { mutate: signup } = useSignup({
+    onSuccess: (data, variables) => {
+      setAmplitudeUserId(data.user_info.provider_sub);
+      trackNative(AmplitudeEvent.SIGNUP_SUCCESS, {
+        provider: variables.provider.toLowerCase(),
+      });
+      closeModal();
+    },
+  });
   const { market, cachedMarket } = useMarketStore();
   const currentMarket = market ?? cachedMarket ?? "KOREA";
   const { nickname } = useRandomName(currentMarket === "GLOBAL" ? "en" : "ko");
