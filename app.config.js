@@ -18,7 +18,7 @@ export default {
       buildNumber: "5",
       entitlements: {
         "com.apple.security.application-groups": [
-          "group.com.cheftory.cheftory",
+          "group.com.cheftory.ios",
         ],
         "aps-environment": "production",
         "com.apple.developer.speech-recognition": true,
@@ -113,7 +113,7 @@ export default {
           ios: {
             useFrameworks: "static",
             useModularHeaders: true,
-            deploymentTarget: "16.1",
+            deploymentTarget: "17.2",
           },
           android: {
             minSdkVersion: 26,
