@@ -127,16 +127,26 @@ export function CreatingRecipeSection() {
 
   return (
     <View style={{ paddingTop: spacing.lg, paddingBottom: spacing.xs, gap: spacing.md }}>
-      <Text
-        style={{
-          fontFamily: typography.heading.fontFamily,
-          ...typography.heading.h2,
-          color: colors.text.primary,
-          paddingHorizontal: spacing.lg,
-        }}
-      >
-        생성 중인 레시피
-      </Text>
+      <View style={{ paddingHorizontal: spacing.lg, gap: 2 }}>
+        <Text
+          style={{
+            fontFamily: typography.heading.fontFamily,
+            ...typography.heading.h2,
+            color: colors.text.primary,
+          }}
+        >
+          생성 중인 레시피
+        </Text>
+        <Text
+          style={{
+            fontFamily: typography.body.fontFamily,
+            fontSize: 12,
+            color: colors.text.secondary,
+          }}
+        >
+          완료되면 알림으로 알려드릴게요
+        </Text>
+      </View>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
