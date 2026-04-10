@@ -15,8 +15,9 @@ let realtimeBufferTranscribe: any = () => {};
 let stopBufferTranscription: any = () => {};
 let setContextualStrings: any = () => {};
 let useRealTimeTranscription: any = () => ({ results: null });
+let speechModule: any = null;
 try {
-  const speechModule = require('expo-speech-transcriber');
+  speechModule = require('expo-speech-transcriber');
   realtimeBufferTranscribe = speechModule.realtimeBufferTranscribe ?? realtimeBufferTranscribe;
   stopBufferTranscription = speechModule.stopBufferTranscription ?? stopBufferTranscription;
   setContextualStrings = speechModule.setContextualStrings ?? setContextualStrings;
@@ -468,6 +469,23 @@ export function useWebAudioPipeline({
         );
         setError('Mic permission denied');
         return;
+      }
+
+      // Speech Recognition 권한 요청 (iOS 설정에 "음성 인식" 항목 생성)
+      if (speechModule?.requestPermissions) {
+        const speechStatus = await speechModule.requestPermissions();
+        if (speechStatus !== 'authorized') {
+          Alert.alert(
+            '음성 인식 권한 필요',
+            '음성 명령을 사용하려면 음성 인식 권한이 필요합니다. 설정에서 허용해주세요.',
+            [
+              { text: '취소', style: 'cancel' },
+              { text: '설정으로 이동', onPress: () => Linking.openSettings() },
+            ],
+          );
+          setError('Speech permission denied');
+          return;
+        }
       }
 
       if (!vadRef.current) {

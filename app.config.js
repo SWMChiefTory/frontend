@@ -21,7 +21,6 @@ export default {
           "group.com.cheftory.ios",
         ],
         "aps-environment": "production",
-        "com.apple.developer.speech-recognition": true,
       },
       googleServicesFile:
         process.env.GOOGLE_SERVICES_PLIST ||
