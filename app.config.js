@@ -15,12 +15,13 @@ export default {
       fallbackToCacheTimeout: 0,
     },
     ios: {
-      buildNumber: "4",
+      buildNumber: "5",
       entitlements: {
         "com.apple.security.application-groups": [
           "group.com.cheftory.cheftory",
         ],
         "aps-environment": "production",
+        "com.apple.developer.speech-recognition": true,
       },
       googleServicesFile:
         process.env.GOOGLE_SERVICES_PLIST ||
