@@ -2,7 +2,7 @@ export default {
   expo: {
     name: "쉐프토리",
     slug: "cheftory",
-    version: "1.0.13",
+    version: "1.0.14",
     orientation: "portrait",
     icon: "./assets/images/mainCharacter.png",
     scheme: "cheftory",
@@ -42,6 +42,8 @@ export default {
           "안전한 로그인과 인증을 위해 Face ID를 사용합니다.",
         NSMicrophoneUsageDescription:
           "쉐프토리는 음성으로 레시피를 제어하기 위해 마이크 접근 권한이 필요합니다.",
+        NSPhotoLibraryUsageDescription:
+          "레시피 이미지를 저장하기 위해 사진 라이브러리 접근이 필요합니다.",
         NSAppTransportSecurity: {
           NSAllowsArbitraryLoads: true,
         },
