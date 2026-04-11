@@ -1,6 +1,8 @@
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import { colors, spacing, radius } from '@/src/shared/design/tokens';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 type CategoryChipsProps = {
   categories: { id: string; name: string }[];
   selected: string;
@@ -9,6 +11,8 @@ type CategoryChipsProps = {
 }
 
 export function CategoryChips({ categories, selected, onSelect, onAdd }: CategoryChipsProps) {
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   return (
     <View>
     <ScrollView
@@ -38,7 +42,7 @@ export function CategoryChips({ categories, selected, onSelect, onAdd }: Categor
         }}
       >
         <Ionicons name="add" size={16} color={colors.text.secondary} />
-        <Text style={{ fontSize: 16, color: colors.text.secondary }}>추가</Text>
+        <Text style={{ fontSize: 16, color: colors.text.secondary }}>{t.add}</Text>
       </Pressable>
 
       {categories.map((cat) => {
@@ -46,7 +50,7 @@ export function CategoryChips({ categories, selected, onSelect, onAdd }: Categor
         return (
           <Pressable
             key={cat.id}
-            onPress={() => onSelect(cat.id)}
+            onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); onSelect(cat.id); }}
             style={{
               paddingHorizontal: spacing.md,
               paddingVertical: spacing.sm,
@@ -73,3 +77,12 @@ export function CategoryChips({ categories, selected, onSelect, onAdd }: Categor
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    add: '추가',
+  },
+  GLOBAL: {
+    add: 'Add',
+  },
+} as const;

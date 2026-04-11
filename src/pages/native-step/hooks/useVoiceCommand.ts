@@ -8,79 +8,40 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Platform } from 'react-native';
+import type { RefObject } from 'react';
 import type { WebView } from 'react-native-webview';
 import { useWebAudioPipeline } from './useWebAudioPipeline';
-import { classifyLocal, extractSlots, normalize, type LocalNLUPayload } from './useLocalNLU';
+import { classifyLocal, extractSlots, normalize } from './useLocalNLU';
 import { createNLU, type IntentLabel } from './onnxNLU';
-
-function formatDuration(sec: number): string {
-  if (sec >= 3600) {
-    const h = Math.floor(sec / 3600);
-    const m = Math.floor((sec % 3600) / 60);
-    return m > 0 ? `${h}시간 ${m}분` : `${h}시간`;
-  }
-  if (sec >= 60) {
-    const m = Math.floor(sec / 60);
-    const s = sec % 60;
-    return s > 0 ? `${m}분 ${s}초` : `${m}분`;
-  }
-  return `${sec}초`;
-}
-import { useSceneMatcher } from './useSceneMatcher';
-
+import type { HandleIntentFn } from './useIntentMatchingAction';
 
 const NLU_CONFIDENCE_THRESHOLD = 0.7;
 
 type UseVoiceCommandOptions = {
-  goToNextStep: () => void;
-  goToPrevStep: () => void;
-  goToStep: (stepNumber: number) => void;
-  seekToScene: (sceneIndex: number) => void;
-  seekToSceneNumber: (sceneNumber: number) => void; // 1-indexed
-  play: () => void;
-  pause: () => void;
-  startTimer: (durationSec: number) => void;
-  cancelTimer: () => void;
-  pauseTimer: () => void;
-  resumeTimer: () => void;
+  onIntent: HandleIntentFn;
   sceneLabels: string[];
   totalSteps: number;
   isFirstStep: boolean;
   isLastStep: boolean;
-  webViewRef: React.RefObject<WebView | null>;
-  onVoiceStart?: () => void;
-  onVoiceEnd?: () => void;
-}
+  webViewRef: RefObject<WebView | null>;
+  postToYouTube: (msg: object) => void;
+};
 
 export function useVoiceCommand({
-  goToNextStep,
-  goToPrevStep,
-  goToStep,
-  seekToScene,
-  seekToSceneNumber,
-  play,
-  pause,
-  startTimer,
-  cancelTimer,
-  pauseTimer,
-  resumeTimer,
+  onIntent,
   sceneLabels,
   totalSteps,
   isFirstStep,
   isLastStep,
   webViewRef,
-  onVoiceStart,
-  onVoiceEnd,
+  postToYouTube,
 }: UseVoiceCommandOptions) {
   const [isListening, setIsListening] = useState(false);
   const [intentFeedback, setIntentFeedback] = useState<{ text: string; intent: string } | null>(null);
   const [transcript, setTranscript] = useState('');
-  const [sceneSearching, setSceneSearching] = useState(false);
   const feedbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isListeningRef = useRef(false);
   const handledInInterimRef = useRef(false);
-
 
   // ─── NLU 모델 로드 ───
   const nluReadyRef = useRef(false);
@@ -96,85 +57,24 @@ export function useVoiceCommand({
       .catch((e) => console.warn('[VoiceCommand] NLU model load failed:', e));
   }, []);
 
-  const { findBestScene } = useSceneMatcher(sceneLabels);
-
   const showFeedback = useCallback((text: string, intent: string = 'UNKNOWN') => {
     setIntentFeedback({ text, intent });
     if (feedbackTimerRef.current) clearTimeout(feedbackTimerRef.current);
     feedbackTimerRef.current = setTimeout(() => setIntentFeedback(null), 1800);
   }, []);
 
-  const executeIntent = useCallback(
-    (intent: IntentLabel, payload: LocalNLUPayload = {}) => {
+  /** Call onIntent and show the returned feedback */
+  const dispatchIntent = useCallback(
+    (intent: IntentLabel, payload: { stepNumber?: number; sceneNumber?: number; durationSec?: number } = {}): boolean => {
       if (intent === 'EXTRA') return false;
-      switch (intent) {
-        case 'NEXT_STEP':
-          if (isLastStep) { showFeedback('마지막 단계예요', 'NEXT_STEP'); }
-          else { goToNextStep(); showFeedback('다음 단계 →', 'NEXT_STEP'); }
-          break;
-        case 'PREV_STEP':
-          if (isFirstStep) { showFeedback('첫 번째 단계예요', 'PREV_STEP'); }
-          else { goToPrevStep(); showFeedback('← 이전 단계', 'PREV_STEP'); }
-          break;
-        case 'GO_TO_STEP': {
-          const n = payload.stepNumber;
-          if (n && n >= 1 && n <= totalSteps) {
-            goToStep(n); showFeedback(`${n}단계로 이동`, 'GO_TO_STEP');
-          } else {
-            showFeedback(`${n}단계는 없어요`, 'GO_TO_STEP');
-          }
-          break;
-        }
-        case 'GO_TO_SCENE_NUMBER': {
-          const n = payload.sceneNumber;
-          if (n && n >= 1 && n <= sceneLabels.length) {
-            seekToSceneNumber(n);
-            showFeedback(`${n}번 장면`, 'GO_TO_SCENE_NUMBER');
-          } else {
-            showFeedback(`${n}번 장면은 없어요`, 'GO_TO_SCENE_NUMBER');
-          }
-          break;
-        }
-        case 'TIMER_START': {
-          const sec = payload.durationSec;
-          if (sec && sec > 0) {
-            startTimer(sec);
-            showFeedback(`⏱ ${formatDuration(sec)} 타이머`, 'TIMER_START');
-          } else {
-            showFeedback('몇 분 타이머인가요?', 'TIMER_START');
-            return false;
-          }
-          break;
-        }
-        case 'TIMER_CANCEL':
-          cancelTimer();
-          showFeedback('⏱ 타이머 취소', 'TIMER_CANCEL');
-          break;
-        case 'TIMER_PAUSE':
-          pauseTimer();
-          showFeedback('⏱ 타이머 일시정지', 'TIMER_PAUSE');
-          break;
-        case 'TIMER_RESUME':
-          resumeTimer();
-          showFeedback('⏱ 타이머 재개', 'TIMER_RESUME');
-          break;
-        case 'PLAY':
-          play(); showFeedback('▶ 재생', 'PLAY');
-          break;
-        case 'PAUSE':
-          pause(); showFeedback('⏸ 일시정지', 'PAUSE');
-          break;
-        case 'GO_TO_SCENE':
-          return false;
+      const feedback = onIntent(intent, payload);
+      if (feedback) {
+        showFeedback(feedback.text, feedback.intent);
+        return true;
       }
-      return true;
+      return false;
     },
-    [
-      isLastStep, isFirstStep, totalSteps, sceneLabels.length,
-      goToNextStep, goToPrevStep, goToStep, seekToSceneNumber,
-      play, pause, startTimer, cancelTimer, pauseTimer, resumeTimer,
-      showFeedback,
-    ],
+    [onIntent, showFeedback],
   );
 
   // ONNX 폴백에서 GO_TO_STEP 받았을 때 슬롯 추출용
@@ -182,6 +82,15 @@ export function useVoiceCommand({
     const slots = extractSlots(normalize(text));
     return slots.stepNumber;
   }, []);
+
+  // ─── Volume Ducking ───
+  const onVoiceStart = useCallback(() => {
+    postToYouTube({ type: 'SET_VOLUME', volume: 0 });
+  }, [postToYouTube]);
+
+  const onVoiceEnd = useCallback(() => {
+    postToYouTube({ type: 'SET_VOLUME', volume: 1 });
+  }, [postToYouTube]);
 
   // ─── interim/final handlers ───
   const resetTranscriptionRef = useRef<() => void>(() => {});
@@ -198,7 +107,7 @@ export function useVoiceCommand({
       const tKeyword1 = performance.now();
       if (localResult) {
         console.log(`[Perf:keyword] interim "${text}" → ${localResult.intent} | ${(tKeyword1 - tKeyword0).toFixed(1)}ms`);
-        const executed = executeIntent(localResult.intent, localResult.payload);
+        const executed = dispatchIntent(localResult.intent, localResult.payload);
         if (executed) {
           console.log(`[Perf:E2E] interim "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
           handledInInterimRef.current = true;
@@ -216,36 +125,19 @@ export function useVoiceCommand({
           console.log(`[Perf:NLU] interim "${text}" → ${result?.intent ?? 'none'}(${((result?.confidence ?? 0) * 100).toFixed(1)}%) | ${(tNlu1 - tNlu0).toFixed(1)}ms`);
 
           if (result && result.confidence >= NLU_CONFIDENCE_THRESHOLD) {
-            if (result.intent === 'GO_TO_SCENE') {
-              setSceneSearching(true);
-              const tScene0 = performance.now();
-              const sceneMatch = await findBestScene(text);
-              const tScene1 = performance.now();
-              setSceneSearching(false);
-              console.log(`[Perf:scene] interim "${text}" → ${sceneMatch?.label ?? 'no match'} | ${(tScene1 - tScene0).toFixed(1)}ms`);
-              if (sceneMatch) {
-                seekToScene(sceneMatch.index);
-                showFeedback(sceneMatch.label, 'GO_TO_SCENE');
-                console.log(`[Perf:E2E] interim "${text}" → 장면 이동 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
-                handledInInterimRef.current = true;
-                resetTranscriptionRef.current();
-                return;
-              }
-            } else {
-              const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumberForOnnx(text) : undefined;
-              const executed = executeIntent(result.intent, { stepNumber: stepNum });
-              if (executed) {
-                console.log(`[Perf:E2E] interim "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
-                handledInInterimRef.current = true;
-                resetTranscriptionRef.current();
-                return;
-              }
+            const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumberForOnnx(text) : undefined;
+            const executed = dispatchIntent(result.intent, { stepNumber: stepNum });
+            if (executed) {
+              console.log(`[Perf:E2E] interim "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
+              handledInInterimRef.current = true;
+              resetTranscriptionRef.current();
+              return;
             }
           }
         } catch (e) { console.warn('[VoiceCommand] NLU interim error:', e); }
       }
     },
-    [executeIntent, extractStepNumberForOnnx, findBestScene, seekToScene, showFeedback],
+    [dispatchIntent, extractStepNumberForOnnx],
   );
 
   const handleFinalResult = useCallback(
@@ -264,7 +156,7 @@ export function useVoiceCommand({
       const tKeyword1 = performance.now();
       if (localResult) {
         console.log(`[Perf:keyword] final "${text}" → ${localResult.intent} | ${(tKeyword1 - tKeyword0).toFixed(1)}ms`);
-        executeIntent(localResult.intent, localResult.payload);
+        dispatchIntent(localResult.intent, localResult.payload);
         console.log(`[Perf:E2E] final "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
         return;
       }
@@ -278,33 +170,17 @@ export function useVoiceCommand({
           console.log(`[Perf:NLU] final "${text}" → ${result?.intent ?? 'none'}(${((result?.confidence ?? 0) * 100).toFixed(1)}%) | ${(tNlu1 - tNlu0).toFixed(1)}ms`);
 
           if (result && result.confidence >= NLU_CONFIDENCE_THRESHOLD) {
-            if (result.intent === 'GO_TO_SCENE') {
-              setSceneSearching(true);
-            } else {
-              const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumberForOnnx(text) : undefined;
-              executeIntent(result.intent, { stepNumber: stepNum });
-              console.log(`[Perf:E2E] final "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
-              return;
-            }
+            const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumberForOnnx(text) : undefined;
+            dispatchIntent(result.intent, { stepNumber: stepNum });
+            console.log(`[Perf:E2E] final "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
+            return;
           }
         } catch (e) { console.warn('[VoiceCommand] NLU final error:', e); }
       }
 
-      // 3. 씬 매칭 (embed + cosine)
-      const tScene0 = performance.now();
-      const sceneMatch = await findBestScene(text);
-      const tScene1 = performance.now();
-      setSceneSearching(false);
-      console.log(`[Perf:scene] final "${text}" → ${sceneMatch?.label ?? 'no match'} | ${(tScene1 - tScene0).toFixed(1)}ms`);
-      if (sceneMatch) {
-        seekToScene(sceneMatch.index);
-        showFeedback(sceneMatch.label, 'GO_TO_SCENE');
-        console.log(`[Perf:E2E] final "${text}" → 장면 이동 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
-      } else {
-        console.log(`[Perf:E2E] final "${text}" → no match | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
-      }
+      console.log(`[Perf:E2E] final "${text}" → no match | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
     },
-    [executeIntent, extractStepNumberForOnnx, findBestScene, seekToScene, showFeedback],
+    [dispatchIntent, extractStepNumberForOnnx],
   );
 
   // ─── boost words (고정 키워드만) ───
@@ -377,7 +253,6 @@ export function useVoiceCommand({
     speechError: pipelineError,
     intentFeedback,
     pipelineState,
-    sceneSearching,
     toggleListening,
     stopListening,
     handleWebViewMessage,

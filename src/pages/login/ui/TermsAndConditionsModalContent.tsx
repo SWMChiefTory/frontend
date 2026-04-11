@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import SquareButton from "@/src/shared/components/textInputs/SquareButtonTemplate";
 import { useSignupModalStore } from "@/src/pages/login/ui/button";
 import { useSignup } from "@/src/entities/user";
 import { trackNative } from "@/src/shared/analytics";
@@ -12,6 +11,7 @@ import { setAmplitudeUserId } from "@/src/shared/analytics/amplitude";
 import useRandomName from "@/src/pages/login/model/useRandomName";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useMarketStore } from "@/src/shared/store/marketStore";
+import { colors, spacing, radius, typography } from "@/src/shared/design/tokens";
 
 export type AgreeValue = {
   isServiceAgree: boolean;
@@ -52,7 +52,6 @@ export default function TermsAndConditionsModalContent() {
       trackNative(AmplitudeEvent.SIGNUP_SUCCESS, {
         provider: variables.provider.toLowerCase(),
       });
-      closeModal();
     },
   });
   const { market, cachedMarket } = useMarketStore();
@@ -81,6 +80,8 @@ export default function TermsAndConditionsModalContent() {
     ) {
       return;
     }
+    // 버튼 누르자마자 모달 내리기 (onSuccess에서 처리 완료될 때까지 기다리지 않음)
+    closeModal();
     signup({
       id_token: idToken,
       provider: provider,
@@ -93,247 +94,106 @@ export default function TermsAndConditionsModalContent() {
     });
   };
 
+  const allChecked = isServiceAgree && isPrivacyAgree && isMarketingAgree;
+  const canSignup = isServiceAgree && isPrivacyAgree;
+
   return (
     <BottomSheetView
-      style={[styles.container, { paddingBottom: insets.bottom }]}
+      style={{ paddingHorizontal: spacing.xl, paddingTop: spacing.lg, paddingBottom: Math.max(insets.bottom, spacing.xl) }}
     >
-      <View style={styles.AllAgreeBottonContainer}>
-        <TouchableOpacity
-          style={styles.allAgreeBotton}
-          onPress={() => {
-            setAgreeValue({
-              ...agreeValue,
-              isServiceAgree: true,
-              isPrivacyAgree: true,
-              isMarketingAgree: true,
-            });
-          }}
-        >
-          <Ionicons
-            name="checkmark"
-            size={20}
-            color={
-              isServiceAgree && isPrivacyAgree && isMarketingAgree
-                ? "#3B3B3B"
-                : "#ADADAD"
-            }
-          />
-          <Text
-            style={[
-              styles.allAgreeText,
-              {
-                color:
-                  isServiceAgree && isPrivacyAgree && isMarketingAgree
-                    ? localColor.text.black
-                    : localColor.text.gray,
-              },
-            ]}
-          >
-            {" "}
-            {text.allAgree}
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ height: 16 }} />
-      <View style={styles.detailContainer}>
-        <TouchableOpacity
-          style={styles.detailLeftContainer}
-          onPress={() => {
-            setAgreeValue({
-              ...agreeValue,
-              isServiceAgree: !isServiceAgree,
-            });
-          }}
-        >
-          <Ionicons
-            name="checkmark"
-            size={20}
-            color={
-              isServiceAgree ? localColor.text.black : localColor.text.gray
-            }
-          />
-          <Text
-            style={[
-              styles.detailText,
-              {
-                color: isServiceAgree
-                  ? localColor.text.black
-                  : localColor.text.gray,
-              },
-            ]}
-          >
-            {" "}
-            {text.serviceAgree}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.detailRightContainer}
-          onPress={() => {
-            closeModal();
-            router.push({
-              pathname: "/agreement/ServiceTermsAndConditions",
-            });
-          }}
-        >
-          <Ionicons
-            name="chevron-forward"
-            size={20}
-            color={localColor.text.gray}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={{ height: 8 }} />
+      {/* 전체 동의 */}
+      <TouchableOpacity
+        onPress={() => setAgreeValue({ isServiceAgree: true, isPrivacyAgree: true, isMarketingAgree: true })}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: spacing.sm,
+          paddingVertical: spacing.lg,
+          paddingHorizontal: spacing.lg,
+          backgroundColor: allChecked ? colors.primaryLight : colors.surface,
+          borderRadius: radius.md,
+          borderCurve: 'continuous',
+        }}
+      >
+        <Ionicons name={allChecked ? 'checkbox' : 'square-outline'} size={22} color={allChecked ? colors.primary : colors.text.disabled} />
+        <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 16, fontWeight: '700', color: allChecked ? colors.primary : colors.text.secondary }}>
+          {text.allAgree}
+        </Text>
+      </TouchableOpacity>
 
-      <View style={styles.detailContainer}>
-        <TouchableOpacity
-          style={styles.detailLeftContainer}
-          onPress={() => {
-            setAgreeValue({
-              ...agreeValue,
-              isPrivacyAgree: !isPrivacyAgree,
-            });
-          }}
-        >
-          <Ionicons
-            name="checkmark"
-            size={20}
-            color={
-              isPrivacyAgree ? localColor.text.black : localColor.text.gray
-            }
-          />
-          <Text
-            style={[
-              styles.detailText,
-              {
-                color: isPrivacyAgree
-                  ? localColor.text.black
-                  : localColor.text.gray,
-              },
-            ]}
+      <View style={{ gap: spacing.xs, marginTop: spacing.lg }}>
+        {/* 서비스 이용약관 */}
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <TouchableOpacity
+            onPress={() => setAgreeValue({ ...agreeValue, isServiceAgree: !isServiceAgree })}
+            style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm, flex: 1, paddingVertical: spacing.md }}
           >
-            {" "}
-            {text.privacyAgree}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.detailRightContainer}
-          onPress={() => {
-            closeModal();
-            router.push({
-              pathname: "/agreement/PrivacyTermsAndConditions",
-            });
-          }}
-        >
-          <Ionicons
-            name="chevron-forward"
-            size={20}
-            color={localColor.text.gray}
-          />
-        </TouchableOpacity>
-      </View>
-
-      <View style={{ height: 8 }} />
-
-      <View style={styles.detailContainer}>
-        <TouchableOpacity
-          style={styles.detailLeftContainer}
-          onPress={() => {
-            setAgreeValue({
-              ...agreeValue,
-              isMarketingAgree: !isMarketingAgree,
-            });
-          }}
-        >
-          <Ionicons
-            name="checkmark"
-            size={20}
-            color={
-              isMarketingAgree ? localColor.text.black : localColor.text.gray
-            }
-          />
-          <Text
-            style={[
-              styles.detailText,
-              {
-                color: isMarketingAgree
-                  ? localColor.text.black
-                  : localColor.text.gray,
-              },
-            ]}
+            <Ionicons name={isServiceAgree ? 'checkbox' : 'square-outline'} size={20} color={isServiceAgree ? colors.primary : colors.text.disabled} />
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: isServiceAgree ? colors.text.primary : colors.text.secondary }}>
+              {text.serviceAgree}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => { closeModal(); router.push({ pathname: '/agreement/ServiceTermsAndConditions' }); }}
+            hitSlop={8}
           >
-            {" "}
+            <Ionicons name="chevron-forward" size={18} color={colors.text.disabled} />
+          </TouchableOpacity>
+        </View>
+
+        {/* 개인정보 처리방침 */}
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <TouchableOpacity
+            onPress={() => setAgreeValue({ ...agreeValue, isPrivacyAgree: !isPrivacyAgree })}
+            style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm, flex: 1, paddingVertical: spacing.md }}
+          >
+            <Ionicons name={isPrivacyAgree ? 'checkbox' : 'square-outline'} size={20} color={isPrivacyAgree ? colors.primary : colors.text.disabled} />
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: isPrivacyAgree ? colors.text.primary : colors.text.secondary }}>
+              {text.privacyAgree}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => { closeModal(); router.push({ pathname: '/agreement/PrivacyTermsAndConditions' }); }}
+            hitSlop={8}
+          >
+            <Ionicons name="chevron-forward" size={18} color={colors.text.disabled} />
+          </TouchableOpacity>
+        </View>
+
+        {/* 마케팅 수신 동의 */}
+        <TouchableOpacity
+          onPress={() => setAgreeValue({ ...agreeValue, isMarketingAgree: !isMarketingAgree })}
+          style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm, paddingVertical: spacing.md }}
+        >
+          <Ionicons name={isMarketingAgree ? 'checkbox' : 'square-outline'} size={20} color={isMarketingAgree ? colors.primary : colors.text.disabled} />
+          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: isMarketingAgree ? colors.text.primary : colors.text.secondary }}>
             {text.marketingAgree}
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{ height: 32 }} />
 
-      <View style={styles.buttonSection}>
-        <View style={styles.buttonContainer}>
-          <SquareButton
-            disabled={!isServiceAgree || !isPrivacyAgree}
-            onPress={() => handleSignupPress()}
-            label={text.signup}
-          />
-        </View>
-      </View>
+      {/* 회원가입 버튼 */}
+      <TouchableOpacity
+        disabled={!canSignup}
+        onPress={handleSignupPress}
+        style={{
+          marginTop: spacing.xl,
+          paddingVertical: spacing.lg,
+          borderRadius: radius.md,
+          borderCurve: 'continuous',
+          backgroundColor: canSignup ? colors.primary : colors.border,
+          alignItems: 'center',
+        }}
+      >
+        <Text style={{
+          fontFamily: typography.heading.fontFamily,
+          fontSize: 16,
+          fontWeight: '700',
+          color: canSignup ? '#fff' : colors.text.disabled,
+        }}>
+          {text.signup}
+        </Text>
+      </TouchableOpacity>
     </BottomSheetView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: 16,
-  },
-  AllAgreeBottonContainer: {
-    width: "90%",
-  },
-  allAgreeBotton: {
-    backgroundColor: "#E6E6E6",
-    padding: 16,
-    borderRadius: 10,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  allAgreeText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: localColor.text.gray,
-  },
-  detailContainer: {
-    width: "90%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  detailLeftContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 48,
-  },
-  detailRightContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 48,
-  },
-  detailText: {
-    color: localColor.text.gray,
-    fontSize: 16,
-  },
-  buttonSection: {
-    alignItems: "center",
-    width: "90%",
-    flexDirection: "row",
-    paddingBottom: 32,
-  },
-  buttonContainer: {
-    flex: 1,
-    alignSelf: "stretch",
-  },
-
-  button: {
-    alignSelf: "stretch",
-  },
-});

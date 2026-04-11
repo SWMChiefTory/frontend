@@ -1,6 +1,7 @@
 import axios, { isAxiosError } from 'axios';
 import { findAccessToken } from './secure-storage';
 import { refreshToken } from './refresh-token';
+import { useMarketStore } from '../store/marketStore';
 
 declare module 'axios' {
   export interface AxiosRequestConfig {
@@ -17,9 +18,13 @@ function isNetworkError(error: unknown): boolean {
   return isAxiosError(error) && !error.response && Boolean(error.request);
 }
 
-// Request: skipAuth가 아니면 토큰 자동 첨부
+// Request: 토큰 + market 헤더 자동 첨부
 client.interceptors.request.use(
   async (config) => {
+    // market 헤더 (언어 설정에 따라 서버 응답 다르게)
+    const market = useMarketStore.getState().market;
+    if (market) config.headers['X-Market'] = market;
+
     if (config.skipAuth) return config;
     const token = await findAccessToken();
     if (token) config.headers.Authorization = token;

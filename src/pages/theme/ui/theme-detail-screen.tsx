@@ -8,6 +8,7 @@ import { DishListCard } from '../components/dish-list-card';
 import { MoodSelectorSheet, type MoodSelectorSheetRef } from '../components/mood-selector-sheet';
 import { CategorySelectorSheet, type CategorySelectorSheetRef } from '../components/category-selector-sheet';
 import { track, ThemeEvents } from '@/src/shared/analytics';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 type ThemeDetailScreenProps = {
   theme: ThemeData;
@@ -15,6 +16,8 @@ type ThemeDetailScreenProps = {
 
 export function ThemeDetailScreen({ theme }: ThemeDetailScreenProps) {
   const isDark = theme.mode === 'dark';
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   // ─── 카테고리 우선 (있으면 mood 모달 대신 사용) ───
   const useCategoryMode = !!theme.categories && theme.categories.length > 0;
@@ -166,7 +169,7 @@ export function ThemeDetailScreen({ theme }: ThemeDetailScreenProps) {
                   color: '#555',
                 }}
               >
-                바꾸기
+                {t.change}
               </Text>
             </Pressable>
           </View>
@@ -195,9 +198,7 @@ export function ThemeDetailScreen({ theme }: ThemeDetailScreenProps) {
                 color: colors.text.disabled,
               }}
             >
-              {useCategoryMode
-                ? '이 카테고리의 요리가 아직 없어요'
-                : '이 분위기의 요리가 아직 없어요'}
+              {useCategoryMode ? t.emptyCategory : t.emptyMood}
             </Text>
           </View>
         )}
@@ -214,7 +215,7 @@ export function ThemeDetailScreen({ theme }: ThemeDetailScreenProps) {
                 paddingHorizontal: spacing.lg,
               }}
             >
-              이런 카테고리는 어때요?
+              {t.otherCategories}
             </Text>
             <ScrollView
               horizontal
@@ -266,7 +267,7 @@ export function ThemeDetailScreen({ theme }: ThemeDetailScreenProps) {
                 paddingHorizontal: spacing.lg,
               }}
             >
-              이런 분위기는 어때요?
+              {t.otherMoods}
             </Text>
             <ScrollView
               horizontal
@@ -324,3 +325,20 @@ export function ThemeDetailScreen({ theme }: ThemeDetailScreenProps) {
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    emptyCategory: '이 카테고리의 요리가 아직 없어요',
+    emptyMood: '이 분위기의 요리가 아직 없어요',
+    otherCategories: '이런 카테고리는 어때요?',
+    otherMoods: '이런 분위기는 어때요?',
+    change: '바꾸기',
+  },
+  GLOBAL: {
+    emptyCategory: 'No recipes in this category yet',
+    emptyMood: 'No recipes for this mood yet',
+    otherCategories: 'How about these categories?',
+    otherMoods: 'How about these moods?',
+    change: 'Change',
+  },
+} as const;

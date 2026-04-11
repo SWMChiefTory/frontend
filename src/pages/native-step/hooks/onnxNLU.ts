@@ -167,7 +167,8 @@ export async function createNLU(): Promise<NLUInstance> {
 
     const modelAsset = Asset.fromModule(require('../../../../assets/models/nlu/model_quantized.onnx'));
     await modelAsset.downloadAsync();
-    const session = await InferenceSession.create(modelAsset.localUri!);
+    const modelPath = decodeURIComponent(modelAsset.localUri!.replace('file://', ''));
+    const session = await InferenceSession.create(modelPath);
 
     console.log(
       `[NLU] Model loaded in ${Date.now() - startMs}ms, inputs:`,

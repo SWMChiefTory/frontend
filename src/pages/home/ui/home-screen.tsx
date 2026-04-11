@@ -8,6 +8,7 @@ import { HomeHeader } from '@/src/pages/home/components/home-header';
 import { FeatureCards } from '@/src/pages/home/components/feature-cards';
 import { ThemeCardsSection, RecipeListSection, RecentRecipeSection, RecentRecipeSkeleton, RecipeListSkeleton, CreatingRecipeSection } from '@/src/pages/home/components/recipe-section';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 import {
   MOCK_THEME_CARDS,
   MOCK_HOT_RECIPES,
@@ -39,6 +40,8 @@ type HomeScreenProps = {
 export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenProps) {
   const [lockedModal, setLockedModal] = useState<string | null>(null);
   const rechargeSheetRef = useRef<CreditRechargeSheetRef>(null);
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   const { data: popularData, isLoading: popularLoading } = useRecommendRecipes(RecommendType.POPULAR);
   const { data: myRecipesData, isLoading: myRecipesLoading } = useMyRecipes();
@@ -130,18 +133,21 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
           </>
         ) : null}
 
-        <ThemeCardsSection
-          cards={MOCK_THEME_CARDS}
-          onPress={handleThemePress}
-        />
-
-        <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
+        {market !== 'GLOBAL' && (
+          <>
+            <ThemeCardsSection
+              cards={MOCK_THEME_CARDS}
+              onPress={handleThemePress}
+            />
+            <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
+          </>
+        )}
 
         {popularLoading ? (
-          <RecipeListSkeleton title="지금 핫한 레시피" />
+          <RecipeListSkeleton title={t.hotRecipes} />
         ) : (
           <RecipeListSection
-            title="지금 핫한 레시피"
+            title={t.hotRecipes}
             recipes={hotRecipes}
             onPress={handleRecipePress}
           />
@@ -172,18 +178,18 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
           >
             <Ionicons name="lock-closed" size={40} color={colors.text.disabled} />
             <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 18, fontWeight: '700', color: colors.text.primary }}>
-              준비 중이에요
+              {t.comingSoon}
             </Text>
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.secondary, textAlign: 'center' }}>
-              {lockedModal} 기능이{'\n'}곧 출시될 예정이에요!
+              {t.comingSoonDesc(lockedModal ?? '')}
             </Text>
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.secondary }}>
-              이 기능이 필요하신가요?
+              {t.needThisFeature}
             </Text>
             <View style={{ flexDirection: 'row', gap: spacing.md }}>
               <Pressable
                 onPress={() => {
-                  Alert.alert('감사합니다!', '추천이 반영되었습니다.');
+                  Alert.alert(t.thankYou, t.recommendationApplied);
                   setLockedModal(null);
                 }}
                 style={{
@@ -196,7 +202,7 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
                 }}
               >
                 <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, fontWeight: '600', color: colors.primary }}>
-                  👍 필요해
+                  {t.yes}
                 </Text>
               </Pressable>
               <Pressable
@@ -211,7 +217,7 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
                 }}
               >
                 <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, fontWeight: '600', color: colors.text.secondary }}>
-                  👎 괜찮아
+                  {t.no}
                 </Text>
               </Pressable>
             </View>
@@ -224,3 +230,26 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    hotRecipes: '지금 핫한 레시피',
+    comingSoon: '준비 중이에요',
+    comingSoonDesc: (feature: string) => `${feature} 기능이\n곧 출시될 예정이에요!`,
+    needThisFeature: '이 기능이 필요하신가요?',
+    thankYou: '감사합니다!',
+    recommendationApplied: '추천이 반영되었습니다.',
+    yes: '👍 필요해',
+    no: '👎 괜찮아',
+  },
+  GLOBAL: {
+    hotRecipes: 'Trending Recipes',
+    comingSoon: 'Coming Soon',
+    comingSoonDesc: (feature: string) => `${feature} is\ncoming soon!`,
+    needThisFeature: 'Do you need this feature?',
+    thankYou: 'Thank you!',
+    recommendationApplied: 'Your feedback has been noted.',
+    yes: '👍 Yes, I need it',
+    no: '👎 Not really',
+  },
+} as const;

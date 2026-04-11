@@ -16,6 +16,7 @@ import {
 import { fetchRecommendRecipes, RecommendType } from '@/src/entities/recipe/api/recommend-api';
 import { ToryEmptyState } from '@/src/shared/components/tory-empty-state';
 import { track, SearchEvents } from '@/src/shared/analytics';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 function useDebounce(value: string, delay: number) {
   const [debounced, setDebounced] = useState(value);
@@ -32,6 +33,8 @@ export default function SearchScreen() {
   const [input, setInput] = useState('');
   const [submittedQuery, setSubmittedQuery] = useState('');
   const debouncedInput = useDebounce(input, 300);
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   const { data: autocomplete } = useQuery({
     queryKey: ['autocomplete', debouncedInput],
@@ -135,7 +138,7 @@ export default function SearchScreen() {
             <TextInput
               value={input}
               onChangeText={(t) => { setInput(t); setSubmittedQuery(''); }}
-              placeholder="레시피를 검색하세요"
+              placeholder={t.placeholder}
               placeholderTextColor={colors.text.disabled}
               returnKeyType="search"
               onSubmitEditing={() => handleSubmit(input)}
@@ -183,11 +186,11 @@ export default function SearchScreen() {
             <View style={{ gap: spacing.md }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: spacing.xl }}>
                 <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 16, fontWeight: '700', color: colors.text.primary }}>
-                  최근 검색어
+                  {t.recentSearches}
                 </Text>
                 <Pressable onPress={handleDeleteAllHistory}>
                   <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.disabled }}>
-                    전체 삭제
+                    {t.clearAll}
                   </Text>
                 </Pressable>
               </View>
@@ -221,7 +224,7 @@ export default function SearchScreen() {
           {/* 인기 검색어 */}
           <View style={{ gap: spacing.md, paddingTop: spacing.xl }}>
             <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 16, fontWeight: '700', color: colors.text.primary, paddingHorizontal: spacing.xl }}>
-              인기 검색어
+              {t.popularKeywords}
             </Text>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, paddingHorizontal: spacing.xl }}>
               {popularKeywords.map((kw, i) => (
@@ -253,7 +256,7 @@ export default function SearchScreen() {
           {trendingData && trendingData.data.length > 0 && (
             <View style={{ gap: spacing.md, paddingTop: spacing.xl }}>
               <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 16, fontWeight: '700', color: colors.text.primary, paddingHorizontal: spacing.xl }}>
-                지금 뜨는 레시피
+                {t.trending}
               </Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: spacing.xl, gap: spacing.md }}>
                 {trendingData.data.slice(0, 8).map((r) => (
@@ -315,7 +318,7 @@ export default function SearchScreen() {
                     }}
                     numberOfLines={1}
                   >
-                    유튜브에서 '{submittedQuery}' 검색
+                    {t.youtubeSearch(submittedQuery)}
                   </Text>
                 </View>
                 <Ionicons name="open-outline" size={16} color={colors.text.disabled} />
@@ -343,7 +346,7 @@ export default function SearchScreen() {
                     {item.recipeTitle}
                   </Text>
                   <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, color: colors.text.secondary }}>
-                    {item.channelTitle} {item.cookingTime ? `· ${item.cookingTime}분` : ''}
+                    {item.channelTitle} {item.cookingTime ? t.cookingTime(item.cookingTime) : ''}
                   </Text>
                 </View>
               </Pressable>
@@ -353,8 +356,8 @@ export default function SearchScreen() {
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: spacing.xl }}>
             <ToryEmptyState
               variant="search"
-              title="검색 결과가 없어요"
-              description={`'${submittedQuery}'와 일치하는 레시피를 찾지 못했어요`}
+              title={t.noResults}
+              description={t.noResultsDesc(submittedQuery)}
             />
             <Pressable
               onPress={() => openYoutubeSearch(submittedQuery)}
@@ -378,7 +381,7 @@ export default function SearchScreen() {
                   color: colors.text.secondary,
                 }}
               >
-                유튜브에서 '{submittedQuery}' 검색
+                {t.youtubeSearch(submittedQuery)}
               </Text>
               <Ionicons name="open-outline" size={16} color={colors.text.disabled} />
             </Pressable>
@@ -388,3 +391,28 @@ export default function SearchScreen() {
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    placeholder: '레시피를 검색하세요',
+    recentSearches: '최근 검색어',
+    clearAll: '전체 삭제',
+    popularKeywords: '인기 검색어',
+    trending: '지금 뜨는 레시피',
+    noResults: '검색 결과가 없어요',
+    noResultsDesc: (q: string) => `'${q}'와 일치하는 레시피를 찾지 못했어요`,
+    youtubeSearch: (q: string) => `유튜브에서 '${q}' 검색`,
+    cookingTime: (t: number) => `· ${t}분`,
+  },
+  GLOBAL: {
+    placeholder: 'Search recipes',
+    recentSearches: 'Recent searches',
+    clearAll: 'Clear all',
+    popularKeywords: 'Popular keywords',
+    trending: 'Trending recipes',
+    noResults: 'No results found',
+    noResultsDesc: (q: string) => `No recipes found matching '${q}'`,
+    youtubeSearch: (q: string) => `Search '${q}' on YouTube`,
+    cookingTime: (t: number) => `· ${t} min`,
+  },
+} as const;

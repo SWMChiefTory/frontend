@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import { View, Text, Pressable, useWindowDimensions, ScrollView } from 'react-native';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 import { Image } from 'expo-image';
 import Animated, {
   useSharedValue,
@@ -35,18 +36,31 @@ type OnboardingScreenProps = {
 }
 
 // ─── Step 1: 레시피 등록 플로우 ───
-const STEP1_STATES = [
+const STEP1_STATES_KO = [
   { id: 'youtube', image: APP_SHARE_1, title: '유튜브에서 레시피 영상을 찾아요', subtitle: '평소 보던 요리 영상 그대로 OK!' },
   { id: 'share_sheet', image: APP_SHARE_2, title: '공유 버튼을 눌러 쉐프토리로 보내요', subtitle: '공유 시트에서 쉐프토리를 선택' },
   { id: 'create_confirm', image: APP_SHARE_3, title: '레시피 생성 확인', subtitle: '버튼 한 번이면 자동으로 정리돼요' },
   { id: 'home_saved', image: APP_HOME, title: '내 레시피에 저장 완료!', subtitle: '언제든 꺼내 볼 수 있어요' },
 ] as const;
 
+const STEP1_STATES_EN = [
+  { id: 'youtube', image: APP_SHARE_1, title: 'Find a recipe video on YouTube', subtitle: 'Any cooking video you like works!' },
+  { id: 'share_sheet', image: APP_SHARE_2, title: 'Share it to Cheftory', subtitle: 'Select Cheftory from the share sheet' },
+  { id: 'create_confirm', image: APP_SHARE_3, title: 'Confirm recipe creation', subtitle: 'One tap and it\'s automatically organized' },
+  { id: 'home_saved', image: APP_HOME, title: 'Saved to your recipes!', subtitle: 'Access it anytime' },
+] as const;
+
 // ─── Step 2: 쿠킹 모드 학습 ───
-const STEP2_STATES = [
+const STEP2_STATES_KO = [
   { id: 'overview', image: APP_DETAIL_2_2, title: '레시피 한눈에 보기', subtitle: '재료, 단계, 시간을 정리해서 보여줘요' },
   { id: 'detail', image: APP_DETAIL_2_1, title: '단계별로 자세히', subtitle: '각 단계의 설명과 영상 구간을 확인하세요' },
   { id: 'cooking', image: APP_COOKING, title: '음성으로 핸즈프리 요리', subtitle: '"다음", "이전"만 말하면 단계가 넘어가요' },
+] as const;
+
+const STEP2_STATES_EN = [
+  { id: 'overview', image: APP_DETAIL_2_2, title: 'Recipe at a glance', subtitle: 'Ingredients, steps, and timing — all organized' },
+  { id: 'detail', image: APP_DETAIL_2_1, title: 'Step by step detail', subtitle: 'See descriptions and video timestamps for each step' },
+  { id: 'cooking', image: APP_COOKING, title: 'Hands-free voice cooking', subtitle: 'Just say "next" or "back" to navigate steps' },
 ] as const;
 
 type Phase = 'step1' | 'step2' | 'step3';
@@ -58,6 +72,10 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   const [step1Index, setStep1Index] = useState(0);
   const [step2Index, setStep2Index] = useState(0);
   const [startedAt] = useState(() => Date.now());
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
+  const STEP1_STATES = market === 'GLOBAL' ? STEP1_STATES_EN : STEP1_STATES_KO;
+  const STEP2_STATES = market === 'GLOBAL' ? STEP2_STATES_EN : STEP2_STATES_KO;
 
   // 온보딩 시작 트래킹
   useEffect(() => {
@@ -127,7 +145,7 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   }
 
   const current = phase === 'step1' ? STEP1_STATES[step1Index] : STEP2_STATES[step2Index];
-  const sectionLabel = phase === 'step1' ? 'STEP 1 · 레시피 등록' : 'STEP 2 · 쿠킹 모드';
+  const sectionLabel = phase === 'step1' ? t.step1Label : t.step2Label;
 
   return (
     <View style={{ flex: 1, backgroundColor: BG, paddingTop: insets.top }}>
@@ -163,7 +181,7 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
               color: colors.text.disabled,
             }}
           >
-            건너뛰기
+            {t.skip}
           </Text>
         </Pressable>
       </View>
@@ -206,11 +224,14 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
           {current.subtitle}
         </Text>
 
-        <Image
-          source={current.image}
-          style={{ flex: 1, width: width * 0.7, marginTop: spacing.lg, marginBottom: spacing.xxxl }}
-          contentFit="contain"
-        />
+        <View style={{ flex: 1, width: width * 0.7, marginTop: spacing.lg, marginBottom: spacing.xxxl }}>
+          <Image
+            source={current.image}
+            style={{ flex: 1, width: '100%' }}
+            contentFit="contain"
+          />
+          {current.id === 'youtube' && <TappingPaw />}
+        </View>
       </Pressable>
 
       {/* 하단 네비게이션 */}
@@ -255,7 +276,7 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
               color: colors.text.inverse,
             }}
           >
-            다음
+            {t.next}
           </Text>
         </Pressable>
       </View>
@@ -275,6 +296,8 @@ function CompletionStep({
   onPrev: () => void;
   startedAt: number;
 }) {
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   const { data: popular } = useRecommendRecipes(RecommendType.POPULAR);
   const recipes = popular?.data?.slice(0, 3) ?? [];
 
@@ -349,7 +372,7 @@ function CompletionStep({
             textAlign: 'center',
           }}
         >
-          준비 완료!
+          {t.completionTitle}
         </Text>
         <Text
           style={{
@@ -360,7 +383,7 @@ function CompletionStep({
             marginTop: -spacing.sm,
           }}
         >
-          이제 토리와 함께 요리를 시작해볼까요?
+          {t.completionSubtitle}
         </Text>
 
         {/* 메인 CTA */}
@@ -385,7 +408,7 @@ function CompletionStep({
               color: colors.text.inverse,
             }}
           >
-            쉐프토리 시작하기
+            {t.startCooking}
           </Text>
         </Pressable>
 
@@ -401,7 +424,7 @@ function CompletionStep({
         >
           <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
           <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, color: colors.text.disabled }}>
-            또는 인기 레시피 둘러보기
+            {t.orBrowsePopular}
           </Text>
           <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
         </View>
@@ -491,3 +514,94 @@ function FloatingTory() {
   );
 }
 
+
+const PAW_PRINT = require('@/assets/images/paw-print.png');
+
+function TappingPaw() {
+  const translateY = useSharedValue(0);
+  const opacity = useSharedValue(0.8);
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    // 반복: 내려가서 탭 → 올라옴
+    translateY.value = withRepeat(
+      withSequence(
+        withTiming(6, { duration: 400, easing: Easing.out(Easing.cubic) }),
+        withTiming(0, { duration: 300, easing: Easing.in(Easing.cubic) }),
+        withTiming(0, { duration: 800 }), // 대기
+      ),
+      -1,
+      false,
+    );
+    // 탭할 때 살짝 눌리는 효과
+    scale.value = withRepeat(
+      withSequence(
+        withTiming(0.85, { duration: 400 }),
+        withTiming(1, { duration: 300 }),
+        withTiming(1, { duration: 800 }),
+      ),
+      -1,
+      false,
+    );
+    // 탭할 때 진해졌다 연해지기
+    opacity.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: 400 }),
+        withTiming(0.6, { duration: 300 }),
+        withTiming(0.8, { duration: 800 }),
+      ),
+      -1,
+      false,
+    );
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateY: translateY.value },
+      { scale: scale.value },
+    ],
+    opacity: opacity.value,
+  }));
+
+  return (
+    <Animated.View
+      style={[
+        {
+          position: 'absolute',
+          // Share 버튼 위치: 이미지 기준 약 40% left, 62% top
+          left: '36%',
+          top: '59%',
+          width: 32,
+          height: 32,
+        },
+        animatedStyle,
+      ]}
+      pointerEvents="none"
+    >
+      <Image source={PAW_PRINT} style={{ width: 32, height: 32 }} contentFit="contain" />
+    </Animated.View>
+  );
+}
+
+const TEXTS = {
+  KOREA: {
+    skip: '건너뛰기',
+    next: '다음',
+    step1Label: 'STEP 1 · 레시피 등록',
+    step2Label: 'STEP 2 · 쿠킹 모드',
+    completionTitle: '준비 완료!',
+    completionSubtitle: '이제 토리와 함께 요리를 시작해볼까요?',
+    startCooking: '쉐프토리 시작하기',
+    orBrowsePopular: '또는 인기 레시피 둘러보기',
+  },
+  GLOBAL: {
+    skip: 'Skip',
+    next: 'Next',
+    step1Label: 'STEP 1 · Add Recipe',
+    step2Label: 'STEP 2 · Cooking Mode',
+    completionTitle: 'You\'re all set!',
+    completionSubtitle: 'Ready to start cooking with Tory?',
+    startCooking: 'Start Cheftory',
+    orBrowsePopular: 'Or browse popular recipes',
+  },
+} as const;

@@ -8,7 +8,6 @@
  *
  * 지원 인텐트:
  *   NEXT_STEP / PREV_STEP / PLAY / PAUSE
- *   GO_TO_STEP             - "5단계", "스텝 3"
  *   GO_TO_SCENE_NUMBER     - "1번", "2번 장면", "장면 3"
  *   TIMER_START            - "타이머 5분 켜줘", "5분 알람"
  *   TIMER_CANCEL           - "타이머 취소", "알람 꺼"

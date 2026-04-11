@@ -8,6 +8,7 @@ import BottomSheet, {
 import { typography, spacing, radius } from '@/src/shared/design/tokens';
 import type { ThemeCategory } from '@/src/entities/theme';
 import { getCategoryImage } from './category-images';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 export type CategorySelectorSheetRef = {
   open: () => void;
@@ -31,6 +32,8 @@ export const CategorySelectorSheet = forwardRef<
 ) {
   const sheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['85%'], []);
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   useImperativeHandle(ref, () => ({
     open: () => sheetRef.current?.expand(),
@@ -76,7 +79,7 @@ export const CategorySelectorSheet = forwardRef<
               textAlign: 'center',
             }}
           >
-            오늘은 누구의 한 끼예요?
+            {t.title}
           </Text>
           <Text
             style={{
@@ -86,7 +89,7 @@ export const CategorySelectorSheet = forwardRef<
               textAlign: 'center',
             }}
           >
-            토리가 딱 맞는 요리 골라줄게요
+            {t.subtitle}
           </Text>
         </View>
 
@@ -157,10 +160,23 @@ export const CategorySelectorSheet = forwardRef<
               textDecorationLine: 'underline',
             }}
           >
-            토리한테 다 맡길래요
+            {t.showAll}
           </Text>
         </Pressable>
       </BottomSheetScrollView>
     </BottomSheet>
   );
 });
+
+const TEXTS = {
+  KOREA: {
+    title: '오늘은 누구의 한 끼예요?',
+    subtitle: '토리가 딱 맞는 요리 골라줄게요',
+    showAll: '토리한테 다 맡길래요',
+  },
+  GLOBAL: {
+    title: "Who's this meal for?",
+    subtitle: 'Tory will pick the perfect recipe',
+    showAll: 'Show me everything',
+  },
+} as const;

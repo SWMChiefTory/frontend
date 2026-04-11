@@ -1,5 +1,6 @@
 import { View, Text, Pressable, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 import * as Haptics from 'expo-haptics';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -35,6 +36,8 @@ function toRecipeCards(recipes: UserRecipe[]): RecipeCard[] {
 export function BookmarkScreen() {
   const insets = useSafeAreaInsets();
   const queryClient = useQueryClient();
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const categorySheetRef = useRef<BottomSheetModal>(null);
   const addCategorySheetRef = useRef<BottomSheetModal>(null);
@@ -50,7 +53,7 @@ export function BookmarkScreen() {
   );
 
   const categories = useMemo(() => {
-    const cats: { id: string; name: string }[] = [{ id: 'all', name: '전체' }];
+    const cats: { id: string; name: string }[] = [{ id: 'all', name: t.all }];
     if (categoriesData) {
       cats.push(...categoriesData.map((c) => ({ id: c.categoryId, name: c.name })));
     }
@@ -114,7 +117,7 @@ export function BookmarkScreen() {
       changeCategorySheetRef.current?.dismiss();
       setSelectedRecipe(null);
     } catch {
-      Alert.alert('오류', '카테고리 변경에 실패했어요');
+      Alert.alert(t.error, t.categoryChangeFailed);
     }
   }, [selectedRecipe, categories, queryClient]);
 
@@ -134,7 +137,7 @@ export function BookmarkScreen() {
       addCategorySheetRef.current?.dismiss();
       setNewCategoryName('');
     } catch {
-      Alert.alert('오류', '카테고리 생성에 실패했어요');
+      Alert.alert(t.error, t.categoryCreateFailed);
     }
   }, [newCategoryName, queryClient]);
 
@@ -149,10 +152,10 @@ export function BookmarkScreen() {
     });
     const recipeCount =
       categoriesData?.find((c) => c.categoryId === cat.id)?.count ?? 0;
-    Alert.alert('삭제', `"${cat.name}" 카테고리를 삭제할까요?`, [
-      { text: '취소', style: 'cancel' },
+    Alert.alert(t.delete, t.deleteCategoryConfirm(cat.name), [
+      { text: t.cancel, style: 'cancel' },
       {
-        text: '삭제',
+        text: t.delete,
         style: 'destructive',
         onPress: async () => {
           try {
@@ -165,7 +168,7 @@ export function BookmarkScreen() {
             queryClient.invalidateQueries({ queryKey: ['categories'] });
             if (selectedCategory === cat.id) setSelectedCategory('all');
           } catch {
-            Alert.alert('오류', '삭제에 실패했어요');
+            Alert.alert(t.error, t.deleteFailed);
           }
         },
       },
@@ -186,7 +189,7 @@ export function BookmarkScreen() {
           }}
         >
           <Text style={{ fontFamily: typography.heading.fontFamily, ...typography.heading.h2, color: colors.text.primary }}>
-            나의 레시피
+            {t.myRecipes}
           </Text>
           <Pressable onPress={handleCategoryManage} hitSlop={8}>
             <Ionicons name="list-outline" size={22} color={colors.text.secondary} />
@@ -215,10 +218,10 @@ export function BookmarkScreen() {
           <Image source={EMPTY_STATE} style={{ width: 140, height: 140 }} contentFit="contain" />
           <View style={{ alignItems: 'center', gap: spacing.xs }}>
             <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 16, fontWeight: '700', color: colors.text.primary }}>
-              {selectedCategory === 'all' ? '아직 저장된 레시피가 없어요' : '이 카테고리에 레시피가 없어요'}
+              {selectedCategory === 'all' ? t.emptyAll : t.emptyCategory}
             </Text>
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
-              유튜브 URL로 첫 레시피를 만들어보세요!
+              {t.emptyHint}
             </Text>
           </View>
         </View>
@@ -251,7 +254,7 @@ export function BookmarkScreen() {
         <BottomSheetView style={{ padding: spacing.lg, gap: spacing.lg }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 18, fontWeight: '700', color: colors.text.primary }}>
-              카테고리 관리
+              {t.categoryManage}
             </Text>
             <Pressable onPress={() => categorySheetRef.current?.dismiss()}>
               <Ionicons name="close" size={22} color={colors.text.secondary} />
@@ -260,7 +263,7 @@ export function BookmarkScreen() {
 
           {categories.filter((c) => c.id !== 'all').length === 0 ? (
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.disabled, textAlign: 'center', paddingVertical: spacing.xl }}>
-              카테고리가 없어요
+              {t.noCategories}
             </Text>
           ) : (
             categories.filter((c) => c.id !== 'all').map((cat) => (
@@ -292,12 +295,12 @@ export function BookmarkScreen() {
       >
         <BottomSheetView style={{ padding: spacing.xl, gap: spacing.md }}>
           <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 18, fontWeight: '700', color: colors.text.primary }}>
-            카테고리 추가
+            {t.categoryAdd}
           </Text>
           <BottomSheetTextInput
             value={newCategoryName}
             onChangeText={setNewCategoryName}
-            placeholder="카테고리 이름"
+            placeholder={t.categoryNamePlaceholder}
             placeholderTextColor={colors.text.disabled}
             autoFocus
             style={{
@@ -322,7 +325,7 @@ export function BookmarkScreen() {
             }}
           >
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 15, fontWeight: '600', color: '#fff' }}>
-              추가하기
+              {t.addButton}
             </Text>
           </Pressable>
         </BottomSheetView>
@@ -359,14 +362,14 @@ export function BookmarkScreen() {
             style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md }}
           >
             <Ionicons name="mic" size={20} color={colors.primary} />
-            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>음성 모드로 시작</Text>
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>{t.startVoiceMode}</Text>
           </Pressable>
           <Pressable
             onPress={handleChangeCategory}
             style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md }}
           >
             <Ionicons name="folder-outline" size={20} color={colors.text.secondary} />
-            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>카테고리 변경</Text>
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>{t.changeCategory}</Text>
           </Pressable>
           <Pressable
             onPress={() => {
@@ -374,12 +377,12 @@ export function BookmarkScreen() {
               recipeActionSheetRef.current?.dismiss();
               if (!recipe) return;
               Alert.alert(
-                '레시피 삭제',
-                `"${recipe.title}"을(를) 삭제할까요?`,
+                t.deleteRecipe,
+                t.deleteRecipeConfirm(recipe.title),
                 [
-                  { text: '취소', style: 'cancel' },
+                  { text: t.cancel, style: 'cancel' },
                   {
-                    text: '삭제',
+                    text: t.delete,
                     style: 'destructive',
                     onPress: async () => {
                       try {
@@ -388,7 +391,7 @@ export function BookmarkScreen() {
                         queryClient.invalidateQueries({ queryKey: ['myRecipes'] });
                         queryClient.invalidateQueries({ queryKey: ['categorizedRecipes'] });
                       } catch {
-                        Alert.alert('오류', '삭제에 실패했어요');
+                        Alert.alert(t.error, t.deleteFailed);
                       }
                     },
                   },
@@ -398,7 +401,7 @@ export function BookmarkScreen() {
             style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md }}
           >
             <Ionicons name="trash-outline" size={20} color={colors.semantic.error} />
-            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.semantic.error }}>삭제</Text>
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.semantic.error }}>{t.delete}</Text>
           </Pressable>
         </BottomSheetView>
       </BottomSheetModal>
@@ -419,18 +422,26 @@ export function BookmarkScreen() {
       >
         <BottomSheetView style={{ padding: spacing.xl, gap: spacing.md }}>
           <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 18, fontWeight: '700', color: colors.text.primary }}>
-            카테고리 선택
+            {t.categorySelect}
           </Text>
           {categories.filter((c) => c.id !== 'all').length === 0 ? (
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.disabled, paddingVertical: spacing.lg, textAlign: 'center' }}>
-              카테고리가 없어요. 먼저 카테고리를 추가해주세요.
+              {t.noCategoriesHint}
             </Text>
           ) : (
             categories.filter((c) => c.id !== 'all').map((cat) => (
               <Pressable
                 key={cat.id}
                 onPress={() => handleSelectCategory(cat.id)}
-                style={{ paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.border }}
+                style={{
+                  paddingVertical: spacing.md,
+                  paddingHorizontal: spacing.lg,
+                  marginVertical: spacing.xs,
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  borderRadius: radius.md,
+                  borderCurve: 'continuous',
+                }}
               >
                 <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary }}>{cat.name}</Text>
               </Pressable>
@@ -441,3 +452,56 @@ export function BookmarkScreen() {
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    all: '전체',
+    myRecipes: '나의 레시피',
+    emptyAll: '아직 저장된 레시피가 없어요',
+    emptyCategory: '이 카테고리에 레시피가 없어요',
+    emptyHint: '유튜브 URL로 첫 레시피를 만들어보세요!',
+    categoryManage: '카테고리 관리',
+    noCategories: '카테고리가 없어요',
+    noCategoriesHint: '카테고리가 없어요. 먼저 카테고리를 추가해주세요.',
+    categoryAdd: '카테고리 추가',
+    categoryNamePlaceholder: '카테고리 이름',
+    addButton: '추가하기',
+    categorySelect: '카테고리 선택',
+    startVoiceMode: '음성 모드로 시작',
+    changeCategory: '카테고리 변경',
+    delete: '삭제',
+    deleteRecipe: '레시피 삭제',
+    deleteRecipeConfirm: (title: string) => `"${title}"을(를) 삭제할까요?`,
+    deleteCategoryConfirm: (name: string) => `"${name}" 카테고리를 삭제할까요?`,
+    cancel: '취소',
+    error: '오류',
+    categoryChangeFailed: '카테고리 변경에 실패했어요',
+    categoryCreateFailed: '카테고리 생성에 실패했어요',
+    deleteFailed: '삭제에 실패했어요',
+  },
+  GLOBAL: {
+    all: 'All',
+    myRecipes: 'My Recipes',
+    emptyAll: 'No recipes saved yet',
+    emptyCategory: 'No recipes in this category',
+    emptyHint: 'Add your first recipe with a YouTube URL!',
+    categoryManage: 'Manage Categories',
+    noCategories: 'No categories yet',
+    noCategoriesHint: 'No categories found. Please add one first.',
+    categoryAdd: 'Add Category',
+    categoryNamePlaceholder: 'Category name',
+    addButton: 'Add',
+    categorySelect: 'Select Category',
+    startVoiceMode: 'Start Voice Mode',
+    changeCategory: 'Change Category',
+    delete: 'Delete',
+    deleteRecipe: 'Delete Recipe',
+    deleteRecipeConfirm: (title: string) => `Delete "${title}"?`,
+    deleteCategoryConfirm: (name: string) => `Delete category "${name}"?`,
+    cancel: 'Cancel',
+    error: 'Error',
+    categoryChangeFailed: 'Failed to change category',
+    categoryCreateFailed: 'Failed to create category',
+    deleteFailed: 'Failed to delete',
+  },
+} as const;

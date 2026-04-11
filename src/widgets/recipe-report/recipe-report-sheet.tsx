@@ -6,14 +6,22 @@ import * as Haptics from 'expo-haptics';
 import { useReportRecipe, type RecipeReportReason } from '@/src/entities/recipe-report';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { track, ReportEvents, ContactEvents } from '@/src/shared/analytics';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 const KAKAO_OPEN_CHAT_URL = 'https://open.kakao.com/o/sXzywB7h';
 
-const REASONS: { id: RecipeReportReason; label: string; icon: keyof typeof Ionicons.glyphMap; color: string }[] = [
+const REASONS_KO: { id: RecipeReportReason; label: string; icon: keyof typeof Ionicons.glyphMap; color: string }[] = [
   { id: 'INAPPROPRIATE_CONTENT', label: '부적절한 콘텐츠', icon: 'warning-outline', color: '#EF4444' },
   { id: 'MISINFORMATION', label: '잘못된 정보', icon: 'information-circle-outline', color: '#3B82F6' },
   { id: 'LOW_QUALITY', label: '낮은 품질', icon: 'remove-circle-outline', color: '#F59E0B' },
   { id: 'OTHER', label: '기타', icon: 'chatbubble-outline', color: '#6B7280' },
+];
+
+const REASONS_EN: { id: RecipeReportReason; label: string; icon: keyof typeof Ionicons.glyphMap; color: string }[] = [
+  { id: 'INAPPROPRIATE_CONTENT', label: 'Inappropriate content', icon: 'warning-outline', color: '#EF4444' },
+  { id: 'MISINFORMATION', label: 'Misinformation', icon: 'information-circle-outline', color: '#3B82F6' },
+  { id: 'LOW_QUALITY', label: 'Low quality', icon: 'remove-circle-outline', color: '#F59E0B' },
+  { id: 'OTHER', label: 'Other', icon: 'chatbubble-outline', color: '#6B7280' },
 ];
 
 export type RecipeReportSheetRef = {
@@ -28,6 +36,9 @@ export const RecipeReportSheet = forwardRef<RecipeReportSheetRef>(function Recip
   const [step, setStep] = useState<'select' | 'detail'>('select');
   const [selectedReason, setSelectedReason] = useState<RecipeReportReason | null>(null);
   const [description, setDescription] = useState('');
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
+  const REASONS = market === 'GLOBAL' ? REASONS_EN : REASONS_KO;
 
   const { mutate: report, isPending } = useReportRecipe();
 
@@ -59,7 +70,7 @@ export const RecipeReportSheet = forwardRef<RecipeReportSheetRef>(function Recip
     try {
       await Linking.openURL(KAKAO_OPEN_CHAT_URL);
     } catch {
-      Alert.alert('오류', '카카오톡 열기에 실패했어요');
+      Alert.alert(t.errorTitle, t.kakaoError);
     }
   }, []);
 
@@ -81,15 +92,15 @@ export const RecipeReportSheet = forwardRef<RecipeReportSheetRef>(function Recip
             reason: selectedReason,
             description: description.trim() || undefined,
           });
-          Alert.alert('신고 완료', '신고가 접수되었어요. 검토 후 조치하겠습니다.');
+          Alert.alert(t.reportSuccess, t.reportSuccessMessage);
           reportRef.current?.dismiss();
         },
         onError: (error: any) => {
           const errorCode = error?.response?.data?.errorCode;
           if (errorCode === 'REPORT_001') {
-            Alert.alert('이미 신고한 레시피', '이 레시피는 이미 신고하신 상태예요');
+            Alert.alert(t.alreadyReported, t.alreadyReportedMessage);
           } else {
-            Alert.alert('오류', '신고 처리에 실패했어요');
+            Alert.alert(t.errorTitle, t.reportError);
           }
         },
       },
@@ -127,7 +138,7 @@ export const RecipeReportSheet = forwardRef<RecipeReportSheetRef>(function Recip
           >
             <Ionicons name="flag-outline" size={20} color={colors.text.secondary} />
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 15, fontWeight: '500', color: colors.text.primary }}>
-              신고하기
+              {t.report}
             </Text>
           </Pressable>
           <Pressable
@@ -144,7 +155,7 @@ export const RecipeReportSheet = forwardRef<RecipeReportSheetRef>(function Recip
           >
             <Ionicons name="chatbubbles-outline" size={20} color={colors.text.secondary} />
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 15, fontWeight: '500', color: colors.text.primary }}>
-              문의하기
+              {t.contact}
             </Text>
           </Pressable>
         </BottomSheetView>
@@ -179,7 +190,7 @@ export const RecipeReportSheet = forwardRef<RecipeReportSheetRef>(function Recip
                     color: colors.primary,
                   }}
                 >
-                  뒤로
+                  {t.back}
                 </Text>
               </Pressable>
             ) : (
@@ -193,7 +204,7 @@ export const RecipeReportSheet = forwardRef<RecipeReportSheetRef>(function Recip
                 color: colors.text.primary,
               }}
             >
-              레시피 신고
+              {t.reportTitle}
             </Text>
             <Pressable onPress={() => reportRef.current?.dismiss()} hitSlop={8}>
               <Ionicons name="close" size={22} color={colors.text.secondary} />
@@ -210,7 +221,7 @@ export const RecipeReportSheet = forwardRef<RecipeReportSheetRef>(function Recip
                   marginBottom: spacing.xs,
                 }}
               >
-                신고 사유를 선택해주세요
+                {t.selectReason}
               </Text>
               {REASONS.map((r) => (
                 <Pressable
@@ -273,7 +284,7 @@ export const RecipeReportSheet = forwardRef<RecipeReportSheetRef>(function Recip
               <BottomSheetTextInput
                 value={description}
                 onChangeText={(t) => setDescription(t.slice(0, 500))}
-                placeholder="자세한 내용을 알려주세요 (선택)"
+                placeholder={t.detailPlaceholder}
                 placeholderTextColor={colors.text.disabled}
                 multiline
                 style={{
@@ -320,7 +331,7 @@ export const RecipeReportSheet = forwardRef<RecipeReportSheetRef>(function Recip
                     color: colors.text.inverse,
                   }}
                 >
-                  {isPending ? '제출 중...' : '신고 제출'}
+                  {isPending ? t.submitting : t.submitButton}
                 </Text>
               </Pressable>
             </View>
@@ -330,3 +341,40 @@ export const RecipeReportSheet = forwardRef<RecipeReportSheetRef>(function Recip
     </>
   );
 });
+
+const TEXTS = {
+  KOREA: {
+    report: '신고하기',
+    contact: '문의하기',
+    back: '뒤로',
+    reportTitle: '레시피 신고',
+    selectReason: '신고 사유를 선택해주세요',
+    detailPlaceholder: '자세한 내용을 알려주세요 (선택)',
+    submitting: '제출 중...',
+    submitButton: '신고 제출',
+    errorTitle: '오류',
+    kakaoError: '카카오톡 열기에 실패했어요',
+    reportSuccess: '신고 완료',
+    reportSuccessMessage: '신고가 접수되었어요. 검토 후 조치하겠습니다.',
+    alreadyReported: '이미 신고한 레시피',
+    alreadyReportedMessage: '이 레시피는 이미 신고하신 상태예요',
+    reportError: '신고 처리에 실패했어요',
+  },
+  GLOBAL: {
+    report: 'Report',
+    contact: 'Contact us',
+    back: 'Back',
+    reportTitle: 'Report Recipe',
+    selectReason: 'Select a reason for reporting',
+    detailPlaceholder: 'Tell us more (optional)',
+    submitting: 'Submitting...',
+    submitButton: 'Submit report',
+    errorTitle: 'Error',
+    kakaoError: 'Failed to open KakaoTalk',
+    reportSuccess: 'Report submitted',
+    reportSuccessMessage: 'Your report has been received. We\'ll review and take action.',
+    alreadyReported: 'Already reported',
+    alreadyReportedMessage: 'You\'ve already reported this recipe',
+    reportError: 'Failed to submit report',
+  },
+} as const;

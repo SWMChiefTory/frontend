@@ -289,7 +289,8 @@ const styles = StyleSheet.create({
     height: responsiveHeight(50),
     backgroundColor: COLORS.background.white,
     borderRadius: responsiveWidth(8),
-    ...SHADOW,
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
     justifyContent: "center",
   },
   buttonContent: {
@@ -304,7 +305,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: responsiveFontSize(16),
     fontWeight: "700",
-    color: COLORS.text.gray,
+    color: '#111111',
     fontFamily: "NotoSerifKR_400Regular",
   },
 });

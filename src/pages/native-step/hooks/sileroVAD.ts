@@ -28,8 +28,11 @@ export async function createSileroVAD(): Promise<SileroVADInstance> {
     throw new Error('Failed to download Silero VAD model');
   }
 
+  // Release 빌드에서 localUri가 URL 인코딩됨 (Application%20Support → Application Support)
+  const modelPath = decodeURIComponent(asset.localUri.replace('file://', ''));
+
   // CPU EP 강제 — CoreML/NNAPI의 LSTM 호환성 문제 회피
-  const session = await InferenceSession.create(asset.localUri, {
+  const session = await InferenceSession.create(modelPath, {
     executionProviders: ['cpu'],
   });
   console.log('[SileroVAD] v4 loaded, inputs:', session.inputNames, 'outputs:', session.outputNames);

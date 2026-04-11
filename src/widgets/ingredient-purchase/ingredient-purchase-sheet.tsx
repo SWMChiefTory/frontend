@@ -7,6 +7,7 @@ import * as Haptics from 'expo-haptics';
 import { useCoupangSearch, type IngredientProduct } from '@/src/entities/affiliate';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { track, CoupangEvents } from '@/src/shared/analytics';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 export type IngredientPurchaseSheetRef = {
   open: (ingredientNames: string[], recipeId?: string) => void;
@@ -21,6 +22,8 @@ export const IngredientPurchaseSheet = forwardRef<IngredientPurchaseSheetRef>(
     const recipeIdRef = useRef<string>('');
     const openedAtRef = useRef(0);
     const clickedProductsRef = useRef<string[]>([]);
+    const market = useMarketStore(s => s.market);
+    const t = TEXTS[market ?? 'KOREA'];
 
     const { data: products = [], isLoading } = useCoupangSearch(ingredients, enabled);
 
@@ -105,7 +108,7 @@ export const IngredientPurchaseSheet = forwardRef<IngredientPurchaseSheetRef>(
                 color: colors.text.primary,
               }}
             >
-              재료 한 번에 사기
+              {t.title}
             </Text>
             <Text
               style={{
@@ -115,7 +118,7 @@ export const IngredientPurchaseSheet = forwardRef<IngredientPurchaseSheetRef>(
                 marginTop: 4,
               }}
             >
-              이 페이지의 일부 링크는 쿠팡 파트너스 활동의 일환으로 수수료를 받습니다
+              {t.affiliateDisclaimer}
             </Text>
           </View>
 
@@ -129,7 +132,7 @@ export const IngredientPurchaseSheet = forwardRef<IngredientPurchaseSheetRef>(
               <View style={{ paddingVertical: 60, alignItems: 'center', gap: spacing.sm }}>
                 <Ionicons name="cart-outline" size={48} color={colors.text.disabled} />
                 <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.disabled }}>
-                  검색 결과가 없어요
+                  {t.noResults}
                 </Text>
               </View>
             ) : (
@@ -170,7 +173,7 @@ export const IngredientPurchaseSheet = forwardRef<IngredientPurchaseSheetRef>(
                           borderRadius: 4,
                         }}
                       >
-                        <Text style={{ fontSize: 9, fontWeight: '700', color: '#fff' }}>로켓</Text>
+                        <Text style={{ fontSize: 9, fontWeight: '700', color: '#fff' }}>{t.rocket}</Text>
                       </View>
                     )}
                   </View>
@@ -207,7 +210,7 @@ export const IngredientPurchaseSheet = forwardRef<IngredientPurchaseSheetRef>(
                         color: colors.text.primary,
                       }}
                     >
-                      {p.price.toLocaleString()}원
+                      {t.price(p.price)}
                     </Text>
                   </View>
 
@@ -223,3 +226,20 @@ export const IngredientPurchaseSheet = forwardRef<IngredientPurchaseSheetRef>(
     );
   },
 );
+
+const TEXTS = {
+  KOREA: {
+    title: '재료 한 번에 사기',
+    affiliateDisclaimer: '이 페이지의 일부 링크는 쿠팡 파트너스 활동의 일환으로 수수료를 받습니다',
+    noResults: '검색 결과가 없어요',
+    rocket: '로켓',
+    price: (p: number) => `${p.toLocaleString()}원`,
+  },
+  GLOBAL: {
+    title: 'Buy ingredients at once',
+    affiliateDisclaimer: 'Some links on this page earn a commission as part of an affiliate program',
+    noResults: 'No results found',
+    rocket: 'Rocket',
+    price: (p: number) => `₩${p.toLocaleString()}`,
+  },
+} as const;

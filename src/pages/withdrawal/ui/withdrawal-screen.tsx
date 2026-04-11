@@ -18,8 +18,9 @@ import { colors, spacing, radius, typography } from '@/src/shared/design/tokens'
 import { useEffect } from 'react';
 import { useUserStore, useDeleteAccount } from '@/src/entities/user';
 import { track, AccountEvents } from '@/src/shared/analytics';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
-const REASONS: { id: string; label: string; key: string }[] = [
+const REASONS_KO: { id: string; label: string; key: string }[] = [
   { id: '1', label: '앱 사용법이 복잡해서', key: 'complex_to_use' },
   { id: '2', label: '필요한 기능이 부족해서', key: 'lack_features' },
   { id: '3', label: '다른 서비스를 이용하기 위해서', key: 'use_other_service' },
@@ -29,10 +30,14 @@ const REASONS: { id: string; label: string; key: string }[] = [
   { id: '7', label: '기타', key: 'other' },
 ];
 
-const INFO_ITEMS = [
-  '저장된 모든 레시피 및 즐겨찾기',
-  '생성한 카테고리 및 요리 기록',
-  '회원 개인 정보',
+const REASONS_EN: { id: string; label: string; key: string }[] = [
+  { id: '1', label: 'The app is too complicated to use', key: 'complex_to_use' },
+  { id: '2', label: 'Missing features I need', key: 'lack_features' },
+  { id: '3', label: 'Switching to another service', key: 'use_other_service' },
+  { id: '4', label: 'I no longer cook', key: 'no_more_cooking' },
+  { id: '5', label: 'Not enough time to use it', key: 'no_time' },
+  { id: '6', label: 'Using a different cooking app', key: 'use_other_app' },
+  { id: '7', label: 'Other', key: 'other' },
 ];
 
 export default function WithdrawalScreen() {
@@ -40,6 +45,9 @@ export default function WithdrawalScreen() {
   const queryClient = useQueryClient();
   const user = useUserStore((s) => s.user);
   const { mutate: deleteAccount, isPending } = useDeleteAccount();
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
+  const REASONS = market === 'GLOBAL' ? REASONS_EN : REASONS_KO;
 
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [feedbacks, setFeedbacks] = useState<Record<string, string>>({});
@@ -74,12 +82,12 @@ export default function WithdrawalScreen() {
 
   const handleSubmit = useCallback(() => {
     Alert.alert(
-      '정말 탈퇴하시겠어요?',
-      '탈퇴하면 모든 데이터가 영구 삭제됩니다.',
+      t.confirmTitle,
+      t.confirmMessage,
       [
-        { text: '취소', style: 'cancel' },
+        { text: t.cancel, style: 'cancel' },
         {
-          text: '탈퇴',
+          text: t.deleteAction,
           style: 'destructive',
           onPress: () => {
             const reasonKeys = REASONS.filter((r) => selected.has(r.id)).map((r) => r.key);
@@ -90,20 +98,20 @@ export default function WithdrawalScreen() {
             });
             deleteAccount(undefined, {
               onSuccess: () => queryClient.clear(),
-              onError: () => Alert.alert('오류', '탈퇴 처리에 실패했어요'),
+              onError: () => Alert.alert(t.errorTitle, t.errorMessage),
             });
           },
         },
       ],
     );
-  }, [deleteAccount, queryClient, selected, feedbacks]);
+  }, [deleteAccount, queryClient, selected, feedbacks, t, REASONS]);
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Stack.Screen
         options={{
           headerShown: true,
-          title: '회원 탈퇴',
+          title: t.screenTitle,
           headerBackButtonDisplayMode: 'minimal',
           headerStyle: { backgroundColor: colors.background },
           headerTintColor: colors.text.primary,
@@ -145,7 +153,7 @@ export default function WithdrawalScreen() {
             lineHeight: 32,
           }}
         >
-          정말 탈퇴하시나요?
+          {t.pageSubtitle}
         </Text>
 
         <View style={{ height: spacing.xl }} />
@@ -170,10 +178,10 @@ export default function WithdrawalScreen() {
                 color: colors.text.primary,
               }}
             >
-              회원탈퇴 시 다음 정보가 삭제되어요
+              {t.infoBoxTitle}
             </Text>
           </View>
-          {INFO_ITEMS.map((item, idx) => (
+          {t.infoItems.map((item, idx) => (
             <Text
               key={idx}
               style={{
@@ -199,7 +207,7 @@ export default function WithdrawalScreen() {
             color: colors.text.primary,
           }}
         >
-          떠나시는 이유를 알려주세요
+          {t.reasonSectionTitle}
         </Text>
         <View style={{ height: spacing.xs }} />
         <Text
@@ -209,7 +217,7 @@ export default function WithdrawalScreen() {
             color: colors.text.secondary,
           }}
         >
-          돌아오실 때 더 좋은 서비스를 제공할게요
+          {t.reasonSectionSubtitle}
         </Text>
 
         <View style={{ height: spacing.lg }} />
@@ -250,7 +258,7 @@ export default function WithdrawalScreen() {
               color: canSubmit ? colors.text.inverse : colors.text.disabled,
             }}
           >
-            {isPending ? '처리 중...' : '탈퇴하기'}
+            {isPending ? t.processing : t.submitButton}
           </Text>
         </Pressable>
       </ScrollView>
@@ -283,6 +291,8 @@ function ReasonItem({
   onToggle: () => void;
   onWritePress: () => void;
 }) {
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   return (
     <View
       style={{
@@ -375,7 +385,7 @@ function ReasonItem({
                 marginBottom: 2,
               }}
             >
-              작성한 의견
+              {t.writtenFeedback}
             </Text>
             <Text
               style={{
@@ -408,6 +418,8 @@ function FeedbackModal({
   const insets = useSafeAreaInsets();
   const [text, setText] = useState(initialText);
   const MAX = 500;
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   return (
     <Modal visible animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
@@ -435,7 +447,7 @@ function FeedbackModal({
                 color: colors.text.secondary,
               }}
             >
-              취소
+              {t.cancel}
             </Text>
           </Pressable>
           <Text
@@ -446,7 +458,7 @@ function FeedbackModal({
               color: colors.text.primary,
             }}
           >
-            자세한 의견 작성
+            {t.modalTitle}
           </Text>
           <Pressable onPress={() => onSave(text.trim())} hitSlop={8}>
             <Text
@@ -457,7 +469,7 @@ function FeedbackModal({
                 color: colors.primary,
               }}
             >
-              저장
+              {t.save}
             </Text>
           </Pressable>
         </View>
@@ -478,7 +490,7 @@ function FeedbackModal({
                 marginBottom: 2,
               }}
             >
-              선택한 이유
+              {t.selectedReason}
             </Text>
             <Text
               style={{
@@ -502,7 +514,7 @@ function FeedbackModal({
                 marginBottom: spacing.xs,
               }}
             >
-              자세한 의견을 들려주세요
+              {t.feedbackLabel}
             </Text>
             <Text
               style={{
@@ -512,12 +524,12 @@ function FeedbackModal({
                 marginBottom: spacing.sm,
               }}
             >
-              선택사항입니다
+              {t.optional}
             </Text>
             <TextInput
               value={text}
               onChangeText={(t) => setText(t.slice(0, MAX))}
-              placeholder="더 나은 서비스를 위해 구체적인 의견을 남겨주세요..."
+              placeholder={t.feedbackPlaceholder}
               placeholderTextColor={colors.text.disabled}
               multiline
               textAlignVertical="top"
@@ -561,16 +573,16 @@ function FeedbackModal({
                 color: colors.text.primary,
               }}
             >
-              의견 작성 TIP
+              {t.tipTitle}
             </Text>
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, color: colors.text.secondary }}>
-              · 구체적인 의견일수록 서비스 개선에 큰 도움이 됩니다
+              · {t.tip1}
             </Text>
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, color: colors.text.secondary }}>
-              · 불편했던 점이나 개선이 필요한 부분을 알려주세요
+              · {t.tip2}
             </Text>
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, color: colors.text.secondary }}>
-              · 작성하신 내용은 익명으로 처리됩니다
+              · {t.tip3}
             </Text>
           </View>
         </ScrollView>
@@ -578,3 +590,60 @@ function FeedbackModal({
     </Modal>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    screenTitle: '회원 탈퇴',
+    pageSubtitle: '정말 탈퇴하시나요?',
+    infoBoxTitle: '회원탈퇴 시 다음 정보가 삭제되어요',
+    infoItems: ['저장된 모든 레시피 및 즐겨찾기', '생성한 카테고리 및 요리 기록', '회원 개인 정보'],
+    reasonSectionTitle: '떠나시는 이유를 알려주세요',
+    reasonSectionSubtitle: '돌아오실 때 더 좋은 서비스를 제공할게요',
+    processing: '처리 중...',
+    submitButton: '탈퇴하기',
+    confirmTitle: '정말 탈퇴하시겠어요?',
+    confirmMessage: '탈퇴하면 모든 데이터가 영구 삭제됩니다.',
+    cancel: '취소',
+    deleteAction: '탈퇴',
+    errorTitle: '오류',
+    errorMessage: '탈퇴 처리에 실패했어요',
+    writtenFeedback: '작성한 의견',
+    modalTitle: '자세한 의견 작성',
+    save: '저장',
+    selectedReason: '선택한 이유',
+    feedbackLabel: '자세한 의견을 들려주세요',
+    optional: '선택사항입니다',
+    feedbackPlaceholder: '더 나은 서비스를 위해 구체적인 의견을 남겨주세요...',
+    tipTitle: '의견 작성 TIP',
+    tip1: '구체적인 의견일수록 서비스 개선에 큰 도움이 됩니다',
+    tip2: '불편했던 점이나 개선이 필요한 부분을 알려주세요',
+    tip3: '작성하신 내용은 익명으로 처리됩니다',
+  },
+  GLOBAL: {
+    screenTitle: 'Delete Account',
+    pageSubtitle: 'Are you sure you want to leave?',
+    infoBoxTitle: 'The following data will be permanently deleted',
+    infoItems: ['All saved recipes and favorites', 'Created categories and cooking history', 'Personal account information'],
+    reasonSectionTitle: 'Tell us why you\'re leaving',
+    reasonSectionSubtitle: 'We\'ll make it better for when you come back',
+    processing: 'Processing...',
+    submitButton: 'Delete Account',
+    confirmTitle: 'Delete your account?',
+    confirmMessage: 'All your data will be permanently deleted.',
+    cancel: 'Cancel',
+    deleteAction: 'Delete',
+    errorTitle: 'Error',
+    errorMessage: 'Failed to delete account',
+    writtenFeedback: 'Your feedback',
+    modalTitle: 'Write detailed feedback',
+    save: 'Save',
+    selectedReason: 'Selected reason',
+    feedbackLabel: 'Tell us more',
+    optional: 'Optional',
+    feedbackPlaceholder: 'Share specific feedback to help us improve...',
+    tipTitle: 'Writing tips',
+    tip1: 'The more specific, the more helpful it is for improving our service',
+    tip2: 'Let us know what was frustrating or needs improvement',
+    tip3: 'Your feedback will be kept anonymous',
+  },
+} as const;

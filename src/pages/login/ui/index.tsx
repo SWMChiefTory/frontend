@@ -94,11 +94,7 @@ export function LoginPage() {
     <View style={{ flex: 1 }}>
       {banner}
       <View style={styles.container}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.subTitle}>
-            {LOGIN_TEXT[currentMarket === "GLOBAL" ? "GLOBAL" : "KOREA"].subtitle}
-          </Text>
-        </View>
+        <View style={styles.titleContainer} />
         <View style={styles.buttonCotainer}>
           <GoogleLoginButton market={currentMarket} />
         </View>

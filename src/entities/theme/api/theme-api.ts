@@ -71,6 +71,12 @@ const RawThemesResponseSchema = z
 
 // ─── Transformer ───
 
+import { useMarketStore } from '@/src/shared/store/marketStore';
+
+function isGlobal(): boolean {
+  return useMarketStore.getState().market === 'GLOBAL';
+}
+
 function toThemeDish(raw: z.infer<typeof RawThemeDishSchema>, idx: number): ThemeDish | null {
   // 서버에서 처리 실패(RECIPE_008 등) 표시된 dish는 UI에서 제외
   if (raw.failed) return null;
@@ -79,6 +85,7 @@ function toThemeDish(raw: z.infer<typeof RawThemeDishSchema>, idx: number): Them
     console.warn('[ThemeAPI] invalid youtube_url, skip:', raw.youtube_url);
     return null;
   }
+  const en = isGlobal();
   return {
     id: raw.id ?? `dish-${videoId}-${idx}`,
     title: raw.title,
@@ -87,26 +94,32 @@ function toThemeDish(raw: z.infer<typeof RawThemeDishSchema>, idx: number): Them
     video_id: videoId,
     estimated_duration: raw.estimated_duration,
     tags: raw.tags as DishTags,
-    why_recommended: raw.why_recommended,
+    why_recommended: (en ? (raw as any).why_recommended_en : null) ?? raw.why_recommended,
     is_curator_pick: raw.is_curator_pick ?? false,
-    hook: raw.hook,
+    hook: (en ? (raw as any).hook_en : null) ?? raw.hook,
     recipe_id: raw.recipe_id,
     category: raw.category,
     thumbnail: raw.thumbnail,
-    dish_name: raw.dish_name,
+    dish_name: (en ? (raw as any).dish_name_en : null) ?? raw.dish_name,
     failed: raw.failed,
   };
 }
 
 function toTheme(raw: z.infer<typeof RawThemeSchema>): ThemeData {
+  const en = isGlobal();
+  const cats = raw.categories?.map(c => ({
+    ...(c as ThemeCategory),
+    name: (en ? (c as any).name_en : null) ?? c.name,
+    concept: (en ? (c as any).concept_en : null) ?? c.concept,
+  }));
   return {
     id: raw.id,
-    title: raw.title,
-    subtitle: raw.subtitle,
+    title: (en ? (raw as any).title_en : null) ?? raw.title,
+    subtitle: (en ? (raw as any).subtitle_en : null) ?? raw.subtitle,
     color: raw.color,
     mode: raw.mode,
-    curator_quote: raw.curator_quote,
-    categories: raw.categories as ThemeCategory[] | undefined,
+    curator_quote: (en ? (raw as any).curator_quote_en : null) ?? raw.curator_quote,
+    categories: cats as ThemeCategory[] | undefined,
     dishes: raw.dishes
       .map((d, i) => toThemeDish(d, i))
       .filter((d): d is ThemeDish => d !== null),
@@ -115,7 +128,19 @@ function toTheme(raw: z.infer<typeof RawThemeSchema>): ThemeData {
 
 // ─── API ───
 
+let cachedMarketKey: string | null = null;
+
 export async function fetchThemes(): Promise<ThemeData[]> {
+  const currentMarket = useMarketStore.getState().market ?? 'KOREA';
+
+  // GLOBAL(영어)에서는 한국 유튜브 큐레이션 미노출
+  if (currentMarket === 'GLOBAL') return [];
+
+  // 언어가 바뀌면 캐시 무효화 (번역 필드 다르게 매핑해야 하므로)
+  if (cachedMarketKey !== currentMarket) {
+    cachedThemes = null;
+    cachedMarketKey = currentMarket;
+  }
   if (!__DEV__ && cachedThemes) return cachedThemes;
 
   const parsed = parseOrNull(RawThemesResponseSchema, themesJson, 'ThemeAPI');

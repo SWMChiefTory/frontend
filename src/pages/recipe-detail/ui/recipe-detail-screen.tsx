@@ -1,5 +1,6 @@
 import { View, Text, Pressable, ScrollView, useWindowDimensions } from 'react-native';
 import { useCallback, useEffect, useRef } from 'react';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 
@@ -30,6 +31,8 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
   const playerRef = useRef<YoutubeIframeRef>(null);
   const reportSheetRef = useRef<RecipeReportSheetRef>(null);
   const purchaseSheetRef = useRef<IngredientPurchaseSheetRef>(null);
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   const handlePurchasePress = useCallback(() => {
     if (!recipe) return;
@@ -53,7 +56,7 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
       queryClient.invalidateQueries({ queryKey: ['recipeDetail', recipeId] });
       queryClient.invalidateQueries({ queryKey: ['balance'] });
       queryClient.invalidateQueries({ queryKey: ['myRecipes'] });
-      Alert.alert('등록 완료', '레시피가 내 레시피에 추가되었어요!');
+      Alert.alert(t.enrollSuccess, t.enrollSuccessDesc);
     },
     onError: (err: any) => {
       track(RecipeEnrollEvents.FAIL, {
@@ -61,7 +64,7 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
         source: enrollSourceRef.current,
         error_code: err?.response?.data?.errorCode ?? err?.name,
       });
-      Alert.alert('등록 실패', err?.message ?? '레시피 등록에 실패했어요');
+      Alert.alert(t.enrollFailed, err?.message ?? t.enrollFailedDesc);
     },
   });
 
@@ -107,16 +110,16 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
     enrollSourceRef.current = source;
     track(RecipeEnrollEvents.CLICK, { recipe_id: recipeId, source });
     if (currentBalance < 1) {
-      Alert.alert('베리 부족', '베리가 부족해요. 충전 후 다시 시도해주세요.');
+      Alert.alert(t.insufficientBerry, t.insufficientBerryDesc);
       return;
     }
     Alert.alert(
-      '레시피 등록',
-      '베리 1개를 사용해 이 레시피를 등록할까요?',
+      t.enrollRecipe,
+      t.enrollRecipeDesc,
       [
-        { text: '취소', style: 'cancel' },
+        { text: t.cancel, style: 'cancel' },
         {
-          text: '등록',
+          text: t.enroll,
           onPress: () => {
             const videoUrl = `https://www.youtube.com/watch?v=${recipe.videoInfo.videoId}`;
             createRecipe(videoUrl);
@@ -179,10 +182,10 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background, paddingTop: insets.top }}>
         <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 18, color: colors.text.primary }}>
-          레시피를 찾을 수 없어요
+          {t.notFound}
         </Text>
         <Pressable onPress={handleBack} style={{ marginTop: spacing.lg }}>
-          <Text style={{ color: colors.primary, fontSize: 16 }}>돌아가기</Text>
+          <Text style={{ color: colors.primary, fontSize: 16 }}>{t.goBack}</Text>
         </Pressable>
       </View>
     );
@@ -288,7 +291,7 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
               >
                 <Ionicons name="people-outline" size={14} color={colors.text.secondary} />
                 <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
-                  {recipe.servings}인분
+                  {t.servings(recipe.servings)}
                 </Text>
               </View>
             )}
@@ -320,7 +323,7 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
           <View style={{ padding: spacing.xl, gap: spacing.md }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <Text style={{ fontFamily: typography.heading.fontFamily, ...typography.heading.h2, color: colors.text.primary }}>
-                재료
+                {t.ingredients}
               </Text>
               <Pressable
                 onPress={handlePurchasePress}
@@ -336,7 +339,7 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
               >
                 <Ionicons name="cart" size={14} color={colors.primary} />
                 <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, fontWeight: '700', color: colors.primary }}>
-                  쿠팡에서 구매
+                  {t.buyOnCoupang}
                 </Text>
               </Pressable>
             </View>
@@ -355,11 +358,9 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
                   <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, fontWeight: '500', color: colors.text.primary }}>
                     {ing.name}
                   </Text>
-                  {(ing.amount || ing.unit) && (
-                    <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, color: colors.text.secondary }}>
-                      {ing.amount ?? ''}{ing.unit ?? ''}
-                    </Text>
-                  )}
+                  <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, color: colors.text.secondary }}>
+                    {ing.amount && ing.amount !== 0 ? `${ing.amount}${ing.unit ?? ''}` : t.referVideo}
+                  </Text>
                 </View>
               ))}
             </View>
@@ -373,13 +374,13 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
           <View style={{ padding: spacing.xl, gap: spacing.lg }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <Text style={{ fontFamily: typography.heading.fontFamily, ...typography.heading.h2, color: colors.text.primary }}>
-                레시피
+                {t.recipe}
               </Text>
               {!isEnrolled && (
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                   <Ionicons name="lock-closed" size={12} color={colors.text.disabled} />
                   <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, color: colors.text.disabled }}>
-                    미리보기
+                    {t.preview}
                   </Text>
                 </View>
               )}
@@ -503,7 +504,7 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
                     marginTop: spacing.xs,
                   }}
                 >
-                  나머지 {recipe.steps.length - 1}단계가 잠겨있어요
+                  {t.stepsLocked(recipe.steps.length - 1)}
                 </Text>
                 <Text
                   style={{
@@ -513,7 +514,7 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
                     textAlign: 'center',
                   }}
                 >
-                  레시피를 등록하고 전체 단계를 확인하세요
+                  {t.enrollToUnlock}
                 </Text>
               </Pressable>
             )}
@@ -565,14 +566,14 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
           <>
             <Ionicons name="mic" size={20} color="#fff" />
             <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 15, fontWeight: '700', color: '#fff' }}>
-              음성 모드
+              {t.voiceMode}
             </Text>
           </>
         ) : (
           <>
             <Ionicons name="add-circle" size={20} color="#fff" />
             <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 15, fontWeight: '700', color: '#fff' }}>
-              {enrolling ? '등록 중...' : '레시피 등록'}
+              {enrolling ? t.enrolling : t.enrollRecipe}
             </Text>
             <View
               style={{
@@ -598,3 +599,54 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    notFound: '레시피를 찾을 수 없어요',
+    goBack: '돌아가기',
+    servings: (n: number) => `${n}인분`,
+    buyOnCoupang: '쿠팡에서 구매',
+    ingredients: '재료',
+    referVideo: '영상참고',
+    recipe: '레시피',
+    preview: '미리보기',
+    stepsLocked: (n: number) => `나머지 ${n}단계가 잠겨있어요`,
+    enrollToUnlock: '레시피를 등록하고 전체 단계를 확인하세요',
+    insufficientBerry: '베리 부족',
+    insufficientBerryDesc: '베리가 부족해요. 충전 후 다시 시도해주세요.',
+    enrollRecipe: '레시피 등록',
+    enrollRecipeDesc: '베리 1개를 사용해 이 레시피를 등록할까요?',
+    cancel: '취소',
+    enroll: '등록',
+    enrollSuccess: '등록 완료',
+    enrollSuccessDesc: '레시피가 내 레시피에 추가되었어요!',
+    enrollFailed: '등록 실패',
+    enrollFailedDesc: '레시피 등록에 실패했어요',
+    enrolling: '등록 중...',
+    voiceMode: '음성 모드',
+  },
+  GLOBAL: {
+    notFound: 'Recipe not found',
+    goBack: 'Go back',
+    servings: (n: number) => `${n} servings`,
+    buyOnCoupang: 'Buy on Coupang',
+    ingredients: 'Ingredients',
+    referVideo: 'See video',
+    recipe: 'Recipe',
+    preview: 'Preview',
+    stepsLocked: (n: number) => `${n} more steps are locked`,
+    enrollToUnlock: 'Enroll this recipe to see all steps',
+    insufficientBerry: 'Not enough berries',
+    insufficientBerryDesc: 'You need more berries. Please recharge and try again.',
+    enrollRecipe: 'Enroll Recipe',
+    enrollRecipeDesc: 'Use 1 Berry to enroll this recipe?',
+    cancel: 'Cancel',
+    enroll: 'Enroll',
+    enrollSuccess: 'Enrolled!',
+    enrollSuccessDesc: 'The recipe has been added to your collection!',
+    enrollFailed: 'Enrollment Failed',
+    enrollFailedDesc: 'Failed to enroll this recipe',
+    enrolling: 'Enrolling...',
+    voiceMode: 'Voice Mode',
+  },
+} as const;

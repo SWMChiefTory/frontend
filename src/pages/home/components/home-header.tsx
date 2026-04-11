@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { colors, spacing, radius } from '@/src/shared/design/tokens';
 import { useBalance } from '@/src/entities/balance';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 const BERRY_ICON = require('@/assets/images/berry-icon.png');
 
@@ -16,6 +17,8 @@ type HomeHeaderProps = {
 export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: HomeHeaderProps) {
   const insets = useSafeAreaInsets();
   const { data: balance } = useBalance();
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   return (
     <View style={{ paddingTop: insets.top }}>
@@ -78,10 +81,19 @@ export function HomeHeader({ onBerryPress, onSearchPress, onSettingsPress }: Hom
         >
           <Ionicons name="search-outline" size={18} color={colors.text.disabled} />
           <Text style={{ fontSize: 14, color: colors.text.disabled }}>
-            레시피를 검색하세요
+            {t.searchPlaceholder}
           </Text>
         </Pressable>
       </View>
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    searchPlaceholder: '레시피를 검색하세요',
+  },
+  GLOBAL: {
+    searchPlaceholder: 'Search recipes',
+  },
+} as const;

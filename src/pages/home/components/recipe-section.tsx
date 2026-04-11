@@ -7,6 +7,7 @@ import { Skeleton } from '@/src/shared/components/skeleton';
 import type { RecipeCard, ThemeCard } from '@/src/shared/data/mock';
 import { useRecipeCreateStore } from '@/src/pages/home/model/recipe-create-store';
 import { useRecipeProgress, RecipeStatus } from '@/src/entities/recipe';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 type ThemeCardsSectionProps = {
   cards: ThemeCard[];
@@ -14,6 +15,8 @@ type ThemeCardsSectionProps = {
 }
 
 export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   return (
     <View
       style={{
@@ -29,7 +32,7 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
           paddingHorizontal: spacing.lg,
         }}
       >
-        이런 요리 어때요?
+        {t.themeTitle}
       </Text>
       <Text
         style={{
@@ -40,7 +43,7 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
           marginTop: -spacing.sm,
         }}
       >
-        토리가 직접 엄선했어요!
+        {t.themeSubtitle}
       </Text>
     <ScrollView
       horizontal
@@ -123,6 +126,8 @@ type RecentRecipeSectionProps = {
 
 export function CreatingRecipeSection() {
   const creating = useRecipeCreateStore((s) => s.creatingRecipes);
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   if (creating.length === 0) return null;
 
   return (
@@ -135,7 +140,7 @@ export function CreatingRecipeSection() {
             color: colors.text.primary,
           }}
         >
-          생성 중인 레시피
+          {t.creatingTitle}
         </Text>
         <Text
           style={{
@@ -144,7 +149,7 @@ export function CreatingRecipeSection() {
             color: colors.text.secondary,
           }}
         >
-          완료되면 알림으로 알려드릴게요
+          {t.creatingSubtitle}
         </Text>
       </View>
       <ScrollView
@@ -161,6 +166,8 @@ export function CreatingRecipeSection() {
 }
 
 export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionProps) {
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   return (
     <View
       style={{
@@ -177,7 +184,7 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
           paddingHorizontal: spacing.lg,
         }}
       >
-        최근 레시피
+        {t.recentRecipes}
       </Text>
       <ScrollView
         horizontal
@@ -235,7 +242,7 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
               >
                 <Ionicons name="mic" size={12} color="#fff" />
                 <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 11, fontWeight: '600', color: '#fff' }}>
-                  음성 모드
+                  {t.voiceMode}
                 </Text>
               </Pressable>
             </View>
@@ -250,6 +257,8 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
 function CreatingRecipeCard({ recipeId }: { recipeId: string }) {
   const { data: status } = useRecipeProgress(recipeId);
   const removeCreating = useRecipeCreateStore((s) => s.removeCreating);
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   const isDone = status === RecipeStatus.SUCCESS;
   const isFailed =
@@ -258,10 +267,10 @@ function CreatingRecipeCard({ recipeId }: { recipeId: string }) {
     status === RecipeStatus.BANNED;
 
   const statusText = isDone
-    ? '생성 완료'
+    ? t.statusDone
     : isFailed
-      ? '레시피 생성 실패'
-      : '레시피 생성 중...';
+      ? t.statusFailed
+      : t.statusCreating;
   const statusColor = isDone ? colors.semantic.success : isFailed ? colors.semantic.error : colors.primary;
 
   return (
@@ -304,7 +313,7 @@ function CreatingRecipeCard({ recipeId }: { recipeId: string }) {
           }}
           numberOfLines={2}
         >
-          새 레시피
+          {t.newRecipe}
         </Text>
         <Text
           style={{
@@ -461,3 +470,30 @@ export function RecipeListSkeleton({ title }: { title: string }) {
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    themeTitle: '이런 요리 어때요?',
+    themeSubtitle: '토리가 직접 엄선했어요!',
+    creatingTitle: '생성 중인 레시피',
+    creatingSubtitle: '완료되면 알림으로 알려드릴게요',
+    recentRecipes: '최근 레시피',
+    voiceMode: '음성 모드',
+    newRecipe: '새 레시피',
+    statusDone: '생성 완료',
+    statusFailed: '레시피 생성 실패',
+    statusCreating: '레시피 생성 중...',
+  },
+  GLOBAL: {
+    themeTitle: 'What should we cook?',
+    themeSubtitle: 'Hand-picked by Tory!',
+    creatingTitle: 'Creating Recipes',
+    creatingSubtitle: "We'll notify you when it's ready",
+    recentRecipes: 'Recent Recipes',
+    voiceMode: 'Voice Mode',
+    newRecipe: 'New Recipe',
+    statusDone: 'Done',
+    statusFailed: 'Creation Failed',
+    statusCreating: 'Creating...',
+  },
+} as const;

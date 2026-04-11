@@ -8,6 +8,7 @@ import * as Haptics from 'expo-haptics';
 import { useBalance, useRechargeBalance, LimitExceededError, CREDIT_PER_SHARE } from '@/src/entities/balance';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { track, RechargeEvents } from '@/src/shared/analytics';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 type Step = 'clipboard' | 'kakao' | 'success';
 
@@ -27,6 +28,8 @@ export const CreditRechargeSheet = forwardRef<CreditRechargeSheetRef>(function C
   const [step, setStep] = useState<Step>('clipboard');
   const [rechargeAmount, setRechargeAmount] = useState<number | null>(null);
   const { data: balance } = useBalance();
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   useImperativeHandle(ref, () => ({
     open: () => {
@@ -63,7 +66,7 @@ export const CreditRechargeSheet = forwardRef<CreditRechargeSheetRef>(function C
               color: colors.text.primary,
             }}
           >
-            크레딧 충전하기
+            {t.headerTitle}
           </Text>
           <Text
             style={{
@@ -73,7 +76,7 @@ export const CreditRechargeSheet = forwardRef<CreditRechargeSheetRef>(function C
               marginTop: 4,
             }}
           >
-            친구에게 쉐프토리를 공유하고 크레딧을 받아보세요
+            {t.headerSubtitle}
           </Text>
         </View>
 
@@ -108,10 +111,12 @@ export const CreditRechargeSheet = forwardRef<CreditRechargeSheetRef>(function C
 // ─── Step Progress ───────────────────────────────────────────────
 function StepProgress({ current }: { current: Step }) {
   const steps: Step[] = ['clipboard', 'kakao', 'success'];
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   const labels: Record<Step, string> = {
-    clipboard: '링크 복사',
-    kakao: '공유하기',
-    success: '완료',
+    clipboard: t.stepCopy,
+    kakao: t.stepShare,
+    success: t.stepDone,
   };
   const currentIdx = steps.indexOf(current);
 
@@ -161,6 +166,8 @@ function StepProgress({ current }: { current: Step }) {
 // ─── Step 1: Clipboard ───────────────────────────────────────────
 function ClipboardStep({ onNext }: { onNext: () => void }) {
   const [copying, setCopying] = useState(false);
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   const handleCopy = useCallback(async () => {
     if (copying) return;
@@ -173,10 +180,10 @@ function ClipboardStep({ onNext }: { onNext: () => void }) {
         setCopying(false);
       }, 400);
     } catch {
-      Alert.alert('복사 실패', '다시 시도해주세요');
+      Alert.alert(t.copyErrorTitle, t.copyErrorMessage);
       setCopying(false);
     }
-  }, [copying, onNext]);
+  }, [copying, onNext, t]);
 
   return (
     <View style={{ alignItems: 'center', gap: spacing.lg, paddingVertical: spacing.md }}>
@@ -190,7 +197,7 @@ function ClipboardStep({ onNext }: { onNext: () => void }) {
             color: colors.text.primary,
           }}
         >
-          친구 초대하고 크레딧 받기
+          {t.clipboardTitle}
         </Text>
         <Text
           style={{
@@ -200,7 +207,7 @@ function ClipboardStep({ onNext }: { onNext: () => void }) {
             textAlign: 'center',
           }}
         >
-          친구에게 쉐프토리를 공유하고{'\n'}크레딧을 받아보세요!
+          {t.clipboardSubtitle}
         </Text>
       </View>
 
@@ -248,7 +255,7 @@ function ClipboardStep({ onNext }: { onNext: () => void }) {
               color: colors.text.inverse,
             }}
           >
-            {copying ? '복사 중...' : '복사하기'}
+            {copying ? t.copying : t.copyButton}
           </Text>
         </Pressable>
       </View>
@@ -264,6 +271,8 @@ function KakaoStep({
   onBack: () => void;
   onSuccess: (amount: number) => void;
 }) {
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   const { mutate: recharge, isPending } = useRechargeBalance({
     onSuccess: (data) => {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -275,7 +284,7 @@ function KakaoStep({
         openKakao();
         onSuccess(0);
       } else {
-        Alert.alert('충전 실패', err.message);
+        Alert.alert(t.rechargeErrorTitle, err.message);
       }
     },
   });
@@ -316,7 +325,7 @@ function KakaoStep({
             color: colors.text.secondary,
           }}
         >
-          뒤로
+          {t.back}
         </Text>
       </Pressable>
 
@@ -342,7 +351,7 @@ function KakaoStep({
               color: colors.text.primary,
             }}
           >
-            카카오톡으로 공유하기
+            {t.kakaoTitle}
           </Text>
           <Text
             style={{
@@ -352,7 +361,7 @@ function KakaoStep({
               textAlign: 'center',
             }}
           >
-            복사된 링크를 카카오톡으로{'\n'}친구에게 공유해주세요
+            {t.kakaoSubtitle}
           </Text>
         </View>
 
@@ -385,7 +394,7 @@ function KakaoStep({
               color: 'rgba(0,0,0,0.85)',
             }}
           >
-            {isPending ? '공유 중...' : '카카오톡으로 공유하기'}
+            {isPending ? t.sharing : t.kakaoButton}
           </Text>
         </Pressable>
       </View>
@@ -403,6 +412,8 @@ function SuccessStep({
   currentBalance: number;
   onClose: () => void;
 }) {
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   const isLoading = amount === null;
   const isLimitExceeded = amount === 0;
 
@@ -449,20 +460,20 @@ function SuccessStep({
               color: colors.text.primary,
             }}
           >
-            {isLoading ? '공유 처리 중...' : isLimitExceeded ? '공유해주셔서 감사해요!' : '공유가 완료되었어요!'}
+            {isLoading ? t.processing : isLimitExceeded ? t.thankYou : t.shareComplete}
           </Text>
           {isLimitExceeded ? (
             <View style={{ alignItems: 'center', gap: 2 }}>
               <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
-                오늘의 충전 횟수를 모두 사용했어요
+                {t.limitReached1}
               </Text>
               <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
-                내일 다시 충전할 수 있어요!
+                {t.limitReached2}
               </Text>
             </View>
           ) : (
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
-              {isLoading ? '카카오톡 공유 완료 시 자동 충전됩니다' : '친구에게 공유해주셔서 감사해요'}
+              {isLoading ? t.autoCharge : t.thankYouShare}
             </Text>
           )}
         </View>
@@ -474,7 +485,7 @@ function SuccessStep({
             color: colors.text.disabled,
           }}
         >
-          현재 베리: <Text style={{ fontWeight: '700', color: colors.text.primary }}>{currentBalance}</Text>
+          {t.currentBalance} <Text style={{ fontWeight: '700', color: colors.text.primary }}>{currentBalance}</Text>
         </Text>
       </View>
 
@@ -497,10 +508,69 @@ function SuccessStep({
               color: colors.text.inverse,
             }}
           >
-            확인
+            {t.confirm}
           </Text>
         </Pressable>
       )}
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    headerTitle: '크레딧 충전하기',
+    headerSubtitle: '친구에게 쉐프토리를 공유하고 크레딧을 받아보세요',
+    stepCopy: '링크 복사',
+    stepShare: '공유하기',
+    stepDone: '완료',
+    clipboardTitle: '친구 초대하고 크레딧 받기',
+    clipboardSubtitle: '친구에게 쉐프토리를 공유하고\n크레딧을 받아보세요!',
+    copyErrorTitle: '복사 실패',
+    copyErrorMessage: '다시 시도해주세요',
+    copying: '복사 중...',
+    copyButton: '복사하기',
+    back: '뒤로',
+    kakaoTitle: '카카오톡으로 공유하기',
+    kakaoSubtitle: '복사된 링크를 카카오톡으로\n친구에게 공유해주세요',
+    rechargeErrorTitle: '충전 실패',
+    sharing: '공유 중...',
+    kakaoButton: '카카오톡으로 공유하기',
+    processing: '공유 처리 중...',
+    thankYou: '공유해주셔서 감사해요!',
+    shareComplete: '공유가 완료되었어요!',
+    limitReached1: '오늘의 충전 횟수를 모두 사용했어요',
+    limitReached2: '내일 다시 충전할 수 있어요!',
+    autoCharge: '카카오톡 공유 완료 시 자동 충전됩니다',
+    thankYouShare: '친구에게 공유해주셔서 감사해요',
+    currentBalance: '현재 베리:',
+    confirm: '확인',
+  },
+  GLOBAL: {
+    headerTitle: 'Recharge Credits',
+    headerSubtitle: 'Share Cheftory with friends to earn credits',
+    stepCopy: 'Copy Link',
+    stepShare: 'Share',
+    stepDone: 'Done',
+    clipboardTitle: 'Invite friends & earn credits',
+    clipboardSubtitle: 'Share Cheftory with friends\nand get credits!',
+    copyErrorTitle: 'Copy failed',
+    copyErrorMessage: 'Please try again',
+    copying: 'Copying...',
+    copyButton: 'Copy link',
+    back: 'Back',
+    kakaoTitle: 'Share via KakaoTalk',
+    kakaoSubtitle: 'Share the copied link with\na friend on KakaoTalk',
+    rechargeErrorTitle: 'Recharge failed',
+    sharing: 'Sharing...',
+    kakaoButton: 'Share via KakaoTalk',
+    processing: 'Processing share...',
+    thankYou: 'Thank you for sharing!',
+    shareComplete: 'Share complete!',
+    limitReached1: 'You\'ve reached today\'s recharge limit',
+    limitReached2: 'Come back tomorrow to recharge again!',
+    autoCharge: 'Credits will be added after sharing on KakaoTalk',
+    thankYouShare: 'Thank you for sharing with a friend',
+    currentBalance: 'Current balance:',
+    confirm: 'Done',
+  },
+} as const;

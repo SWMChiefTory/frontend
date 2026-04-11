@@ -22,7 +22,6 @@ export async function cancelTimerAlarm({
   timerId: string;
 }): Promise<void> {
   try {
-    console.log("취소!!!!!!!!!!!!!!!!!!!!!!!!!!");
     await Notifications.cancelScheduledNotificationAsync(timerId);
   } catch (error) {
     console.warn("예약된 타이머 알림 취소 실패:", error);

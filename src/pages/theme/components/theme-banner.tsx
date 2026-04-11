@@ -4,6 +4,7 @@ import { colors, spacing, typography, radius } from '@/src/shared/design/tokens'
 import type { ThemeData, ThemeCategory } from '@/src/entities/theme';
 import { THEME_IMAGES } from './theme-images';
 import { getCategoryImage } from './category-images';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 type ThemeBannerProps = {
   theme: ThemeData;
@@ -14,6 +15,8 @@ type ThemeBannerProps = {
 }
 
 export function ThemeBanner({ theme, selectedCategory, onChangeCategory }: ThemeBannerProps) {
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   const isDark = theme.mode === 'dark';
   const bg = isDark ? colors.dark.background : '#FFFFFF';
   const titleColor = isDark ? '#FFFFFF' : '#111';
@@ -73,7 +76,7 @@ export function ThemeBanner({ theme, selectedCategory, onChangeCategory }: Theme
                   color: bodyColor,
                 }}
               >
-                바꾸기
+                {t.change}
               </Text>
             </Pressable>
           )}
@@ -136,3 +139,12 @@ export function ThemeBanner({ theme, selectedCategory, onChangeCategory }: Theme
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    change: '바꾸기',
+  },
+  GLOBAL: {
+    change: 'Change',
+  },
+} as const;

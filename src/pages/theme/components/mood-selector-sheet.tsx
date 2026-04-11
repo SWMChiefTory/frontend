@@ -4,6 +4,7 @@ import { Image } from 'expo-image';
 import BottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { typography, spacing, radius } from '@/src/shared/design/tokens';
 import { getMoodImage } from './mood-images';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 export type MoodSelectorSheetRef = {
   open: () => void;
@@ -21,6 +22,8 @@ export const MoodSelectorSheet = forwardRef<MoodSelectorSheetRef, MoodSelectorSh
   function MoodSelectorSheet({ moods, themeColor, themeTitle, onSelect }, ref) {
     const sheetRef = useRef<BottomSheet>(null);
     const snapPoints = useMemo(() => ['80%'], []);
+    const market = useMarketStore(s => s.market);
+    const t = TEXTS[market ?? 'KOREA'];
 
     useImperativeHandle(ref, () => ({
       open: () => sheetRef.current?.expand(),
@@ -59,7 +62,7 @@ export const MoodSelectorSheet = forwardRef<MoodSelectorSheetRef, MoodSelectorSh
                 textAlign: 'center',
               }}
             >
-              어떤 분위기로 즐겨볼까요?
+              {t.title}
             </Text>
           </View>
 
@@ -119,7 +122,7 @@ export const MoodSelectorSheet = forwardRef<MoodSelectorSheetRef, MoodSelectorSh
                 textDecorationLine: 'underline',
               }}
             >
-              전체 보기
+              {t.viewAll}
             </Text>
           </Pressable>
         </BottomSheetScrollView>
@@ -127,3 +130,14 @@ export const MoodSelectorSheet = forwardRef<MoodSelectorSheetRef, MoodSelectorSh
     );
   },
 );
+
+const TEXTS = {
+  KOREA: {
+    title: '어떤 분위기로 즐겨볼까요?',
+    viewAll: '전체 보기',
+  },
+  GLOBAL: {
+    title: 'What vibe are you feeling?',
+    viewAll: 'View all',
+  },
+} as const;

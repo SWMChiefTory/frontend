@@ -7,6 +7,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { client } from '@/src/shared/api/client';
+import { setLanguagePreference } from '@/src/shared/storage/languagePreference';
 import { useLogout } from '@/src/entities/user';
 import { useBalance } from '@/src/entities/balance';
 import { trackNative } from '@/src/shared/analytics';
@@ -15,6 +16,7 @@ import { resetAmplitudeUser } from '@/src/shared/analytics/amplitude';
 import { CreditRechargeSheet, type CreditRechargeSheetRef } from '@/src/widgets/credit-recharge/credit-recharge-sheet';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import Constants from 'expo-constants';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 const BERRY_ICON = require('@/assets/images/berry-icon.png');
 const TORY_LOGO = require('@/assets/images/tory-logo.png');
@@ -94,6 +96,8 @@ function SectionHeader({ title }: { title: string }) {
 export default function SettingsScreen() {
   const insets = useSafeAreaInsets();
   const queryClient = useQueryClient();
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   const { mutate: logout } = useLogout({
     onSettled: () => {
       trackNative(AmplitudeEvent.LOGOUT);
@@ -106,10 +110,10 @@ export default function SettingsScreen() {
   const appVersion = Constants.expoConfig?.version ?? '1.0.0';
 
   const handleLogout = () => {
-    Alert.alert('로그아웃', '정말 로그아웃 하시겠어요?', [
-      { text: '취소', style: 'cancel' },
+    Alert.alert(t.logoutTitle, t.logoutMessage, [
+      { text: t.cancel, style: 'cancel' },
       {
-        text: '로그아웃',
+        text: t.logoutAction,
         style: 'destructive',
         onPress: () => {
           logout(undefined, {
@@ -140,7 +144,7 @@ export default function SettingsScreen() {
             <Ionicons name="chevron-back" size={24} color={colors.text.primary} />
           </Pressable>
           <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 18, fontWeight: '700', color: colors.text.primary, flex: 1, textAlign: 'center' }}>
-            설정
+            {t.screenTitle}
           </Text>
           <View style={{ width: 44 }} />
         </View>
@@ -152,7 +156,7 @@ export default function SettingsScreen() {
           <Image source={TORY_LOGO} style={{ width: 72, height: 72 }} contentFit="contain" />
           <View style={{ alignItems: 'center', gap: spacing.xs }}>
             <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 20, fontWeight: '700', color: colors.text.primary }}>
-              {profile?.nickname || '로딩 중...'}
+              {profile?.nickname || t.loading}
             </Text>
             {profile?.tag ? (
               <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.secondary }}>
@@ -167,7 +171,7 @@ export default function SettingsScreen() {
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
             <Image source={BERRY_ICON} style={{ width: 24, height: 24 }} contentFit="contain" />
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, fontWeight: '600', color: colors.text.primary }}>
-              {balance?.balance ?? 0}개
+              {t.berryCount(balance?.balance ?? 0)}
             </Text>
           </View>
           <Pressable
@@ -180,38 +184,123 @@ export default function SettingsScreen() {
             }}
           >
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, fontWeight: '600', color: '#fff' }}>
-              충전
+              {t.recharge}
             </Text>
           </Pressable>
         </View>
 
-        <SectionHeader title="약관" />
-        <SettingsItem icon="document-text-outline" label="개인정보 처리방침" onPress={() => router.push('/legal/privacy-policy')} />
+        <SectionHeader title={t.sectionLegal} />
+        <SettingsItem icon="document-text-outline" label={t.privacyPolicy} onPress={() => router.push('/legal/privacy-policy')} />
         <Divider />
-        <SettingsItem icon="document-outline" label="서비스 이용약관" onPress={() => router.push('/legal/terms-of-service')} />
+        <SettingsItem icon="document-outline" label={t.termsOfService} onPress={() => router.push('/legal/terms-of-service')} />
 
-        <SectionHeader title="앱 정보" />
-        <SettingsItem icon="refresh-outline" label="온보딩 다시 보기" onPress={handleResetOnboarding} />
+        <SectionHeader title={t.sectionApp} />
+        <Pressable
+          onPress={() => {
+            Alert.alert(
+              t.languageTitle,
+              t.languageMessage,
+              [
+                {
+                  text: '한국어',
+                  onPress: async () => {
+                    await setLanguagePreference('KOREA');
+                    useMarketStore.getState().setMarket('KOREA', '');
+                  },
+                },
+                {
+                  text: 'English',
+                  onPress: async () => {
+                    await setLanguagePreference('GLOBAL');
+                    useMarketStore.getState().setMarket('GLOBAL', '');
+                  },
+                },
+                { text: t.cancel, style: 'cancel' },
+              ],
+            );
+          }}
+          style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: spacing.lg, paddingHorizontal: spacing.xl }}
+        >
+          <Ionicons name="language-outline" size={20} color={colors.text.secondary} />
+          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary, flex: 1, marginLeft: spacing.md }}>
+            {t.language}
+          </Text>
+          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.secondary }}>
+            {market === 'GLOBAL' ? 'English' : '한국어'}
+          </Text>
+          <Ionicons name="chevron-forward" size={16} color={colors.text.disabled} style={{ marginLeft: spacing.xs }} />
+        </Pressable>
+        <Divider />
+        <SettingsItem icon="refresh-outline" label={t.replayOnboarding} onPress={handleResetOnboarding} />
         <Divider />
         <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: spacing.lg, paddingHorizontal: spacing.xl }}>
           <Ionicons name="information-circle-outline" size={20} color={colors.text.secondary} />
           <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 16, color: colors.text.primary, flex: 1, marginLeft: spacing.md }}>
-            버전 정보
+            {t.versionInfo}
           </Text>
           <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.secondary }}>
             v{appVersion}
           </Text>
         </View>
 
-        <SectionHeader title="기타" />
-        <SettingsItem icon="chatbubble-ellipses-outline" label="문의하기" onPress={() => Linking.openURL(KAKAO_CHAT_URL)} />
+        <SectionHeader title={t.sectionOther} />
+        <SettingsItem icon="chatbubble-ellipses-outline" label={t.contact} onPress={() => Linking.openURL(KAKAO_CHAT_URL)} />
         <Divider />
-        <SettingsItem icon="log-out-outline" label="로그아웃" onPress={handleLogout} />
+        <SettingsItem icon="log-out-outline" label={t.logout} onPress={handleLogout} />
         <Divider />
-        <SettingsItem icon="person-remove-outline" label="회원 탈퇴" onPress={handleDeleteAccount} destructive />
+        <SettingsItem icon="person-remove-outline" label={t.deleteAccount} onPress={handleDeleteAccount} destructive />
       </ScrollView>
 
       <CreditRechargeSheet ref={rechargeSheetRef} />
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    screenTitle: '설정',
+    loading: '로딩 중...',
+    recharge: '충전',
+    berryCount: (n: number) => `${n}개`,
+    sectionLegal: '약관',
+    privacyPolicy: '개인정보 처리방침',
+    termsOfService: '서비스 이용약관',
+    sectionApp: '앱 정보',
+    language: '언어 설정',
+    languageTitle: '언어 선택',
+    languageMessage: '앱에서 사용할 언어를 선택하세요',
+    replayOnboarding: '온보딩 다시 보기',
+    versionInfo: '버전 정보',
+    sectionOther: '기타',
+    contact: '문의하기',
+    logout: '로그아웃',
+    deleteAccount: '회원 탈퇴',
+    logoutTitle: '로그아웃',
+    logoutMessage: '정말 로그아웃 하시겠어요?',
+    cancel: '취소',
+    logoutAction: '로그아웃',
+  },
+  GLOBAL: {
+    screenTitle: 'Settings',
+    loading: 'Loading...',
+    recharge: 'Recharge',
+    berryCount: (n: number) => `${n}`,
+    sectionLegal: 'Legal',
+    privacyPolicy: 'Privacy Policy',
+    termsOfService: 'Terms of Service',
+    sectionApp: 'App Info',
+    language: 'Language',
+    languageTitle: 'Select Language',
+    languageMessage: 'Choose your preferred language',
+    replayOnboarding: 'Replay onboarding',
+    versionInfo: 'App version',
+    sectionOther: 'Other',
+    contact: 'Contact us',
+    logout: 'Log out',
+    deleteAccount: 'Delete account',
+    logoutTitle: 'Log out',
+    logoutMessage: 'Are you sure you want to log out?',
+    cancel: 'Cancel',
+    logoutAction: 'Log out',
+  },
+} as const;

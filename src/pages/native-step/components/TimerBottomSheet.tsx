@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import type { Timer, StepTimerResult } from '../hooks/useStepTimer';
 import { useTimerStore } from '../hooks/useStepTimer';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 const MINUTES = Array.from({ length: 60 }, (_, i) => i);
 const SECONDS = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
@@ -70,6 +71,8 @@ export function TimerMiniBar({
   onCancel: () => void;
   onDismiss: () => void;
 }) {
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   const isFinished = timer.state === 'FINISHED';
   const isPaused = timer.state === 'PAUSED';
 
@@ -105,7 +108,7 @@ export function TimerMiniBar({
         </Text>
         {isFinished ? (
           <Pressable onPress={onDismiss} hitSlop={8} style={s.miniBarBtn}>
-            <Text style={{ color: '#22c55e', fontSize: 13, fontWeight: '600' }}>확인</Text>
+            <Text style={{ color: '#22c55e', fontSize: 13, fontWeight: '600' }}>{t.confirm}</Text>
           </Pressable>
         ) : (
           <>
@@ -142,6 +145,8 @@ export const TimerSheet = forwardRef<TimerSheetRef, TimerBottomSheetProps>(
     const bottomSheetRef = useRef<BottomSheet>(null);
     const [selectedMinutes, setSelectedMinutes] = useState(5);
     const [selectedSeconds, setSelectedSeconds] = useState(0);
+    const market = useMarketStore(s => s.market);
+    const t = TEXTS[market ?? 'KOREA'];
 
     const isSheetOpen = useTimerStore((s) => s.isSheetOpen);
     const closeSheet = useTimerStore((s) => s.closeSheet);
@@ -181,9 +186,9 @@ export const TimerSheet = forwardRef<TimerSheetRef, TimerBottomSheetProps>(
     }, [resumeTimer]);
 
     const handleCancel = useCallback(() => {
-      Alert.alert('타이머 취소', '타이머를 취소하시겠습니까?', [
-        { text: '아니오', style: 'cancel' },
-        { text: '취소', style: 'destructive', onPress: () => {
+      Alert.alert(t.cancelTimer, t.cancelTimerDesc, [
+        { text: t.no, style: 'cancel' },
+        { text: t.cancelButton, style: 'destructive', onPress: () => {
           cancelTimer();
           bottomSheetRef.current?.close();
         }},
@@ -213,16 +218,16 @@ export const TimerSheet = forwardRef<TimerSheetRef, TimerBottomSheetProps>(
         <BottomSheetView style={s.sheetContent}>
           {!timer || timer.state === 'FINISHED' ? (
             <View style={s.pickerContainer}>
-              <Text style={s.pickerTitle}>타이머 설정</Text>
+              <Text style={s.pickerTitle}>{t.timerSettings}</Text>
               <View style={s.pickerRow}>
                 <WheelPicker
-                  label="분"
+                  label={t.minutes}
                   items={MINUTES}
                   selectedIndex={MINUTES.indexOf(selectedMinutes)}
                   onSelect={(i) => setSelectedMinutes(MINUTES[i])}
                 />
                 <WheelPicker
-                  label="초"
+                  label={t.seconds}
                   items={SECONDS}
                   selectedIndex={SECONDS.indexOf(selectedSeconds)}
                   onSelect={(i) => setSelectedSeconds(SECONDS[i])}
@@ -234,13 +239,13 @@ export const TimerSheet = forwardRef<TimerSheetRef, TimerBottomSheetProps>(
                 disabled={selectedMinutes === 0 && selectedSeconds === 0}
               >
                 <Ionicons name="flame" size={18} color="#fff" />
-                <Text style={s.startBtnText}>시작</Text>
+                <Text style={s.startBtnText}>{t.start}</Text>
               </Pressable>
             </View>
           ) : (
             <View style={s.timerDetail}>
               <Text style={s.timerDetailName}>{timer.name}</Text>
-              {timer.state === 'PAUSED' && <Text style={s.pausedLabel}>일시정지</Text>}
+              {timer.state === 'PAUSED' && <Text style={s.pausedLabel}>{t.paused}</Text>}
               <Text style={[
                 s.timerDetailTime,
                 timer.state === 'PAUSED' && { opacity: 0.5 },
@@ -260,17 +265,17 @@ export const TimerSheet = forwardRef<TimerSheetRef, TimerBottomSheetProps>(
                 {timer.state === 'ACTIVE' ? (
                   <Pressable style={s.actionBtn} onPress={handlePause}>
                     <Ionicons name="pause" size={20} color="#fff" />
-                    <Text style={s.actionBtnText}>일시정지</Text>
+                    <Text style={s.actionBtnText}>{t.pause}</Text>
                   </Pressable>
                 ) : (
                   <Pressable style={s.actionBtn} onPress={handleResume}>
                     <Ionicons name="play" size={20} color="#fff" />
-                    <Text style={s.actionBtnText}>재개</Text>
+                    <Text style={s.actionBtnText}>{t.resume}</Text>
                   </Pressable>
                 )}
                 <Pressable style={[s.actionBtn, { borderColor: 'rgba(239,68,68,0.3)' }]} onPress={handleCancel}>
                   <Ionicons name="close" size={20} color="#ef4444" />
-                  <Text style={[s.actionBtnText, { color: '#ef4444' }]}>취소</Text>
+                  <Text style={[s.actionBtnText, { color: '#ef4444' }]}>{t.cancelButton}</Text>
                 </Pressable>
               </View>
             </View>
@@ -370,3 +375,34 @@ const s = StyleSheet.create({
   actionBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 24, paddingVertical: 12, borderRadius: 20, borderWidth: 1, borderColor: 'rgba(255,255,255,0.12)' },
   actionBtnText: { color: '#fff', fontSize: 14, fontWeight: '600' },
 });
+
+const TEXTS = {
+  KOREA: {
+    confirm: '확인',
+    cancelTimer: '타이머 취소',
+    cancelTimerDesc: '타이머를 취소하시겠습니까?',
+    no: '아니오',
+    cancelButton: '취소',
+    timerSettings: '타이머 설정',
+    minutes: '분',
+    seconds: '초',
+    start: '시작',
+    paused: '일시정지',
+    pause: '일시정지',
+    resume: '재개',
+  },
+  GLOBAL: {
+    confirm: 'OK',
+    cancelTimer: 'Cancel Timer',
+    cancelTimerDesc: 'Are you sure you want to cancel the timer?',
+    no: 'No',
+    cancelButton: 'Cancel',
+    timerSettings: 'Set Timer',
+    minutes: 'min',
+    seconds: 'sec',
+    start: 'Start',
+    paused: 'Paused',
+    pause: 'Pause',
+    resume: 'Resume',
+  },
+} as const;

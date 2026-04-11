@@ -5,6 +5,7 @@ import {
   getCachedMarket,
   setCachedMarket as saveCachedMarket,
 } from "../storage/marketCache";
+import { getLanguagePreference } from "../storage/languagePreference";
 import { getMarketFromDeviceLocale } from "../utils/deviceLocale";
 
 export function useMarketBootstrap() {
@@ -13,6 +14,15 @@ export function useMarketBootstrap() {
   useEffect(() => {
     const init = async () => {
       try {
+        // Step 0: 사용자가 설정에서 직접 선택한 언어 (최우선)
+        const userPref = await getLanguagePreference();
+        if (userPref) {
+          console.debug("[Market Bootstrap] ✅ 사용자 언어 설정:", userPref);
+          setCachedMarket(userPref);
+          setMarket(userPref, '');
+          return;
+        }
+
         // Step 1: AsyncStorage 캐시 확인 (5-10ms)
         const cached = await getCachedMarket();
 

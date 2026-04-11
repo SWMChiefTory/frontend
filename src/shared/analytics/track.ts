@@ -138,7 +138,6 @@ export type EventPropsMap = {
   [CookingModeEvents.START]: {
     recipe_id: string;
     total_steps: number;
-    total_details: number;
   };
   [CookingModeEvents.COMMAND]: {
     recipe_id: string;
@@ -150,14 +149,7 @@ export type EventPropsMap = {
   };
   [CookingModeEvents.END]: {
     recipe_id: string;
-    duration_seconds: number;
     total_steps: number;
-    visited_steps_unique?: number;
-    step_completion_rate?: number;
-    voice_command_count?: number;
-    touch_command_count?: number;
-    command_count?: number;
-    last_step_index?: number;
   };
 
   // ─── Search ───

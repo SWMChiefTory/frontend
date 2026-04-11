@@ -6,6 +6,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import type { PipelineState } from '../hooks/useAudioPipeline';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 type SpeechCaptionBarProps = {
   isListening: boolean;
@@ -14,6 +15,8 @@ type SpeechCaptionBarProps = {
 }
 
 export function SpeechCaptionBar({ isListening, transcript, pipelineState }: SpeechCaptionBarProps) {
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
   if (!isListening) return null;
 
   const isTranscribing = pipelineState === 'TRANSCRIBING';
@@ -26,8 +29,8 @@ export function SpeechCaptionBar({ isListening, transcript, pipelineState }: Spe
         numberOfLines={1}
       >
         {isTranscribing
-          ? transcript || '듣고 있어요...'
-          : '대기 중... (AEC ON)'}
+          ? transcript || t.listening
+          : t.standby}
       </Text>
     </View>
   );
@@ -67,3 +70,14 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.5)',
   },
 });
+
+const TEXTS = {
+  KOREA: {
+    listening: '듣고 있어요...',
+    standby: '대기 중... (AEC ON)',
+  },
+  GLOBAL: {
+    listening: 'Listening...',
+    standby: 'Standby... (AEC ON)',
+  },
+} as const;

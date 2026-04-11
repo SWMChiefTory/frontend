@@ -10,6 +10,7 @@ import { useCategories, useCreateRecipe } from '@/src/entities/recipe';
 import { useRecipeCreateStore } from '@/src/pages/home/model/recipe-create-store';
 import * as Haptics from 'expo-haptics';
 import { track, RecipeCreateEvents } from '@/src/shared/analytics';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 const BERRY_ICON = require('@/assets/images/berry-icon.png');
 
@@ -44,6 +45,8 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
   const { data: balance } = useBalance();
   const addCreating = useRecipeCreateStore((s) => s.addCreating);
   const { mutateAsync: createRecipeAsync } = useCreateRecipe();
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   useImperativeHandle(ref, () => ({
     open: (initialUrl?: string) => {
@@ -112,7 +115,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
     } catch (err: any) {
       setLoading(false);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      const msg = err?.response?.data?.message ?? err?.message ?? '레시피 생성에 실패했어요';
+      const msg = err?.response?.data?.message ?? err?.message ?? t.createFailed;
       const errorType = err?.response?.data?.errorCode ?? err?.name ?? 'unknown_error';
       track(RecipeCreateEvents.FAIL_URL, {
         entry_point: entryPointRef.current,
@@ -151,18 +154,18 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
       <BottomSheetView style={{ padding: spacing.xl, gap: spacing.md }}>
         {/* 제목 */}
         <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 20, fontWeight: '700', color: colors.text.primary }}>
-          레시피 등록하기
+          {t.title}
         </Text>
 
         {/* 베리 비용 */}
         <View style={{ alignItems: 'center', gap: spacing.xs }}>
           <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
-            등록 시 1 베리가 소모됩니다
+            {t.berryCost}
           </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.xs }}>
             <Image source={BERRY_ICON} style={{ width: 16, height: 16 }} contentFit="contain" />
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.primary, fontWeight: '600' }}>
-              보유 {balance?.balance ?? 0}개
+              {t.balance(balance?.balance ?? 0)}
             </Text>
           </View>
         </View>
@@ -174,7 +177,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
               <BottomSheetTextInput
                 value={url}
                 onChangeText={(text) => { setUrl(text); setError(null); }}
-                placeholder="YouTube URL 붙여넣기"
+                placeholder={t.urlPlaceholder}
                 placeholderTextColor={colors.text.disabled}
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -221,7 +224,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
             >
               <Ionicons name="logo-youtube" size={14} color="#fff" />
               <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, fontWeight: '600', color: '#fff' }}>
-                검색
+                {t.search}
               </Text>
             </Pressable>
           </View>
@@ -236,7 +239,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
         {categories && categories.length > 0 && (
           <View style={{ gap: spacing.sm }}>
             <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
-              카테고리 (선택)
+              {t.category}
             </Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: spacing.sm }}>
               {categories.map((cat) => {
@@ -282,7 +285,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
             <ActivityIndicator color="#fff" />
           ) : (
             <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 16, fontWeight: '700', color: '#fff' }}>
-              생성하기
+              {t.create}
             </Text>
           )}
         </Pressable>
@@ -290,3 +293,26 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
     </BottomSheet>
   );
 });
+
+const TEXTS = {
+  KOREA: {
+    title: '레시피 등록하기',
+    berryCost: '등록 시 1 베리가 소모됩니다',
+    balance: (n: number) => `보유 ${n}개`,
+    urlPlaceholder: 'YouTube URL 붙여넣기',
+    search: '검색',
+    category: '카테고리 (선택)',
+    create: '생성하기',
+    createFailed: '레시피 생성에 실패했어요',
+  },
+  GLOBAL: {
+    title: 'Add Recipe',
+    berryCost: '1 Berry will be used',
+    balance: (n: number) => `Balance: ${n}`,
+    urlPlaceholder: 'Paste YouTube URL',
+    search: 'Search',
+    category: 'Category (optional)',
+    create: 'Create',
+    createFailed: 'Failed to create recipe',
+  },
+} as const;

@@ -44,10 +44,7 @@
           "is_curator_pick": true,
           "category": "boyfriend",
           "dish_name": "밥 두 그릇 김치",
-          "recipe_id": "756a95e4-77b0-4abc-a266-e11b2ac7ed5d",
-          "hook_en": "Explosively addictive! Two bowls of rice, minimum!",
-          "why_recommended_en": "The warm broth will melt all your stress away.",
-          "dish_name_en": "Two-Bowl Kimchi"
+          "recipe_id": "756a95e4-77b0-4abc-a266-e11b2ac7ed5d"
         },
         {
           "id": "love-boyfriend-2",
@@ -85,10 +82,7 @@
           "is_curator_pick": true,
           "category": "boyfriend",
           "dish_name": "소고기 덮밥",
-          "recipe_id": "00ae3c64-e77e-473a-b4fc-e9133a877353",
-          "hook_en": "Restaurant-quality Beef Rice Bowl",
-          "why_recommended_en": "One bowl and you'll be perfectly full.",
-          "dish_name_en": "Beef Rice Bowl"
+          "recipe_id": "00ae3c64-e77e-473a-b4fc-e9133a877353"
         },
         {
           "id": "love-boyfriend-3",
@@ -126,10 +120,7 @@
           "is_curator_pick": true,
           "category": "boyfriend",
           "dish_name": "중화 비빔당면",
-          "recipe_id": "da51f3d2-3a4c-48ca-84a0-1f19d73f8a7a",
-          "hook_en": "Chef Lee Yeon-bok's spicy noodles, ready in 10!",
-          "why_recommended_en": "The perfect drinking snack with a cold beer.",
-          "dish_name_en": "Spicy Chinese Glass Noodles"
+          "recipe_id": "da51f3d2-3a4c-48ca-84a0-1f19d73f8a7a"
         },
         {
           "id": "love-boyfriend-4",
@@ -166,10 +157,7 @@
           "is_curator_pick": true,
           "category": "boyfriend",
           "dish_name": "부대찌개",
-          "recipe_id": "b5015637-4cb5-49d5-a365-dde8ba9d4a14",
-          "hook_en": "Look no further! This is the Budae Jjigae of your life!",
-          "why_recommended_en": "Its spicy, refreshing broth makes it perfect for a drink.",
-          "dish_name_en": "Budae Jjigae"
+          "recipe_id": "b5015637-4cb5-49d5-a365-dde8ba9d4a14"
         },
         {
           "id": "love-boyfriend-5",
@@ -208,10 +196,7 @@
           "is_curator_pick": true,
           "category": "boyfriend",
           "dish_name": "스테이크 덮밥",
-          "recipe_id": "3cac6b4c-8f71-4234-b9df-99ddbefce9fc",
-          "hook_en": "Whip it up quick! A gourmet steak rice bowl.",
-          "why_recommended_en": "Impress your boyfriend with this fancy meal.",
-          "dish_name_en": "Steak Rice Bowl"
+          "recipe_id": "3cac6b4c-8f71-4234-b9df-99ddbefce9fc"
         },
         {
           "id": "love-boyfriend-6",
@@ -248,10 +233,7 @@
           "is_curator_pick": true,
           "category": "boyfriend",
           "dish_name": "닭볶음탕",
-          "recipe_id": "f09eb0a9-9b58-42ad-957c-64468ad7f06e",
-          "hook_en": "Chef Baek Jong-won's recipe, the GOAT of Korean chicken dishes!",
-          "why_recommended_en": "The perfect spiciness makes rice disappear, and it's great with drinks too!",
-          "dish_name_en": "Spicy Braised Chicken Stew"
+          "recipe_id": "f09eb0a9-9b58-42ad-957c-64468ad7f06e"
         },
         {
           "id": "love-girlfriend-1",
@@ -286,10 +268,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "딸기 케이크",
-          "recipe_id": "ae3e5d2e-3c26-4c86-a5d3-a3aa8dd460d2",
-          "hook_en": "A pink cake, brimming with sweet excitement.",
-          "why_recommended_en": "One bite and you'll be all smiles.",
-          "dish_name_en": "Strawberry Cake"
+          "recipe_id": "ae3e5d2e-3c26-4c86-a5d3-a3aa8dd460d2"
         },
         {
           "id": "love-girlfriend-2",
@@ -324,10 +303,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "프렌치 토스트",
-          "recipe_id": "c976e1ad-8a4e-4d76-9421-b396796dd370",
-          "hook_en": "This is weekend morning perfection.",
-          "why_recommended_en": "So soft, you'll close your eyes to savor every bite.",
-          "dish_name_en": "French Toast"
+          "recipe_id": "c976e1ad-8a4e-4d76-9421-b396796dd370"
         },
         {
           "id": "love-girlfriend-3",
@@ -362,10 +338,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "버터 감바스",
-          "recipe_id": "60b21e77-0cc7-46f3-a9f6-3e65ba596248",
-          "hook_en": "The ultimate wine pairing.",
-          "why_recommended_en": "It sets the perfect mood for a lovely date.",
-          "dish_name_en": "Butter Gambas"
+          "recipe_id": "60b21e77-0cc7-46f3-a9f6-3e65ba596248"
         },
         {
           "id": "love-girlfriend-4",
@@ -400,10 +373,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "크리미 오므라이스",
-          "recipe_id": "d7817dc2-4914-4418-a26c-d7f124efc714",
-          "hook_en": "It just melts in your mouth.",
-          "why_recommended_en": "Its incredible softness will make you sigh with delight.",
-          "dish_name_en": "Creamy Omurice"
+          "recipe_id": "d7817dc2-4914-4418-a26c-d7f124efc714"
         },
         {
           "id": "love-girlfriend-5",
@@ -437,10 +407,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "햄치즈 토스트",
-          "recipe_id": "9bda6e30-f0fd-424f-8be0-75ff52077fbb",
-          "hook_en": "Hearty and delicious, you've got it all!",
-          "why_recommended_en": "It'll warm their heart, too.",
-          "dish_name_en": "Ham & Cheese Toast"
+          "recipe_id": "9bda6e30-f0fd-424f-8be0-75ff52077fbb"
         },
         {
           "id": "love-girlfriend-6",
@@ -475,10 +442,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "폭신 팬케이크",
-          "recipe_id": "9ae11781-1cd0-4909-806c-8823b7e58ccd",
-          "hook_en": "Looks straight out of a cartoon, you'll fall for its fluffiness!",
-          "why_recommended_en": "A happy slice you'll enjoy with your eyes first.",
-          "dish_name_en": "Fluffy Pancakes"
+          "recipe_id": "9ae11781-1cd0-4909-806c-8823b7e58ccd"
         },
         {
           "id": "love-girlfriend-7",
@@ -512,10 +476,7 @@
           "is_curator_pick": true,
           "category": "girlfriend",
           "dish_name": "참간초 파스타",
-          "recipe_id": "6f15d2c0-104a-44e1-be5b-2b4875b03cba",
-          "hook_en": "The pasta of a lifetime your girlfriend will rave about!",
-          "why_recommended_en": "You'll be deeply captivated by its unique flavor.",
-          "dish_name_en": "Chamgancho Pasta"
+          "recipe_id": "6f15d2c0-104a-44e1-be5b-2b4875b03cba"
         },
         {
           "id": "love-first-date-1",
@@ -548,10 +509,7 @@
           "is_curator_pick": true,
           "category": "first-date",
           "dish_name": "알리오올리오",
-          "recipe_id": "73e6683a-fce3-46ac-9155-9941b6653190",
-          "hook_en": "Impress them as a great cook with your first dish.",
-          "why_recommended_en": "Get praised for its perfect, foolproof taste.",
-          "dish_name_en": "Aglio e Olio"
+          "recipe_id": "73e6683a-fce3-46ac-9155-9941b6653190"
         },
         {
           "id": "love-first-date-2",
@@ -585,10 +543,7 @@
           "category": "first-date",
           "dish_name": "류수영 파스타",
           "recipe_id": "75781943-37e5-4720-9b19-e9dc85994864",
-          "failed": true,
-          "hook_en": "The ultimate pasta for our budding romance.",
-          "why_recommended_en": "Chase away awkwardness with a taste everyone will adore.",
-          "dish_name_en": "Ryu Soo-young Pasta"
+          "failed": true
         },
         {
           "id": "love-first-date-3",
@@ -622,10 +577,7 @@
           "category": "first-date",
           "dish_name": "류수영 파스타",
           "recipe_id": "75781943-37e5-4720-9b19-e9dc85994864",
-          "failed": true,
-          "hook_en": "How to become a cooking genius in just 30 minutes.",
-          "why_recommended_en": "Make it easily and enjoy relaxed conversation.",
-          "dish_name_en": "Ryu Soo-young Pasta"
+          "failed": true
         },
         {
           "id": "love-first-date-4",
@@ -659,10 +611,7 @@
           "is_curator_pick": true,
           "category": "first-date",
           "dish_name": "아보카도 토스트",
-          "recipe_id": "3b22cb70-24d5-40b9-8c56-71190af4fd96",
-          "hook_en": "Kick off your date with a perfectly stylish brunch.",
-          "why_recommended_en": "Complete a sophisticated meal that looks effortlessly chic.",
-          "dish_name_en": "Avocado Toast"
+          "recipe_id": "3b22cb70-24d5-40b9-8c56-71190af4fd96"
         },
         {
           "id": "love-first-date-5",
@@ -695,10 +644,7 @@
           "is_curator_pick": true,
           "category": "first-date",
           "dish_name": "감바스",
-          "recipe_id": "3f555dfc-16fb-40df-8fca-3adcb57ed98c",
-          "hook_en": "A fantastic ambiance, ready in just 15 minutes.",
-          "why_recommended_en": "Our own date, no fancy restaurant needed.",
-          "dish_name_en": "Gambas"
+          "recipe_id": "3f555dfc-16fb-40df-8fca-3adcb57ed98c"
         },
         {
           "id": "love-home-invite-1",
@@ -732,10 +678,7 @@
           "category": "home-invite",
           "dish_name": "감바스",
           "recipe_id": "ec487633-9626-4dfc-88d1-167e76d68bf3",
-          "failed": true,
-          "hook_en": "Turn your home into a Spanish tapas bar.",
-          "why_recommended_en": "Pair with a glass of wine for the ultimate ambiance.",
-          "dish_name_en": "Gambas"
+          "failed": true
         },
         {
           "id": "love-home-invite-2",
@@ -768,10 +711,7 @@
           "is_curator_pick": true,
           "category": "home-invite",
           "dish_name": "스테이크",
-          "recipe_id": "70b7db1b-25d5-4b9c-a705-a4980552ac19",
-          "hook_en": "Perfectly cooked, they'll ask if you're a chef.",
-          "why_recommended_en": "Everyone will rave about its juicy flavor.",
-          "dish_name_en": "Steak"
+          "recipe_id": "70b7db1b-25d5-4b9c-a705-a4980552ac19"
         },
         {
           "id": "love-home-invite-3",
@@ -804,10 +744,7 @@
           "is_curator_pick": false,
           "category": "home-invite",
           "dish_name": "크림 감자 뇨끼",
-          "recipe_id": "36c98ed8-8025-4ffe-bc40-a2c9bca3db90",
-          "hook_en": "Bring the whole restaurant home!",
-          "why_recommended_en": "Everyone will rave about your refined taste!",
-          "dish_name_en": "Cream Potato Gnocchi"
+          "recipe_id": "36c98ed8-8025-4ffe-bc40-a2c9bca3db90"
         },
         {
           "id": "love-home-invite-4",
@@ -840,10 +777,7 @@
           "is_curator_pick": false,
           "category": "home-invite",
           "dish_name": "찹스테이크",
-          "recipe_id": "bbc4e9e9-9eb1-411b-b916-4b31f5132f68",
-          "hook_en": "So hearty, your guests will give it a thumbs-up!",
-          "why_recommended_en": "A fail-proof flavor that'll boost your host pride!",
-          "dish_name_en": "Chop Steak"
+          "recipe_id": "bbc4e9e9-9eb1-411b-b916-4b31f5132f68"
         },
         {
           "id": "love-home-invite-5",
@@ -876,10 +810,7 @@
           "is_curator_pick": false,
           "category": "home-invite",
           "dish_name": "라자니아",
-          "recipe_id": "3e01f317-0ca5-4b1a-ae65-c131f3068c18",
-          "hook_en": "Italian feast, ready in 30 minutes!",
-          "why_recommended_en": "Prep ahead and just warm it up when guests arrive!",
-          "dish_name_en": "Lasagna"
+          "recipe_id": "3e01f317-0ca5-4b1a-ae65-c131f3068c18"
         },
         {
           "id": "love-home-invite-6",
@@ -912,10 +843,7 @@
           "is_curator_pick": false,
           "category": "home-invite",
           "dish_name": "라따뚜이",
-          "recipe_id": "0848ffa7-7cd8-4e9d-bab1-bad382c2d6a2",
-          "hook_en": "Ratatouille, straight out of a movie scene!",
-          "why_recommended_en": "Its vibrant colors add an extra special touch.",
-          "dish_name_en": "Ratatouille"
+          "recipe_id": "0848ffa7-7cd8-4e9d-bab1-bad382c2d6a2"
         },
         {
           "id": "love-cook-together-1",
@@ -948,10 +876,7 @@
           "is_curator_pick": true,
           "category": "cook-together",
           "dish_name": "고기만두",
-          "recipe_id": "3de171b2-6a1e-4630-ab51-89bfb93ad208",
-          "hook_en": "Dumplings are tastier when you make them together!",
-          "why_recommended_en": "Build beautiful memories with your own hands.",
-          "dish_name_en": "Meat Dumplings"
+          "recipe_id": "3de171b2-6a1e-4630-ab51-89bfb93ad208"
         },
         {
           "id": "love-cook-together-2",
@@ -984,10 +909,7 @@
           "is_curator_pick": true,
           "category": "cook-together",
           "dish_name": "김밥",
-          "recipe_id": "5b769f33-da96-4a22-9bb7-89c8164c2a17",
-          "hook_en": "Roll it up together, picnic-perfect Gimbap!",
-          "why_recommended_en": "Pure fun from prep to plate!",
-          "dish_name_en": "Gimbap"
+          "recipe_id": "5b769f33-da96-4a22-9bb7-89c8164c2a17"
         },
         {
           "id": "love-cook-together-3",
@@ -1020,10 +942,7 @@
           "is_curator_pick": true,
           "category": "cook-together",
           "dish_name": "수제 버거",
-          "recipe_id": "5b5ec22a-92cb-496e-aa4e-d26f1a250a78",
-          "hook_en": "Build amazing burgers with fantastic teamwork!",
-          "why_recommended_en": "Craft the ultimate burger, customized to your tastes!",
-          "dish_name_en": "Homemade Burger"
+          "recipe_id": "5b5ec22a-92cb-496e-aa4e-d26f1a250a78"
         },
         {
           "id": "love-cook-together-4",
@@ -1056,10 +975,7 @@
           "is_curator_pick": false,
           "category": "cook-together",
           "dish_name": "초콜릿 딤섬",
-          "recipe_id": "bc61db78-4441-4898-983a-2cc9d558bbed",
-          "hook_en": "Our sweet secret: the joy of making dim sum!",
-          "why_recommended_en": "Share sweet moments shaping them together.",
-          "dish_name_en": "Chocolate Dim Sum"
+          "recipe_id": "bc61db78-4441-4898-983a-2cc9d558bbed"
         },
         {
           "id": "love-cook-together-5",
@@ -1093,10 +1009,7 @@
           "category": "cook-together",
           "dish_name": "떡볶이 & 튀김",
           "recipe_id": "8f8ce6ae-effb-4e91-8f2a-59f059f4dacf",
-          "failed": true,
-          "hook_en": "Crispy fried treats & spicy Tteokbokki: a match made in heaven!",
-          "why_recommended_en": "An exciting date, from chopping to frying!",
-          "dish_name_en": "Tteokbokki & Fried Treats"
+          "failed": true
         },
         {
           "id": "love-cook-together-6",
@@ -1129,10 +1042,7 @@
           "is_curator_pick": false,
           "category": "cook-together",
           "dish_name": "곰돌이 마카롱",
-          "recipe_id": "a4100840-32dc-41ed-8f14-65dcf0a8a20f",
-          "hook_en": "Cute bear macarons, fresh from the oven!",
-          "why_recommended_en": "Get excited together and make sweet memories.",
-          "dish_name_en": "Bear Macarons"
+          "recipe_id": "a4100840-32dc-41ed-8f14-65dcf0a8a20f"
         },
         {
           "id": "love-cook-together-7",
@@ -1165,10 +1075,7 @@
           "is_curator_pick": false,
           "category": "cook-together",
           "dish_name": "먹물 피자",
-          "recipe_id": "e104fa31-813e-4d67-a140-2db772b5d079",
-          "hook_en": "Stretchy, gooey, and oh-so-special squid ink pizza!",
-          "why_recommended_en": "Fun to make together, from kneading the dough to adding the toppings!",
-          "dish_name_en": "Squid Ink Pizza"
+          "recipe_id": "e104fa31-813e-4d67-a140-2db772b5d079"
         },
         {
           "id": "love-lunchbox-1",
@@ -1201,10 +1108,7 @@
           "is_curator_pick": true,
           "category": "lunchbox",
           "dish_name": "소불고기",
-          "recipe_id": "7ad0976c-0a65-4448-b7fa-96e523a8b651",
-          "hook_en": "Premium beef bulgogi that melts in your mouth!",
-          "why_recommended_en": "Stays tender even when cold, making for a satisfying lunch.",
-          "dish_name_en": "Beef Bulgogi"
+          "recipe_id": "7ad0976c-0a65-4448-b7fa-96e523a8b651"
         },
         {
           "id": "love-lunchbox-2",
@@ -1237,10 +1141,7 @@
           "is_curator_pick": true,
           "category": "lunchbox",
           "dish_name": "스팸주먹밥",
-          "recipe_id": "4d49559c-e9ce-4acd-925f-4359f67ef30c",
-          "hook_en": "Spam rice balls that'll leave your lunchbox sparkling clean!",
-          "why_recommended_en": "Tastes great even when cold, making for a satisfying lunch.",
-          "dish_name_en": "Spam Rice Balls"
+          "recipe_id": "4d49559c-e9ce-4acd-925f-4359f67ef30c"
         },
         {
           "id": "love-lunchbox-3",
@@ -1274,10 +1175,7 @@
           "category": "lunchbox",
           "dish_name": "치킨 데리야끼",
           "recipe_id": "0860c5c7-cdaa-4e75-9f31-6cd84fcb6e75",
-          "failed": true,
-          "hook_en": "Tender chicken teriyaki you'll want to pack every single day!",
-          "why_recommended_en": "Whip it up quick with fridge ingredients! This sweet & spicy 'rice thief' is irresistible.",
-          "dish_name_en": "Chicken Teriyaki"
+          "failed": true
         },
         {
           "id": "love-lunchbox-4",
@@ -1310,10 +1208,7 @@
           "is_curator_pick": false,
           "category": "lunchbox",
           "dish_name": "3분 계란말이",
-          "recipe_id": "c1a3ef29-f0e9-4db2-bbcb-56aa2cd3f39b",
-          "hook_en": "This rolled omelet instantly upgrades your lunchbox!",
-          "why_recommended_en": "Done in 3 minutes, it's the perfect sidekick for any main dish.",
-          "dish_name_en": "3-Minute Rolled Omelet"
+          "recipe_id": "c1a3ef29-f0e9-4db2-bbcb-56aa2cd3f39b"
         },
         {
           "id": "love-lunchbox-5",
@@ -1346,10 +1241,7 @@
           "is_curator_pick": false,
           "category": "lunchbox",
           "dish_name": "옛날도시락",
-          "recipe_id": "d2ae61e5-c1f1-4da9-a1a6-0966e95534b2",
-          "hook_en": "Nostalgic old-fashioned lunchbox that'll make you count down to lunchtime!",
-          "why_recommended_en": "The more you shake it, the tastier it gets! A truly satisfying meal.",
-          "dish_name_en": "Old-Fashioned Lunchbox"
+          "recipe_id": "d2ae61e5-c1f1-4da9-a1a6-0966e95534b2"
         },
         {
           "id": "love-lunchbox-6",
@@ -1383,10 +1275,7 @@
           "category": "lunchbox",
           "dish_name": "대나무 도시락",
           "recipe_id": "5f485acb-4335-4cef-b712-8a28b56eb9fc",
-          "failed": true,
-          "hook_en": "A luxurious bamboo lunchbox that'll make your colleagues green with envy!",
-          "why_recommended_en": "A perfect lunch, packed with care and full of nutrition.",
-          "dish_name_en": "Bamboo Lunchbox"
+          "failed": true
         },
         {
           "id": "love-lunchbox-7",
@@ -1419,10 +1308,7 @@
           "is_curator_pick": false,
           "category": "lunchbox",
           "dish_name": "황태채무침",
-          "recipe_id": "44d92a0c-12b4-4367-9ce2-13c881a22c98",
-          "hook_en": "This seasoned dried pollock will make a bowl of rice disappear in a flash!",
-          "why_recommended_en": "The ultimate hero for adding soft, moist, and savory umami to your lunchbox.",
-          "dish_name_en": "Seasoned Dried Pollock Strips"
+          "recipe_id": "44d92a0c-12b4-4367-9ce2-13c881a22c98"
         }
       ],
       "categories": [
@@ -1430,54 +1316,39 @@
           "id": "boyfriend",
           "name": "남친한테",
           "emoji": "💪",
-          "concept": "양 많고 든든한 한 그릇. 푸짐·고기·면·매콤·자극적. 남자친구가 환장하는 메뉴.",
-          "name_en": "For Your Boyfriend",
-          "concept_en": "A hearty, generous one-bowl meal. Think abundant, meaty, noodle-y, spicy, and bold flavors. A dish your boyfriend will go absolutely wild for!"
+          "concept": "양 많고 든든한 한 그릇. 푸짐·고기·면·매콤·자극적. 남자친구가 환장하는 메뉴."
         },
         {
           "id": "girlfriend",
           "name": "여친한테",
           "emoji": "💖",
-          "concept": "예쁘고 사랑스러운 한 접시. 비주얼·플레이팅·달콤. 사진부터 찍게 되는 요리.",
-          "name_en": "For Your Girlfriend",
-          "concept_en": "A pretty and lovely plate. Focus on visuals, plating, and sweetness. A dish so beautiful, you'll have to snap a pic before eating!"
+          "concept": "예쁘고 사랑스러운 한 접시. 비주얼·플레이팅·달콤. 사진부터 찍게 되는 요리."
         },
         {
           "id": "first-date",
           "name": "처음 한끼",
           "emoji": "✨",
-          "concept": "썸타는 사람한테 처음 해주는 한 끼. 30분 이내, 재료 5개 이하, 실패 거의 없음, 부담 없음.",
-          "name_en": "First Date Meal",
-          "concept_en": "Your very first meal for someone you're crushing on. Quick (under 30 mins), simple (5 ingredients or less), almost foolproof, and totally stress-free."
+          "concept": "썸타는 사람한테 처음 해주는 한 끼. 30분 이내, 재료 5개 이하, 실패 거의 없음, 부담 없음."
         },
         {
           "id": "home-invite",
           "name": "우리집 초대",
           "emoji": "🍷",
-          "concept": "집에 초대해서 한 상 차리는 호스트 메뉴. 와인 페어링, 여러 접시 조합, 분위기 좋고 뽐낼 수 있는 요리.",
-          "name_en": "Hosting at Home",
-          "concept_en": "A host's menu for inviting guests over and setting a beautiful table. Think wine pairings, multiple dishes, and impressive recipes that create a great atmosphere."
+          "concept": "집에 초대해서 한 상 차리는 호스트 메뉴. 와인 페어링, 여러 접시 조합, 분위기 좋고 뽐낼 수 있는 요리."
         },
         {
           "id": "cook-together",
           "name": "같이 만들기",
           "emoji": "👫",
-          "concept": "둘이 함께 손이 많이 가는 메뉴. 재료 분담, 만드는 과정 자체가 데이트.",
-          "name_en": "Cook Together",
-          "concept_en": "A hands-on menu for two. Share the ingredients and tasks – the cooking process itself is a date!"
+          "concept": "둘이 함께 손이 많이 가는 메뉴. 재료 분담, 만드는 과정 자체가 데이트."
         },
         {
           "id": "lunchbox",
           "name": "출근 도시락",
           "emoji": "🍱",
-          "concept": "남친이 출근할 때 챙겨주는 도시락. 전날 밤 준비 가능, 보온/식어도 맛있음, 색감 균형, 새벽에 빨리 만들 수 있는 메뉴.",
-          "name_en": "Work Lunchbox",
-          "concept_en": "A lunchbox to pack for your boyfriend when he heads to work. Can be prepped the night before, tastes great warm or cold, has balanced colors, and is quick to make in the morning."
+          "concept": "남친이 출근할 때 챙겨주는 도시락. 전날 밤 준비 가능, 보온/식어도 맛있음, 색감 균형, 새벽에 빨리 만들 수 있는 메뉴."
         }
-      ],
-      "title_en": "Love Meal",
-      "subtitle_en": "6 Curated Meals for Couples",
-      "curator_quote_en": "From your very first date meal to special anniversaries, pick one to match the mood!"
+      ]
     },
     {
       "id": "night-snack",
@@ -1520,10 +1391,7 @@
           "category": "quick-3",
           "dish_name": "마요계란토스트",
           "recipe_id": "d487cea4-60c9-4b24-bff7-2ac7213e18d5",
-          "failed": true,
-          "hook_en": "Hungry? 3 mins is all you need!",
-          "why_recommended_en": "A warm slice fills your heart.",
-          "dish_name_en": "Egg Toast"
+          "failed": true
         },
         {
           "id": "night-snack-21",
@@ -1558,10 +1426,7 @@
           "category": "quick-3",
           "dish_name": "우동버터간장",
           "recipe_id": "15a94765-0569-442f-9a4d-d8c6448f3b2b",
-          "failed": true,
-          "hook_en": "Noodles in just 5 minutes!",
-          "why_recommended_en": "Savory flavors dance in your mouth.",
-          "dish_name_en": "Soy Butter"
+          "failed": true
         },
         {
           "id": "night-snack-22",
@@ -1595,10 +1460,7 @@
           "hook": "치즈 폭포 속 옥수수! 이거지!",
           "category": "quick-3",
           "dish_name": "치즈듬뿍콘",
-          "recipe_id": "9d342932-277a-4a6c-b43b-3cab77f87395",
-          "hook_en": "Cheesy corn waterfall? Yes!",
-          "why_recommended_en": "Sweet & salty burst in one bite.",
-          "dish_name_en": "Cheesy Corn"
+          "recipe_id": "9d342932-277a-4a6c-b43b-3cab77f87395"
         },
         {
           "id": "night-snack-23",
@@ -1632,10 +1494,7 @@
           "hook": "식사? 야식? 바삭한 누룽지 치즈밥!",
           "category": "quick-3",
           "dish_name": "버터치즈누룽지",
-          "recipe_id": "27774a31-8207-41c3-bd5a-1bbf4612913e",
-          "hook_en": "Meal or snack? Crispy rice!",
-          "why_recommended_en": "5 mins, comforted by savory cheese.",
-          "dish_name_en": "Cheese Rice"
+          "recipe_id": "27774a31-8207-41c3-bd5a-1bbf4612913e"
         },
         {
           "id": "night-snack-24",
@@ -1669,10 +1528,7 @@
           "hook": "이 촉촉함, 무려 5분만에 완성?",
           "category": "quick-3",
           "dish_name": "새우젓계란찜",
-          "recipe_id": "31744922-2cea-49bd-a1f4-f4290533c583",
-          "hook_en": "This moistness, in just 5 mins?",
-          "why_recommended_en": "A soft bite comforts my tired self.",
-          "dish_name_en": "Steamed Egg"
+          "recipe_id": "31744922-2cea-49bd-a1f4-f4290533c583"
         },
         {
           "id": "night-snack-25",
@@ -1707,10 +1563,7 @@
           "category": "guilt-free",
           "dish_name": "두부 떡볶이",
           "recipe_id": "b5a03ccf-bd08-4145-bb56-794183f6d01b",
-          "failed": true,
-          "hook_en": "Tteokbokki craving? Give in!",
-          "why_recommended_en": "Spicy-sweet tofu for a healthy treat.",
-          "dish_name_en": "Tofu Tteok"
+          "failed": true
         },
         {
           "id": "night-snack-26",
@@ -1745,10 +1598,7 @@
           "category": "guilt-free",
           "dish_name": "곤약 비빔국수",
           "recipe_id": "ecea9392-a33a-4aaa-a81b-3b0856eae1eb",
-          "failed": true,
-          "hook_en": "Spicy, sour, umami! Can't resist!",
-          "why_recommended_en": "Chewy noodles burst with fresh flavor.",
-          "dish_name_en": "Konjac Mix"
+          "failed": true
         },
         {
           "id": "night-snack-27",
@@ -1782,10 +1632,7 @@
           "hook": "38kg 감량, 그 비법 간식이 여기?",
           "category": "guilt-free",
           "dish_name": "또띠아 케사디아",
-          "recipe_id": "071cab39-9943-461a-a2fa-abe58e75413e",
-          "hook_en": "Lost 38kg? Secret snack here!",
-          "why_recommended_en": "Crispy, moist, healthy cheese snack.",
-          "dish_name_en": "Quesadilla"
+          "recipe_id": "071cab39-9943-461a-a2fa-abe58e75413e"
         },
         {
           "id": "night-snack-28",
@@ -1819,10 +1666,7 @@
           "hook": "단 5분이면 나만의 건강 야식 완성!",
           "category": "guilt-free",
           "dish_name": "든든 오트밀",
-          "recipe_id": "9f448712-e26a-427b-ba52-3cae0691c884",
-          "hook_en": "Healthy snack in just 5 mins!",
-          "why_recommended_en": "Quick & easy, a comforting combo.",
-          "dish_name_en": "Oatmeal"
+          "recipe_id": "9f448712-e26a-427b-ba52-3cae0691c884"
         },
         {
           "id": "night-snack-29",
@@ -1856,10 +1700,7 @@
           "hook": "달콤 촉촉한 단호박에 고소한 치즈가 쏙!",
           "category": "guilt-free",
           "dish_name": "치즈 단호박구이",
-          "recipe_id": "56710a02-b187-4c21-99bd-85c9aa9aeb25",
-          "hook_en": "Sweet pumpkin, savory cheese!",
-          "why_recommended_en": "Sweet & salty comfort melts fatigue.",
-          "dish_name_en": "Pumpkin"
+          "recipe_id": "56710a02-b187-4c21-99bd-85c9aa9aeb25"
         },
         {
           "id": "night-snack-30",
@@ -1893,10 +1734,7 @@
           "hook": "이국적 향신료가 부르는 짜파게티의 변주",
           "category": "ramen-mod",
           "dish_name": "마라 짜파게티",
-          "recipe_id": "70e029ad-fc9d-48eb-b947-30062bd7cf41",
-          "hook_en": "Jjapaghetti with exotic spices!",
-          "why_recommended_en": "Exotic charm added to the ordinary.",
-          "dish_name_en": "Mala Jjapa"
+          "recipe_id": "70e029ad-fc9d-48eb-b947-30062bd7cf41"
         },
         {
           "id": "night-snack-31",
@@ -1930,10 +1768,7 @@
           "hook": "이거야말로 라면의 진화!",
           "category": "ramen-mod",
           "dish_name": "부대찌개맛 라면",
-          "recipe_id": "6542412b-8b36-4834-96a0-ee8885fdb4d6",
-          "hook_en": "This is ramen's evolution!",
-          "why_recommended_en": "A hearty meal, ready when boiled.",
-          "dish_name_en": "Army Stew"
+          "recipe_id": "6542412b-8b36-4834-96a0-ee8885fdb4d6"
         },
         {
           "id": "night-snack-32",
@@ -1967,10 +1802,7 @@
           "hook": "크림 소스처럼 꾸덕한 한 입?",
           "category": "ramen-mod",
           "dish_name": "까르보 불닭",
-          "recipe_id": "3076a022-d27e-4b50-a9b2-b68a35119fe0",
-          "hook_en": "Creamy, thick, one delicious bite?",
-          "why_recommended_en": "Spicy flavor wrapped in creaminess.",
-          "dish_name_en": "Buldak"
+          "recipe_id": "3076a022-d27e-4b50-a9b2-b68a35119fe0"
         },
         {
           "id": "night-snack-33",
@@ -2004,10 +1836,7 @@
           "hook": "집에서 이 맛을 재현한다고?",
           "category": "ramen-mod",
           "dish_name": "분식집 떡라면",
-          "recipe_id": "28d905b5-7fbd-4d32-828f-ac8ba94f8b4a",
-          "hook_en": "Recreate this taste at home?",
-          "why_recommended_en": "Perfect when you miss nostalgic flavors.",
-          "dish_name_en": "Tteok-Ramen"
+          "recipe_id": "28d905b5-7fbd-4d32-828f-ac8ba94f8b4a"
         },
         {
           "id": "night-snack-34",
@@ -2041,10 +1870,7 @@
           "hook": "치즈 여섯 장은 넣어야 이 정도!",
           "category": "ramen-mod",
           "dish_name": "꾸덕 치즈 라면",
-          "recipe_id": "c066c80f-6d09-4a13-a46e-f7a12a04250f",
-          "hook_en": "Six slices of cheese for this!",
-          "why_recommended_en": "Deep, savory richness fills your mouth.",
-          "dish_name_en": "Cheese"
+          "recipe_id": "c066c80f-6d09-4a13-a46e-f7a12a04250f"
         },
         {
           "id": "night-snack-35",
@@ -2078,10 +1904,7 @@
           "hook": "이게 바로 편의점 만찬의 정석!",
           "category": "cvs-combo",
           "dish_name": "마크정식",
-          "recipe_id": "a1edace1-0e76-4820-a258-033241179870",
-          "hook_en": "The ultimate CVS feast!",
-          "why_recommended_en": "A special meal everyone loves. How about tonight?",
-          "dish_name_en": "Mark's Meal"
+          "recipe_id": "a1edace1-0e76-4820-a258-033241179870"
         },
         {
           "id": "night-snack-36",
@@ -2116,10 +1939,7 @@
           "category": "cvs-combo",
           "dish_name": "오모리 라면죽",
           "recipe_id": "88ecc440-94f2-4bab-9aba-6c2a05d93751",
-          "failed": true,
-          "hook_en": "Cold day? Need warm comfort?",
-          "why_recommended_en": "A bowl full of warmth, chasing away the cold.",
-          "dish_name_en": "Ramen Juk"
+          "failed": true
         },
         {
           "id": "night-snack-37",
@@ -2153,10 +1973,7 @@
           "hook": "1분 만에 뚝딱! 이런 환상의 궁합 봤어?",
           "category": "cvs-combo",
           "dish_name": "사리곰탕 만둣국",
-          "recipe_id": "ff7b3062-1eec-4d5e-8f88-0cdc85d9bbd8",
-          "hook_en": "1 min, done! Ever seen this combo?",
-          "why_recommended_en": "A gourmet delight, surprisingly fast.",
-          "dish_name_en": "Mandu Guk"
+          "recipe_id": "ff7b3062-1eec-4d5e-8f88-0cdc85d9bbd8"
         },
         {
           "id": "night-snack-38",
@@ -2190,10 +2007,7 @@
           "hook": "평범한 삼김의 반전! 이거 진짜 레스토랑?",
           "category": "cvs-combo",
           "dish_name": "불닭 치즈 리조또",
-          "recipe_id": "006bf070-47eb-415d-9648-3c3b96eb258c",
-          "hook_en": "Rice ball twist! A real restaurant?",
-          "why_recommended_en": "Michelin-level transformation from common ingredients.",
-          "dish_name_en": "Buldak Rice"
+          "recipe_id": "006bf070-47eb-415d-9648-3c3b96eb258c"
         },
         {
           "id": "night-snack-39",
@@ -2227,10 +2041,7 @@
           "hook": "어떻게 이런 풍미가? 라면 두 개로 역대급!",
           "category": "cvs-combo",
           "dish_name": "참짜라면",
-          "recipe_id": "22af51e0-2d25-4c0c-b36d-f1d5e488e3e2",
-          "hook_en": "Such flavor? Two ramen, epic!",
-          "why_recommended_en": "Different noodles, deeper addiction.",
-          "dish_name_en": "Jjajang"
+          "recipe_id": "22af51e0-2d25-4c0c-b36d-f1d5e488e3e2"
         },
         {
           "id": "night-snack-40",
@@ -2265,10 +2076,7 @@
           "category": "guilty",
           "dish_name": "에어프라이어 양념통닭",
           "recipe_id": "a1cf7554-ae26-4638-be32-32a508b624fd",
-          "failed": true,
-          "hook_en": "Fresh fried chicken from air fryer?",
-          "why_recommended_en": "Crispy old-school taste, guilt melts away.",
-          "dish_name_en": "Yangnyeom"
+          "failed": true
         },
         {
           "id": "night-snack-41",
@@ -2302,10 +2110,7 @@
           "hook": "유명 셰프 레시피로 만드는 달콤 바삭 한 입!",
           "category": "guilty",
           "dish_name": "백종원 닭강정",
-          "recipe_id": "4291416f-e8ec-402d-8948-42a98caa7060",
-          "hook_en": "Sweet & crispy, chef's recipe!",
-          "why_recommended_en": "This taste will be better than delivery.",
-          "dish_name_en": "Dakgang"
+          "recipe_id": "4291416f-e8ec-402d-8948-42a98caa7060"
         },
         {
           "id": "night-snack-42",
@@ -2340,10 +2145,7 @@
           "category": "guilty",
           "dish_name": "홈메이드 뿌링클",
           "recipe_id": "513787e3-46b7-4956-98ee-870baecf0999",
-          "failed": true,
-          "hook_en": "Sprinkle Bburinkle powder at home!",
-          "why_recommended_en": "Your own chicken party, no delivery fee.",
-          "dish_name_en": "Bburinkle"
+          "failed": true
         },
         {
           "id": "night-snack-43",
@@ -2377,10 +2179,7 @@
           "hook": "단 15분! 이 정도면 충분히 행복하지 않을까?",
           "category": "guilty",
           "dish_name": "15분 또띠아 피자",
-          "recipe_id": "5a0515dd-7d03-414e-842c-c61ac3f51493",
-          "hook_en": "Just 15 mins! Isn't that enough joy?",
-          "why_recommended_en": "Complicated weekend snack? One pizza does it!",
-          "dish_name_en": "Mini Pizza"
+          "recipe_id": "5a0515dd-7d03-414e-842c-c61ac3f51493"
         },
         {
           "id": "night-snack-44",
@@ -2414,10 +2213,7 @@
           "hook": "잠 못 드는 새벽, 피자토스트로 위로받자!",
           "category": "guilty",
           "dish_name": "염정아 피자토스트",
-          "recipe_id": "58f5a183-f61b-4995-baa1-e376300fc3b7",
-          "hook_en": "Can't sleep? Pizza toast comfort!",
-          "why_recommended_en": "Pizza on toast is the best choice.",
-          "dish_name_en": "Pizza"
+          "recipe_id": "58f5a183-f61b-4995-baa1-e376300fc3b7"
         }
       ],
       "categories": [
@@ -2425,46 +2221,33 @@
           "id": "quick-3",
           "name": "3재료 5분",
           "emoji": "🍳",
-          "concept": "재료 3개, 시간 5분. 자취생도 새벽에 부담 없이 만드는 초간단 야식.",
-          "name_en": "3-5 Quick",
-          "concept_en": "3 ingredients, 5 minutes. Super easy late-night snack for anyone, even students, without the fuss."
+          "concept": "재료 3개, 시간 5분. 자취생도 새벽에 부담 없이 만드는 초간단 야식."
         },
         {
           "id": "guilt-free",
           "name": "죄책감 0%",
           "emoji": "🥗",
-          "concept": "다이어트 중에도 마음 편하게. 두부·곤약·오트밀·단호박으로 만드는 가벼운 야식.",
-          "name_en": "Guilt-Free",
-          "concept_en": "Eat easy, even on a diet. Light snacks with tofu, konjac, oatmeal, and pumpkin."
+          "concept": "다이어트 중에도 마음 편하게. 두부·곤약·오트밀·단호박으로 만드는 가벼운 야식."
         },
         {
           "id": "ramen-mod",
           "name": "라면 변신",
           "emoji": "🍜",
-          "concept": "봉지 라면 하나로 새로운 한 그릇. 5분 만에 끝나는 라면 모디파이.",
-          "name_en": "Ramen Remix",
-          "concept_en": "One pack of ramen, a whole new dish. Ramen modifications done in 5 minutes."
+          "concept": "봉지 라면 하나로 새로운 한 그릇. 5분 만에 끝나는 라면 모디파이."
         },
         {
           "id": "cvs-combo",
           "name": "편의점 꿀조합",
           "emoji": "🏪",
-          "concept": "편의점 갔다가 즉흥적으로 만드는 꿀조합. 가성비·간편함·중독성.",
-          "name_en": "CVS Combos",
-          "concept_en": "Impulsive, delicious combos from the convenience store. Great value, easy, addictive."
+          "concept": "편의점 갔다가 즉흥적으로 만드는 꿀조합. 가성비·간편함·중독성."
         },
         {
           "id": "guilty",
           "name": "길티 치킨피자",
           "emoji": "🍗",
-          "concept": "내일은 운동! 오늘 밤은 진하게 가는 치킨·피자·튀김. 죄책감은 내일.",
-          "name_en": "Guilty Pleasures",
-          "concept_en": "Workout tomorrow! Tonight, it's rich chicken, pizza, and fries. Guilt can wait."
+          "concept": "내일은 운동! 오늘 밤은 진하게 가는 치킨·피자·튀김. 죄책감은 내일."
         }
-      ],
-      "title_en": "Late-Night Bites",
-      "subtitle_en": "Tonight's late-night snack to satisfy both angels and devils.",
-      "curator_quote_en": "Tonight's late-night snack to satisfy both angels and devils."
+      ]
     },
     {
       "id": "butter-tteok",
@@ -2505,10 +2288,7 @@
           "is_curator_pick": true,
           "dish_name": "버터 가래떡 구이",
           "recipe_id": "aced1ad4-3fca-40e5-901d-df19cc1504ee",
-          "failed": true,
-          "hook_en": "So good, you'll run away! Grandma's fave.",
-          "why_recommended_en": "A traditional snack for all ages.",
-          "dish_name_en": "Garaetteok"
+          "failed": true
         },
         {
           "id": "bt-2",
@@ -2541,10 +2321,7 @@
           "is_curator_pick": true,
           "dish_name": "모카 앙버떡",
           "recipe_id": "36ae184f-cb0f-49d4-93b2-07ec4d1536ff",
-          "failed": true,
-          "hook_en": "Sweet & bitter mocha An-butter tteok!",
-          "why_recommended_en": "Perfect with a fragrant coffee.",
-          "dish_name_en": "Mocha Tteok"
+          "failed": true
         },
         {
           "id": "bt-3",
@@ -2577,10 +2354,7 @@
           "is_curator_pick": false,
           "dish_name": "3만개 완판 버터떡",
           "recipe_id": "fbbc933c-c82b-4260-8da8-7fc41b75a3ff",
-          "failed": true,
-          "hook_en": "30K sold! Crispy, chewy & famous.",
-          "why_recommended_en": "A proven favorite for tteok lovers.",
-          "dish_name_en": "Best Tteok"
+          "failed": true
         },
         {
           "id": "bt-4",
@@ -2612,10 +2386,7 @@
           "hook": "더 부드럽게! 냉동 떡도 살려내는 마법의 레시피",
           "is_curator_pick": false,
           "dish_name": "부드러운 버터 가래떡",
-          "recipe_id": "fd1c061f-233a-4037-8c8f-94b9660e6eac",
-          "hook_en": "Softer! Revive frozen tteok.",
-          "why_recommended_en": "Fancy snack in 10 mins from frozen tteok.",
-          "dish_name_en": "Soft Tteok"
+          "recipe_id": "fd1c061f-233a-4037-8c8f-94b9660e6eac"
         },
         {
           "id": "bt-5",
@@ -2648,10 +2419,7 @@
           "is_curator_pick": false,
           "dish_name": "난리난 버터떡",
           "recipe_id": "eeaedae6-7ffc-4666-91e7-a74dea46041c",
-          "failed": true,
-          "hook_en": "Foolproof butter tteok!",
-          "why_recommended_en": "The ultimate trendy tteok recipe.",
-          "dish_name_en": "Hot Tteok"
+          "failed": true
         },
         {
           "id": "bt-6",
@@ -2683,10 +2451,7 @@
           "hook": "\"버터+팥앙금 꿀조합 듬뿍\"",
           "is_curator_pick": false,
           "dish_name": "쫄깃 앙버떡",
-          "recipe_id": "fcab0e1d-c76a-4487-a14b-68998c998086",
-          "hook_en": "Butter & red bean paste combo!",
-          "why_recommended_en": "Sweet & salty, melts in your mouth.",
-          "dish_name_en": "An-tteok"
+          "recipe_id": "fcab0e1d-c76a-4487-a14b-68998c998086"
         },
         {
           "id": "bt-7",
@@ -2718,15 +2483,9 @@
           "hook": "\"겉바속쫀, 말차맛까지 챙기다\"",
           "is_curator_pick": false,
           "dish_name": "상하이 버터떡",
-          "recipe_id": "f07573bb-bb81-4b09-99b3-92e05aab5936",
-          "hook_en": "Crispy, chewy, with matcha!",
-          "why_recommended_en": "Bakery-worthy looks and taste.",
-          "dish_name_en": "Shanghai"
+          "recipe_id": "f07573bb-bb81-4b09-99b3-92e05aab5936"
         }
-      ],
-      "title_en": "Butter Tteok",
-      "subtitle_en": "Sweet meets savory: Butter & Tteok",
-      "curator_quote_en": "I've gathered trendy butter tteok twists!"
+      ]
     },
     {
       "id": "bomdong",
@@ -2767,10 +2526,7 @@
           },
           "why_recommended": "요즘 SNS에서 가장 핫한 봄동 비빔밥 트렌드를 가장 감각적이고 빠르게 보여줍니다. 복잡한 과정 없이 누구나 따라 할 수 있는 초간단 구성이 매력적입니다.",
           "hook": "올봄, 한 그릇이 트렌드가 되다",
-          "recipe_id": "e2522edb-a320-49f0-b109-8894cc31399d",
-          "hook_en": "This spring, one bowl is the trend.",
-          "why_recommended_en": "It quickly shows the hottest Bomdong Bibimbap trend on social media, with super simple steps anyone can follow.",
-          "dish_name_en": "Trendy Bibimbap"
+          "recipe_id": "e2522edb-a320-49f0-b109-8894cc31399d"
         },
         {
           "id": "bomdong-2",
@@ -2804,10 +2560,7 @@
           "why_recommended": "단순한 비빔밥을 넘어 깊은 맛을 내는 '한 끗' 차이 비법을 전수해줍니다. 엄마가 해주는 정성 가득한 집밥의 맛을 제대로 느낄 수 있습니다.",
           "hook": "양념 전 한 끗으로, 밥솥이 거덜난다",
           "recipe_id": "39e24ad7-97a1-4a81-ab3f-af569afe2fb2",
-          "failed": true,
-          "hook_en": "One secret touch, and the rice cooker's empty.",
-          "why_recommended_en": "Learn the 'secret touch' for a deep flavor beyond simple bibimbap, tasting like mom's homemade meal.",
-          "dish_name_en": "Mom's Bibimbap"
+          "failed": true
         },
         {
           "id": "bomdong-3",
@@ -2840,10 +2593,7 @@
           "why_recommended": "비빔밥의 핵심인 겉절이를 가장 효율적으로 만드는 법을 보여줍니다. 퇴근 후 빠르게 한 끼 해결하고 싶은 직장인들에게 최적화된 영상입니다.",
           "hook": "퇴근길 10분, 밥상 위의 봄",
           "recipe_id": "2656e312-64fb-4ad1-be37-9261713e9b16",
-          "failed": true,
-          "hook_en": "10 mins after work, spring on your table.",
-          "why_recommended_en": "It shows the most efficient way to make geotjeori, perfect for busy office workers wanting a quick meal after work.",
-          "dish_name_en": "Quick Bibimbap"
+          "failed": true
         },
         {
           "id": "bomdong-4",
@@ -2877,10 +2627,7 @@
           "why_recommended": "비주얼까지 완벽한 봄동 비빔밥을 제안하며, 여유로운 주말 점심에 어울리는 감각적인 레시피입니다. 세련된 상차림을 원하는 분들께 추천합니다.",
           "hook": "예쁜 그릇이 더 맛있어지는 점심",
           "recipe_id": "c467ea18-7cf0-4bb1-b23e-90e40a0b0048",
-          "failed": true,
-          "hook_en": "Pretty bowls make lunch tastier.",
-          "why_recommended_en": "This stylish recipe offers visually perfect Bomdong Bibimbap, ideal for a leisurely weekend lunch and elegant table settings.",
-          "dish_name_en": "Stylish Bibimbap"
+          "failed": true
         },
         {
           "id": "bomdong-5",
@@ -2914,10 +2661,7 @@
           "why_recommended": "조회수로 증명된 믿고 보는 레시피로, 봄동의 아삭한 식감을 극대화하는 양념 배합이 훌륭합니다. 실패 없는 전통적인 맛을 보장합니다.",
           "hook": "한 입에 봄, 두 입에 또 한 그릇",
           "recipe_id": "7fe2fad5-f062-4bea-99a8-b25ef08240f5",
-          "failed": true,
-          "hook_en": "Spring in one bite, another bowl in two.",
-          "why_recommended_en": "A proven recipe with excellent seasoning that maximizes bomdong's crisp texture, guaranteeing a classic, fail-proof taste.",
-          "dish_name_en": "Crispy Bibimbap"
+          "failed": true
         },
         {
           "id": "bomdong-6",
@@ -2950,10 +2694,7 @@
           "why_recommended": "강한 식욕을 자극하는 편집과 함께 봄동의 매력을 1분 안에 농축해 보여줍니다. 입맛 없는 봄철에 식욕을 돋우기에 최고의 영상입니다.",
           "hook": "고기보다 손이 가는, 봄의 풀 한 잎",
           "recipe_id": "f4d62c9e-18a8-4eb7-9ef2-6a330d93dc2b",
-          "failed": true,
-          "hook_en": "More tempting than meat, a spring leaf.",
-          "why_recommended_en": "This video condenses bomdong's charm in 1 minute with stimulating edits, perfect for boosting appetite in spring.",
-          "dish_name_en": "Appetizing Bibimbap"
+          "failed": true
         },
         {
           "id": "bomdong-7",
@@ -2987,10 +2728,7 @@
           "why_recommended": "비빔밥과 찰떡궁합인 된장찌개까지 함께 배우는 완벽한 한 상 차림 가이드입니다. 제대로 된 식사를 대접하고 싶을 때 참고하기 좋습니다.",
           "hook": "한 상이 통째로 봄이 된다",
           "recipe_id": "eb391f2f-1b0d-42ee-b06f-11adaf93dbd6",
-          "failed": true,
-          "hook_en": "The whole table turns spring.",
-          "why_recommended_en": "A complete guide to a perfect meal, learning both bibimbap and its ideal partner, doenjang jjigae, great for hosting.",
-          "dish_name_en": "Full Meal Bibimbap"
+          "failed": true
         },
         {
           "id": "bomdong-8",
@@ -3023,10 +2761,7 @@
           "why_recommended": "군더더기 없는 깔끔한 진행으로 비빔밥의 핵심 과정만 짚어줍니다. 요리 초보자가 가장 편하게 시도해볼 수 있는 가이드입니다.",
           "hook": "이름 그대로, 망설일 새가 없다",
           "recipe_id": "756d63fb-ad48-403a-bd0b-a75e172f829a",
-          "failed": true,
-          "hook_en": "No hesitation, just as the name says.",
-          "why_recommended_en": "A clean, straightforward guide focusing on the core steps of bibimbap, making it easy for cooking beginners to try.",
-          "dish_name_en": "Beginner Bibimbap"
+          "failed": true
         },
         {
           "id": "bomdong-9",
@@ -3060,10 +2795,7 @@
           "why_recommended": "2분이라는 적절한 길이 안에 팁을 꽉 채워 전달합니다. 전통 비빔밥에 지루함을 느끼는 분들을 위한 변주가 돋보입니다.",
           "hook": "올해의 비빔밥, 2분이면 외워진다",
           "recipe_id": "4c8984be-5161-47a5-b51a-97ab281ff3c8",
-          "failed": true,
-          "hook_en": "This year's bibimbap, memorized in 2 mins.",
-          "why_recommended_en": "Packed with tips in a concise 2-minute video, it offers a refreshing twist for those bored with traditional bibimbap.",
-          "dish_name_en": "Twist Bibimbap"
+          "failed": true
         },
         {
           "id": "bomdong-10",
@@ -3096,10 +2828,7 @@
           "why_recommended": "할머니의 노하우가 담긴 깊은 맛의 겉절이 비법을 배울 수 있습니다. 시간이 지나도 변치 않는 클래식한 한식의 정석을 보여줍니다.",
           "hook": "할머니의 손맛, 한 평생의 양념",
           "recipe_id": "c04d579d-af1a-4ddf-a3e0-257229a1fb78",
-          "failed": true,
-          "hook_en": "Grandma's touch, a lifetime of sauce.",
-          "why_recommended_en": "Learn the secret to deep-flavored geotjeori from grandma's know-how, showcasing the timeless essence of classic Korean food.",
-          "dish_name_en": "Grandma's Bibimbap"
+          "failed": true
         },
         {
           "id": "bomdong-11",
@@ -3132,10 +2861,7 @@
           "why_recommended": "유명 방송 레시피를 짧고 굵게 요약하여 실용성이 높습니다. 검증된 맛을 빠르게 재현하고 싶은 분들께 추천합니다.",
           "hook": "검증된 한 그릇, 1분이면 충분해",
           "recipe_id": "4d795f58-38e5-44f2-824c-48016b32b8d3",
-          "failed": true,
-          "hook_en": "Proven bowl, 1 minute is enough.",
-          "why_recommended_en": "Highly practical, summarizing famous broadcast recipes concisely, recommended for quickly replicating verified flavors.",
-          "dish_name_en": "TV Bibimbap"
+          "failed": true
         },
         {
           "id": "bomdong-12",
@@ -3169,15 +2895,9 @@
           "why_recommended": "베테랑 요리연구가의 디테일한 설명이 곁들여져 완성도를 높여줍니다. 고소함을 살리는 특별한 팁이 일품입니다.",
           "hook": "봄동의 진가는 양념 직전에 결정된다",
           "recipe_id": "648fdadf-7398-4826-a5cb-c818c02cba32",
-          "failed": true,
-          "hook_en": "Bomdong's true value, decided before seasoning.",
-          "why_recommended_en": "Enhanced by a veteran chef's detailed explanations, it offers an excellent special tip for maximizing savory flavor.",
-          "dish_name_en": "Chef's Bibimbap"
+          "failed": true
         }
-      ],
-      "title_en": "Bomdong Bibimbap",
-      "subtitle_en": "Freshness of Seasonal Bomdong",
-      "curator_quote_en": "A bowl made with fresh seasonal ingredients."
+      ]
     },
     {
       "id": "dubai-cookie",
@@ -3218,10 +2938,7 @@
           "is_curator_pick": true,
           "dish_name": "자도르 쫀득쿠키",
           "recipe_id": "758907fe-5f4a-4b8f-bc03-c98300754dbe",
-          "failed": true,
-          "hook_en": "Seriously, the boss's secret recipe?",
-          "why_recommended_en": "Guaranteed success with this cafe's secret!",
-          "dish_name_en": "Jadore Chewy Cookies"
+          "failed": true
         },
         {
           "id": "dc-2",
@@ -3254,10 +2971,7 @@
           "is_curator_pick": true,
           "dish_name": "쿠킹트리 쿠키",
           "recipe_id": "5cc9185c-5f57-4bee-bf6c-407a368c0c43",
-          "failed": true,
-          "hook_en": "Gorgeous visuals! The ultimate home baking masterpiece!",
-          "why_recommended_en": "Perfectly recreated with a super detailed recipe!",
-          "dish_name_en": "Cooking Tree Cookies"
+          "failed": true
         },
         {
           "id": "dc-3",
@@ -3289,10 +3003,7 @@
           "hook": "“와! 매출 1등 카페 레시피!”",
           "is_curator_pick": true,
           "dish_name": "커픽처스 쿠키",
-          "recipe_id": "617e24b2-a792-4807-a180-3fea8bd7d57b",
-          "hook_en": "Whoa! This cafe's #1 best-selling recipe!",
-          "why_recommended_en": "A proven cafe recipe that's now a super popular menu item!",
-          "dish_name_en": "Coffictures Cookies"
+          "recipe_id": "617e24b2-a792-4807-a180-3fea8bd7d57b"
         },
         {
           "id": "dc-4",
@@ -3325,10 +3036,7 @@
           "is_curator_pick": false,
           "dish_name": "찰떡 쫀득쿠키",
           "recipe_id": "d51b7611-dc15-45f1-80ad-1a0474bc92f3",
-          "failed": true,
-          "hook_en": "Mochi-like texture! This combo is seriously amazing!",
-          "why_recommended_en": "Super chewy texture and easy to make!",
-          "dish_name_en": "Chaltteok Chewy Cookies"
+          "failed": true
         },
         {
           "id": "dc-5",
@@ -3361,10 +3069,7 @@
           "is_curator_pick": false,
           "dish_name": "스브스 두바이쿠키",
           "recipe_id": "2eece6c6-94c4-4980-ab80-a73d34be2563",
-          "failed": true,
-          "hook_en": "OMG! The taste that even Arabs were shocked by?",
-          "why_recommended_en": "Solve your curiosity about this trending dessert!",
-          "dish_name_en": "SBS Dubai Cookies"
+          "failed": true
         },
         {
           "id": "dc-6",
@@ -3396,10 +3101,7 @@
           "hook": "“따라만 해도 성공하는 대결 레시피”",
           "is_curator_pick": false,
           "dish_name": "지니 쫀득쿠키",
-          "recipe_id": "68fc423c-9140-4e8f-bd9f-d1ce32684bd5",
-          "hook_en": "A challenge recipe you'll nail just by following along!",
-          "why_recommended_en": "Have fun home baking with your friends!",
-          "dish_name_en": "Genie Chewy Cookies"
+          "recipe_id": "68fc423c-9140-4e8f-bd9f-d1ce32684bd5"
         },
         {
           "id": "dc-7",
@@ -3432,10 +3134,7 @@
           "is_curator_pick": false,
           "dish_name": "피스타치오 쿠키",
           "recipe_id": "d592d9fc-3910-4005-826c-f1b410e6e1da",
-          "failed": true,
-          "hook_en": "Packed with nutty goodness! Pistachio Cream Cheese!",
-          "why_recommended_en": "Experience the unique flavor of pistachio cream cheese!",
-          "dish_name_en": "Pistachio Cookies"
+          "failed": true
         },
         {
           "id": "dc-8",
@@ -3467,10 +3166,7 @@
           "hook": "“세상에! 요즘 가장 핫한 두바이 디저트!”",
           "is_curator_pick": false,
           "dish_name": "두쫀쿠 모음.zip",
-          "recipe_id": "407a686e-049a-48a2-8f28-3a0a736edd8f",
-          "hook_en": "OMG! The hottest Dubai dessert right now!",
-          "why_recommended_en": "Master all the trending desserts in one go!",
-          "dish_name_en": "Dubai Chewy Cookie Collection.zip"
+          "recipe_id": "407a686e-049a-48a2-8f28-3a0a736edd8f"
         },
         {
           "id": "dc-9",
@@ -3503,10 +3199,7 @@
           "is_curator_pick": false,
           "dish_name": "르뱅 쫀득쿠키",
           "recipe_id": "9e1ee8bb-2ef8-4d3f-86c8-ef9bd84aab33",
-          "failed": true,
-          "hook_en": "Super easy! The ultimate chewy New York Levain Cookie!",
-          "why_recommended_en": "A super easy Levain cookie you can't mess up!",
-          "dish_name_en": "Levain Chewy Cookies"
+          "failed": true
         },
         {
           "id": "dc-10",
@@ -3539,10 +3232,7 @@
           "is_curator_pick": false,
           "dish_name": "초대형 두쫀쿠",
           "recipe_id": "1eb206bb-377e-483d-ba3b-0cca181e3eaa",
-          "failed": true,
-          "hook_en": "1 Million Won?! This super-sized Dubai cookie is legendary!",
-          "why_recommended_en": "Its overwhelming visuals will grab all the attention!",
-          "dish_name_en": "Giant Dubai Chewy Cookies"
+          "failed": true
         },
         {
           "id": "dc-11",
@@ -3575,15 +3265,9 @@
           "is_curator_pick": false,
           "dish_name": "품절대란 쿠키",
           "recipe_id": "370743cf-c0a5-4e74-96bf-1ee9d6f939a9",
-          "failed": true,
-          "hook_en": "OMG, really? The recipe for that legendary sold-out item is finally revealed!",
-          "why_recommended_en": "Unlock the secret to that sold-out item and become super popular!",
-          "dish_name_en": "Sold-Out Sensation Cookies"
+          "failed": true
         }
-      ],
-      "title_en": "Dubai Chewy Cookies",
-      "subtitle_en": "Trendy dessert, irresistible chewiness in every bite.",
-      "curator_quote_en": "A bite so chewy, you won't envy Dubai!"
+      ]
     }
   ]
 }

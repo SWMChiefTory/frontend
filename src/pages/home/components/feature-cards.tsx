@@ -1,7 +1,9 @@
 import { View, Text, Pressable, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
+import { useMarketStore } from '@/src/shared/store/marketStore';
 
 const CARD_IMAGES = {
   create: require('@/assets/images/card-recipe-create.png'),
@@ -11,16 +13,16 @@ const CARD_IMAGES = {
 
 type FeatureCard = {
   id: keyof typeof CARD_IMAGES;
-  title: string;
-  subtitle: string;
+  titleKey: 'createTitle' | 'fridgeTitle' | 'calendarTitle';
+  subtitleKey: 'createSubtitle' | 'fridgeSubtitle' | 'calendarSubtitle';
   backgroundColor: string;
   locked: boolean;
 }
 
 const FEATURES: FeatureCard[] = [
-  { id: 'create', title: '레시피', subtitle: '생성', backgroundColor: colors.card.recipe, locked: false },
-  { id: 'fridge', title: '냉장고', subtitle: '파먹기', backgroundColor: colors.card.fridge, locked: true },
-  { id: 'calendar', title: '캘린더', subtitle: '', backgroundColor: colors.card.calendar, locked: true },
+  { id: 'create', titleKey: 'createTitle', subtitleKey: 'createSubtitle', backgroundColor: colors.card.recipe, locked: false },
+  { id: 'fridge', titleKey: 'fridgeTitle', subtitleKey: 'fridgeSubtitle', backgroundColor: colors.card.fridge, locked: true },
+  { id: 'calendar', titleKey: 'calendarTitle', subtitleKey: 'calendarSubtitle', backgroundColor: colors.card.calendar, locked: true },
 ];
 
 type FeatureCardsProps = {
@@ -32,6 +34,8 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
   const { width } = useWindowDimensions();
   const cardWidth = (width - spacing.lg * 2 - spacing.md * 2) / 3;
   const cardHeight = cardWidth * 1.2;
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
 
   return (
     <View
@@ -45,7 +49,8 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
         <Pressable
           key={feature.id}
           onPress={() => {
-            if (feature.locked) onLockedPress(feature.title);
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            if (feature.locked) onLockedPress(t[feature.titleKey]);
             else onCreatePress();
           }}
           style={{
@@ -79,12 +84,12 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
                   color: colors.text.inverse,
                 }}
               >
-                {feature.title}
+                {t[feature.titleKey]}
               </Text>
             </View>
-            {feature.subtitle ? (
+            {t[feature.subtitleKey] ? (
               <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: 'rgba(255,255,255,0.8)' }}>
-                {feature.subtitle}
+                {t[feature.subtitleKey]}
               </Text>
             ) : null}
           </View>
@@ -114,7 +119,7 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
                   color: 'rgba(255,255,255,0.85)',
                 }}
               >
-                곧 만나요!
+                {t.comingSoon}
               </Text>
             </View>
           )}
@@ -123,3 +128,24 @@ export function FeatureCards({ onCreatePress, onLockedPress }: FeatureCardsProps
     </View>
   );
 }
+
+const TEXTS = {
+  KOREA: {
+    createTitle: '레시피',
+    createSubtitle: '생성',
+    fridgeTitle: '냉장고',
+    fridgeSubtitle: '파먹기',
+    calendarTitle: '캘린더',
+    calendarSubtitle: '',
+    comingSoon: '곧 만나요!',
+  },
+  GLOBAL: {
+    createTitle: 'Recipe',
+    createSubtitle: 'Create',
+    fridgeTitle: 'Fridge',
+    fridgeSubtitle: 'Use up',
+    calendarTitle: 'Calendar',
+    calendarSubtitle: '',
+    comingSoon: 'Coming soon!',
+  },
+} as const;

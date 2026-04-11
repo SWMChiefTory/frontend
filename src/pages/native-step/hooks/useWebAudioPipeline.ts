@@ -11,20 +11,27 @@ import { Alert, Linking } from 'react-native';
 import type { WebView, WebViewMessageEvent } from 'react-native-webview';
 import { Audio } from 'expo-av';
 
-let realtimeBufferTranscribe: any = () => {};
-let stopBufferTranscription: any = () => {};
-let setContextualStrings: any = () => {};
-let useRealTimeTranscription: any = () => ({ results: null });
-let speechModule: any = null;
-try {
-  speechModule = require('expo-speech-transcriber');
-  realtimeBufferTranscribe = speechModule.realtimeBufferTranscribe ?? realtimeBufferTranscribe;
-  stopBufferTranscription = speechModule.stopBufferTranscription ?? stopBufferTranscription;
-  setContextualStrings = speechModule.setContextualStrings ?? setContextualStrings;
-  useRealTimeTranscription = speechModule.useRealTimeTranscription ?? useRealTimeTranscription;
-} catch (e) {
-  console.warn('[useWebAudioPipeline] expo-speech-transcriber 로드 실패:', e);
-}
+const { speechModule, realtimeBufferTranscribe, stopBufferTranscription, setContextualStrings, useRealTimeTranscription } = (() => {
+  try {
+    const mod = require('expo-speech-transcriber');
+    return {
+      speechModule: mod,
+      realtimeBufferTranscribe: mod.realtimeBufferTranscribe ?? (() => {}),
+      stopBufferTranscription: mod.stopBufferTranscription ?? (() => {}),
+      setContextualStrings: mod.setContextualStrings ?? (() => {}),
+      useRealTimeTranscription: mod.useRealTimeTranscription ?? (() => ({ results: null })),
+    };
+  } catch (e) {
+    console.warn('[useWebAudioPipeline] expo-speech-transcriber 로드 실패:', e);
+    return {
+      speechModule: null as any,
+      realtimeBufferTranscribe: (() => {}) as any,
+      stopBufferTranscription: (() => {}) as any,
+      setContextualStrings: (() => {}) as any,
+      useRealTimeTranscription: (() => ({ results: null })) as any,
+    };
+  }
+})();
 import { createSileroVAD, type SileroVADInstance, SAMPLE_RATE, WINDOW_SIZE } from './sileroVAD';
 import { base64PcmToFloat32 } from './audioUtils';
 import type { PipelineState, AudioPipelineResult } from './useAudioPipeline';
@@ -136,13 +143,11 @@ export function useWebAudioPipeline({
 
   const stateRef = useRef<PipelineState>('IDLE');
   const webViewReadyRef = useRef(false);
-  //이건 웹뷰에서 알아서 start 두 번 오면 계속 start 유지하게 함.
   const pendingStartRef = useRef(false);
 
   const vadRef = useRef<SileroVADInstance | null>(null);
   const ringBufferRef = useRef(new RingBuffer(PRE_BUFFER_SAMPLES));
-  //TODO : stateRef로 통일
-  //PO : stateRef로 통일
+
   const transcribingRef = useRef(false);
 
   const consecutiveSpeechRef = useRef(0);
@@ -324,7 +329,6 @@ export function useWebAudioPipeline({
       try {
         const msg = JSON.parse(event.nativeEvent.data);
 
-        //디버그 코드는 실제 로직과 분리하는 건 어떨까
         //그리고 웹뷰는 음성만 전달해주고, 권한 이런거는 네이티브에서 체크해야 함.
         if (msg.type === 'debug') {
           console.log(`[WebAudioPipeline] Bridge debug: ${msg.msg}`);
@@ -378,7 +382,6 @@ export function useWebAudioPipeline({
         }
 
         // VAD — LISTENING일 때만
-        // PO : LISTENING 일때만 VAD실행. 계속 들으면 렉걸림
         if (stateRef.current === 'LISTENING') {
           if (processingRef.current) {
             const acc = accBufRef.current;
@@ -407,25 +410,14 @@ export function useWebAudioPipeline({
   );
 
   // ─── WebView 녹음 시작 inject ───
-  //PO : 꼭 이렇게 해야 할까?
   //
   const injectStartRecording = useCallback(() => {
     if (!webViewRef.current) {
-      console.warn('[WebAudioPipeline] WebView ref is null, cannot inject');
+      console.warn('[WebAudioPipeline] WebView ref is null, cannot send START_RECORDING');
       return;
     }
-    console.log('[WebAudioPipeline] Injecting __startRecording');
-    //PO: 메세지 방식으로 변경
-    //TODO: 메세지 방식으로 변경
-    webViewRef.current.injectJavaScript(`
-      if (window.__startRecording) {
-        window.__startRecording();
-        window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'debug', msg: 'startRecording called' }));
-      } else {
-        window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'debug', msg: '__startRecording NOT found' }));
-      }
-      true;
-    `);
+    console.log('[WebAudioPipeline] Sending START_RECORDING via postMessage');
+    webViewRef.current.postMessage(JSON.stringify({ type: 'START_RECORDING' }));
   }, [webViewRef]);
   injectStartRecordingRef.current = injectStartRecording;
 
@@ -440,7 +432,6 @@ export function useWebAudioPipeline({
   }, [injectStartRecording]);
 
   // ─── Start ───
-  //PO : WebView에서 getUserMedia() 호출하면 브라우저 레벨 권한을 요청하지만, Android에서 WebView의 마이크
   // 접근은 앱의 네이티브 RECORD_AUDIO 권한이 먼저 승인되어 있어야 합니다
   // 사용자가 마이크 버튼 탭
   //          │
@@ -472,8 +463,10 @@ export function useWebAudioPipeline({
       }
 
       // Speech Recognition 권한 요청 (iOS 설정에 "음성 인식" 항목 생성)
+      console.log('[WebAudioPipeline] speechModule:', !!speechModule, 'requestPermissions:', !!speechModule?.requestPermissions);
       if (speechModule?.requestPermissions) {
         const speechStatus = await speechModule.requestPermissions();
+        console.log('[WebAudioPipeline] speech permission status:', speechStatus);
         if (speechStatus !== 'authorized') {
           Alert.alert(
             '음성 인식 권한 필요',
@@ -537,12 +530,7 @@ export function useWebAudioPipeline({
       onVoiceEndRef.current?.();
     }
 
-    //PO : 메시지 형식으로 변경
-    //TODO : 메시지 형식으로 변경
-    webViewRef.current?.injectJavaScript(`
-      if (window.__stopRecording) window.__stopRecording();
-      true;
-    `);
+    webViewRef.current?.postMessage(JSON.stringify({ type: 'STOP_RECORDING' }));
 
     ringBufferRef.current.reset();
     consecutiveSpeechRef.current = 0;
