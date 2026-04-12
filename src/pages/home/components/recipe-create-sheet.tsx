@@ -140,35 +140,69 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
       onChange={(index) => {
         if (index === -1) {
           Keyboard.dismiss();
-          // 닫힐 때 입력 상태 초기화 (제스처/백드롭/명시적 close 모두 포함)
           setUrl('');
           setError(null);
           setSelectedCategoryId(null);
         }
       }}
       backdropComponent={(props) => (
-        <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} />
+        <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} pressBehavior="none" />
       )}
       backgroundStyle={{ borderRadius: radius.xl }}
     >
       <BottomSheetView style={{ padding: spacing.xl, gap: spacing.md }}>
-        {/* 제목 */}
-        <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 20, fontWeight: '700', color: colors.text.primary }}>
-          {t.title}
-        </Text>
-
-        {/* 베리 비용 */}
-        <View style={{ alignItems: 'center', gap: spacing.xs }}>
-          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
-            {t.berryCost}
+        {/* 제목 + 닫기 */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Text style={{ fontFamily: typography.heading.fontFamily, fontSize: 20, fontWeight: '700', color: colors.text.primary }}>
+            {t.title}
           </Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.xs }}>
-            <Image source={BERRY_ICON} style={{ width: 16, height: 16 }} contentFit="contain" />
-            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.primary, fontWeight: '600' }}>
-              {t.balance(balance?.balance ?? 0)}
-            </Text>
-          </View>
+          <Pressable
+            onPress={() => sheetRef.current?.close()}
+            hitSlop={8}
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: 14,
+              backgroundColor: colors.surface,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Ionicons name="close" size={16} color={colors.text.secondary} />
+          </Pressable>
         </View>
+
+        {/* 카테고리 선택 */}
+        {categories && categories.length > 0 && (
+          <View style={{ gap: spacing.sm }}>
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
+              {t.category}
+            </Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: spacing.sm }}>
+              {categories.map((cat) => {
+                const isSelected = selectedCategoryId === cat.categoryId;
+                return (
+                  <Pressable
+                    key={cat.categoryId}
+                    onPress={() => setSelectedCategoryId(isSelected ? null : cat.categoryId)}
+                    style={{
+                      paddingHorizontal: 14,
+                      paddingVertical: 6,
+                      borderRadius: radius.full,
+                      backgroundColor: isSelected ? colors.primary : 'transparent',
+                      borderWidth: 1,
+                      borderColor: isSelected ? colors.primary : colors.border,
+                    }}
+                  >
+                    <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: isSelected ? '#fff' : colors.text.primary }}>
+                      {cat.name}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+          </View>
+        )}
 
         {/* URL 입력 + YouTube 칩 */}
         <View style={{ gap: spacing.sm }}>
@@ -235,37 +269,18 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
           )}
         </View>
 
-        {/* 카테고리 선택 */}
-        {categories && categories.length > 0 && (
-          <View style={{ gap: spacing.sm }}>
-            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
-              {t.category}
+        {/* 베리 비용 */}
+        <View style={{ alignItems: 'center', gap: spacing.xs }}>
+          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: colors.text.secondary }}>
+            {t.berryCost}
+          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.xs }}>
+            <Image source={BERRY_ICON} style={{ width: 16, height: 16 }} contentFit="contain" />
+            <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 14, color: colors.text.primary, fontWeight: '600' }}>
+              {t.balance(balance?.balance ?? 0)}
             </Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: spacing.sm }}>
-              {categories.map((cat) => {
-                const isSelected = selectedCategoryId === cat.categoryId;
-                return (
-                  <Pressable
-                    key={cat.categoryId}
-                    onPress={() => setSelectedCategoryId(isSelected ? null : cat.categoryId)}
-                    style={{
-                      paddingHorizontal: 14,
-                      paddingVertical: 6,
-                      borderRadius: radius.full,
-                      backgroundColor: isSelected ? colors.primary : 'transparent',
-                      borderWidth: 1,
-                      borderColor: isSelected ? colors.primary : colors.border,
-                    }}
-                  >
-                    <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 13, color: isSelected ? '#fff' : colors.text.primary }}>
-                      {cat.name}
-                    </Text>
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
           </View>
-        )}
+        </View>
 
         {/* 생성 버튼 */}
         <Pressable

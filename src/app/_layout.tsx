@@ -13,6 +13,7 @@ import { GlobalErrorBoundary } from "@/src/shared/components/error/GlobalErrorBo
 import { SplashScreenController } from "@/src/shared/splash/SplashScreenController";
 import { useEffect } from "react";
 import { useAppBootstrap } from "@/src/shared/hooks/useAppBootstrap";
+import { DeepLinkHandler } from "@/src/shared/components/deep-link-handler";
 
 import * as Network from "expo-network";
 import { AppState, AppStateStatus, Platform } from "react-native";
@@ -187,6 +188,7 @@ export default function RootLayout() {
               <GlobalErrorBoundary>
                 <SplashScreenController isReady={isReady}>
                   <RootNavigator isLoggedIn={isLoggedIn} />
+                  {isLoggedIn && <DeepLinkHandler />}
                 </SplashScreenController>
               </GlobalErrorBoundary>
             </BottomSheetModalProvider>

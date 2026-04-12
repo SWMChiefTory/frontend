@@ -1,9 +1,9 @@
 import * as Notifications from "expo-notifications";
 import * as Linking from "expo-linking";
-import { router } from "expo-router";
+import { useDeepLinkStore } from "@/src/shared/store/deep-link-store";
 
 /**
- * Push/Local 알림 옵저버 + 라우팅.
+ * Push/Local 알림 옵저버.
  *
  * 처리하는 payload:
  * 1) 서버 push (레시피 생성 완료)
@@ -11,7 +11,7 @@ import { router } from "expo-router";
  * 2) 로컬 알림 (타이머 완료)
  *    { type: "timer", url: "cheftory://?recipeId=<recipe_id>" }
  *
- * 둘 다 최종적으로 `/recipe/<id>` 로 이동.
+ * 모든 알림은 deepLinkStore에 pending intent로 저장 → 전역 DeepLinkHandler가 처리.
  */
 
 type NotifData = Record<string, unknown> | null | undefined;
@@ -20,14 +20,18 @@ function asString(v: unknown): string | null {
   return typeof v === "string" && v.length > 0 ? v : null;
 }
 
-function getRouteFromData(data: NotifData): string | null {
-  if (!data) return null;
+function setPendingFromData(data: NotifData, source: string) {
+  if (!data) return;
+
+  const store = useDeepLinkStore.getState();
 
   // 1) 서버 push: action + target_id
   const action = asString(data.action);
   const targetId = asString(data.target_id) ?? asString((data as any).targetId);
   if (action === "RECIPE_CREATED" && targetId) {
-    return `/recipe/${targetId}`;
+    console.log(`[expo-push] ${source} → detail:`, targetId);
+    store.setPending({ type: "detail", recipeId: targetId });
+    return;
   }
 
   // 2) 로컬 타이머: type=timer, url=cheftory://?recipeId=...
@@ -37,28 +41,24 @@ function getRouteFromData(data: NotifData): string | null {
     const parsed = Linking.parse(url);
     const recipeId = parsed.queryParams?.["recipeId"];
     if (typeof recipeId === "string" && recipeId.length > 0) {
-      return `/recipe/${recipeId}`;
+      console.log(`[expo-push] ${source} → cooking:`, recipeId);
+      store.setPending({ type: "cooking", recipeId });
+      return;
     }
   }
 
-  // legacy: url 만 있는 경우
+  // 3) legacy: url만 있는 경우
   if (url) {
     const parsed = Linking.parse(url);
     const recipeId = parsed.queryParams?.["recipeId"];
     if (typeof recipeId === "string" && recipeId.length > 0) {
-      return `/recipe/${recipeId}`;
+      console.log(`[expo-push] ${source} → detail (legacy):`, recipeId);
+      store.setPending({ type: "detail", recipeId });
+      return;
     }
   }
 
-  return null;
-}
-
-function navigateFromNotification(data: NotifData, source: string) {
-  const route = getRouteFromData(data);
-  console.log(`[expo-push] ${source} → route:`, route, "data:", data);
-  if (route) {
-    router.push(route as any);
-  }
+  console.log(`[expo-push] ${source} → no matching route, data:`, data);
 }
 
 export function startExpoPushObservers(): () => void {
@@ -77,7 +77,7 @@ export function startExpoPushObservers(): () => void {
   const responseSubscription =
     Notifications.addNotificationResponseReceivedListener((response) => {
       const data = response.notification.request.content.data as NotifData;
-      navigateFromNotification(data, "TAP");
+      setPendingFromData(data, "TAP");
     });
 
   // 3) 콜드 스타트 — 앱 종료 상태에서 알림 탭해서 켜짐
@@ -85,8 +85,7 @@ export function startExpoPushObservers(): () => void {
     .then((response) => {
       if (!response) return;
       const data = response.notification.request.content.data as NotifData;
-      // router 마운트 후에 push 되도록 약간 지연
-      setTimeout(() => navigateFromNotification(data, "COLD START"), 300);
+      setPendingFromData(data, "COLD START");
     })
     .catch((err) => {
       console.warn("[expo-push] getLastNotificationResponseAsync error", err);

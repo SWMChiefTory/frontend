@@ -8,6 +8,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Haptics from 'expo-haptics';
 import { scheduleTimerAlarm, cancelTimerAlarm } from '@/src/modules/timer/notifications/timerNotifications';
 import { startActivity, pauseActivity, resumeActivity, endActivity } from '@/src/modules/timer/live-activity/liveActivity';
@@ -24,7 +26,7 @@ export type Timer = {
   state: TimerState;
 }
 
-// ─── Zustand Store ───
+// ─── Zustand Store (persist) ───
 type TimerStore = {
   timer: Timer | null;
   isSheetOpen: boolean;
@@ -34,14 +36,23 @@ type TimerStore = {
   closeSheet: () => void;
 }
 
-export const useTimerStore = create<TimerStore>((set) => ({
-  timer: null,
-  isSheetOpen: false,
+export const useTimerStore = create<TimerStore>()(
+  persist(
+    (set) => ({
+      timer: null,
+      isSheetOpen: false,
 
-  setTimer: (timer) => set({ timer }),
-  openSheet: () => set({ isSheetOpen: true }),
-  closeSheet: () => set({ isSheetOpen: false }),
-}));
+      setTimer: (timer) => set({ timer }),
+      openSheet: () => set({ isSheetOpen: true }),
+      closeSheet: () => set({ isSheetOpen: false }),
+    }),
+    {
+      name: 'cheftory.timer',
+      storage: createJSONStorage(() => AsyncStorage),
+      partialize: (state) => ({ timer: state.timer }),
+    },
+  ),
+);
 
 // ─── 타이머 액션 (스토어 외부에서 호출 가능) ───
 let idCounter = 0;
@@ -53,6 +64,13 @@ export function startTimerAction(opts: {
   recipeTitle: string;
   market: string | null;
 }) {
+  // 기존 타이머가 있으면 notification + Live Activity 정리
+  const prev = useTimerStore.getState().timer;
+  if (prev) {
+    cancelTimerAlarm({ timerId: prev.id });
+    endActivity({ timerId: prev.id });
+  }
+
   const id = `timer-${Date.now()}-${++idCounter}`;
   const endAt = Date.now() + opts.seconds * 1000;
   const newTimer: Timer = {

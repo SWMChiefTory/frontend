@@ -19,12 +19,13 @@ import { NormalStepScreen } from './normal-step-screen';
 import type { Scene, StepScreenSharedProps } from './types';
 
 type RecipeStepScreenProps = {
+  recipeId: string;
   videoId: string;
   recipe: any;
   isShorts?: boolean;
 }
 
-export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeStepScreenProps) {
+export function RecipeStepScreen({ recipeId, videoId, recipe, isShorts = false }: RecipeStepScreenProps) {
   const insets = useSafeAreaInsets();
   const webviewRef = useRef<WebView>(null);
 
@@ -42,7 +43,7 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
   // ─── Timer ───
   const timerSheetRef = useRef<TimerSheetRef>(null);
   const timerResult = useStepTimer({
-    recipeId: recipe?.id ?? videoId,
+    recipeId,
     recipeTitle: recipe?.title ?? '',
   });
 
@@ -58,7 +59,7 @@ export function RecipeStepScreen({ videoId, recipe, isShorts = false }: RecipeSt
   }, []);
 
   // ─── Cooking mode 트래킹 (start / command / end) ───
-  const recipeIdForTrack = String(recipe?.id ?? videoId);
+  const recipeIdForTrack = recipeId;
   const currentStepIndexRef = useRef(0);
 
   useEffect(() => { currentStepIndexRef.current = stepNav.currentStepIndex; });

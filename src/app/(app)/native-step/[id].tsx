@@ -15,7 +15,7 @@ function StepContent({ recipeId }: { recipeId: string }) {
     throw new Error('레시피 데이터 구조 오류: recipe 필드가 없습니다');
   }
 
-  return <RecipeStepScreen videoId={data.videoId} recipe={data.recipe} isShorts={data.videoType === 'SHORTS'} />;
+  return <RecipeStepScreen recipeId={recipeId} videoId={data.videoId} recipe={data.recipe} isShorts={data.videoType === 'SHORTS'} />;
 }
 
 function StepFallback() {

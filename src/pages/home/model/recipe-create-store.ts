@@ -7,11 +7,6 @@ type CreatingRecipe = {
 }
 
 type RecipeCreateStore = {
-  /** 딥링크로 받은 URL — 다음 마운트 시 시트 자동 오픈 */
-  pendingVideoUrl: string | null;
-  requestOpen: (videoUrl?: string) => void;
-  consume: () => void;
-
   /** 현재 생성 중인 레시피들의 정보 */
   creatingRecipes: CreatingRecipe[];
   addCreating: (recipeId: string, videoUrl: string) => void;
@@ -19,10 +14,6 @@ type RecipeCreateStore = {
 }
 
 export const useRecipeCreateStore = create<RecipeCreateStore>((set) => ({
-  pendingVideoUrl: null,
-  requestOpen: (videoUrl) => set({ pendingVideoUrl: videoUrl ?? '' }),
-  consume: () => set({ pendingVideoUrl: null }),
-
   creatingRecipes: [],
   addCreating: (recipeId, videoUrl) =>
     set((s) => ({

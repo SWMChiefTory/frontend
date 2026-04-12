@@ -84,7 +84,7 @@ const startActivity = async (opts: {
 }) => {
   const duration = Math.ceil((opts.endAt - Date.now()) / 1000);
 
-  const deepLinkUrl = `cheftory://?recipeId=${opts.recipeId}`;
+  const deepLinkUrl = `cheftory://?recipeId=${opts.recipeId}&from=timer`;
 
   if (!isLiveActivityAvailable) return null;
   if (duration <= 0) throw new Error("Duration은 0보다 커야 합니다.");
