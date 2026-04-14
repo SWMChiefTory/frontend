@@ -35,6 +35,6 @@ export function useSignup(options?: UseSignupOptions) {
       options?.onSuccess?.(data, variables);
     },
     onError: (err, variables) => options?.onError?.(err as Error, variables),
-    throwOnError: true,
+    throwOnError: false,
   });
 }

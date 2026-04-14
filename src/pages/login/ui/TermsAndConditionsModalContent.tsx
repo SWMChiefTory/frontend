@@ -53,6 +53,9 @@ export default function TermsAndConditionsModalContent() {
         provider: variables.provider.toLowerCase(),
       });
     },
+    onError: (error) => {
+      console.error('[Signup] error:', error.message);
+    },
   });
   const { market, cachedMarket } = useMarketStore();
   const currentMarket = market ?? cachedMarket ?? "KOREA";
@@ -80,8 +83,8 @@ export default function TermsAndConditionsModalContent() {
     ) {
       return;
     }
-    // 버튼 누르자마자 모달 내리기 (onSuccess에서 처리 완료될 때까지 기다리지 않음)
-    closeModal();
+    // signup 성공 시 setAuthenticated() → 라우트 전환으로 모달이 자연스럽게 사라짐
+    // closeModal()을 먼저 호출하면 컴포넌트 언마운트 + mutation 진행 중 race condition 발생
     signup({
       id_token: idToken,
       provider: provider,

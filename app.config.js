@@ -9,13 +9,13 @@ export default {
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     owner: "cheftory",
-    runtimeVersion: { policy: "appVersion" },
+    runtimeVersion: "1.0.14",
     updates: {
       url: "https://u.expo.dev/f02c958a-c473-4a51-829c-3ff1ad8fd256",
-      fallbackToCacheTimeout: 0,
+      fallbackToCacheTimeout: 5000,
     },
     ios: {
-      buildNumber: "5",
+      buildNumber: "9",
       entitlements: {
         "com.apple.security.application-groups": [
           "group.com.cheftory.ios",

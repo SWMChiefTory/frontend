@@ -416,8 +416,16 @@ export function useWebAudioPipeline({
       console.warn('[WebAudioPipeline] WebView ref is null, cannot send START_RECORDING');
       return;
     }
-    console.log('[WebAudioPipeline] Sending START_RECORDING via postMessage');
-    webViewRef.current.postMessage(JSON.stringify({ type: 'START_RECORDING' }));
+    console.log('[WebAudioPipeline] Injecting __startRecording');
+    webViewRef.current.injectJavaScript(`
+      if (window.__startRecording) {
+        window.__startRecording();
+        window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'debug', msg: 'startRecording called' }));
+      } else {
+        window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'debug', msg: '__startRecording NOT found' }));
+      }
+      true;
+    `);
   }, [webViewRef]);
   injectStartRecordingRef.current = injectStartRecording;
 
@@ -530,7 +538,10 @@ export function useWebAudioPipeline({
       onVoiceEndRef.current?.();
     }
 
-    webViewRef.current?.postMessage(JSON.stringify({ type: 'STOP_RECORDING' }));
+    webViewRef.current?.injectJavaScript(`
+      if (window.__stopRecording) window.__stopRecording();
+      true;
+    `);
 
     ringBufferRef.current.reset();
     consecutiveSpeechRef.current = 0;
