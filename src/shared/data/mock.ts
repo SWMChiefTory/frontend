@@ -19,6 +19,7 @@ export type RecipeCard = {
   description?: string;
   servings?: number;
   cookingTime?: number;
+  recipeStatus?: string;
 }
 
 export type Category = {

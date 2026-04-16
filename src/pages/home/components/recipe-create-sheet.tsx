@@ -8,6 +8,7 @@ import { client } from '@/src/shared/api/client';
 import { useBalance } from '@/src/entities/balance';
 import { useCategories, useCreateRecipe } from '@/src/entities/recipe';
 import { useRecipeCreateStore } from '@/src/pages/home/model/recipe-create-store';
+import { useQueryClient } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import { track, RecipeCreateEvents } from '@/src/shared/analytics';
 import { useMarketStore } from '@/src/shared/store/marketStore';
@@ -45,6 +46,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
   const { data: balance } = useBalance();
   const addCreating = useRecipeCreateStore((s) => s.addCreating);
   const { mutateAsync: createRecipeAsync } = useCreateRecipe();
+  const queryClient = useQueryClient();
   const market = useMarketStore(s => s.market);
   const t = TEXTS[market ?? 'KOREA'];
 
@@ -106,6 +108,9 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
 
       // 생성 중 목록에 추가 → 홈에서 progress 표시
       addCreating(recipeId, videoUrl);
+      // 즉시 myRecipes 캐시 갱신 → IN_PROGRESS 상태의 레시피가 홈에 오버레이와 함께 노출됨
+      queryClient.invalidateQueries({ queryKey: ['myRecipes'] });
+      queryClient.invalidateQueries({ queryKey: ['categorizedRecipes'] });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
       setLoading(false);
@@ -126,7 +131,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
       });
       setError(msg);
     }
-  }, [videoId, selectedCategoryId, createRecipeAsync, addCreating]);
+  }, [videoId, selectedCategoryId, createRecipeAsync, addCreating, queryClient]);
 
   return (
     <BottomSheet

@@ -1,12 +1,11 @@
 import { ScrollView, View, Alert, Modal, Text, Pressable, ActivityIndicator } from 'react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { CreditRechargeSheet, type CreditRechargeSheetRef } from '@/src/widgets/credit-recharge/credit-recharge-sheet';
-import { CreatingRecipeWatcher } from '@/src/pages/home/components/creating-recipe-watcher';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { HomeHeader } from '@/src/pages/home/components/home-header';
 import { FeatureCards } from '@/src/pages/home/components/feature-cards';
-import { ThemeCardsSection, RecipeListSection, RecentRecipeSection, RecentRecipeSkeleton, RecipeListSkeleton, CreatingRecipeSection } from '@/src/pages/home/components/recipe-section';
+import { ThemeCardsSection, RecipeListSection, RecentRecipeSection, RecentRecipeSkeleton, RecipeListSkeleton } from '@/src/pages/home/components/recipe-section';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { useMarketStore } from '@/src/shared/store/marketStore';
 import {
@@ -23,13 +22,14 @@ function toRecipeCards(data: any[] | undefined): RecipeCard[] {
   if (!data) return [];
   return data.map((r) => ({
     id: r.recipeId,
-    title: r.recipeTitle,
+    title: r.recipeTitle || '',
     thumbnailUrl: r.videoThumbnailUrl,
     duration: r.cookingTime ? `${r.cookingTime}분` : '',
     views: r.channelTitle ?? '',
     description: r.description ?? '',
     servings: r.servings ?? 0,
     cookingTime: r.cookingTime ?? 0,
+    recipeStatus: r.recipeStatus ?? 'SUCCESS',
   }));
 }
 
@@ -120,7 +120,6 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120, paddingTop: spacing.xl, gap: spacing.lg }}
       >
-        <CreatingRecipeSection />
         {myRecipesLoading ? (
           <RecentRecipeSkeleton />
         ) : recentRecipes.length > 0 ? (
@@ -226,7 +225,6 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
       </Modal>
 
       <CreditRechargeSheet ref={rechargeSheetRef} />
-      <CreatingRecipeWatcher />
     </View>
   );
 }

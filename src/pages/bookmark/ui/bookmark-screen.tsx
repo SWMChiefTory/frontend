@@ -9,7 +9,6 @@ import { router } from 'expo-router';
 import { BottomSheetModal, BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useQueryClient } from '@tanstack/react-query';
 import { CategoryChips } from '@/src/pages/bookmark/components/category-chips';
-import { CreatingRecipeSection } from '@/src/pages/home/components/recipe-section';
 import { RecipeGrid } from '@/src/pages/bookmark/components/recipe-grid';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { useMyRecipes, useCategorizedRecipes, useCategories } from '@/src/entities/recipe';
@@ -196,9 +195,6 @@ export function BookmarkScreen() {
           </Pressable>
         </View>
       </View>
-
-      {/* 생성 중 레시피 섹션 */}
-      <CreatingRecipeSection />
 
       {/* 카테고리 칩 */}
       <CategoryChips

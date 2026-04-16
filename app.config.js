@@ -2,14 +2,14 @@ export default {
   expo: {
     name: "쉐프토리",
     slug: "cheftory",
-    version: "1.0.14",
+    version: "1.0.15",
     orientation: "portrait",
     icon: "./assets/images/mainCharacter.png",
     scheme: "cheftory",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     owner: "cheftory",
-    runtimeVersion: "1.0.14",
+    runtimeVersion: "1.0.15",
     updates: {
       url: "https://u.expo.dev/f02c958a-c473-4a51-829c-3ff1ad8fd256",
       fallbackToCacheTimeout: 5000,
