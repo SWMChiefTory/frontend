@@ -71,10 +71,11 @@ function toRecommendRecipe(raw: RawRecommendRecipe): RecommendRecipe {
 
 export async function fetchRecommendRecipes(
   recommendType: RecommendType,
+  cursor?: string | null,
 ): Promise<RecommendRecipesPage> {
   try {
     const res = await client.get(`/recipes/recommend/${recommendType}`, {
-      params: { query: 'ALL' },
+      params: { query: 'ALL', ...(cursor ? { cursor } : {}) },
     });
 
     const parsed = parseOrNull(RawRecommendResponseSchema, res.data, `RecommendAPI/${recommendType}`);

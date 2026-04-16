@@ -1,6 +1,7 @@
 import { View, Text, Pressable, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
+import { FlashList } from '@shopify/flash-list';
 import { router } from 'expo-router';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { Skeleton } from '@/src/shared/components/skeleton';
@@ -121,11 +122,13 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
 type RecentRecipeSectionProps = {
   recipes: RecipeCard[];
   onPress: (recipe: RecipeCard) => void;
+  fetchNextPage?: () => void;
+  hasNextPage?: boolean;
 }
 
 // CreatingRecipeSection 제거 — 카드별 독립 폴링으로 대체
 
-export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionProps) {
+export function RecentRecipeSection({ recipes, onPress, fetchNextPage, hasNextPage }: RecentRecipeSectionProps) {
   const market = useMarketStore(s => s.market);
   const t = TEXTS[market ?? 'KOREA'];
   return (
@@ -146,22 +149,43 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
       >
         {t.recentRecipes}
       </Text>
-      <ScrollView
+      <FlashList
         horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}
-      >
-        {recipes.map((recipe) => (
+        data={recipes}
+        renderItem={({ item }: { item: RecipeCard }) => (
           <RecipeCardWithStatus
-            key={recipe.id}
-            recipe={recipe}
+            recipe={item}
             onPress={onPress}
             voiceModeLabel={t.voiceMode}
             statusCreatingLabel={t.statusCreating}
             statusFailedLabel={t.statusFailed}
           />
-        ))}
-      </ScrollView>
+        )}
+        keyExtractor={(item: RecipeCard) => item.id}
+        showsHorizontalScrollIndicator={false}
+        onEndReached={fetchNextPage}
+        onEndReachedThreshold={0.5}
+        contentContainerStyle={{ paddingHorizontal: spacing.lg }}
+        ItemSeparatorComponent={() => <View style={{ width: spacing.md }} />}
+        ListFooterComponent={hasNextPage ? <RecentRecipeSkeletonFooter /> : null}
+      />
+    </View>
+  );
+}
+
+function RecentRecipeSkeletonFooter() {
+  return (
+    <View style={{ flexDirection: 'row', gap: spacing.md, marginLeft: spacing.md }}>
+      {[1, 2].map((i) => (
+        <View key={i} style={{ width: 220, flexDirection: 'row', gap: spacing.md, backgroundColor: colors.surface, borderRadius: radius.lg, padding: spacing.sm }}>
+          <Skeleton width={68} height={68} borderRadius={radius.sm} />
+          <View style={{ flex: 1, gap: spacing.sm, justifyContent: 'center' }}>
+            <Skeleton width="80%" height={14} />
+            <Skeleton width="50%" height={12} />
+            <Skeleton width="100%" height={28} borderRadius={radius.sm} />
+          </View>
+        </View>
+      ))}
     </View>
   );
 }
@@ -291,9 +315,11 @@ type RecipeListSectionProps = {
   icon?: string;
   recipes: RecipeCard[];
   onPress: (recipe: RecipeCard) => void;
+  fetchNextPage?: () => void;
+  hasNextPage?: boolean;
 }
 
-export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListSectionProps) {
+export function RecipeListSection({ title, icon, recipes, onPress, fetchNextPage, hasNextPage }: RecipeListSectionProps) {
   return (
     <View
       style={{
@@ -311,19 +337,16 @@ export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListS
       >
         {title}
       </Text>
-      <ScrollView
+      <FlashList
         horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}
-      >
-        {recipes.map((recipe) => (
+        data={recipes}
+        renderItem={({ item }: { item: RecipeCard }) => (
           <Pressable
-            key={recipe.id}
-            onPress={() => onPress(recipe)}
+            onPress={() => onPress(item)}
             style={{ width: 160, gap: spacing.sm }}
           >
             <Image
-              source={{ uri: recipe.thumbnailUrl }}
+              source={{ uri: item.thumbnailUrl }}
               style={{
                 width: 160,
                 height: 100,
@@ -337,15 +360,36 @@ export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListS
                 style={{ fontFamily: typography.body.fontFamily, fontSize: 13, fontWeight: '600', color: colors.text.primary }}
                 numberOfLines={1}
               >
-                {recipe.title}
+                {item.title}
               </Text>
               <Text style={{ fontSize: 11, color: colors.text.secondary }}>
-                {recipe.duration} · {recipe.views}
+                {item.duration} · {item.views}
               </Text>
             </View>
           </Pressable>
-        ))}
-      </ScrollView>
+        )}
+        keyExtractor={(item: RecipeCard) => item.id}
+        showsHorizontalScrollIndicator={false}
+        onEndReached={fetchNextPage}
+        onEndReachedThreshold={0.5}
+        contentContainerStyle={{ paddingHorizontal: spacing.lg }}
+        ItemSeparatorComponent={() => <View style={{ width: spacing.md }} />}
+        ListFooterComponent={hasNextPage ? <RecipeListSkeletonFooter /> : null}
+      />
+    </View>
+  );
+}
+
+function RecipeListSkeletonFooter() {
+  return (
+    <View style={{ flexDirection: 'row', gap: spacing.md, marginLeft: spacing.md }}>
+      {[1, 2].map((i) => (
+        <View key={i} style={{ width: 160, gap: spacing.sm }}>
+          <Skeleton width={160} height={100} borderRadius={radius.md} />
+          <Skeleton width={120} height={14} />
+          <Skeleton width={80} height={11} />
+        </View>
+      ))}
     </View>
   );
 }
@@ -355,7 +399,7 @@ export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListS
 export function RecentRecipeSkeleton() {
   return (
     <View style={{ paddingVertical: spacing.lg, gap: spacing.md }}>
-      <Skeleton width={140} height={22} style={{ marginLeft: spacing.lg }} />
+      <View style={{ marginLeft: spacing.lg }}><Skeleton width={140} height={22} /></View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}>
         {[1, 2, 3].map((i) => (

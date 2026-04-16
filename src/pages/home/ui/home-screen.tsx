@@ -43,18 +43,27 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
   const market = useMarketStore(s => s.market);
   const t = TEXTS[market ?? 'KOREA'];
 
-  const { data: popularData, isLoading: popularLoading } = useRecommendRecipes(RecommendType.POPULAR);
-  const { data: myRecipesData, isLoading: myRecipesLoading } = useMyRecipes();
+  const {
+    entities: popularEntities,
+    isLoading: popularLoading,
+    fetchNextPage: fetchNextPopular,
+    hasNextPage: hasNextPopular,
+  } = useRecommendRecipes(RecommendType.POPULAR);
+  const {
+    entities: myRecipeEntities,
+    isLoading: myRecipesLoading,
+    fetchNextPage: fetchNextMyRecipes,
+    hasNextPage: hasNextMyRecipes,
+  } = useMyRecipes();
 
   const hotRecipes = useMemo(() => {
-    const apiCards = toRecipeCards(popularData?.data);
+    const apiCards = toRecipeCards(popularEntities);
     return apiCards.length > 0 ? apiCards : MOCK_HOT_RECIPES;
-  }, [popularData]);
+  }, [popularEntities]);
 
   const recentRecipes = useMemo(() => {
-    const apiCards = toRecipeCards(myRecipesData?.data);
-    return apiCards;
-  }, [myRecipesData]);
+    return toRecipeCards(myRecipeEntities);
+  }, [myRecipeEntities]);
 
   const handleBerryPress = useCallback(() => {
     track(RechargeEvents.CLICK, { source: 'home_header' });
@@ -127,6 +136,8 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
             <RecentRecipeSection
               recipes={recentRecipes}
               onPress={handleRecipePress}
+              fetchNextPage={fetchNextMyRecipes}
+              hasNextPage={hasNextMyRecipes}
             />
             <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
           </>
@@ -149,6 +160,8 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
             title={t.hotRecipes}
             recipes={hotRecipes}
             onPress={handleRecipePress}
+            fetchNextPage={fetchNextPopular}
+            hasNextPage={hasNextPopular}
           />
         )}
       </ScrollView>

@@ -298,8 +298,8 @@ function CompletionStep({
 }) {
   const market = useMarketStore(s => s.market);
   const t = TEXTS[market ?? 'KOREA'];
-  const { data: popular } = useRecommendRecipes(RecommendType.POPULAR);
-  const recipes = popular?.data?.slice(0, 3) ?? [];
+  const { entities: popularEntities } = useRecommendRecipes(RecommendType.POPULAR);
+  const recipes = popularEntities.slice(0, 3);
 
   const finish = useCallback(
     async (exit_type: 'start_cooking' | 'recipe_detail' | 'explore') => {

@@ -46,8 +46,8 @@ export function BookmarkScreen() {
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeCard | null>(null);
 
   const { data: categoriesData } = useCategories();
-  const { data: allRecipesData, isLoading: allLoading } = useMyRecipes();
-  const { data: catRecipesData, isLoading: catLoading } = useCategorizedRecipes(
+  const { entities: allRecipeEntities, isLoading: allLoading } = useMyRecipes();
+  const { entities: catRecipeEntities, isLoading: catLoading } = useCategorizedRecipes(
     selectedCategory !== 'all' ? selectedCategory : null,
   );
 
@@ -61,10 +61,10 @@ export function BookmarkScreen() {
 
   const recipes = useMemo(() => {
     if (selectedCategory === 'all') {
-      return toRecipeCards(allRecipesData?.data ?? []);
+      return toRecipeCards(allRecipeEntities);
     }
-    return toRecipeCards(catRecipesData?.data ?? []);
-  }, [selectedCategory, allRecipesData, catRecipesData]);
+    return toRecipeCards(catRecipeEntities);
+  }, [selectedCategory, allRecipeEntities, catRecipeEntities]);
 
   const isLoading = selectedCategory === 'all' ? allLoading : catLoading;
 

@@ -1,10 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
 import { fetchRecommendRecipes, RecommendType } from '../api/recommend-api';
+import { useInfinitePagination } from '@/src/shared/hooks/use-infinite-pagination';
 
 export function useRecommendRecipes(type: RecommendType) {
-  return useQuery({
+  return useInfinitePagination({
     queryKey: ['recommendRecipes', type],
-    queryFn: () => fetchRecommendRecipes(type),
+    queryFn: ({ pageParam }) => fetchRecommendRecipes(type, pageParam),
     staleTime: 5 * 60 * 1000,
   });
 }
