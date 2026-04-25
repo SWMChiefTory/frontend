@@ -383,7 +383,7 @@ function StaticTory() {
 
 const TEXTS = {
   KOREA: {
-    skip: '다음에',
+    skip: '건너뛰기',
     welcomeTitle: '안녕하세요!\n쉐프토리에 오신 걸 환영해요',
     welcomeSubtitle: '유튜브에서 본 레시피를\n쉐프토리로 가져오는 법을 알려드릴게요',
     welcomeStart: '시작하기',
@@ -393,7 +393,7 @@ const TEXTS = {
     orBrowsePopular: '또는 인기 레시피 둘러보기',
   },
   GLOBAL: {
-    skip: 'Later',
+    skip: 'Skip',
     welcomeTitle: 'Hello!\nWelcome to ChefTory',
     welcomeSubtitle: 'Let me show you how to bring\nYouTube recipes into ChefTory',
     welcomeStart: 'Get Started',

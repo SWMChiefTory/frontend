@@ -56,7 +56,7 @@ export function TutorialHeader({ onSkip }: TutorialHeaderProps) {
             color: 'rgba(255,255,255,0.9)',
           }}
         >
-          다음에
+          건너뛰기
         </Text>
         <Ionicons name="chevron-forward" size={14} color="rgba(255,255,255,0.9)" />
       </Pressable>
