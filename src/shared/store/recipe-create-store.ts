@@ -11,6 +11,11 @@ type RecipeCreateStore = {
   creatingRecipes: CreatingRecipe[];
   addCreating: (recipeId: string, videoUrl: string) => void;
   removeCreating: (recipeId: string) => void;
+  /** 레시피 생성 시트 open/close 제어 */
+  isSheetOpen: boolean;
+  initialUrl: string | null;
+  openSheet: (url?: string) => void;
+  closeSheet: () => void;
 }
 
 export const useRecipeCreateStore = create<RecipeCreateStore>((set) => ({
@@ -26,4 +31,8 @@ export const useRecipeCreateStore = create<RecipeCreateStore>((set) => ({
     set((s) => ({
       creatingRecipes: s.creatingRecipes.filter((r) => r.recipeId !== recipeId),
     })),
+  isSheetOpen: false,
+  initialUrl: null,
+  openSheet: (url) => set({ isSheetOpen: true, initialUrl: url ?? null }),
+  closeSheet: () => set({ isSheetOpen: false, initialUrl: null }),
 }));

@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useImperativeHandle, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Text, Pressable, Alert, ActivityIndicator, Linking, Keyboard, ScrollView, Platform } from 'react-native';
 import BottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,7 +7,7 @@ import { colors, spacing, radius, typography } from '@/src/shared/design/tokens'
 import { client } from '@/src/shared/api/client';
 import { useBalance } from '@/src/entities/balance';
 import { useCategories, useCreateRecipe } from '@/src/entities/recipe';
-import { useRecipeCreateStore } from '@/src/pages/home/model/recipe-create-store';
+import { useRecipeCreateStore } from '@/src/shared/store/recipe-create-store';
 import { useQueryClient } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import { track, RecipeCreateEvents } from '@/src/shared/analytics';
@@ -30,12 +30,7 @@ function extractVideoId(url: string): string | null {
   return null;
 }
 
-export type RecipeCreateSheetRef = {
-  open: (initialUrl?: string) => void;
-  close: () => void;
-}
-
-export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) => {
+export function RecipeCreateSheet() {
   const sheetRef = useRef<BottomSheet>(null);
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
@@ -45,13 +40,16 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
   const { data: categories } = useCategories();
   const { data: balance } = useBalance();
   const addCreating = useRecipeCreateStore((s) => s.addCreating);
+  const isSheetOpen = useRecipeCreateStore((s) => s.isSheetOpen);
+  const initialUrl = useRecipeCreateStore((s) => s.initialUrl);
+  const closeSheet = useRecipeCreateStore((s) => s.closeSheet);
   const { mutateAsync: createRecipeAsync } = useCreateRecipe();
   const queryClient = useQueryClient();
   const market = useMarketStore(s => s.market);
   const t = TEXTS[market ?? 'KOREA'];
 
-  useImperativeHandle(ref, () => ({
-    open: (initialUrl?: string) => {
+  useEffect(() => {
+    if (isSheetOpen) {
       if (initialUrl) setUrl(initialUrl);
       const entryPoint: 'home' | 'external_share' = initialUrl ? 'external_share' : 'home';
       entryPointRef.current = entryPoint;
@@ -61,14 +59,8 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
         has_prefilled_url: !!initialUrl,
         is_from_share: !!initialUrl,
       });
-    },
-    close: () => {
-      sheetRef.current?.close();
-      setUrl('');
-      setError(null);
-      setSelectedCategoryId(null);
-    },
-  }));
+    }
+  }, [isSheetOpen]);
 
   const videoId = extractVideoId(url);
   const isValid = !!videoId;
@@ -115,6 +107,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
 
       setLoading(false);
       sheetRef.current?.close();
+      closeSheet();
       setUrl('');
       setSelectedCategoryId(null);
     } catch (err: any) {
@@ -148,6 +141,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
           setUrl('');
           setError(null);
           setSelectedCategoryId(null);
+          closeSheet();
         }
       }}
       backdropComponent={(props) => (
@@ -162,7 +156,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
             {t.title}
           </Text>
           <Pressable
-            onPress={() => sheetRef.current?.close()}
+            onPress={() => { sheetRef.current?.close(); closeSheet(); }}
             hitSlop={8}
             style={{
               width: 28,
@@ -312,7 +306,7 @@ export const RecipeCreateSheet = forwardRef<RecipeCreateSheetRef>((_props, ref) 
       </BottomSheetView>
     </BottomSheet>
   );
-});
+}
 
 const TEXTS = {
   KOREA: {

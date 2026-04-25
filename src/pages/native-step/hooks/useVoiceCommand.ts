@@ -12,10 +12,12 @@ import type { RefObject } from 'react';
 import type { WebView } from 'react-native-webview';
 import { useWebAudioPipeline } from './useWebAudioPipeline';
 import { classifyLocal, extractSlots, normalize } from './useLocalNLU';
-import { createNLU, type IntentLabel } from './onnxNLU';
+// NLU 모델 비활성화 — partial interim에서 조기 dispatch 문제로 STT 세션이 죽음
+// import { createNLU, type IntentLabel } from './onnxNLU';
+import type { IntentLabel } from './onnxNLU';
 import type { HandleIntentFn } from './useIntentMatchingAction';
 
-const NLU_CONFIDENCE_THRESHOLD = 0.7;
+// const NLU_CONFIDENCE_THRESHOLD = 0.7;
 
 type UseVoiceCommandOptions = {
   onIntent: HandleIntentFn;
@@ -43,19 +45,21 @@ export function useVoiceCommand({
   const isListeningRef = useRef(false);
   const handledInInterimRef = useRef(false);
 
-  // ─── NLU 모델 로드 ───
-  const nluReadyRef = useRef(false);
-  const nluRef = useRef<Awaited<ReturnType<typeof createNLU>> | null>(null);
-
-  useEffect(() => {
-    createNLU()
-      .then((nlu) => {
-        nluRef.current = nlu;
-        nluReadyRef.current = true;
-        console.log('[VoiceCommand] NLU model ready');
-      })
-      .catch((e) => console.warn('[VoiceCommand] NLU model load failed:', e));
-  }, []);
+  // ─── NLU 모델 로드 (비활성화) ───
+  // partial interim ("장면" 단독 등)에서 조기 dispatch 발생 → STT 세션 죽이는 버그.
+  // 키워드 매칭(Tier 1)만으로 충분하다고 판단되어 비활성화.
+  // const nluReadyRef = useRef(false);
+  // const nluRef = useRef<Awaited<ReturnType<typeof createNLU>> | null>(null);
+  //
+  // useEffect(() => {
+  //   createNLU()
+  //     .then((nlu) => {
+  //       nluRef.current = nlu;
+  //       nluReadyRef.current = true;
+  //       console.log('[VoiceCommand] NLU model ready');
+  //     })
+  //     .catch((e) => console.warn('[VoiceCommand] NLU model load failed:', e));
+  // }, []);
 
   const showFeedback = useCallback((text: string, intent: string = 'UNKNOWN') => {
     setIntentFeedback({ text, intent });
@@ -77,11 +81,11 @@ export function useVoiceCommand({
     [onIntent, showFeedback],
   );
 
-  // ONNX 폴백에서 GO_TO_STEP 받았을 때 슬롯 추출용
-  const extractStepNumberForOnnx = useCallback((text: string): number | undefined => {
-    const slots = extractSlots(normalize(text));
-    return slots.stepNumber;
-  }, []);
+  // ONNX 폴백에서 GO_TO_STEP 받았을 때 슬롯 추출용 (비활성화)
+  // const extractStepNumberForOnnx = useCallback((text: string): number | undefined => {
+  //   const slots = extractSlots(normalize(text));
+  //   return slots.stepNumber;
+  // }, []);
 
   // ─── Volume Ducking ───
   const onVoiceStart = useCallback(() => {
@@ -116,28 +120,28 @@ export function useVoiceCommand({
         }
       }
 
-      // 2. NLU 추론
-      if (nluReadyRef.current && nluRef.current) {
-        try {
-          const tNlu0 = performance.now();
-          const result = await nluRef.current.classify(text);
-          const tNlu1 = performance.now();
-          console.log(`[Perf:NLU] interim "${text}" → ${result?.intent ?? 'none'}(${((result?.confidence ?? 0) * 100).toFixed(1)}%) | ${(tNlu1 - tNlu0).toFixed(1)}ms`);
-
-          if (result && result.confidence >= NLU_CONFIDENCE_THRESHOLD) {
-            const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumberForOnnx(text) : undefined;
-            const executed = dispatchIntent(result.intent, { stepNumber: stepNum });
-            if (executed) {
-              console.log(`[Perf:E2E] interim "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
-              handledInInterimRef.current = true;
-              resetTranscriptionRef.current();
-              return;
-            }
-          }
-        } catch (e) { console.warn('[VoiceCommand] NLU interim error:', e); }
-      }
+      // 2. NLU 추론 (비활성화 — partial interim 조기 dispatch 방지)
+      // if (nluReadyRef.current && nluRef.current) {
+      //   try {
+      //     const tNlu0 = performance.now();
+      //     const result = await nluRef.current.classify(text);
+      //     const tNlu1 = performance.now();
+      //     console.log(`[Perf:NLU] interim "${text}" → ${result?.intent ?? 'none'}(${((result?.confidence ?? 0) * 100).toFixed(1)}%) | ${(tNlu1 - tNlu0).toFixed(1)}ms`);
+      //
+      //     if (result && result.confidence >= NLU_CONFIDENCE_THRESHOLD) {
+      //       const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumberForOnnx(text) : undefined;
+      //       const executed = dispatchIntent(result.intent, { stepNumber: stepNum });
+      //       if (executed) {
+      //         console.log(`[Perf:E2E] interim "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
+      //         handledInInterimRef.current = true;
+      //         resetTranscriptionRef.current();
+      //         return;
+      //       }
+      //     }
+      //   } catch (e) { console.warn('[VoiceCommand] NLU interim error:', e); }
+      // }
     },
-    [dispatchIntent, extractStepNumberForOnnx],
+    [dispatchIntent],
   );
 
   const handleFinalResult = useCallback(
@@ -161,26 +165,26 @@ export function useVoiceCommand({
         return;
       }
 
-      // 2. NLU 추론
-      if (nluReadyRef.current && nluRef.current) {
-        try {
-          const tNlu0 = performance.now();
-          const result = await nluRef.current.classify(text);
-          const tNlu1 = performance.now();
-          console.log(`[Perf:NLU] final "${text}" → ${result?.intent ?? 'none'}(${((result?.confidence ?? 0) * 100).toFixed(1)}%) | ${(tNlu1 - tNlu0).toFixed(1)}ms`);
-
-          if (result && result.confidence >= NLU_CONFIDENCE_THRESHOLD) {
-            const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumberForOnnx(text) : undefined;
-            dispatchIntent(result.intent, { stepNumber: stepNum });
-            console.log(`[Perf:E2E] final "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
-            return;
-          }
-        } catch (e) { console.warn('[VoiceCommand] NLU final error:', e); }
-      }
+      // 2. NLU 추론 (비활성화)
+      // if (nluReadyRef.current && nluRef.current) {
+      //   try {
+      //     const tNlu0 = performance.now();
+      //     const result = await nluRef.current.classify(text);
+      //     const tNlu1 = performance.now();
+      //     console.log(`[Perf:NLU] final "${text}" → ${result?.intent ?? 'none'}(${((result?.confidence ?? 0) * 100).toFixed(1)}%) | ${(tNlu1 - tNlu0).toFixed(1)}ms`);
+      //
+      //     if (result && result.confidence >= NLU_CONFIDENCE_THRESHOLD) {
+      //       const stepNum = result.intent === 'GO_TO_STEP' ? extractStepNumberForOnnx(text) : undefined;
+      //       dispatchIntent(result.intent, { stepNumber: stepNum });
+      //       console.log(`[Perf:E2E] final "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
+      //       return;
+      //     }
+      //   } catch (e) { console.warn('[VoiceCommand] NLU final error:', e); }
+      // }
 
       console.log(`[Perf:E2E] final "${text}" → no match | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
     },
-    [dispatchIntent, extractStepNumberForOnnx],
+    [dispatchIntent],
   );
 
   // ─── boost words (고정 키워드만) ───

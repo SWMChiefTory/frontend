@@ -17,6 +17,7 @@ import { useRecommendRecipes, useMyRecipes } from '@/src/entities/recipe';
 import { RecommendType } from '@/src/entities/recipe/api/recommend-api';
 import type { RecipeCard } from '@/src/shared/data/mock';
 import { track, RechargeEvents, RecipeEvents } from '@/src/shared/analytics';
+import { useRecipeCreateStore } from '@/src/shared/store/recipe-create-store';
 
 function toRecipeCards(data: any[] | undefined): RecipeCard[] {
   if (!data) return [];
@@ -33,11 +34,7 @@ function toRecipeCards(data: any[] | undefined): RecipeCard[] {
   }));
 }
 
-type HomeScreenProps = {
-  onCreatePress?: () => void;
-}
-
-export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenProps) {
+export function HomeScreen() {
   const [lockedModal, setLockedModal] = useState<string | null>(null);
   const rechargeSheetRef = useRef<CreditRechargeSheetRef>(null);
   const market = useMarketStore(s => s.market);
@@ -79,8 +76,8 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
   }, []);
 
   const handleCreatePress = useCallback(() => {
-    onCreatePressExternal?.();
-  }, [onCreatePressExternal]);
+    useRecipeCreateStore.getState().openSheet();
+  }, []);
 
   const handleLockedPress = useCallback((feature: string) => {
     setLockedModal(feature);
