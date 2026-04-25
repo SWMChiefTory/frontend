@@ -45,7 +45,7 @@ export const CategorySelectorSheet = forwardRef<
       ref={sheetRef}
       index={-1}
       snapPoints={snapPoints}
-      enablePanDownToClose={false}
+      enablePanDownToClose
       enableDynamicSizing={false}
       backdropComponent={(props) => (
         <BottomSheetBackdrop
@@ -53,7 +53,7 @@ export const CategorySelectorSheet = forwardRef<
           disappearsOnIndex={-1}
           appearsOnIndex={0}
           opacity={0.5}
-          pressBehavior="none"
+          pressBehavior="close"
         />
       )}
       backgroundStyle={{

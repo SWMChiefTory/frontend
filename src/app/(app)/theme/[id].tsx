@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { View, ActivityIndicator } from 'react-native';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { View, ActivityIndicator, Pressable } from 'react-native';
+import { Stack, useLocalSearchParams, router } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/src/entities/theme';
 import { colors, typography } from '@/src/shared/design/tokens';
 import { MOCK_THEME_CARDS } from '@/src/shared/data/mock';
@@ -27,7 +28,6 @@ export default function ThemeScreen() {
           headerShown: true,
           title: '',
           animation: 'slide_from_right',
-          headerBackButtonDisplayMode: 'minimal',
           headerStyle: { backgroundColor: headerColor },
           headerTintColor: colors.text.inverse,
           headerTitleStyle: {
@@ -37,6 +37,22 @@ export default function ThemeScreen() {
             fontWeight: '700',
           },
           headerShadowVisible: false,
+          // 명시적 back button — 시트 backdrop 등 다른 요소 영향 안 받게
+          headerLeft: () => (
+            <Pressable
+              onPress={() => {
+                if (router.canGoBack()) {
+                  router.back();
+                } else {
+                  router.replace('/');
+                }
+              }}
+              hitSlop={16}
+              style={{ paddingHorizontal: 4 }}
+            >
+              <Ionicons name="chevron-back" size={26} color={colors.text.inverse} />
+            </Pressable>
+          ),
         }}
       />
       {isLoading || !theme ? (
