@@ -17,6 +17,7 @@ import {
   ReportEvents,
   SearchEvents,
   ThemeEvents,
+  TutorialShareEvents,
 } from "./events";
 
 /**
@@ -39,7 +40,8 @@ export type AmplitudeEventName =
   | (typeof ThemeEvents)[keyof typeof ThemeEvents]
   | (typeof ReportEvents)[keyof typeof ReportEvents]
   | (typeof ContactEvents)[keyof typeof ContactEvents]
-  | (typeof AccountEvents)[keyof typeof AccountEvents];
+  | (typeof AccountEvents)[keyof typeof AccountEvents]
+  | (typeof TutorialShareEvents)[keyof typeof TutorialShareEvents];
 
 /**
  * 이벤트별 프로퍼티 타입 매핑.
@@ -249,6 +251,17 @@ export type EventPropsMap = {
   [OnboardingEvents.START]: never;
   [OnboardingEvents.SKIP]: never;
   [OnboardingEvents.COMPLETE]: never;
+
+  // ─── Tutorial: 공유하기 인터랙티브 온보딩 ───
+  [TutorialShareEvents.VIEW]: never;
+  [TutorialShareEvents.YOUTUBE_TAP]: never;
+  [TutorialShareEvents.MORE_TAP]: never;
+  [TutorialShareEvents.CHEFTORY_TAP]: never;
+  [TutorialShareEvents.ACTION_TAP]: never;
+  [TutorialShareEvents.CREATE_TAP]: never;
+  [TutorialShareEvents.SKIP]: { phase: string; duration_ms: number };
+  [TutorialShareEvents.COMPLETE]: { duration_ms: number };
+  [TutorialShareEvents.WRONG_TAP]: { phase: string };
 }
 
 type PropsOf<E extends AmplitudeEventName> = E extends keyof EventPropsMap

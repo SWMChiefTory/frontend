@@ -6,7 +6,7 @@ import { client, parseOrNull } from '@/src/shared/api';
 const RawUserRecipeSchema = z
   .object({
     recipe_id: z.string(),
-    recipe_title: z.string(),
+    recipe_title: z.string().nullish(),
     video_id: z.string().nullish(),
     video_thumbnail_url: z.string().nullish(),
     video_type: z.enum(['SHORTS', 'NORMAL']).nullish(),
@@ -79,7 +79,7 @@ export type UserRecipesPage = {
 function toUserRecipe(raw: RawUserRecipe): UserRecipe {
   return {
     recipeId: raw.recipe_id,
-    recipeTitle: raw.recipe_title,
+    recipeTitle: raw.recipe_title ?? '',
     videoId: raw.video_id ?? '',
     videoThumbnailUrl: raw.video_thumbnail_url ?? '',
     videoType: raw.video_type ?? 'NORMAL',

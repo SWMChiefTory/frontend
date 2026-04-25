@@ -2,7 +2,6 @@ import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { GlobalError } from "./Fallback";
 import * as Sentry from "@sentry/react-native";
 import React from "react";
-import { AxiosError } from "axios";
 
 type Props = {
   children: React.ReactNode;
@@ -13,12 +12,7 @@ export function GlobalErrorBoundary({ children }: Props) {
     <QueryErrorResetBoundary>
       {({ reset: queryReset }) => (
         <Sentry.ErrorBoundary
-          fallback={({ error, resetError }) => {
-            console.log("error!!!!!!!!!!!!!!!!!", JSON.stringify(error));
-            console.log(
-              "resetError!!!!!!!!!!!!!!!!!",
-              JSON.stringify((error as AxiosError).response),
-            );
+          fallback={({ resetError }) => {
             return (
               <GlobalError
                 // error={error}

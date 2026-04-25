@@ -207,7 +207,6 @@ export function useWebAudioPipeline({
   const startTranscribing = useCallback(() => {
     vadSpeechStartRef.current = performance.now();
     firstSttResultRef.current = true;
-    console.log('[WebAudioPipeline] VAD → speech, opening STT');
     onVoiceStartRef.current?.();
 
     // 매 발화 시작 전 biasing 설정 (realtimeBufferTranscribe에서 Kotlin으로 전달)
@@ -233,18 +232,13 @@ export function useWebAudioPipeline({
     prevTextRef.current = text;
     if (stateRef.current !== 'TRANSCRIBING') return;
 
-    const now = performance.now();
-    const sinceVAD = vadSpeechStartRef.current > 0 ? (now - vadSpeechStartRef.current).toFixed(0) : '?';
-    const isFirst = firstSttResultRef.current;
     firstSttResultRef.current = false;
 
     if (isFinal) {
       if (!transcribingRef.current) return;
-      console.log(`[Perf:STT] final "${text}" | VAD→STT: ${sinceVAD}ms${isFirst ? ' (first result)' : ''}`);
       onFinalRef.current(text);
       finishTranscription();
     } else {
-      console.log(`[Perf:STT] interim "${text}" | VAD→STT: ${sinceVAD}ms${isFirst ? ' (first result)' : ''}`);
       onInterimRef.current(text);
     }
   }, [text, isFinal]);
@@ -302,13 +296,7 @@ export function useWebAudioPipeline({
       while (pos + WINDOW_SIZE <= len && stateRef.current === 'LISTENING') {
         const frame = cur.subarray(pos, pos + WINDOW_SIZE);
         pos += WINDOW_SIZE;
-        const tVad0 = performance.now();
         const prob = await vadRef.current.process(frame);
-        const tVad1 = performance.now();
-        vadFrameCountRef.current++;
-        if (vadFrameCountRef.current <= 3 || prob > SPEECH_THRESHOLD) {
-          console.log(`[Perf:VAD] frame #${vadFrameCountRef.current} | ${(tVad1 - tVad0).toFixed(1)}ms | prob: ${prob.toFixed(3)}`);
-        }
         handleVADResult(prob);
       }
 
@@ -322,8 +310,6 @@ export function useWebAudioPipeline({
   processChunkRef.current = processChunk;
 
   // ─── WebView bridge message handler ───
-  const chunkLogCountRef = useRef(0);
-
   const handleWebViewMessage = useCallback(
     (event: WebViewMessageEvent) => {
       try {
@@ -331,10 +317,8 @@ export function useWebAudioPipeline({
 
         //그리고 웹뷰는 음성만 전달해주고, 권한 이런거는 네이티브에서 체크해야 함.
         if (msg.type === 'debug') {
-          console.log(`[WebAudioPipeline] Bridge debug: ${msg.msg}`);
           if (msg.msg === 'mic_ready') {
             webViewReadyRef.current = true;
-            console.log('[WebAudioPipeline] Mic ready from web');
             if (pendingStartRef.current) {
               pendingStartRef.current = false;
               injectStartRecordingRef.current();
@@ -343,22 +327,10 @@ export function useWebAudioPipeline({
           return;
         }
 
-        if (msg.type === 'audio_stream_start') {
-          console.log('[WebAudioPipeline] Stream started from web');
-          chunkLogCountRef.current = 0;
-          return;
-        }
-        if (msg.type === 'audio_stream_end') {
-          console.log('[WebAudioPipeline] Stream ended from web');
-          return;
-        }
+        if (msg.type === 'audio_stream_start') return;
+        if (msg.type === 'audio_stream_end') return;
 
         if (msg.type !== 'audio_stream_chunk') return;
-
-        chunkLogCountRef.current++;
-        if (chunkLogCountRef.current <= 10) {
-          console.log(`[WebAudioPipeline] Chunk #${chunkLogCountRef.current}, bytes: ${msg.bytes}, state: ${stateRef.current}`);
-        }
 
         if (stateRef.current === 'IDLE') return;
 
@@ -375,7 +347,6 @@ export function useWebAudioPipeline({
           utteranceSamplesRef.current += buffer.length;
 
           if (utteranceSamplesRef.current >= MAX_UTTERANCE_SAMPLES) {
-            console.log('[WebAudioPipeline] Max utterance reached');
             finishTranscriptionRef.current();
             return;
           }
@@ -416,7 +387,6 @@ export function useWebAudioPipeline({
       console.warn('[WebAudioPipeline] WebView ref is null, cannot send START_RECORDING');
       return;
     }
-    console.log('[WebAudioPipeline] Injecting __startRecording');
     webViewRef.current.injectJavaScript(`
       if (window.__startRecording) {
         window.__startRecording();
@@ -431,7 +401,6 @@ export function useWebAudioPipeline({
 
 
   const onWebViewReady = useCallback(() => {
-    console.log('[WebAudioPipeline] WebView ready');
     webViewReadyRef.current = true;
     if (pendingStartRef.current) {
       pendingStartRef.current = false;
@@ -471,10 +440,8 @@ export function useWebAudioPipeline({
       }
 
       // Speech Recognition 권한 요청 (iOS 설정에 "음성 인식" 항목 생성)
-      console.log('[WebAudioPipeline] speechModule:', !!speechModule, 'requestPermissions:', !!speechModule?.requestPermissions);
       if (speechModule?.requestPermissions) {
         const speechStatus = await speechModule.requestPermissions();
-        console.log('[WebAudioPipeline] speech permission status:', speechStatus);
         if (speechStatus !== 'authorized') {
           Alert.alert(
             '음성 인식 권한 필요',
@@ -490,9 +457,7 @@ export function useWebAudioPipeline({
       }
 
       if (!vadRef.current) {
-        console.log('[WebAudioPipeline] Loading Silero VAD...');
         vadRef.current = await createSileroVAD();
-        console.log('[WebAudioPipeline] VAD loaded');
       } else {
         vadRef.current.reset();
       }
@@ -512,18 +477,15 @@ export function useWebAudioPipeline({
 
       if (boostWords && boostWords.length > 0) {
         setContextualStrings(boostWords);
-        console.log(`[WebAudioPipeline] contextualStrings set: ${boostWords.length} words`);
       }
 
       if (webViewReadyRef.current) {
         injectStartRecording();
       } else {
-        console.log('[WebAudioPipeline] WebView not ready yet, pending start...');
         pendingStartRef.current = true;
       }
 
       transitionTo('LISTENING');
-      console.log('[WebAudioPipeline] Started (streaming)');
     } catch (err: any) {
       console.error('[WebAudioPipeline] Start failed:', err);
       setError(err.message || 'Failed to start pipeline');
@@ -555,7 +517,6 @@ export function useWebAudioPipeline({
   // ─── Reset ───
   const resetTranscription = useCallback(() => {
     if (stateRef.current !== 'TRANSCRIBING') return;
-    console.log('[WebAudioPipeline] Reset (NLU matched)');
     finishTranscription();
   }, [finishTranscription]);
 

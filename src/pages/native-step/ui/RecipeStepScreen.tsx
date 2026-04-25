@@ -8,11 +8,30 @@ import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 
 import { useStepNavigation } from '@/src/pages/native-step/hooks/useStepNavigation';
 import { useVideoControl } from '@/src/pages/native-step/hooks/useVideoControl';
-import { useIntentMatchingAction } from '@/src/pages/native-step/hooks/useIntentMatchingAction';
+import { useIntentMatchingAction, type HandleIntentFn } from '@/src/pages/native-step/hooks/useIntentMatchingAction';
 import { useVoiceCommand } from '@/src/pages/native-step/hooks/useVoiceCommand';
 import { useStepTimer } from '@/src/pages/native-step/hooks/useStepTimer';
 import { type TimerSheetRef } from '@/src/pages/native-step/components/TimerBottomSheet';
-import { track, CookingModeEvents } from '@/src/shared/analytics';
+import { track, CookingModeEvents, CookingCommandDetails } from '@/src/shared/analytics';
+import type { IntentLabel } from '@/src/pages/native-step/hooks/onnxNLU';
+
+// Voice intent → cooking_mode_command (type, detail) 매핑.
+// 페이지 레벨에 두는 이유: amplitude 트래킹 로직을 hook 안에 묻지 않기 위함.
+const INTENT_TO_COMMAND: Partial<Record<IntentLabel, {
+  type: 'navigation' | 'video_control' | 'timer';
+  detail: string;
+}>> = {
+  NEXT_STEP: { type: 'navigation', detail: CookingCommandDetails.NEXT },
+  PREV_STEP: { type: 'navigation', detail: CookingCommandDetails.PREV },
+  GO_TO_STEP: { type: 'navigation', detail: CookingCommandDetails.STEP },
+  GO_TO_SCENE_NUMBER: { type: 'navigation', detail: CookingCommandDetails.GO_TO_SCENE_NUMBER },
+  PLAY: { type: 'video_control', detail: CookingCommandDetails.VIDEO_PLAY },
+  PAUSE: { type: 'video_control', detail: CookingCommandDetails.VIDEO_STOP },
+  TIMER_START: { type: 'timer', detail: CookingCommandDetails.TIMER_START },
+  TIMER_CANCEL: { type: 'timer', detail: CookingCommandDetails.TIMER_CANCEL },
+  TIMER_PAUSE: { type: 'timer', detail: CookingCommandDetails.TIMER_PAUSE },
+  TIMER_RESUME: { type: 'timer', detail: CookingCommandDetails.TIMER_RESUME },
+};
 import { YOUTUBE_URL } from './constants';
 import { ShortsStepScreen } from './shorts-step-screen';
 import { NormalStepScreen } from './normal-step-screen';
@@ -96,16 +115,22 @@ export function RecipeStepScreen({ recipeId, videoId, recipe, isShorts = false }
     [recipeIdForTrack],
   );
 
-  // ─── Intent Matching ───
-  const handleIntent = useIntentMatchingAction({
+  // ─── Intent Matching (순수 hook - tracking 없음) ───
+  const baseIntentHandler = useIntentMatchingAction({
     stepNav,
     videoControl,
     timerResult,
-    trackCookingCommand,
     currentStepTitle: stepNav.currentStep?.title,
     currentStepIndex: stepNav.currentStepIndex,
     sceneLabelsLength: sceneLabels.length,
   });
+
+  // ─── Voice intent wrapper: track('voice') 후 순수 hook에 위임 ───
+  const handleVoiceIntent: HandleIntentFn = useCallback((intent, payload) => {
+    const cmd = INTENT_TO_COMMAND[intent];
+    if (cmd) trackCookingCommand(cmd.type, cmd.detail, 'voice');
+    return baseIntentHandler(intent, payload);
+  }, [baseIntentHandler, trackCookingCommand]);
 
   // ─── Voice Command ───
   const {
@@ -118,7 +143,7 @@ export function RecipeStepScreen({ recipeId, videoId, recipe, isShorts = false }
     handleWebViewMessage: voiceHandleMessage,
     onWebViewReady,
   } = useVoiceCommand({
-    onIntent: handleIntent,
+    onIntent: handleVoiceIntent,
     sceneLabels,
     totalSteps: stepNav.totalSteps,
     isFirstStep: stepNav.isFirstStep,
@@ -127,16 +152,52 @@ export function RecipeStepScreen({ recipeId, videoId, recipe, isShorts = false }
     postToYouTube,
   });
 
-  // ─── Touch wrappers (tracking + action) ───
+  // ─── Touch wrappers (track('touch') 후 순수 액션 호출) ───
+  // ─ Navigation
   const handleManualPrev = useCallback(() => {
-    trackCookingCommand('navigation', 'PREV', 'touch');
+    trackCookingCommand('navigation', CookingCommandDetails.PREV, 'touch');
     stepNav.goToPrevStep();
   }, [stepNav.goToPrevStep, trackCookingCommand]);
 
   const handleManualNext = useCallback(() => {
-    trackCookingCommand('navigation', 'NEXT', 'touch');
+    trackCookingCommand('navigation', CookingCommandDetails.NEXT, 'touch');
     stepNav.goToNextStep();
   }, [stepNav.goToNextStep, trackCookingCommand]);
+
+  const handleNavigateToStep = useCallback((i: number) => {
+    trackCookingCommand('navigation', CookingCommandDetails.STEP, 'touch');
+    stepNav.navigateStep(i);
+  }, [stepNav.navigateStep, trackCookingCommand]);
+
+  // ─ Video control
+  const handleTogglePlay = useCallback(() => {
+    const detail = videoControl.isPlaying
+      ? CookingCommandDetails.VIDEO_STOP
+      : CookingCommandDetails.VIDEO_PLAY;
+    trackCookingCommand('video_control', detail, 'touch');
+    videoControl.togglePlay();
+  }, [videoControl, trackCookingCommand]);
+
+  // ─ Timer (TimerBottomSheet에서 onPress prop으로 사용)
+  const handleAddTimerTouch = useCallback((name: string, sec: number) => {
+    trackCookingCommand('timer', CookingCommandDetails.TIMER_START, 'touch');
+    timerResult.addTimer(name, sec);
+  }, [timerResult, trackCookingCommand]);
+
+  const handlePauseTimerTouch = useCallback(() => {
+    trackCookingCommand('timer', CookingCommandDetails.TIMER_PAUSE, 'touch');
+    timerResult.pauseTimer();
+  }, [timerResult, trackCookingCommand]);
+
+  const handleResumeTimerTouch = useCallback(() => {
+    trackCookingCommand('timer', CookingCommandDetails.TIMER_RESUME, 'touch');
+    timerResult.resumeTimer();
+  }, [timerResult, trackCookingCommand]);
+
+  const handleCancelTimerTouch = useCallback(() => {
+    trackCookingCommand('timer', CookingCommandDetails.TIMER_CANCEL, 'touch');
+    timerResult.cancelTimer();
+  }, [timerResult, trackCookingCommand]);
 
   const handleBack = useCallback(() => {
     stopListening();
@@ -210,6 +271,12 @@ export function RecipeStepScreen({ recipeId, videoId, recipe, isShorts = false }
     timerSheetRef,
     handleManualPrev,
     handleManualNext,
+    handleNavigateToStep,
+    handleTogglePlay,
+    handleAddTimerTouch,
+    handlePauseTimerTouch,
+    handleResumeTimerTouch,
+    handleCancelTimerTouch,
     handleBack,
     handleYouTubeMessage,
     webviewRef,

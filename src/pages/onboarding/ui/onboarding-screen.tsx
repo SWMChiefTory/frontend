@@ -1,268 +1,177 @@
-import { useCallback, useEffect, useState, useMemo } from 'react';
-import { View, Text, Pressable, useWindowDimensions, ScrollView } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { View, Text, Pressable, ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useMarketStore } from '@/src/shared/store/marketStore';
 import { Image } from 'expo-image';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withRepeat,
-  withSequence,
   withTiming,
   Easing,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { useRecommendRecipes, RecommendType } from '@/src/entities/recipe';
 import { completeTutorial } from '@/src/entities/user';
 import { trackNative } from '@/src/shared/analytics';
 import { AmplitudeEvent } from '@/src/shared/analytics/amplitudeEvents';
 import { router } from 'expo-router';
+import { ShareTutorial } from '@/src/pages/onboarding/components/share-tutorial/share-tutorial';
 
 const BG = '#FFF7ED';
 
 const TORY_COOKING = require('@/assets/images/tory-veggie.png');
-const APP_SHARE_1 = require('@/assets/images/onboarding/app-share_1.png');
-const APP_SHARE_2 = require('@/assets/images/onboarding/app-share_2.png');
-const APP_SHARE_3 = require('@/assets/images/onboarding/app-share_3.png');
-const APP_HOME = require('@/assets/images/onboarding/app-home.png');
-const APP_DETAIL_2_1 = require('@/assets/images/onboarding/app-detail-2_1.png');
-const APP_DETAIL_2_2 = require('@/assets/images/onboarding/app-detail-2_2.png');
-const APP_COOKING = require('@/assets/images/onboarding/app-cooking_home.png');
 
 type OnboardingScreenProps = {
   onComplete: () => void;
 }
 
-// ─── Step 1: 레시피 등록 플로우 ───
-const STEP1_STATES_KO = [
-  { id: 'youtube', image: APP_SHARE_1, title: '유튜브에서 레시피 영상을 찾아요', subtitle: '평소 보던 요리 영상 그대로 OK!' },
-  { id: 'share_sheet', image: APP_SHARE_2, title: '공유 버튼을 눌러 쉐프토리로 보내요', subtitle: '공유 시트에서 쉐프토리를 선택' },
-  { id: 'create_confirm', image: APP_SHARE_3, title: '레시피 생성 확인', subtitle: '버튼 한 번이면 자동으로 정리돼요' },
-  { id: 'home_saved', image: APP_HOME, title: '내 레시피에 저장 완료!', subtitle: '언제든 꺼내 볼 수 있어요' },
-] as const;
+type Phase = 'welcome' | 'share' | 'completion';
 
-const STEP1_STATES_EN = [
-  { id: 'youtube', image: APP_SHARE_1, title: 'Find a recipe video on YouTube', subtitle: 'Any cooking video you like works!' },
-  { id: 'share_sheet', image: APP_SHARE_2, title: 'Share it to Cheftory', subtitle: 'Select Cheftory from the share sheet' },
-  { id: 'create_confirm', image: APP_SHARE_3, title: 'Confirm recipe creation', subtitle: 'One tap and it\'s automatically organized' },
-  { id: 'home_saved', image: APP_HOME, title: 'Saved to your recipes!', subtitle: 'Access it anytime' },
-] as const;
-
-// ─── Step 2: 쿠킹 모드 학습 ───
-const STEP2_STATES_KO = [
-  { id: 'overview', image: APP_DETAIL_2_2, title: '레시피 한눈에 보기', subtitle: '재료, 단계, 시간을 정리해서 보여줘요' },
-  { id: 'detail', image: APP_DETAIL_2_1, title: '단계별로 자세히', subtitle: '각 단계의 설명과 영상 구간을 확인하세요' },
-  { id: 'cooking', image: APP_COOKING, title: '음성으로 핸즈프리 요리', subtitle: '"다음", "이전"만 말하면 단계가 넘어가요' },
-] as const;
-
-const STEP2_STATES_EN = [
-  { id: 'overview', image: APP_DETAIL_2_2, title: 'Recipe at a glance', subtitle: 'Ingredients, steps, and timing — all organized' },
-  { id: 'detail', image: APP_DETAIL_2_1, title: 'Step by step detail', subtitle: 'See descriptions and video timestamps for each step' },
-  { id: 'cooking', image: APP_COOKING, title: 'Hands-free voice cooking', subtitle: 'Just say "next" or "back" to navigate steps' },
-] as const;
-
-type Phase = 'step1' | 'step2' | 'step3';
-
+/**
+ * 첫 온보딩 — 3-phase 흐름.
+ *
+ * 1) Welcome — 토리 인사 + 가치 제안 + "시작하기" CTA (context 설정)
+ * 2) ShareTutorial — 4-phase 인터랙티브 공유 튜토리얼
+ * 3) Completion — 완료 환영 + 인기 레시피 카드
+ *
+ * 쿠킹 모드/디테일 페이지 등 나머지 학습은 해당 페이지 첫 진입 시
+ * contextual onboarding으로 분리 (just-in-time 전략).
+ */
 export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
-  const insets = useSafeAreaInsets();
-  const { width } = useWindowDimensions();
-  const [phase, setPhase] = useState<Phase>('step1');
-  const [step1Index, setStep1Index] = useState(0);
-  const [step2Index, setStep2Index] = useState(0);
+  const [phase, setPhase] = useState<Phase>('welcome');
   const [startedAt] = useState(() => Date.now());
-  const market = useMarketStore(s => s.market);
-  const t = TEXTS[market ?? 'KOREA'];
-  const STEP1_STATES = market === 'GLOBAL' ? STEP1_STATES_EN : STEP1_STATES_KO;
-  const STEP2_STATES = market === 'GLOBAL' ? STEP2_STATES_EN : STEP2_STATES_KO;
 
-  // 온보딩 시작 트래킹
   useEffect(() => {
     trackNative(AmplitudeEvent.ONBOARDING_START);
   }, []);
 
-  const getGlobalStep = useCallback((): number => {
-    if (phase === 'step1') return step1Index + 1;
-    if (phase === 'step2') return STEP1_STATES.length + step2Index + 1;
-    return STEP1_STATES.length + STEP2_STATES.length + 1;
-  }, [phase, step1Index, step2Index]);
-
-  const haptic = useCallback(() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  }, []);
-
-  // ─── 진행 ───
-  const handleNext = useCallback(() => {
-    haptic();
-    if (phase === 'step1') {
-      if (step1Index < STEP1_STATES.length - 1) setStep1Index(step1Index + 1);
-      else { setPhase('step2'); setStep2Index(0); }
-    } else if (phase === 'step2') {
-      if (step2Index < STEP2_STATES.length - 1) setStep2Index(step2Index + 1);
-      else setPhase('step3');
-    }
-  }, [phase, step1Index, step2Index, haptic]);
-
-  const handlePrev = useCallback(() => {
-    haptic();
-    if (phase === 'step1') {
-      if (step1Index > 0) setStep1Index(step1Index - 1);
-    } else if (phase === 'step2') {
-      if (step2Index > 0) setStep2Index(step2Index - 1);
-      else { setPhase('step1'); setStep1Index(STEP1_STATES.length - 1); }
-    } else if (phase === 'step3') {
-      setPhase('step2');
-      setStep2Index(STEP2_STATES.length - 1);
-    }
-  }, [phase, step1Index, step2Index, haptic]);
-
   const handleSkip = useCallback(() => {
     trackNative(AmplitudeEvent.ONBOARDING_SKIP, {
-      global_step: getGlobalStep(),
+      phase,
       duration_ms: Date.now() - startedAt,
     });
     onComplete();
-  }, [onComplete, getGlobalStep, startedAt]);
+  }, [onComplete, phase, startedAt]);
 
-  // ─── 진행 인디케이터 ───
-  const totalDots = STEP1_STATES.length + STEP2_STATES.length + 1;
-  const currentDot = useMemo(() => {
-    if (phase === 'step1') return step1Index;
-    if (phase === 'step2') return STEP1_STATES.length + step2Index;
-    return totalDots - 1;
-  }, [phase, step1Index, step2Index, totalDots]);
-
-  if (phase === 'step3') {
+  if (phase === 'welcome') {
     return (
-      <CompletionStep
-        onComplete={onComplete}
-        insets={insets}
-        onPrev={handlePrev}
-        startedAt={startedAt}
+      <WelcomeStep
+        onStart={() => setPhase('share')}
+        onSkip={handleSkip}
       />
     );
   }
 
-  const current = phase === 'step1' ? STEP1_STATES[step1Index] : STEP2_STATES[step2Index];
-  const sectionLabel = phase === 'step1' ? t.step1Label : t.step2Label;
+  if (phase === 'share') {
+    return (
+      <ShareTutorial
+        onComplete={() => setPhase('completion')}
+        onSkip={handleSkip}
+      />
+    );
+  }
+
+  return <CompletionStep onComplete={onComplete} startedAt={startedAt} />;
+}
+
+// ─── Welcome 화면 ───
+function WelcomeStep({ onStart, onSkip }: { onStart: () => void; onSkip: () => void }) {
+  const insets = useSafeAreaInsets();
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
+
+  const handleStart = useCallback(() => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    onStart();
+  }, [onStart]);
 
   return (
     <View style={{ flex: 1, backgroundColor: BG, paddingTop: insets.top }}>
-      {/* 헤더: 인디케이터 + 건너뛰기 */}
+      {/* 우상단 "다음에" — 헤더와 동일 스타일이지만 cream bg에 맞게 dark variant */}
       <View
         style={{
           flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-end',
           paddingHorizontal: spacing.xl,
           paddingVertical: spacing.md,
         }}
       >
-        <View style={{ flexDirection: 'row', gap: 4, flex: 1 }}>
-          {Array.from({ length: totalDots }).map((_, i) => (
-            <View
-              key={i}
-              style={{
-                flex: 1,
-                height: 3,
-                borderRadius: 2,
-                backgroundColor: i <= currentDot ? colors.primary : 'rgba(196,99,43,0.2)',
-              }}
-            />
-          ))}
-        </View>
-        <Pressable onPress={handleSkip} hitSlop={8} style={{ marginLeft: spacing.md }}>
+        <Pressable
+          onPress={onSkip}
+          hitSlop={8}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 3,
+            paddingHorizontal: 14,
+            paddingVertical: 8,
+            borderRadius: 18,
+            backgroundColor: 'rgba(0,0,0,0.06)',
+          }}
+        >
           <Text
             style={{
               fontFamily: typography.body.fontFamily,
               fontSize: 13,
-              fontWeight: '600',
-              color: colors.text.disabled,
+              fontWeight: '700',
+              color: '#606060',
             }}
           >
             {t.skip}
           </Text>
+          <Ionicons name="chevron-forward" size={14} color="#606060" />
         </Pressable>
       </View>
 
-      {/* 본문 */}
-      <Pressable
-        onPress={handleNext}
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: spacing.xl, gap: spacing.md }}
-      >
-        <Text
-          style={{
-            fontFamily: typography.heading.fontFamily,
-            fontSize: 11,
-            fontWeight: '700',
-            color: colors.primary,
-            letterSpacing: 0.5,
-          }}
-        >
-          {sectionLabel}
-        </Text>
-        <Text
-          style={{
-            fontFamily: typography.heading.fontFamily,
-            fontSize: 22,
-            fontWeight: '700',
-            color: colors.text.primary,
-            textAlign: 'center',
-          }}
-        >
-          {current.title}
-        </Text>
-        <Text
-          style={{
-            fontFamily: typography.body.fontFamily,
-            fontSize: 14,
-            color: colors.text.secondary,
-            textAlign: 'center',
-          }}
-        >
-          {current.subtitle}
-        </Text>
-
-        <View style={{ flex: 1, width: width * 0.7, marginTop: spacing.lg, marginBottom: spacing.xxxl }}>
-          <Image
-            source={current.image}
-            style={{ flex: 1, width: '100%' }}
-            contentFit="contain"
-          />
-          {current.id === 'youtube' && <TappingPaw />}
-        </View>
-      </Pressable>
-
-      {/* 하단 네비게이션 */}
+      {/* 메인 콘텐츠 */}
       <View
         style={{
-          flexDirection: 'row',
-          gap: spacing.md,
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
           paddingHorizontal: spacing.xl,
-          paddingBottom: insets.bottom + spacing.lg,
+          gap: spacing.xl,
         }}
       >
+        <StaticTory />
+
+        <View style={{ alignItems: 'center', gap: spacing.sm }}>
+          <Text
+            style={{
+              fontFamily: typography.heading.fontFamily,
+              fontSize: 26,
+              fontWeight: '700',
+              color: colors.text.primary,
+              textAlign: 'center',
+              lineHeight: 34,
+            }}
+          >
+            {t.welcomeTitle}
+          </Text>
+          <Text
+            style={{
+              fontFamily: typography.body.fontFamily,
+              fontSize: 14,
+              color: colors.text.secondary,
+              textAlign: 'center',
+              lineHeight: 20,
+              marginTop: spacing.xs,
+            }}
+          >
+            {t.welcomeSubtitle}
+          </Text>
+        </View>
+      </View>
+
+      {/* 하단 CTA */}
+      <View style={{ paddingHorizontal: spacing.xl, paddingBottom: insets.bottom + spacing.lg }}>
         <Pressable
-          onPress={handlePrev}
-          disabled={phase === 'step1' && step1Index === 0}
+          onPress={handleStart}
           style={{
-            paddingHorizontal: spacing.lg,
             paddingVertical: spacing.lg,
-            borderRadius: radius.md,
-            borderCurve: 'continuous',
-            backgroundColor: colors.surface,
-            opacity: phase === 'step1' && step1Index === 0 ? 0.4 : 1,
-          }}
-        >
-          <Ionicons name="chevron-back" size={20} color={colors.text.secondary} />
-        </Pressable>
-        <Pressable
-          onPress={handleNext}
-          style={{
-            flex: 1,
-            paddingVertical: spacing.lg,
-            borderRadius: radius.md,
+            borderRadius: radius.lg,
             borderCurve: 'continuous',
             backgroundColor: colors.primary,
             alignItems: 'center',
@@ -271,12 +180,12 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
           <Text
             style={{
               fontFamily: typography.heading.fontFamily,
-              fontSize: 16,
+              fontSize: 17,
               fontWeight: '700',
               color: colors.text.inverse,
             }}
           >
-            {t.next}
+            {t.welcomeStart}
           </Text>
         </Pressable>
       </View>
@@ -284,25 +193,22 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   );
 }
 
-// ─── Step 3: 완료 화면 ───
+// ─── 완료 화면 ───
 function CompletionStep({
   onComplete,
-  insets,
-  onPrev,
   startedAt,
 }: {
   onComplete: () => void;
-  insets: ReturnType<typeof useSafeAreaInsets>;
-  onPrev: () => void;
   startedAt: number;
 }) {
+  const insets = useSafeAreaInsets();
   const market = useMarketStore(s => s.market);
   const t = TEXTS[market ?? 'KOREA'];
-  const { data: popular } = useRecommendRecipes(RecommendType.POPULAR);
-  const recipes = popular?.data?.slice(0, 3) ?? [];
+  const { entities: popularEntities } = useRecommendRecipes(RecommendType.POPULAR);
+  const recipes = popularEntities.slice(0, 3);
 
   const finish = useCallback(
-    async (exit_type: 'start_cooking' | 'recipe_detail' | 'explore') => {
+    async (exit_type: 'start_cooking' | 'recipe_detail') => {
       let isFirstComplete = false;
       try {
         isFirstComplete = await completeTutorial();
@@ -310,7 +216,6 @@ function CompletionStep({
         console.warn('[Onboarding] tutorial complete failed:', err);
       }
       trackNative(AmplitudeEvent.ONBOARDING_COMPLETE, {
-        global_step: 8,
         exit_type,
         duration_ms: Date.now() - startedAt,
         is_first_complete: isFirstComplete,
@@ -336,33 +241,19 @@ function CompletionStep({
 
   return (
     <View style={{ flex: 1, backgroundColor: BG, paddingTop: insets.top }}>
-      {/* 헤더: 뒤로 */}
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingHorizontal: spacing.xl,
-          paddingVertical: spacing.md,
-        }}
-      >
-        <Pressable onPress={onPrev} hitSlop={8}>
-          <Ionicons name="chevron-back" size={24} color={colors.text.secondary} />
-        </Pressable>
-      </View>
-
       <ScrollView
         contentContainerStyle={{
           alignItems: 'center',
           paddingHorizontal: spacing.xl,
+          paddingTop: spacing.xxxl,
           paddingBottom: insets.bottom + spacing.xxxl,
           gap: spacing.lg,
         }}
         showsVerticalScrollIndicator={false}
       >
-        {/* 토리 캐릭터 — 떠다니는 애니메이션 */}
-        <FloatingTory />
+        {/* 토리 (정적, 한 번만 entrance scale) */}
+        <StaticTory />
 
-        {/* 제목 */}
         <Text
           style={{
             fontFamily: typography.heading.fontFamily,
@@ -386,7 +277,6 @@ function CompletionStep({
           {t.completionSubtitle}
         </Text>
 
-        {/* 메인 CTA */}
         <Pressable
           onPress={handleStartCooking}
           style={{
@@ -412,7 +302,6 @@ function CompletionStep({
           </Text>
         </Pressable>
 
-        {/* 디바이더 */}
         <View
           style={{
             flexDirection: 'row',
@@ -429,7 +318,6 @@ function CompletionStep({
           <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
         </View>
 
-        {/* 인기 레시피 그리드 */}
         <View style={{ flexDirection: 'row', gap: spacing.sm, width: '100%', justifyContent: 'space-between' }}>
           {(recipes.length > 0
             ? recipes
@@ -471,40 +359,19 @@ function CompletionStep({
   );
 }
 
-function FloatingTory() {
-  const translateY = useSharedValue(0);
-  const rotate = useSharedValue(0);
+/**
+ * 정적 토리 캐릭터 — 한 번만 entrance scale (0.6 → 1.0).
+ * 떠다니거나 회전하는 perpetual 애니메이션 없음 (피로감 ↓, 차분함).
+ */
+function StaticTory() {
   const scale = useSharedValue(0.6);
 
   useEffect(() => {
-    // 등장 애니메이션
     scale.value = withTiming(1, { duration: 600, easing: Easing.out(Easing.back(1.5)) });
-
-    // 떠다니는 + 살짝 흔들리는 애니메이션
-    translateY.value = withRepeat(
-      withSequence(
-        withTiming(-12, { duration: 1500, easing: Easing.inOut(Easing.cubic) }),
-        withTiming(0, { duration: 1500, easing: Easing.inOut(Easing.cubic) }),
-      ),
-      -1,
-      false,
-    );
-    rotate.value = withRepeat(
-      withSequence(
-        withTiming(3, { duration: 2000, easing: Easing.inOut(Easing.cubic) }),
-        withTiming(-3, { duration: 2000, easing: Easing.inOut(Easing.cubic) }),
-      ),
-      -1,
-      true,
-    );
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateY: translateY.value },
-      { rotate: `${rotate.value}deg` },
-      { scale: scale.value },
-    ],
+    transform: [{ scale: scale.value }],
   }));
 
   return (
@@ -514,81 +381,12 @@ function FloatingTory() {
   );
 }
 
-
-const PAW_PRINT = require('@/assets/images/paw-print.png');
-
-function TappingPaw() {
-  const translateY = useSharedValue(0);
-  const opacity = useSharedValue(0.8);
-  const scale = useSharedValue(1);
-
-  useEffect(() => {
-    // 반복: 내려가서 탭 → 올라옴
-    translateY.value = withRepeat(
-      withSequence(
-        withTiming(6, { duration: 400, easing: Easing.out(Easing.cubic) }),
-        withTiming(0, { duration: 300, easing: Easing.in(Easing.cubic) }),
-        withTiming(0, { duration: 800 }), // 대기
-      ),
-      -1,
-      false,
-    );
-    // 탭할 때 살짝 눌리는 효과
-    scale.value = withRepeat(
-      withSequence(
-        withTiming(0.85, { duration: 400 }),
-        withTiming(1, { duration: 300 }),
-        withTiming(1, { duration: 800 }),
-      ),
-      -1,
-      false,
-    );
-    // 탭할 때 진해졌다 연해지기
-    opacity.value = withRepeat(
-      withSequence(
-        withTiming(1, { duration: 400 }),
-        withTiming(0.6, { duration: 300 }),
-        withTiming(0.8, { duration: 800 }),
-      ),
-      -1,
-      false,
-    );
-  }, []);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateY: translateY.value },
-      { scale: scale.value },
-    ],
-    opacity: opacity.value,
-  }));
-
-  return (
-    <Animated.View
-      style={[
-        {
-          position: 'absolute',
-          // Share 버튼 위치: 이미지 기준 약 40% left, 62% top
-          left: '36%',
-          top: '59%',
-          width: 32,
-          height: 32,
-        },
-        animatedStyle,
-      ]}
-      pointerEvents="none"
-    >
-      <Image source={PAW_PRINT} style={{ width: 32, height: 32 }} contentFit="contain" />
-    </Animated.View>
-  );
-}
-
 const TEXTS = {
   KOREA: {
     skip: '건너뛰기',
-    next: '다음',
-    step1Label: 'STEP 1 · 레시피 등록',
-    step2Label: 'STEP 2 · 쿠킹 모드',
+    welcomeTitle: '안녕하세요!\n쉐프토리에 오신 걸 환영해요',
+    welcomeSubtitle: '유튜브에서 본 레시피를\n쉐프토리로 가져오는 법을 알려드릴게요',
+    welcomeStart: '시작하기',
     completionTitle: '준비 완료!',
     completionSubtitle: '이제 토리와 함께 요리를 시작해볼까요?',
     startCooking: '쉐프토리 시작하기',
@@ -596,9 +394,9 @@ const TEXTS = {
   },
   GLOBAL: {
     skip: 'Skip',
-    next: 'Next',
-    step1Label: 'STEP 1 · Add Recipe',
-    step2Label: 'STEP 2 · Cooking Mode',
+    welcomeTitle: 'Hello!\nWelcome to ChefTory',
+    welcomeSubtitle: 'Let me show you how to bring\nYouTube recipes into ChefTory',
+    welcomeStart: 'Get Started',
     completionTitle: 'You\'re all set!',
     completionSubtitle: 'Ready to start cooking with Tory?',
     startCooking: 'Start Cheftory',

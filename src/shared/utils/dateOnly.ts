@@ -11,8 +11,6 @@ const dateOfBirthSchema = z
   .refine((dateStr) => {
     const parsed = DateTime.fromISO(dateStr).startOf("day");
     const now = DateTime.now().startOf("day");
-    console.log("parsed", parsed);
-    console.log("now", now);
     return parsed <= now;
   }, "미래 날짜는 입력할 수 없습니다")
   .refine((dateStr) => {
@@ -29,7 +27,6 @@ export class DateOnly {
   }
 
   static create(dateOfBirth: string): DateOnly {
-    console.log(dateOfBirth);
     const validatedDate = dateOfBirthSchema.parse(dateOfBirth);
     return new DateOnly(validatedDate);
   }
@@ -40,7 +37,6 @@ export class DateOnly {
 
   public toJSON(): string {
     const iso = this.dateOfBirth.toISODate();
-    console.log("iso", iso);
     if (!iso) {
       throw new Error("DateOfBirth is null");
     }

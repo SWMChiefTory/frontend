@@ -1,18 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchMyRecipes, fetchCategorizedRecipes, fetchCategories } from '../api/user-recipe-api';
+import { useInfinitePagination } from '@/src/shared/hooks/use-infinite-pagination';
 
 export function useMyRecipes() {
-  return useQuery({
+  return useInfinitePagination({
     queryKey: ['myRecipes'],
-    queryFn: () => fetchMyRecipes(),
+    queryFn: ({ pageParam }) => fetchMyRecipes(pageParam),
     staleTime: 2 * 60 * 1000,
   });
 }
 
 export function useCategorizedRecipes(categoryId: string | null) {
-  return useQuery({
+  return useInfinitePagination({
     queryKey: ['categorizedRecipes', categoryId],
-    queryFn: () => fetchCategorizedRecipes(categoryId!),
+    queryFn: ({ pageParam }) => fetchCategorizedRecipes(categoryId!, pageParam),
     enabled: !!categoryId,
     staleTime: 2 * 60 * 1000,
   });

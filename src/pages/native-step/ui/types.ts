@@ -50,9 +50,16 @@ export type StepScreenSharedProps = {
   timerResult: any;
   timerSheetRef: React.RefObject<TimerSheetRef | null>;
 
-  // handlers
+  // handlers (track('touch')가 포함된 page-level wrapper)
   handleManualPrev: () => void;
   handleManualNext: () => void;
+  handleNavigateToStep: (i: number) => void;
+  handleTogglePlay: () => void;
+  // timer 액션 (TimerBottomSheet의 onPress에서 사용)
+  handleAddTimerTouch: (name: string, sec: number) => void;
+  handlePauseTimerTouch: () => void;
+  handleResumeTimerTouch: () => void;
+  handleCancelTimerTouch: () => void;
   handleBack: () => void;
   handleYouTubeMessage: (e: WebViewMessageEvent) => void;
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRecipeProgress, RecipeStatus } from '@/src/entities/recipe';
-import { useRecipeCreateStore } from '@/src/pages/home/model/recipe-create-store';
+import { useRecipeCreateStore } from '@/src/shared/store/recipe-create-store';
 
 /**
  * 단일 생성 중 레시피의 진행 상태를 폴링하는 invisible watcher.

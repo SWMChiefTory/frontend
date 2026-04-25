@@ -1,22 +1,25 @@
 import { useCallback, useEffect, useState } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView, FlatList, ActivityIndicator, Linking, Platform } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView, ActivityIndicator, Linking, Platform } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import { FlashList } from '@shopify/flash-list';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
+import { Skeleton } from '@/src/shared/components/skeleton';
 import {
   fetchAutocomplete,
   fetchSearchHistories,
   deleteSearchHistory,
   deleteAllSearchHistories,
-  searchRecipes,
 } from '@/src/entities/recipe/api/search-api';
+import { useSearchRecipes } from '@/src/entities/recipe';
 import { fetchRecommendRecipes, RecommendType } from '@/src/entities/recipe/api/recommend-api';
 import { ToryEmptyState } from '@/src/shared/components/tory-empty-state';
 import { track, SearchEvents } from '@/src/shared/analytics';
 import { useMarketStore } from '@/src/shared/store/marketStore';
+import type { SearchedRecipe } from '@/src/entities/recipe/api/search-api';
 
 function useDebounce(value: string, delay: number) {
   const [debounced, setDebounced] = useState(value);
@@ -60,11 +63,12 @@ export default function SearchScreen() {
     '알리오 올리오', '볶음밥', '떡볶이', '미역국',
   ];
 
-  const { data: results, isLoading: searchLoading } = useQuery({
-    queryKey: ['searchRecipes', submittedQuery],
-    queryFn: () => searchRecipes(submittedQuery),
-    enabled: submittedQuery.trim().length > 0,
-  });
+  const {
+    entities: searchResults,
+    isLoading: searchLoading,
+    fetchNextPage: fetchNextSearch,
+    hasNextPage: hasNextSearch,
+  } = useSearchRecipes(submittedQuery);
 
   const handleSubmit = useCallback((
     query: string,
@@ -287,11 +291,13 @@ export default function SearchScreen() {
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <ActivityIndicator color={colors.primary} />
           </View>
-        ) : results && results.data.length > 0 ? (
-          <FlatList
-            data={results.data}
-            keyExtractor={(item) => item.recipeId}
-            contentContainerStyle={{ padding: spacing.lg, gap: spacing.md }}
+        ) : searchResults.length > 0 ? (
+          <FlashList
+            data={searchResults}
+            keyExtractor={(item: SearchedRecipe) => item.recipeId}
+            contentContainerStyle={{ padding: spacing.lg }}
+            onEndReached={fetchNextSearch}
+            onEndReachedThreshold={0.5}
             ListHeaderComponent={
               <Pressable
                 onPress={() => openYoutubeSearch(submittedQuery)}
@@ -304,7 +310,7 @@ export default function SearchScreen() {
                   backgroundColor: colors.surface,
                   borderRadius: radius.md,
                   borderCurve: 'continuous',
-                  marginBottom: spacing.sm,
+                  marginBottom: spacing.md,
                 }}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm, flex: 1 }}>
@@ -324,7 +330,7 @@ export default function SearchScreen() {
                 <Ionicons name="open-outline" size={16} color={colors.text.disabled} />
               </Pressable>
             }
-            renderItem={({ item, index }) => (
+            renderItem={({ item, index }: { item: SearchedRecipe; index: number }) => (
               <Pressable
                 onPress={() => {
                   track(SearchEvents.RESULT_CLICK, {
@@ -351,6 +357,7 @@ export default function SearchScreen() {
                 </View>
               </Pressable>
             )}
+            ListFooterComponent={hasNextSearch ? <SearchResultSkeletonFooter /> : null}
           />
         ) : (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: spacing.xl }}>
@@ -388,6 +395,22 @@ export default function SearchScreen() {
           </View>
         )
       )}
+    </View>
+  );
+}
+
+function SearchResultSkeletonFooter() {
+  return (
+    <View style={{ gap: spacing.md, paddingTop: spacing.sm }}>
+      {[1, 2].map((i) => (
+        <View key={i} style={{ flexDirection: 'row', gap: spacing.md, paddingVertical: spacing.sm }}>
+          <Skeleton width={100} height={70} borderRadius={radius.md} />
+          <View style={{ flex: 1, justifyContent: 'center', gap: spacing.xs }}>
+            <Skeleton width="90%" height={15} />
+            <Skeleton width="50%" height={12} />
+          </View>
+        </View>
+      ))}
     </View>
   );
 }

@@ -10,6 +10,7 @@ import {
   useDeepLinkStore,
   type DeepLinkIntent,
 } from "@/src/shared/store/deep-link-store";
+import { useRecipeCreateStore } from "@/src/shared/store/recipe-create-store";
 import {
   colors,
   spacing,
@@ -204,13 +205,9 @@ export function DeepLinkHandler() {
 
 /**
  * share 딥링크 처리 (index.tsx에서 사용).
- * RecipeCreateSheet를 열기.
+ * RecipeCreateSheet를 store 경유로 열기.
  */
-export function ShareDeepLinkHandler({
-  createSheetRef,
-}: {
-  createSheetRef: React.RefObject<{ open: (url?: string) => void } | null>;
-}) {
+export function ShareDeepLinkHandler() {
   const pending = useDeepLinkStore((s) => s.pending);
   const consume = useDeepLinkStore((s) => s.consume);
 
@@ -218,11 +215,11 @@ export function ShareDeepLinkHandler({
     if (!pending || pending.type !== "share") return;
 
     const timer = setTimeout(() => {
-      createSheetRef?.current?.open(pending.videoUrl);
+      useRecipeCreateStore.getState().openSheet(pending.videoUrl);
       consume();
     }, 800);
     return () => clearTimeout(timer);
-  }, [pending, consume, createSheetRef]);
+  }, [pending, consume]);
 
   return null;
 }

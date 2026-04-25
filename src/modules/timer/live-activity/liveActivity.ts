@@ -58,8 +58,6 @@ const liveActivityStore = create<LiveActivityStore>()(
           state.timerIdActivityIdMap = new Map(
             state.timerIdActivityIdMap as [string, string][],
           );
-        } else {
-          console.log("복구 실패");
         }
       },
     },

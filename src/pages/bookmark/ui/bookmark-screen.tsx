@@ -9,7 +9,6 @@ import { router } from 'expo-router';
 import { BottomSheetModal, BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useQueryClient } from '@tanstack/react-query';
 import { CategoryChips } from '@/src/pages/bookmark/components/category-chips';
-import { CreatingRecipeSection } from '@/src/pages/home/components/recipe-section';
 import { RecipeGrid } from '@/src/pages/bookmark/components/recipe-grid';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { useMyRecipes, useCategorizedRecipes, useCategories } from '@/src/entities/recipe';
@@ -47,8 +46,8 @@ export function BookmarkScreen() {
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeCard | null>(null);
 
   const { data: categoriesData } = useCategories();
-  const { data: allRecipesData, isLoading: allLoading } = useMyRecipes();
-  const { data: catRecipesData, isLoading: catLoading } = useCategorizedRecipes(
+  const { entities: allRecipeEntities, isLoading: allLoading } = useMyRecipes();
+  const { entities: catRecipeEntities, isLoading: catLoading } = useCategorizedRecipes(
     selectedCategory !== 'all' ? selectedCategory : null,
   );
 
@@ -62,10 +61,10 @@ export function BookmarkScreen() {
 
   const recipes = useMemo(() => {
     if (selectedCategory === 'all') {
-      return toRecipeCards(allRecipesData?.data ?? []);
+      return toRecipeCards(allRecipeEntities);
     }
-    return toRecipeCards(catRecipesData?.data ?? []);
-  }, [selectedCategory, allRecipesData, catRecipesData]);
+    return toRecipeCards(catRecipeEntities);
+  }, [selectedCategory, allRecipeEntities, catRecipeEntities]);
 
   const isLoading = selectedCategory === 'all' ? allLoading : catLoading;
 
@@ -196,9 +195,6 @@ export function BookmarkScreen() {
           </Pressable>
         </View>
       </View>
-
-      {/* 생성 중 레시피 섹션 */}
-      <CreatingRecipeSection />
 
       {/* 카테고리 칩 */}
       <CategoryChips

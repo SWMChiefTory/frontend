@@ -7,3 +7,4 @@ export { RecommendType } from './api/recommend-api';
 export { useCreateRecipe, useRecipeProgress } from './hooks/use-create-recipe';
 export { RecipeStatus } from './api/recipe-create-api';
 export { useMyRecipes, useCategorizedRecipes, useCategories } from './hooks/use-my-recipes';
+export { useSearchRecipes } from './hooks/use-search-recipes';

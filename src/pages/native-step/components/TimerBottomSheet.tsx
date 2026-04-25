@@ -135,13 +135,18 @@ export type TimerSheetRef = {
 }
 
 type TimerBottomSheetProps = {
-  timerResult: StepTimerResult;
+  timerResult: StepTimerResult;  // state (timer, displayTime, progress, isUrgent) 용도
   stepName: string;
+  // page-level wrapper — track('touch') 포함된 액션 (timerResult.addTimer 등 직접 호출 X)
+  onAddTimer: (name: string, sec: number) => void;
+  onPause: () => void;
+  onResume: () => void;
+  onCancel: () => void;
 }
 
 export const TimerSheet = forwardRef<TimerSheetRef, TimerBottomSheetProps>(
-  function TimerSheet({ timerResult, stepName }, ref) {
-    const { timer, displayTime, progress, isUrgent, addTimer, pauseTimer, resumeTimer, cancelTimer } = timerResult;
+  function TimerSheet({ timerResult, stepName, onAddTimer, onPause, onResume, onCancel }, ref) {
+    const { timer, displayTime, progress, isUrgent } = timerResult;
     const bottomSheetRef = useRef<BottomSheet>(null);
     const [selectedMinutes, setSelectedMinutes] = useState(5);
     const [selectedSeconds, setSelectedSeconds] = useState(0);
@@ -171,29 +176,29 @@ export const TimerSheet = forwardRef<TimerSheetRef, TimerBottomSheetProps>(
       const totalSeconds = selectedMinutes * 60 + selectedSeconds;
       if (totalSeconds <= 0) return;
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-      addTimer(stepName, totalSeconds);
+      onAddTimer(stepName, totalSeconds);
       bottomSheetRef.current?.close();
-    }, [selectedMinutes, selectedSeconds, stepName, addTimer]);
+    }, [selectedMinutes, selectedSeconds, stepName, onAddTimer]);
 
     const handlePause = useCallback(() => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      pauseTimer();
-    }, [pauseTimer]);
+      onPause();
+    }, [onPause]);
 
     const handleResume = useCallback(() => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      resumeTimer();
-    }, [resumeTimer]);
+      onResume();
+    }, [onResume]);
 
     const handleCancel = useCallback(() => {
       Alert.alert(t.cancelTimer, t.cancelTimerDesc, [
         { text: t.no, style: 'cancel' },
         { text: t.cancelButton, style: 'destructive', onPress: () => {
-          cancelTimer();
+          onCancel();
           bottomSheetRef.current?.close();
         }},
       ]);
-    }, [cancelTimer]);
+    }, [onCancel, t]);
 
     return (
       <BottomSheet

@@ -50,10 +50,8 @@ const BUTTON_TEXT = {
 } as const;
 
 export function GoogleLoginButton({ market }: { market: Market }) {
-  const { handleSignInGoogle, isLoading } = useLoginWithGoogle(market);
+  const { handleSignInGoogle } = useLoginWithGoogle(market);
   const description = BUTTON_TEXT[market].google;
-
-  console.log("isLoading!!!", isLoading);
 
   return (
     <>
@@ -84,7 +82,7 @@ export function AppleLoginButton({ market }: { market: Market }) {
 }
 
 function useLoginWithGoogle(market: Market) {
-  const { mutate: login, isPending: isLoading, error } = useLogin({
+  const { mutate: login, error } = useLogin({
     onSuccess: (data, variables) => {
       setAmplitudeUserId(data.user_info.provider_sub);
       trackNative(AmplitudeEvent.LOGIN_SUCCESS, {
@@ -92,15 +90,12 @@ function useLoginWithGoogle(market: Market) {
       });
     },
   });
-  console.log("isLoading!!", isLoading);
-  console.log("error!!", error);
   const { openModal } = useSignupModalStore();
   const [idToken, setIdToken] = useState<string | null>(null);
   async function handleSignInGoogle() {
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
-      console.log("response!!", JSON.stringify(response));
       if (response.type === "success") {
         const { idToken } = response.data;
         if (!idToken) {
@@ -114,7 +109,6 @@ function useLoginWithGoogle(market: Market) {
         setIdToken(idToken);
         login({ id_token: idToken, provider: OauthProvider.GOOGLE });
       } else {
-        console.log("구글에 문제가 생겼습니다.", response.type);
         Alert.alert(getErrorMessage(market, "googleError"), response.type);
       }
     } catch (err) {
@@ -126,13 +120,12 @@ function useLoginWithGoogle(market: Market) {
   useEffect(() => {
     if (isNotUserError(error) && idToken) {
       setTimeout(() => {
-        console.log("open modal!!", idToken);
         openModal({ idToken: idToken, provider: OauthProvider.GOOGLE });
       }, 500);
     }
   }, [error, idToken]);
 
-  return { handleSignInGoogle, isLoading };
+  return { handleSignInGoogle };
 }
 
 type SignupModalStore = {
@@ -180,7 +173,7 @@ function isNotUserError(error: any) {
 }
 
 function useLoginWithApple(market: Market) {
-  const { mutate: login, isPending: isLoading, error } = useLogin({
+  const { mutate: login, error } = useLogin({
     onSuccess: (data, variables) => {
       setAmplitudeUserId(data.user_info.provider_sub);
       trackNative(AmplitudeEvent.LOGIN_SUCCESS, {
@@ -227,7 +220,6 @@ function useLoginWithApple(market: Market) {
       credentialState ===
         AppleAuthentication.AppleAuthenticationCredentialState.TRANSFERRED
     ) {
-      console.log("AppleLoginButton 로그인 성공");
       login({
         id_token: appleAuthRequestResponse.identityToken,
         provider: OauthProvider.APPLE,
@@ -250,7 +242,7 @@ function useLoginWithApple(market: Market) {
     }
   }, [error, idToken]);
 
-  return { handleSignInApple, isLoading };
+  return { handleSignInApple };
 }
 
 function LoginButtonTemplate({

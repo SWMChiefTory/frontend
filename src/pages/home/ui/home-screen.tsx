@@ -1,12 +1,11 @@
 import { ScrollView, View, Alert, Modal, Text, Pressable, ActivityIndicator } from 'react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { CreditRechargeSheet, type CreditRechargeSheetRef } from '@/src/widgets/credit-recharge/credit-recharge-sheet';
-import { CreatingRecipeWatcher } from '@/src/pages/home/components/creating-recipe-watcher';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { HomeHeader } from '@/src/pages/home/components/home-header';
 import { FeatureCards } from '@/src/pages/home/components/feature-cards';
-import { ThemeCardsSection, RecipeListSection, RecentRecipeSection, RecentRecipeSkeleton, RecipeListSkeleton, CreatingRecipeSection } from '@/src/pages/home/components/recipe-section';
+import { ThemeCardsSection, RecipeListSection, RecentRecipeSection, RecentRecipeSkeleton, RecipeListSkeleton } from '@/src/pages/home/components/recipe-section';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { useMarketStore } from '@/src/shared/store/marketStore';
 import {
@@ -18,43 +17,50 @@ import { useRecommendRecipes, useMyRecipes } from '@/src/entities/recipe';
 import { RecommendType } from '@/src/entities/recipe/api/recommend-api';
 import type { RecipeCard } from '@/src/shared/data/mock';
 import { track, RechargeEvents, RecipeEvents } from '@/src/shared/analytics';
+import { useRecipeCreateStore } from '@/src/shared/store/recipe-create-store';
 
 function toRecipeCards(data: any[] | undefined): RecipeCard[] {
   if (!data) return [];
   return data.map((r) => ({
     id: r.recipeId,
-    title: r.recipeTitle,
+    title: r.recipeTitle || '',
     thumbnailUrl: r.videoThumbnailUrl,
     duration: r.cookingTime ? `${r.cookingTime}분` : '',
     views: r.channelTitle ?? '',
     description: r.description ?? '',
     servings: r.servings ?? 0,
     cookingTime: r.cookingTime ?? 0,
+    recipeStatus: r.recipeStatus ?? 'SUCCESS',
   }));
 }
 
-type HomeScreenProps = {
-  onCreatePress?: () => void;
-}
-
-export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenProps) {
+export function HomeScreen() {
   const [lockedModal, setLockedModal] = useState<string | null>(null);
   const rechargeSheetRef = useRef<CreditRechargeSheetRef>(null);
   const market = useMarketStore(s => s.market);
   const t = TEXTS[market ?? 'KOREA'];
 
-  const { data: popularData, isLoading: popularLoading } = useRecommendRecipes(RecommendType.POPULAR);
-  const { data: myRecipesData, isLoading: myRecipesLoading } = useMyRecipes();
+  const {
+    entities: popularEntities,
+    isLoading: popularLoading,
+    fetchNextPage: fetchNextPopular,
+    hasNextPage: hasNextPopular,
+  } = useRecommendRecipes(RecommendType.POPULAR);
+  const {
+    entities: myRecipeEntities,
+    isLoading: myRecipesLoading,
+    fetchNextPage: fetchNextMyRecipes,
+    hasNextPage: hasNextMyRecipes,
+  } = useMyRecipes();
 
   const hotRecipes = useMemo(() => {
-    const apiCards = toRecipeCards(popularData?.data);
+    const apiCards = toRecipeCards(popularEntities);
     return apiCards.length > 0 ? apiCards : MOCK_HOT_RECIPES;
-  }, [popularData]);
+  }, [popularEntities]);
 
   const recentRecipes = useMemo(() => {
-    const apiCards = toRecipeCards(myRecipesData?.data);
-    return apiCards;
-  }, [myRecipesData]);
+    return toRecipeCards(myRecipeEntities);
+  }, [myRecipeEntities]);
 
   const handleBerryPress = useCallback(() => {
     track(RechargeEvents.CLICK, { source: 'home_header' });
@@ -70,8 +76,8 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
   }, []);
 
   const handleCreatePress = useCallback(() => {
-    onCreatePressExternal?.();
-  }, [onCreatePressExternal]);
+    useRecipeCreateStore.getState().openSheet();
+  }, []);
 
   const handleLockedPress = useCallback((feature: string) => {
     setLockedModal(feature);
@@ -120,7 +126,6 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120, paddingTop: spacing.xl, gap: spacing.lg }}
       >
-        <CreatingRecipeSection />
         {myRecipesLoading ? (
           <RecentRecipeSkeleton />
         ) : recentRecipes.length > 0 ? (
@@ -128,6 +133,8 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
             <RecentRecipeSection
               recipes={recentRecipes}
               onPress={handleRecipePress}
+              fetchNextPage={fetchNextMyRecipes}
+              hasNextPage={hasNextMyRecipes}
             />
             <View style={{ height: 1, backgroundColor: colors.border, marginHorizontal: spacing.lg }} />
           </>
@@ -150,6 +157,8 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
             title={t.hotRecipes}
             recipes={hotRecipes}
             onPress={handleRecipePress}
+            fetchNextPage={fetchNextPopular}
+            hasNextPage={hasNextPopular}
           />
         )}
       </ScrollView>
@@ -226,7 +235,6 @@ export function HomeScreen({ onCreatePress: onCreatePressExternal }: HomeScreenP
       </Modal>
 
       <CreditRechargeSheet ref={rechargeSheetRef} />
-      <CreatingRecipeWatcher />
     </View>
   );
 }

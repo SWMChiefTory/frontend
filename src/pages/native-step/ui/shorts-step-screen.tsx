@@ -26,6 +26,11 @@ export function ShortsStepScreen(props: StepScreenSharedProps) {
     voiceState,
     handleManualPrev,
     handleManualNext,
+    handleTogglePlay,
+    handleAddTimerTouch,
+    handlePauseTimerTouch,
+    handleResumeTimerTouch,
+    handleCancelTimerTouch,
     handleBack,
     handleYouTubeMessage,
     timerSheetRef,
@@ -208,7 +213,7 @@ export function ShortsStepScreen(props: StepScreenSharedProps) {
         <View style={{ overflow: 'visible', position: 'relative' }}>
           <PawFeedback visible={voiceState.intentFeedback?.intent === 'PLAY' || voiceState.intentFeedback?.intent === 'PAUSE'} size={28} direction="right" />
           <Pressable
-            onPress={videoControl.togglePlay}
+            onPress={handleTogglePlay}
             style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: '#333', alignItems: 'center', justifyContent: 'center' }}
           >
             <Ionicons name={videoControl.isPlaying ? 'pause' : 'play'} size={18} color="#fff" />
@@ -255,7 +260,15 @@ export function ShortsStepScreen(props: StepScreenSharedProps) {
 
       <IntentFeedbackToast message={voiceState.intentFeedback?.text ?? null} />
       <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, elevation: 9999 }} pointerEvents="box-none">
-        <TimerSheet ref={timerSheetRef} timerResult={timerResult} stepName={stepNav.currentStep?.title ?? '타이머'} />
+        <TimerSheet
+          ref={timerSheetRef}
+          timerResult={timerResult}
+          stepName={stepNav.currentStep?.title ?? '타이머'}
+          onAddTimer={handleAddTimerTouch}
+          onPause={handlePauseTimerTouch}
+          onResume={handleResumeTimerTouch}
+          onCancel={handleCancelTimerTouch}
+        />
       </View>
     </GestureHandlerRootView>
   );

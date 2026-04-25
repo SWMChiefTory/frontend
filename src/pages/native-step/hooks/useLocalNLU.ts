@@ -71,17 +71,31 @@ const SPACING_KEYWORDS = [
 // 조사 (단어 경계 보호)
 const PARTICLE_RE = /(을|를|이|가|은|는|에서|으로|로|에|도|만|까지|부터|랑|이랑|와|과|께|께서)(\s|$)/g;
 
+// STT가 자주 오인식하는 단어 → 의도한 키워드로 정규화
+// (예: "장면"이 "작년"으로 자주 인식됨)
+const STT_ALIASES: Record<string, string> = {
+  '작년': '장면',
+};
+
 // ─── Stage 1: 정규화 ───
 export function normalize(raw: string): string {
-  let text = raw.trim().toLowerCase();
+  let text = raw.normalize('NFC').trim().toLowerCase();
   if (!text) return '';
+
+  // 0. STT 오인식 alias 치환 (spacing/조사 처리 전에 먼저)
+  for (const [from, to] of Object.entries(STT_ALIASES)) {
+    if (text.includes(from)) {
+      text = text.split(from).join(to);
+    }
+  }
 
   // 1. 키워드 경계에 공백 강제 삽입 (붙여쓴 발화 처리)
   for (const kw of SPACING_KEYWORDS) {
     text = text.split(kw).join(` ${kw} `);
   }
 
-  // 2. 한글 숫자 + 단위 → 아라비아 (단위 결합 시에만 변환)
+  // 2-1. 한글 숫자 + 단위 (정순) → 아라비아
+  //      "일 단계" → "1단계", "오 분" → "5분"
   for (const unit of UNITS) {
     for (const word of KOREAN_NUM_KEYS) {
       const num = KOREAN_NUM[word];
@@ -90,8 +104,37 @@ export function normalize(raw: string): string {
     }
   }
 
+  // 2-2. 앵커 + 한글 숫자 (역순) → 앵커 + 아라비아
+  //      "장면 일" → "장면 1", "단계 이" → "단계 2", "스텝 셋" → "스텝 3"
+  //      뒤에 한글 글자가 더 붙는 경우는 제외 (예: "장면 이전" → 매칭 X)
+  const REVERSE_ANCHORS = ['장면', '단계', '스텝'];
+  for (const anchor of REVERSE_ANCHORS) {
+    for (const word of KOREAN_NUM_KEYS) {
+      const num = KOREAN_NUM[word];
+      const re = new RegExp(`${anchor}\\s+${word}(?![가-힣])`, 'g');
+      text = text.replace(re, `${anchor} ${num}`);
+    }
+  }
+
+  // 3. 조사 제거 직전에, "로/으로"를 포함하는 방향 명령어를 마스킹
+  // (PARTICLE_RE가 "뒤로"의 "로", "앞으로"의 "으로"를 조사로 잘못 인식해 떼어가는 것을 방지)
+  const PARTICLE_PROTECTED = ['뒤로', '앞으로'];
+  const masks: Array<[string, string]> = [];
+  PARTICLE_PROTECTED.forEach((kw, i) => {
+    if (text.includes(kw)) {
+      const mask = `${i}`;
+      text = text.split(kw).join(mask);
+      masks.push([mask, kw]);
+    }
+  });
+
   // 3. 조사 제거 (의미 키워드 뒤에 붙은 것)
   text = text.replace(PARTICLE_RE, ' ');
+
+  // 마스킹 복원
+  masks.forEach(([mask, kw]) => {
+    text = text.split(mask).join(kw);
+  });
 
   // 4. 공백 정리
   text = text.replace(/\s+/g, ' ').trim();

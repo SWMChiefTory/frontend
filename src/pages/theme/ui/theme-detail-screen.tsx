@@ -40,16 +40,9 @@ export function ThemeDetailScreen({ theme }: ThemeDetailScreenProps) {
 
   // 첫 진입 시 자동 오픈
   useEffect(() => {
-    console.log('[ThemeDetail] mount', {
-      themeId: theme.id,
-      useCategoryMode,
-      categoriesCount: theme.categories?.length,
-      dishesCount: theme.dishes.length,
-    });
     if (useCategoryMode) {
       // BottomSheet 마운트 + 애니메이션 안정화 대기 (500ms)
       const t = setTimeout(() => {
-        console.log('[ThemeDetail] expand category sheet, ref:', !!categorySheetRef.current);
         categorySheetRef.current?.open();
       }, 500);
       return () => clearTimeout(t);

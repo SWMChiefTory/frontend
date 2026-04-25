@@ -21,8 +21,6 @@ export function DishListCard({ dish, isDark, themeId, themeColor }: DishListCard
       theme_id: themeId ?? '',
       dish_name: dish.title,
     });
-    // eslint-disable-next-line no-console
-    console.log('[DishListCard] navigate', { dishId: dish.id, recipe_id: dish.recipe_id });
     if (dish.recipe_id) {
       router.push(`/recipe/${dish.recipe_id}`);
       return;

@@ -1,11 +1,11 @@
 import { View, Text, Pressable, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
+import { FlashList } from '@shopify/flash-list';
 import { router } from 'expo-router';
 import { colors, spacing, radius, typography } from '@/src/shared/design/tokens';
 import { Skeleton } from '@/src/shared/components/skeleton';
 import type { RecipeCard, ThemeCard } from '@/src/shared/data/mock';
-import { useRecipeCreateStore } from '@/src/pages/home/model/recipe-create-store';
 import { useRecipeProgress, RecipeStatus } from '@/src/entities/recipe';
 import { useMarketStore } from '@/src/shared/store/marketStore';
 
@@ -122,50 +122,13 @@ export function ThemeCardsSection({ cards, onPress }: ThemeCardsSectionProps) {
 type RecentRecipeSectionProps = {
   recipes: RecipeCard[];
   onPress: (recipe: RecipeCard) => void;
+  fetchNextPage?: () => void;
+  hasNextPage?: boolean;
 }
 
-export function CreatingRecipeSection() {
-  const creating = useRecipeCreateStore((s) => s.creatingRecipes);
-  const market = useMarketStore(s => s.market);
-  const t = TEXTS[market ?? 'KOREA'];
-  if (creating.length === 0) return null;
+// CreatingRecipeSection 제거 — 카드별 독립 폴링으로 대체
 
-  return (
-    <View style={{ paddingTop: spacing.lg, paddingBottom: spacing.xs, gap: spacing.md }}>
-      <View style={{ paddingHorizontal: spacing.lg, gap: 2 }}>
-        <Text
-          style={{
-            fontFamily: typography.heading.fontFamily,
-            ...typography.heading.h2,
-            color: colors.text.primary,
-          }}
-        >
-          {t.creatingTitle}
-        </Text>
-        <Text
-          style={{
-            fontFamily: typography.body.fontFamily,
-            fontSize: 12,
-            color: colors.text.secondary,
-          }}
-        >
-          {t.creatingSubtitle}
-        </Text>
-      </View>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}
-      >
-        {creating.map((c) => (
-          <CreatingRecipeCard key={c.recipeId} recipeId={c.recipeId} />
-        ))}
-      </ScrollView>
-    </View>
-  );
-}
-
-export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionProps) {
+export function RecentRecipeSection({ recipes, onPress, fetchNextPage, hasNextPage }: RecentRecipeSectionProps) {
   const market = useMarketStore(s => s.market);
   const t = TEXTS[market ?? 'KOREA'];
   return (
@@ -186,97 +149,75 @@ export function RecentRecipeSection({ recipes, onPress }: RecentRecipeSectionPro
       >
         {t.recentRecipes}
       </Text>
-      <ScrollView
+      <FlashList
         horizontal
+        data={recipes}
+        renderItem={({ item }: { item: RecipeCard }) => (
+          <RecipeCardWithStatus
+            recipe={item}
+            onPress={onPress}
+            voiceModeLabel={t.voiceMode}
+            statusCreatingLabel={t.statusCreating}
+            statusFailedLabel={t.statusFailed}
+          />
+        )}
+        keyExtractor={(item: RecipeCard) => item.id}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}
-      >
-        {recipes.map((recipe) => (
-          <Pressable
-            key={recipe.id}
-            onPress={() => onPress(recipe)}
-            style={{
-              width: 220,
-              flexDirection: 'row',
-              gap: spacing.md,
-              backgroundColor: colors.surface,
-              borderRadius: radius.lg,
-              padding: spacing.sm,
-              borderCurve: 'continuous',
-            }}
-          >
-            <Image
-              source={{ uri: recipe.thumbnailUrl }}
-              style={{
-                width: 68,
-                height: 68,
-                borderRadius: radius.sm,
-                backgroundColor: colors.border,
-              }}
-              contentFit="cover"
-            />
-            <View style={{ flex: 1, justifyContent: 'center', gap: spacing.sm }}>
-              <Text
-                style={{
-                  fontFamily: typography.heading.fontFamily,
-                  fontSize: 14,
-                  fontWeight: '600',
-                  color: colors.text.primary,
-                }}
-                numberOfLines={2}
-              >
-                {recipe.title}
-              </Text>
-              <Pressable
-                onPress={() => router.push(`/native-step/${recipe.id}`)}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 4,
-                  backgroundColor: colors.primary,
-                  paddingVertical: spacing.sm,
-                  borderRadius: radius.sm,
-                  marginTop: 'auto',
-                }}
-              >
-                <Ionicons name="mic" size={12} color="#fff" />
-                <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 11, fontWeight: '600', color: '#fff' }}>
-                  {t.voiceMode}
-                </Text>
-              </Pressable>
-            </View>
-          </Pressable>
-        ))}
-      </ScrollView>
+        onEndReached={fetchNextPage}
+        onEndReachedThreshold={0.5}
+        contentContainerStyle={{ paddingHorizontal: spacing.lg }}
+        ItemSeparatorComponent={() => <View style={{ width: spacing.md }} />}
+        ListFooterComponent={hasNextPage ? <RecentRecipeSkeletonFooter /> : null}
+      />
     </View>
   );
 }
 
-// ─── 생성 중 카드 (최근 레시피 섹션 prepend) ───
-function CreatingRecipeCard({ recipeId }: { recipeId: string }) {
-  const { data: status } = useRecipeProgress(recipeId);
-  const removeCreating = useRecipeCreateStore((s) => s.removeCreating);
-  const market = useMarketStore(s => s.market);
-  const t = TEXTS[market ?? 'KOREA'];
+function RecentRecipeSkeletonFooter() {
+  return (
+    <View style={{ flexDirection: 'row', gap: spacing.md, marginLeft: spacing.md }}>
+      {[1, 2].map((i) => (
+        <View key={i} style={{ width: 220, flexDirection: 'row', gap: spacing.md, backgroundColor: colors.surface, borderRadius: radius.lg, padding: spacing.sm }}>
+          <Skeleton width={68} height={68} borderRadius={radius.sm} />
+          <View style={{ flex: 1, gap: spacing.sm, justifyContent: 'center' }}>
+            <Skeleton width="80%" height={14} />
+            <Skeleton width="50%" height={12} />
+            <Skeleton width="100%" height={28} borderRadius={radius.sm} />
+          </View>
+        </View>
+      ))}
+    </View>
+  );
+}
 
-  const isDone = status === RecipeStatus.SUCCESS;
-  const isFailed =
-    status === RecipeStatus.FAILED ||
-    status === RecipeStatus.BLOCKED ||
-    status === RecipeStatus.BANNED;
+// ─── 카드별 독립 폴링 (웹뷰 v2 패턴) ───
+// recipeStatus가 SUCCESS 아니면 absolute 오버레이로 폴링 상태 표시.
+// 폴링 결과가 SUCCESS가 되면 오버레이 사라지고 정상 카드로 전환.
+function RecipeCardWithStatus({ recipe, onPress, voiceModeLabel, statusCreatingLabel, statusFailedLabel }: {
+  recipe: RecipeCard;
+  onPress: (recipe: RecipeCard) => void;
+  voiceModeLabel: string;
+  statusCreatingLabel: string;
+  statusFailedLabel: string;
+}) {
+  const isInitiallyDone = !recipe.recipeStatus || recipe.recipeStatus === 'SUCCESS';
+  // SUCCESS 카드는 폴링하지 않음 (enabled: false)
+  const { data: polledStatus } = useRecipeProgress(isInitiallyDone ? null : recipe.id);
 
-  const statusText = isDone
-    ? t.statusDone
-    : isFailed
-      ? t.statusFailed
-      : t.statusCreating;
-  const statusColor = isDone ? colors.semantic.success : isFailed ? colors.semantic.error : colors.primary;
+  // 초기 SUCCESS + 폴링 결과 SUCCESS 모두 정상 처리
+  const isDone = isInitiallyDone || polledStatus === RecipeStatus.SUCCESS;
+  const isFailed = !isDone && (
+    polledStatus === RecipeStatus.FAILED ||
+    polledStatus === RecipeStatus.BLOCKED ||
+    polledStatus === RecipeStatus.BANNED
+  );
 
   return (
-    <View
+    <Pressable
+      onPress={() => isDone && onPress(recipe)}
       style={{
         width: 220,
+        position: 'relative',
         flexDirection: 'row',
         gap: spacing.md,
         backgroundColor: colors.surface,
@@ -285,82 +226,87 @@ function CreatingRecipeCard({ recipeId }: { recipeId: string }) {
         borderCurve: 'continuous',
       }}
     >
-      <View
+      <Image
+        source={{ uri: recipe.thumbnailUrl }}
         style={{
           width: 68,
           height: 68,
           borderRadius: radius.sm,
-          backgroundColor: colors.background,
-          alignItems: 'center',
-          justifyContent: 'center',
+          backgroundColor: colors.border,
         }}
-      >
-        {isDone ? (
-          <Ionicons name="checkmark-circle" size={36} color={colors.semantic.success} />
-        ) : isFailed ? (
-          <Ionicons name="alert-circle" size={36} color={colors.semantic.error} />
+        contentFit="cover"
+      />
+      <View style={{ flex: 1, justifyContent: 'center', gap: spacing.sm }}>
+        {recipe.title ? (
+          <Text
+            style={{
+              fontFamily: typography.heading.fontFamily,
+              fontSize: 14,
+              fontWeight: '600',
+              color: colors.text.primary,
+            }}
+            numberOfLines={2}
+          >
+            {recipe.title}
+          </Text>
         ) : (
-          <ActivityIndicator size="small" color={colors.primary} />
-        )}
-      </View>
-      <View style={{ flex: 1, justifyContent: 'center', gap: spacing.xs }}>
-        <Text
-          style={{
-            fontFamily: typography.heading.fontFamily,
-            fontSize: 13,
-            fontWeight: '600',
-            color: colors.text.primary,
-          }}
-          numberOfLines={2}
-        >
-          {t.newRecipe}
-        </Text>
-        <Text
-          style={{
-            fontFamily: typography.body.fontFamily,
-            fontSize: 11,
-            fontWeight: '600',
-            color: statusColor,
-          }}
-        >
-          {statusText}
-        </Text>
-        {!isDone && !isFailed && (
-          <View style={{ height: 3, backgroundColor: colors.border, borderRadius: 2, overflow: 'hidden' }}>
-            <View
-              style={{
-                position: 'absolute',
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width: '40%',
-                backgroundColor: colors.primary,
-                borderRadius: 2,
-              }}
-            />
+          <View style={{ gap: spacing.xs }}>
+            <Skeleton width="80%" height={14} />
+            <Skeleton width="50%" height={14} />
           </View>
         )}
-      </View>
-      {/* 실패 시 dismiss 버튼 */}
-      {isFailed && (
         <Pressable
-          onPress={() => removeCreating(recipeId)}
-          hitSlop={8}
+          onPress={() => isDone && router.push(`/native-step/${recipe.id}`)}
           style={{
-            position: 'absolute',
-            top: 4,
-            right: 4,
-            width: 22,
-            height: 22,
-            borderRadius: 11,
+            flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
+            gap: 4,
+            backgroundColor: colors.primary,
+            paddingVertical: spacing.sm,
+            borderRadius: radius.sm,
+            marginTop: 'auto',
           }}
         >
-          <Ionicons name="close" size={16} color={colors.text.disabled} />
+          <Ionicons name="mic" size={12} color="#fff" />
+          <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 11, fontWeight: '600', color: '#fff' }}>
+            {voiceModeLabel}
+          </Text>
         </Pressable>
+      </View>
+
+      {/* 생성 중 / 실패 오버레이 — 전체 카드 덮음 */}
+      {!isDone && (
+        <View
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            borderRadius: radius.lg,
+            borderCurve: 'continuous',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: spacing.xs,
+          }}
+        >
+          {isFailed ? (
+            <>
+              <Ionicons name="alert-circle" size={24} color={colors.semantic.error} />
+              <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, fontWeight: '600', color: '#fff' }}>
+                {statusFailedLabel}
+              </Text>
+            </>
+          ) : (
+            <>
+              <ActivityIndicator size="small" color="#fff" />
+              <Text style={{ fontFamily: typography.body.fontFamily, fontSize: 12, fontWeight: '600', color: '#fff' }}>
+                {statusCreatingLabel}
+              </Text>
+            </>
+          )}
+        </View>
       )}
-    </View>
+    </Pressable>
   );
 }
 
@@ -369,9 +315,11 @@ type RecipeListSectionProps = {
   icon?: string;
   recipes: RecipeCard[];
   onPress: (recipe: RecipeCard) => void;
+  fetchNextPage?: () => void;
+  hasNextPage?: boolean;
 }
 
-export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListSectionProps) {
+export function RecipeListSection({ title, icon, recipes, onPress, fetchNextPage, hasNextPage }: RecipeListSectionProps) {
   return (
     <View
       style={{
@@ -389,19 +337,16 @@ export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListS
       >
         {title}
       </Text>
-      <ScrollView
+      <FlashList
         horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}
-      >
-        {recipes.map((recipe) => (
+        data={recipes}
+        renderItem={({ item }: { item: RecipeCard }) => (
           <Pressable
-            key={recipe.id}
-            onPress={() => onPress(recipe)}
+            onPress={() => onPress(item)}
             style={{ width: 160, gap: spacing.sm }}
           >
             <Image
-              source={{ uri: recipe.thumbnailUrl }}
+              source={{ uri: item.thumbnailUrl }}
               style={{
                 width: 160,
                 height: 100,
@@ -415,15 +360,36 @@ export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListS
                 style={{ fontFamily: typography.body.fontFamily, fontSize: 13, fontWeight: '600', color: colors.text.primary }}
                 numberOfLines={1}
               >
-                {recipe.title}
+                {item.title}
               </Text>
               <Text style={{ fontSize: 11, color: colors.text.secondary }}>
-                {recipe.duration} · {recipe.views}
+                {item.duration} · {item.views}
               </Text>
             </View>
           </Pressable>
-        ))}
-      </ScrollView>
+        )}
+        keyExtractor={(item: RecipeCard) => item.id}
+        showsHorizontalScrollIndicator={false}
+        onEndReached={fetchNextPage}
+        onEndReachedThreshold={0.5}
+        contentContainerStyle={{ paddingHorizontal: spacing.lg }}
+        ItemSeparatorComponent={() => <View style={{ width: spacing.md }} />}
+        ListFooterComponent={hasNextPage ? <RecipeListSkeletonFooter /> : null}
+      />
+    </View>
+  );
+}
+
+function RecipeListSkeletonFooter() {
+  return (
+    <View style={{ flexDirection: 'row', gap: spacing.md, marginLeft: spacing.md }}>
+      {[1, 2].map((i) => (
+        <View key={i} style={{ width: 160, gap: spacing.sm }}>
+          <Skeleton width={160} height={100} borderRadius={radius.md} />
+          <Skeleton width={120} height={14} />
+          <Skeleton width={80} height={11} />
+        </View>
+      ))}
     </View>
   );
 }
@@ -433,7 +399,7 @@ export function RecipeListSection({ title, icon, recipes, onPress }: RecipeListS
 export function RecentRecipeSkeleton() {
   return (
     <View style={{ paddingVertical: spacing.lg, gap: spacing.md }}>
-      <Skeleton width={140} height={22} style={{ marginLeft: spacing.lg }} />
+      <View style={{ marginLeft: spacing.lg }}><Skeleton width={140} height={22} /></View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}>
         {[1, 2, 3].map((i) => (
@@ -475,24 +441,16 @@ const TEXTS = {
   KOREA: {
     themeTitle: '이런 요리 어때요?',
     themeSubtitle: '토리가 직접 엄선했어요!',
-    creatingTitle: '생성 중인 레시피',
-    creatingSubtitle: '완료되면 알림으로 알려드릴게요',
     recentRecipes: '최근 레시피',
     voiceMode: '음성 모드',
-    newRecipe: '새 레시피',
-    statusDone: '생성 완료',
     statusFailed: '레시피 생성 실패',
     statusCreating: '레시피 생성 중...',
   },
   GLOBAL: {
     themeTitle: 'What should we cook?',
     themeSubtitle: 'Hand-picked by Tory!',
-    creatingTitle: 'Creating Recipes',
-    creatingSubtitle: "We'll notify you when it's ready",
     recentRecipes: 'Recent Recipes',
     voiceMode: 'Voice Mode',
-    newRecipe: 'New Recipe',
-    statusDone: 'Done',
     statusFailed: 'Creation Failed',
     statusCreating: 'Creating...',
   },

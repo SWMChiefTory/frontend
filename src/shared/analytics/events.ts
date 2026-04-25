@@ -57,12 +57,46 @@ export const RecipeDetailEvents = {
   COOKING_START: "recipe_detail_cooking_start",
 } as const;
 
+// ─── Tutorial: 공유하기 (인터랙티브 온보딩) ───
+// 사용자가 어느 phase에서 막히는지, 어느 entry point를 더 자주 쓰는지 분석 위해
+// phase별로 세분화된 이벤트.
+export const TutorialShareEvents = {
+  VIEW: "tutorial_share_view",                  // 튜토리얼 진입 (mount)
+  YOUTUBE_TAP: "tutorial_share_youtube_tap",    // Phase 1: 유튜브 공유 버튼 탭
+  MORE_TAP: "tutorial_share_more_tap",          // Phase 2: 더보기 탭
+  CHEFTORY_TAP: "tutorial_share_cheftory_tap",  // Phase 3: 쉐프토리 앱 아이콘 탭
+  ACTION_TAP: "tutorial_share_action_tap",      // Phase 3: action list (Import recipe) 탭
+  CREATE_TAP: "tutorial_share_create_tap",      // Phase 4: 만들기 탭 (자연 완료)
+  SKIP: "tutorial_share_skip",                  // 어느 phase에서든 건너뛰기
+  COMPLETE: "tutorial_share_complete",          // 자연 완료
+  WRONG_TAP: "tutorial_share_wrong_tap",        // 비활성 영역 탭 (어느 phase에서 헤매는지)
+} as const;
+
 // ─── Cooking mode (start / command / end) ───
 export const CookingModeEvents = {
   START: "cooking_mode_start",
   COMMAND: "cooking_mode_command",
   END: "cooking_mode_end",
 } as const;
+
+// 쿠킹모드 명령의 command_detail 값 (track.ts EventPropsMap의 command_detail 값과 동일)
+// 음성/터치 모두 동일한 값 사용 → trigger_method로만 구분
+export const CookingCommandDetails = {
+  // navigation
+  NEXT: "NEXT",
+  PREV: "PREV",
+  STEP: "STEP",
+  GO_TO_SCENE_NUMBER: "GO_TO_SCENE_NUMBER",
+  // video_control
+  VIDEO_PLAY: "VIDEO_PLAY",
+  VIDEO_STOP: "VIDEO_STOP",
+  // timer
+  TIMER_START: "TIMER_START",
+  TIMER_CANCEL: "TIMER_CANCEL",
+  TIMER_PAUSE: "TIMER_PAUSE",
+  TIMER_RESUME: "TIMER_RESUME",
+} as const;
+export type CookingCommandDetail = (typeof CookingCommandDetails)[keyof typeof CookingCommandDetails];
 
 // ─── Search ───
 export const SearchEvents = {
