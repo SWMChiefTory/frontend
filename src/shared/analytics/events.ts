@@ -64,6 +64,25 @@ export const CookingModeEvents = {
   END: "cooking_mode_end",
 } as const;
 
+// 쿠킹모드 명령의 command_detail 값 (track.ts EventPropsMap의 command_detail 값과 동일)
+// 음성/터치 모두 동일한 값 사용 → trigger_method로만 구분
+export const CookingCommandDetails = {
+  // navigation
+  NEXT: "NEXT",
+  PREV: "PREV",
+  STEP: "STEP",
+  GO_TO_SCENE_NUMBER: "GO_TO_SCENE_NUMBER",
+  // video_control
+  VIDEO_PLAY: "VIDEO_PLAY",
+  VIDEO_STOP: "VIDEO_STOP",
+  // timer
+  TIMER_START: "TIMER_START",
+  TIMER_CANCEL: "TIMER_CANCEL",
+  TIMER_PAUSE: "TIMER_PAUSE",
+  TIMER_RESUME: "TIMER_RESUME",
+} as const;
+export type CookingCommandDetail = (typeof CookingCommandDetails)[keyof typeof CookingCommandDetails];
+
 // ─── Search ───
 export const SearchEvents = {
   EXECUTED: "search_executed",

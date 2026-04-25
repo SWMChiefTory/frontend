@@ -63,6 +63,12 @@ export function NormalStepScreen(props: StepScreenSharedProps) {
     voiceState,
     handleManualPrev,
     handleManualNext,
+    handleNavigateToStep,
+    handleTogglePlay,
+    handleAddTimerTouch,
+    handlePauseTimerTouch,
+    handleResumeTimerTouch,
+    handleCancelTimerTouch,
     handleBack,
     handleYouTubeMessage,
     timerSheetRef,
@@ -145,7 +151,7 @@ export function NormalStepScreen(props: StepScreenSharedProps) {
           {stepNav.steps.map((_: any, i: number) => (
             <Pressable
               key={i}
-              onPress={() => stepNav.navigateStep(i)}
+              onPress={() => handleNavigateToStep(i)}
               style={[
                 styles.progressSegment,
                 i === stepNav.currentStepIndex
@@ -190,7 +196,7 @@ export function NormalStepScreen(props: StepScreenSharedProps) {
         {videoControl.isVideoLoaded && (
           <View style={{ position: 'absolute', top: 8, right: 8 }}>
             <PawFeedback visible={voiceState.intentFeedback?.intent === 'PLAY' || voiceState.intentFeedback?.intent === 'PAUSE'} size={28} />
-            <Pressable onPress={videoControl.togglePlay} style={[styles.playFab, { position: 'relative', top: 0, right: 0 }]}>
+            <Pressable onPress={handleTogglePlay} style={[styles.playFab, { position: 'relative', top: 0, right: 0 }]}>
               <Ionicons name={videoControl.isPlaying ? 'pause' : 'play'} size={16} color="#fff" />
             </Pressable>
           </View>
@@ -280,6 +286,10 @@ export function NormalStepScreen(props: StepScreenSharedProps) {
           ref={timerSheetRef}
           timerResult={timerResult}
           stepName={stepNav.currentStep?.title ?? '타이머'}
+          onAddTimer={handleAddTimerTouch}
+          onPause={handlePauseTimerTouch}
+          onResume={handleResumeTimerTouch}
+          onCancel={handleCancelTimerTouch}
         />
       </View>
     </GestureHandlerRootView>

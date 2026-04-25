@@ -16,6 +16,7 @@ export {
   RecipeEvents,
   RecipeDetailEvents,
   CookingModeEvents,
+  CookingCommandDetails,
   SearchEvents,
   CategoryEvents,
   CoupangEvents,
