@@ -25,6 +25,7 @@ export {
   ReportEvents,
   ContactEvents,
   AccountEvents,
+  TutorialShareEvents,
 } from "./events";
 
 // @deprecated 점진 마이그레이션 중 — 신규 코드는 track() 사용
