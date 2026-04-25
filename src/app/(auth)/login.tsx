@@ -7,6 +7,5 @@ export default function LoginScreen() {
     track.screen("Login");
   }, []);
 
-  console.log("LoginScreen!!!!");
   return <LoginPage />;
 }

@@ -7,9 +7,6 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 function StepContent({ recipeId }: { recipeId: string }) {
   const { data } = useRecipe(recipeId);
-  console.log(`[NativeStep] data keys:`, Object.keys(data));
-  console.log(`[NativeStep] videoId:`, data.videoId);
-  console.log(`[NativeStep] recipe:`, data.recipe ? Object.keys(data.recipe) : 'undefined');
 
   if (!data.recipe) {
     throw new Error('레시피 데이터 구조 오류: recipe 필드가 없습니다');

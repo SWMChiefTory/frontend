@@ -225,10 +225,6 @@ function containsAny(text: string, words: string[]): boolean {
 }
 
 export function classifyLocal(rawText: string): LocalNLUResult | null {
-  if (__DEV__) {
-    const codes = [...rawText].map(c => 'U+' + c.charCodeAt(0).toString(16).toUpperCase()).join(' ');
-    console.log(`[NLU] "${rawText}" codes=[${codes}]`);
-  }
   const text = normalize(rawText);
   if (!text) return null;
 

@@ -34,8 +34,6 @@ export function RecipeDetailScreen({ recipeId }: RecipeDetailScreenProps) {
   const market = useMarketStore(s => s.market);
   const t = TEXTS[market ?? 'KOREA'];
 
-  console.log(JSON.stringify(recipe));
-
   const handlePurchasePress = useCallback(() => {
     if (!recipe) return;
     const names = recipe.ingredients.map((i) => i.name).filter((n) => n.length > 0);

@@ -12,8 +12,6 @@ const AMPLITUDE_API_KEY = process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY!;
  */
 export const initAmplitude = async () => {
   try {
-    console.log("[Amplitude] API Key:", AMPLITUDE_API_KEY);
-
     // logLevel: 0=None, 1=Error, 2=Warn, 3=Verbose, 4=Debug
     // RN에서 발생하는 cookie storage fallback noise 억제 위해 None
     // (이벤트 송신은 정상, AsyncStorage로 fallback됨)

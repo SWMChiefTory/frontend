@@ -102,18 +102,13 @@ export function useVoiceCommand({
   const handleInterimResult = useCallback(
     async (text: string) => {
       if (!text.trim()) return;
-      const tE2E = performance.now();
       setTranscript(text);
 
       // 1. 키워드 매칭
-      const tKeyword0 = performance.now();
       const localResult = classifyLocal(text);
-      const tKeyword1 = performance.now();
       if (localResult) {
-        console.log(`[Perf:keyword] interim "${text}" → ${localResult.intent} | ${(tKeyword1 - tKeyword0).toFixed(1)}ms`);
         const executed = dispatchIntent(localResult.intent, localResult.payload);
         if (executed) {
-          console.log(`[Perf:E2E] interim "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
           handledInInterimRef.current = true;
           resetTranscriptionRef.current();
           return;
@@ -151,17 +146,12 @@ export function useVoiceCommand({
         return;
       }
       if (!text.trim()) return;
-      const tE2E = performance.now();
       setTranscript(text);
 
       // 1. 키워드 매칭
-      const tKeyword0 = performance.now();
       const localResult = classifyLocal(text);
-      const tKeyword1 = performance.now();
       if (localResult) {
-        console.log(`[Perf:keyword] final "${text}" → ${localResult.intent} | ${(tKeyword1 - tKeyword0).toFixed(1)}ms`);
         dispatchIntent(localResult.intent, localResult.payload);
-        console.log(`[Perf:E2E] final "${text}" → 명령 실행 | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
         return;
       }
 
@@ -181,8 +171,6 @@ export function useVoiceCommand({
       //     }
       //   } catch (e) { console.warn('[VoiceCommand] NLU final error:', e); }
       // }
-
-      console.log(`[Perf:E2E] final "${text}" → no match | STT후: ${(performance.now() - tE2E).toFixed(1)}ms | VAD부터: ${(performance.now() - (vadSpeechStartRef.current || tE2E)).toFixed(0)}ms`);
     },
     [dispatchIntent],
   );
@@ -217,7 +205,6 @@ export function useVoiceCommand({
     error: pipelineError,
     handleWebViewMessage,
     onWebViewReady,
-    vadSpeechStartRef,
   } = useWebAudioPipeline({
     onInterimResult: handleInterimResult,
     onFinalResult: handleFinalResult,
