@@ -1,8 +1,8 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
-import { View, Text, Pressable, type NativeSyntheticEvent, type NativeScrollEvent } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import BottomSheet, {
-  BottomSheetScrollView,
+  BottomSheetView,
   BottomSheetBackdrop,
   type BottomSheetBackdropProps,
 } from '@gorhom/bottom-sheet';
@@ -10,8 +10,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { PulseScale } from '@/src/shared/onboarding/pulse-scale';
 import { ToryPawHint } from '@/src/shared/onboarding/tory-paw-hint';
+import { TargetCaption } from '@/src/shared/onboarding/target-caption';
 
 const TORY_LOGO = require('@/assets/images/tory-logo.png');
+
+const INACTIVE_OPACITY = 0.4;
 
 export type MockIOSShareSheetRef = {
   open: () => void;
@@ -20,48 +23,34 @@ export type MockIOSShareSheetRef = {
 
 type MockIOSShareSheetProps = {
   isInteractive: boolean;
-  /** 쉐프토리 앱 아이콘 탭 */
+  /** 쉐프토리 앱 아이콘 탭 — 유일한 path */
   onCheftoryPress: () => void;
-  /** action list "Import recipe" 탭 */
-  onActionPress: () => void;
   onWrongTap: () => void;
 }
 
-const SECONDARY_REVEAL_DELAY = 5000; // 5초 후 자동으로 secondary path 노출
-const SCROLL_REVEAL_THRESHOLD = 80;  // 이만큼 스크롤하면 즉시 노출
-
 /**
- * iOS 시스템 공유 시트 mock.
+ * iOS 시스템 공유 시트 mock — 단일 path (쉐프토리 앱 아이콘만).
  *
- * Sequential Discovery 패턴:
- *   - 처음엔 쉐프토리 앱 아이콘만 highlight (primary path)
- *   - 5초 경과 OR 사용자가 80px 이상 스크롤 → action list "Import recipe"도 highlight (secondary path)
- *   - 두 path 모두 활성 — 어느 쪽 탭하든 다음 phase로
- *
- * BottomSheetScrollView로 스크롤 + onScroll로 사용자 행동 감지.
+ * 변경 이력:
+ *   - "Import recipe" 액션은 우리 앱 전용이 아니라 제거 (CookGo, 읽기 목록 추가도 같이 제거)
+ *   - 액션 리스트 섹션 자체 제거 → 더 단순하고 쉐프토리에 집중
+ *   - 사람 row의 가짜 contacts → 토리 가족(토리/토순/토똑이) 마스코트로 교체
  */
 export const MockIOSShareSheet = forwardRef<MockIOSShareSheetRef, MockIOSShareSheetProps>(
-  function MockIOSShareSheet({ isInteractive, onCheftoryPress, onActionPress, onWrongTap }, ref) {
+  function MockIOSShareSheet({ isInteractive, onCheftoryPress, onWrongTap }, ref) {
     const sheetRef = useRef<BottomSheet>(null);
     const [highlightActive, setHighlightActive] = useState(false);
-    const [secondaryActive, setSecondaryActive] = useState(false);
-
-    // primary (쉐프토리 앱 아이콘) paw
     const cheftoryRef = useRef<View>(null);
-    const [cheftoryPaw, setCheftoryPaw] = useState<{ x: number; y: number } | null>(null);
-    const [cheftoryPawActive, setCheftoryPawActive] = useState(false);
-
-    // secondary (Import recipe action) paw
-    const actionRef = useRef<View>(null);
-    const [actionPaw, setActionPaw] = useState<{ x: number; y: number } | null>(null);
-    const [actionPawActive, setActionPawActive] = useState(false);
+    const [targetBounds, setTargetBounds] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
+    const [pawActive, setPawActive] = useState(false);
 
     useImperativeHandle(ref, () => ({
       open: () => sheetRef.current?.expand(),
       close: () => sheetRef.current?.close(),
     }));
 
-    const snapPoints = useMemo(() => ['85%'], []);
+    // 액션 리스트 제거로 시트 짧아짐 → 70%
+    const snapPoints = useMemo(() => ['70%'], []);
 
     const renderBackdrop = useCallback(
       (props: BottomSheetBackdropProps) => (
@@ -80,66 +69,40 @@ export const MockIOSShareSheet = forwardRef<MockIOSShareSheetRef, MockIOSShareSh
       if (index === 0) {
         setHighlightActive(true);
         setTimeout(() => {
-          cheftoryRef.current?.measure?.((_x, _y, _w, _h, pageX, pageY) => {
-            setCheftoryPaw({ x: pageX, y: pageY });
-            setCheftoryPawActive(true);
+          cheftoryRef.current?.measure?.((_x, _y, w, h, pageX, pageY) => {
+            setTargetBounds({ x: pageX, y: pageY, width: w, height: h });
+            setPawActive(true);
           });
-        }, 200);
+        }, 50);
       } else if (index === -1) {
         setHighlightActive(false);
-        setSecondaryActive(false);
-        setCheftoryPawActive(false);
-        setActionPawActive(false);
+        setPawActive(false);
+        setTargetBounds(null);
       }
     }, []);
-
-    // 5초 후 secondary 자동 노출
-    useEffect(() => {
-      if (!isInteractive || !highlightActive) return;
-      const t = setTimeout(() => {
-        setSecondaryActive(true);
-      }, SECONDARY_REVEAL_DELAY);
-      return () => clearTimeout(t);
-    }, [isInteractive, highlightActive]);
-
-    // secondary 활성화되면 action 위치 measure + paw
-    useEffect(() => {
-      if (!secondaryActive) {
-        setActionPawActive(false);
-        return;
-      }
-      setTimeout(() => {
-        actionRef.current?.measure?.((_x, _y, _w, _h, pageX, pageY) => {
-          setActionPaw({ x: pageX, y: pageY });
-          setActionPawActive(true);
-        });
-      }, 200);
-    }, [secondaryActive]);
-
-    // 스크롤 감지 → secondary 즉시 노출
-    const handleScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const y = event.nativeEvent.contentOffset.y;
-      if (y > SCROLL_REVEAL_THRESHOLD && !secondaryActive) {
-        setSecondaryActive(true);
-      }
-    }, [secondaryActive]);
 
     const handleCheftory = useCallback(() => {
       if (!isInteractive) return;
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      // 즉시 cleanup — 시트가 그대로 열려있어도 캡션/발자국은 사라져야 함
+      setHighlightActive(false);
+      setPawActive(false);
+      setTargetBounds(null);
       onCheftoryPress();
     }, [isInteractive, onCheftoryPress]);
-
-    const handleAction = useCallback(() => {
-      if (!isInteractive) return;
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-      onActionPress();
-    }, [isInteractive, onActionPress]);
 
     const handleWrongPress = useCallback(() => {
       if (!isInteractive) return;
       onWrongTap();
     }, [isInteractive, onWrongTap]);
+
+    useEffect(() => {
+      if (!isInteractive) {
+        setHighlightActive(false);
+        setPawActive(false);
+        setTargetBounds(null);
+      }
+    }, [isInteractive]);
 
     return (
       <>
@@ -155,11 +118,8 @@ export const MockIOSShareSheet = forwardRef<MockIOSShareSheetRef, MockIOSShareSh
           handleIndicatorStyle={{ backgroundColor: 'rgba(0,0,0,0.2)', width: 36 }}
           onChange={handleSheetChange}
         >
-          <BottomSheetScrollView
-            onScroll={handleScroll}
-            contentContainerStyle={{ paddingBottom: 30 }}
-          >
-            {/* sender info row */}
+          <BottomSheetView style={{ flex: 1 }}>
+            {/* sender info row (장식, 약화) */}
             <View
               style={{
                 flexDirection: 'row',
@@ -168,16 +128,10 @@ export const MockIOSShareSheet = forwardRef<MockIOSShareSheetRef, MockIOSShareSh
                 paddingHorizontal: 16,
                 paddingTop: 8,
                 paddingBottom: 14,
+                opacity: isInteractive ? INACTIVE_OPACITY : 1,
               }}
             >
-              <View
-                style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: 8,
-                  backgroundColor: '#888',
-                }}
-              />
+              <View style={{ width: 48, height: 48, borderRadius: 8, backgroundColor: '#888' }} />
               <View style={{ flex: 1 }}>
                 <Text style={{ fontSize: 14, fontWeight: '600', color: '#000' }}>진영 Jinyeong</Text>
                 <Text style={{ fontSize: 12, color: '#666' }}>youtube.com</Text>
@@ -196,16 +150,23 @@ export const MockIOSShareSheet = forwardRef<MockIOSShareSheetRef, MockIOSShareSh
               </View>
             </View>
 
-            {/* 구분선 */}
             <View style={{ height: 0.5, backgroundColor: 'rgba(60,60,67,0.2)', marginHorizontal: 16 }} />
 
-            {/* 사람 row (장식) */}
-            <View style={{ flexDirection: 'row', gap: 14, paddingHorizontal: 16, paddingVertical: 16 }}>
+            {/* 사람 row — ChefTory 마스코트 가족(토리/토순/토똑이) (장식, 약화) */}
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: 14,
+                paddingHorizontal: 16,
+                paddingVertical: 16,
+                opacity: isInteractive ? INACTIVE_OPACITY : 1,
+              }}
+            >
               {[
-                { name: 'MacBook Pro', color: '#E5E5E5' },
-                { name: '카멜', color: '#D4A574' },
-                { name: '커피챗', color: '#A8B5D9' },
-                { name: '황교준', color: '#A8B5D9' },
+                { name: 'MacBook Pro', color: '#E5E5E5', textColor: '#999' },
+                { name: '토리', color: '#FF8C42', textColor: '#fff' },
+                { name: '토순', color: '#F8A8B4', textColor: '#fff' },
+                { name: '토똑이', color: '#D4A574', textColor: '#fff' },
               ].map((p) => (
                 <Pressable
                   key={p.name}
@@ -218,8 +179,14 @@ export const MockIOSShareSheet = forwardRef<MockIOSShareSheetRef, MockIOSShareSh
                       height: 52,
                       borderRadius: 26,
                       backgroundColor: p.color,
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
-                  />
+                  >
+                    <Text style={{ color: p.textColor, fontSize: 18, fontWeight: '700' }}>
+                      {p.name.charAt(0)}
+                    </Text>
+                  </View>
                   <Text style={{ fontSize: 10, color: '#000', textAlign: 'center' }} numberOfLines={1}>
                     {p.name}
                   </Text>
@@ -229,62 +196,62 @@ export const MockIOSShareSheet = forwardRef<MockIOSShareSheetRef, MockIOSShareSh
 
             <View style={{ height: 0.5, backgroundColor: 'rgba(60,60,67,0.2)', marginHorizontal: 16 }} />
 
-            {/* 앱 아이콘 row — 쉐프토리는 활성 타깃 */}
-            <View style={{ flexDirection: 'row', gap: 14, paddingHorizontal: 16, paddingVertical: 16 }}>
-              {/* AirDrop */}
-              <Pressable onPress={handleWrongPress} style={{ alignItems: 'center', gap: 4, width: 56 }}>
-                <View
-                  style={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: 12,
-                    backgroundColor: '#3B82F6',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Ionicons name="radio-outline" size={26} color="#fff" />
-                </View>
-                <Text style={{ fontSize: 10, color: '#000' }}>AirDrop</Text>
-              </Pressable>
+            {/* 앱 아이콘 row — paddingVertical로 활성 타깃 펄스/glow 클리핑 방지 */}
+            <View style={{ flexDirection: 'row', gap: 14, paddingHorizontal: 16, paddingVertical: 16, alignItems: 'flex-start', overflow: 'visible' }}>
+              {/* 비활성 앱들 (그룹으로 약화) */}
+              <View style={{ flexDirection: 'row', gap: 14, opacity: isInteractive ? INACTIVE_OPACITY : 1 }}>
+                <Pressable onPress={handleWrongPress} style={{ alignItems: 'center', gap: 4, width: 56 }}>
+                  <View
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: 12,
+                      backgroundColor: '#3B82F6',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Ionicons name="radio-outline" size={26} color="#fff" />
+                  </View>
+                  <Text style={{ fontSize: 10, color: '#000' }}>AirDrop</Text>
+                </Pressable>
 
-              {/* 메시지 */}
-              <Pressable onPress={handleWrongPress} style={{ alignItems: 'center', gap: 4, width: 56 }}>
-                <View
-                  style={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: 12,
-                    backgroundColor: '#22C55E',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Ionicons name="chatbubble" size={26} color="#fff" />
-                </View>
-                <Text style={{ fontSize: 10, color: '#000' }}>메시지</Text>
-              </Pressable>
+                <Pressable onPress={handleWrongPress} style={{ alignItems: 'center', gap: 4, width: 56 }}>
+                  <View
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: 12,
+                      backgroundColor: '#22C55E',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Ionicons name="chatbubble" size={26} color="#fff" />
+                  </View>
+                  <Text style={{ fontSize: 10, color: '#000' }}>메시지</Text>
+                </Pressable>
 
-              {/* Mail */}
-              <Pressable onPress={handleWrongPress} style={{ alignItems: 'center', gap: 4, width: 56 }}>
-                <View
-                  style={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: 12,
-                    backgroundColor: '#3B82F6',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Ionicons name="mail" size={26} color="#fff" />
-                </View>
-                <Text style={{ fontSize: 10, color: '#000' }}>Mail</Text>
-              </Pressable>
+                <Pressable onPress={handleWrongPress} style={{ alignItems: 'center', gap: 4, width: 56 }}>
+                  <View
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: 12,
+                      backgroundColor: '#3B82F6',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Ionicons name="mail" size={26} color="#fff" />
+                  </View>
+                  <Text style={{ fontSize: 10, color: '#000' }}>Mail</Text>
+                </Pressable>
+              </View>
 
-              {/* 쉐프토리 — 타깃 */}
-              <View ref={cheftoryRef} collapsable={false}>
-                <PulseScale active={isInteractive && highlightActive}>
+              {/* 쉐프토리 — 활성 타깃 (full opacity + glow + 큰 펄스) */}
+              <View ref={cheftoryRef} collapsable={false} style={{ overflow: 'visible' }}>
+                <PulseScale active={isInteractive && highlightActive} withGlow>
                   <Pressable onPress={handleCheftory} style={{ alignItems: 'center', gap: 4, width: 56 }}>
                     <View
                       style={{
@@ -294,7 +261,7 @@ export const MockIOSShareSheet = forwardRef<MockIOSShareSheetRef, MockIOSShareSh
                         backgroundColor: '#fff',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        borderWidth: isInteractive ? 2 : 0,
+                        borderWidth: isInteractive ? 2.5 : 0,
                         borderColor: '#FF7300',
                       }}
                     >
@@ -308,98 +275,35 @@ export const MockIOSShareSheet = forwardRef<MockIOSShareSheetRef, MockIOSShareSh
               </View>
             </View>
 
-            {/* action list */}
-            <View
-              style={{
-                marginTop: 8,
-                marginHorizontal: 16,
-                backgroundColor: '#fff',
-                borderRadius: 12,
-                overflow: 'hidden',
-              }}
-            >
-              <Pressable onPress={handleWrongPress} style={actionRowStyle}>
-                <Text style={actionTextStyle}>Chrome에서 열기</Text>
-                <Ionicons name="logo-chrome" size={20} color="#666" />
-              </Pressable>
-              <View style={dividerStyle} />
-
-              {/* Import recipe — secondary 타깃 */}
-              <View ref={actionRef} collapsable={false}>
-                <PulseScale active={secondaryActive} maxScale={1.03}>
-                  <Pressable onPress={handleAction} style={[actionRowStyle, { backgroundColor: secondaryActive ? '#FFF7ED' : '#fff' }]}>
-                    <Text
-                      style={[
-                        actionTextStyle,
-                        secondaryActive && { color: '#FF7300', fontWeight: '700' },
-                      ]}
-                    >
-                      Import recipe
-                    </Text>
-                    <Image source={TORY_LOGO} style={{ width: 22, height: 22 }} contentFit="contain" />
-                  </Pressable>
-                </PulseScale>
-              </View>
-
-              <View style={dividerStyle} />
-              <Pressable onPress={handleWrongPress} style={actionRowStyle}>
-                <Text style={actionTextStyle}>CookGo로 레시피 가져오기</Text>
-                <View style={{ width: 22, height: 22, borderRadius: 4, backgroundColor: '#000' }} />
-              </Pressable>
-              <View style={dividerStyle} />
-              <Pressable onPress={handleWrongPress} style={actionRowStyle}>
-                <Text style={actionTextStyle}>읽기 목록에 추가</Text>
-                <Ionicons name="glasses-outline" size={20} color="#666" />
-              </Pressable>
-            </View>
-          </BottomSheetScrollView>
+          </BottomSheetView>
         </BottomSheet>
 
-        {/* 발자국들 (각각 다른 위치) */}
-        {cheftoryPaw && (
+        {/* === Overlays — absolute, 다른 layout 영향 없음 === */}
+
+        {/* 발자국 */}
+        {targetBounds && (
           <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9000 }} pointerEvents="none">
             <ToryPawHint
-              targetX={cheftoryPaw.x}
-              targetY={cheftoryPaw.y}
-              active={cheftoryPawActive}
-              onComplete={() => setCheftoryPawActive(false)}
+              targetX={targetBounds.x}
+              targetY={targetBounds.y}
+              active={pawActive}
+              onComplete={() => setPawActive(false)}
               offsetX={20}
               offsetY={-32}
             />
           </View>
         )}
-        {actionPaw && (
-          <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9000 }} pointerEvents="none">
-            <ToryPawHint
-              targetX={actionPaw.x}
-              targetY={actionPaw.y}
-              active={actionPawActive}
-              onComplete={() => setActionPawActive(false)}
-              offsetX={-30}
-              offsetY={-30}
-            />
-          </View>
+
+        {/* 캡션 — 쉐프토리 아이콘 바로 아래 */}
+        {isInteractive && highlightActive && (
+          <TargetCaption
+            target={targetBounds}
+            primary="쉐프토리를 눌러주세요"
+            step={3}
+            total={4}
+          />
         )}
       </>
     );
   },
 );
-
-const actionRowStyle = {
-  flexDirection: 'row' as const,
-  alignItems: 'center' as const,
-  justifyContent: 'space-between' as const,
-  paddingHorizontal: 16,
-  paddingVertical: 14,
-};
-
-const actionTextStyle = {
-  fontSize: 15,
-  color: '#000',
-};
-
-const dividerStyle = {
-  height: 0.5,
-  backgroundColor: 'rgba(60,60,67,0.15)',
-  marginLeft: 16,
-};

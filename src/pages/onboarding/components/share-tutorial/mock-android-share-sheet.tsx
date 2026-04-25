@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import BottomSheet, {
@@ -6,12 +6,14 @@ import BottomSheet, {
   BottomSheetBackdrop,
   type BottomSheetBackdropProps,
 } from '@gorhom/bottom-sheet';
-import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { PulseScale } from '@/src/shared/onboarding/pulse-scale';
 import { ToryPawHint } from '@/src/shared/onboarding/tory-paw-hint';
+import { TargetCaption } from '@/src/shared/onboarding/target-caption';
 
 const TORY_LOGO = require('@/assets/images/tory-logo.png');
+
+const INACTIVE_OPACITY = 0.4;
 
 /** iOS sheet과 동일 API */
 export type MockAndroidShareSheetRef = {
@@ -39,7 +41,7 @@ export const MockAndroidShareSheet = forwardRef<MockAndroidShareSheetRef, MockAn
     const sheetRef = useRef<BottomSheet>(null);
     const [highlightActive, setHighlightActive] = useState(false);
     const cheftoryRef = useRef<View>(null);
-    const [pawTarget, setPawTarget] = useState<{ x: number; y: number } | null>(null);
+    const [targetBounds, setTargetBounds] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
     const [pawActive, setPawActive] = useState(false);
 
     useImperativeHandle(ref, () => ({
@@ -66,20 +68,25 @@ export const MockAndroidShareSheet = forwardRef<MockAndroidShareSheetRef, MockAn
       if (index === 0) {
         setHighlightActive(true);
         setTimeout(() => {
-          cheftoryRef.current?.measure?.((_x, _y, _w, _h, pageX, pageY) => {
-            setPawTarget({ x: pageX, y: pageY });
+          cheftoryRef.current?.measure?.((_x, _y, w, h, pageX, pageY) => {
+            setTargetBounds({ x: pageX, y: pageY, width: w, height: h });
             setPawActive(true);
           });
-        }, 200);
+        }, 50);
       } else if (index === -1) {
         setHighlightActive(false);
         setPawActive(false);
+        setTargetBounds(null);
       }
     }, []);
 
     const handleCheftory = useCallback(() => {
       if (!isInteractive) return;
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      // 즉시 cleanup
+      setHighlightActive(false);
+      setPawActive(false);
+      setTargetBounds(null);
       onCheftoryPress();
     }, [isInteractive, onCheftoryPress]);
 
@@ -87,6 +94,15 @@ export const MockAndroidShareSheet = forwardRef<MockAndroidShareSheetRef, MockAn
       if (!isInteractive) return;
       onWrongTap();
     }, [isInteractive, onWrongTap]);
+
+    // isInteractive false 시 즉시 cleanup
+    useEffect(() => {
+      if (!isInteractive) {
+        setHighlightActive(false);
+        setPawActive(false);
+        setTargetBounds(null);
+      }
+    }, [isInteractive]);
 
     // 8개 앱 (4x2 grid) — 마지막이 쉐프토리
     const apps = [
@@ -116,41 +132,46 @@ export const MockAndroidShareSheet = forwardRef<MockAndroidShareSheetRef, MockAn
         >
           <BottomSheetView style={{ flex: 1, paddingHorizontal: 16, paddingTop: 8 }}>
             {/* 제목 */}
-            <Text style={{ fontSize: 16, fontWeight: '600', color: '#000', paddingVertical: 8 }}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '600',
+                color: '#000',
+                paddingVertical: 8,
+                opacity: isInteractive ? INACTIVE_OPACITY : 1,
+              }}
+            >
               공유 대상
             </Text>
 
-            {/* 앱 격자 — 4 cols × 2 rows */}
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                paddingTop: 8,
-              }}
-            >
-              {apps.map((app) => (
-                <Pressable
-                  key={app.name}
-                  onPress={handleWrongPress}
-                  style={{ width: '25%', alignItems: 'center', gap: 6, paddingVertical: 12 }}
-                >
-                  <View
-                    style={{
-                      width: 56,
-                      height: 56,
-                      borderRadius: 28,
-                      backgroundColor: app.color,
-                    }}
-                  />
-                  <Text style={{ fontSize: 11, color: '#000', textAlign: 'center' }} numberOfLines={1}>
-                    {app.name}
-                  </Text>
-                </Pressable>
-              ))}
+            {/* 앱 격자 — paddingVertical로 활성 타깃 펄스/glow 클리핑 방지 */}
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingVertical: 12, overflow: 'visible' }}>
+              {/* 비활성 앱들 */}
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 7, opacity: isInteractive ? INACTIVE_OPACITY : 1 }}>
+                {apps.map((app) => (
+                  <Pressable
+                    key={app.name}
+                    onPress={handleWrongPress}
+                    style={{ width: `${100 / 7}%`, alignItems: 'center', gap: 6, paddingVertical: 12 }}
+                  >
+                    <View
+                      style={{
+                        width: 56,
+                        height: 56,
+                        borderRadius: 28,
+                        backgroundColor: app.color,
+                      }}
+                    />
+                    <Text style={{ fontSize: 11, color: '#000', textAlign: 'center' }} numberOfLines={1}>
+                      {app.name}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
 
               {/* 쉐프토리 — 활성 타깃 */}
-              <View ref={cheftoryRef} collapsable={false} style={{ width: '25%' }}>
-                <PulseScale active={isInteractive && highlightActive}>
+              <View ref={cheftoryRef} collapsable={false} style={{ width: `${100 / 8}%`, overflow: 'visible' }}>
+                <PulseScale active={isInteractive && highlightActive} withGlow>
                   <Pressable
                     onPress={handleCheftory}
                     style={{ alignItems: 'center', gap: 6, paddingVertical: 12 }}
@@ -163,7 +184,7 @@ export const MockAndroidShareSheet = forwardRef<MockAndroidShareSheetRef, MockAn
                         backgroundColor: '#fff',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        borderWidth: isInteractive ? 2 : 1,
+                        borderWidth: isInteractive ? 2.5 : 1,
                         borderColor: isInteractive ? '#FF7300' : '#E5E5E5',
                       }}
                     >
@@ -176,20 +197,34 @@ export const MockAndroidShareSheet = forwardRef<MockAndroidShareSheetRef, MockAn
                 </PulseScale>
               </View>
             </View>
+
           </BottomSheetView>
         </BottomSheet>
 
-        {pawTarget && (
+        {/* === Overlays — absolute, 다른 layout 영향 없음 === */}
+
+        {/* 발자국 */}
+        {targetBounds && (
           <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9000 }} pointerEvents="none">
             <ToryPawHint
-              targetX={pawTarget.x}
-              targetY={pawTarget.y}
+              targetX={targetBounds.x}
+              targetY={targetBounds.y}
               active={pawActive}
               onComplete={() => setPawActive(false)}
               offsetX={20}
               offsetY={-32}
             />
           </View>
+        )}
+
+        {/* 캡션 — 쉐프토리 아이콘 바로 아래 */}
+        {isInteractive && highlightActive && (
+          <TargetCaption
+            target={targetBounds}
+            primary="쉐프토리를 눌러주세요"
+            step={3}
+            total={4}
+          />
         )}
       </>
     );

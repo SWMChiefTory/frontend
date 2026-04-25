@@ -11,13 +11,6 @@ import { CreateCTABanner } from './create-cta-banner';
 
 export type SharePhase = 'youtube' | 'youtube_share' | 'ios_share' | 'cta';
 
-const PHASE_INDEX: Record<SharePhase, number> = {
-  youtube: 0,
-  youtube_share: 1,
-  ios_share: 2,
-  cta: 3,
-};
-
 type ShareTutorialProps = {
   onComplete: () => void;
   onSkip: () => void;
@@ -80,11 +73,6 @@ export function ShareTutorial({ onComplete, onSkip }: ShareTutorialProps) {
     // 시트는 그대로 열려 있음 (CTA 띠가 그 위에 나타남) → 시각적 stack
   }, []);
 
-  const handleActionPress = useCallback(() => {
-    track(TutorialShareEvents.ACTION_TAP);
-    setPhase('cta');
-  }, []);
-
   // ─── Phase 4 → 완료 ───
   const handleCreatePress = useCallback(() => {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -127,7 +115,6 @@ export function ShareTutorial({ onComplete, onSkip }: ShareTutorialProps) {
           ref={shareSheetRef as React.RefObject<MockIOSShareSheetRef>}
           isInteractive={phase === 'ios_share'}
           onCheftoryPress={handleCheftoryPress}
-          onActionPress={handleActionPress}
           onWrongTap={handleWrongTap}
         />
       ) : (
@@ -145,12 +132,8 @@ export function ShareTutorial({ onComplete, onSkip }: ShareTutorialProps) {
         onCreatePress={handleCreatePress}
       />
 
-      {/* 헤더: 진행 dots + 건너뛰기 (모든 phase 공통) */}
-      <TutorialHeader
-        currentIndex={PHASE_INDEX[phase]}
-        total={4}
-        onSkip={handleSkip}
-      />
+      {/* 헤더: 건너뛰기 only (진행은 각 캡션의 1/4 배지가 담당) */}
+      <TutorialHeader onSkip={handleSkip} />
     </View>
   );
 }

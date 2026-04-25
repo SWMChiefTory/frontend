@@ -55,13 +55,13 @@ export function CreateCTABanner({ visible, onCreatePress }: CreateCTABannerProps
         false,
       );
 
-      // 띠 펼침 후 발자국 등장
+      // 띠 펼침 후 발자국 등장 — spring 애니가 어느 정도 진행된 시점
       const t = setTimeout(() => {
         buttonRef.current?.measure?.((_x, _y, _w, _h, pageX, pageY) => {
           setPawTarget({ x: pageX, y: pageY });
           setPawActive(true);
         });
-      }, 700);
+      }, 200);
       return () => {
         clearTimeout(t);
       };
@@ -113,17 +113,41 @@ export function CreateCTABanner({ visible, onCreatePress }: CreateCTABannerProps
           bannerAnimStyle,
         ]}
       >
-        <Text
-          style={{
-            flex: 1,
-            fontFamily: typography.heading.fontFamily,
-            fontSize: 16,
-            fontWeight: '700',
-            color: colors.text.inverse,
-          }}
-        >
-          레시피를 만들 수 있어요!
-        </Text>
+        <View style={{ flex: 1, gap: 4 }}>
+          {/* 4/4 progress badge */}
+          <View
+            style={{
+              alignSelf: 'flex-start',
+              paddingHorizontal: 6,
+              paddingVertical: 1.5,
+              borderRadius: 8,
+              backgroundColor: 'rgba(255,255,255,0.18)',
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: typography.body.fontFamily,
+                color: '#fff',
+                fontSize: 11,
+                fontWeight: '700',
+                letterSpacing: 0.3,
+              }}
+            >
+              4/4
+            </Text>
+          </View>
+
+          <Text
+            style={{
+              fontFamily: typography.heading.fontFamily,
+              fontSize: 16,
+              fontWeight: '700',
+              color: colors.text.inverse,
+            }}
+          >
+            레시피를 만들 수 있어요!
+          </Text>
+        </View>
 
         <View ref={buttonRef} collapsable={false}>
           <Animated.View style={buttonAnimStyle}>

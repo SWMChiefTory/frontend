@@ -1,23 +1,22 @@
 import { View, Text, Pressable } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors, spacing, typography } from '@/src/shared/design/tokens';
+import { spacing, typography } from '@/src/shared/design/tokens';
 
 type TutorialHeaderProps = {
-  /** 0-based 현재 phase 인덱스 */
-  currentIndex: number;
-  /** 전체 phase 수 */
-  total: number;
   onSkip: () => void;
-  /** 헤더 위에 표시할 라벨 (e.g. "튜토리얼 1/4") */
-  label?: string;
 }
 
 /**
- * 모든 contextual onboarding이 공통으로 쓰는 상단 헤더.
- * 진행 dots(완료된 단계 + 현재 단계 강조) + "건너뛰기" 버튼.
+ * 튜토리얼 상단 헤더 — "다음에" 버튼.
+ *
+ * 진행 단계는 각 TargetCaption의 우상단 1/N 배지로 옮겨짐.
+ * 이 헤더는 native step screen의 "다음" 버튼과 동일한 스타일 (translucent pill)로
+ * 통일감 + 검은 status bar 배경 위에 명확히 보임.
+ *
  * 항상 absolute top, zIndex 최상단.
  */
-export function TutorialHeader({ currentIndex, total, onSkip, label }: TutorialHeaderProps) {
+export function TutorialHeader({ onSkip }: TutorialHeaderProps) {
   const insets = useSafeAreaInsets();
 
   return (
@@ -30,54 +29,37 @@ export function TutorialHeader({ currentIndex, total, onSkip, label }: TutorialH
         paddingTop: insets.top + spacing.sm,
         paddingHorizontal: spacing.lg,
         paddingBottom: spacing.md,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
         zIndex: 10000,
       }}
       pointerEvents="box-none"
     >
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
-        {/* 진행 dots */}
-        <View style={{ flex: 1, flexDirection: 'row', gap: 6 }}>
-          {Array.from({ length: total }).map((_, i) => (
-            <View
-              key={i}
-              style={{
-                flex: 1,
-                height: 4,
-                borderRadius: 2,
-                backgroundColor: i <= currentIndex ? colors.primary : 'rgba(255,255,255,0.3)',
-              }}
-            />
-          ))}
-        </View>
-
-        {/* 건너뛰기 */}
-        <Pressable onPress={onSkip} hitSlop={12}>
-          <Text
-            style={{
-              fontFamily: typography.body.fontFamily,
-              fontSize: 13,
-              fontWeight: '600',
-              color: 'rgba(255,255,255,0.85)',
-            }}
-          >
-            건너뛰기
-          </Text>
-        </Pressable>
-      </View>
-
-      {label ? (
+      <Pressable
+        onPress={onSkip}
+        hitSlop={8}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 3,
+          paddingHorizontal: 14,
+          paddingVertical: 8,
+          borderRadius: 18,
+          backgroundColor: 'rgba(255,255,255,0.15)',
+        }}
+      >
         <Text
           style={{
             fontFamily: typography.body.fontFamily,
-            fontSize: 11,
-            color: 'rgba(255,255,255,0.5)',
-            marginTop: 6,
-            textAlign: 'center',
+            fontSize: 13,
+            fontWeight: '700',
+            color: 'rgba(255,255,255,0.9)',
           }}
         >
-          {label}
+          다음에
         </Text>
-      ) : null}
+        <Ionicons name="chevron-forward" size={14} color="rgba(255,255,255,0.9)" />
+      </Pressable>
     </View>
   );
 }

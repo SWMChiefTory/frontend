@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { View, Text, Pressable, ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useMarketStore } from '@/src/shared/store/marketStore';
 import { Image } from 'expo-image';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withRepeat,
-  withSequence,
   withTiming,
   Easing,
 } from 'react-native-reanimated';
@@ -28,25 +27,22 @@ type OnboardingScreenProps = {
   onComplete: () => void;
 }
 
-type Phase = 'share' | 'completion';
+type Phase = 'welcome' | 'share' | 'completion';
 
 /**
- * 첫 온보딩.
+ * 첫 온보딩 — 3-phase 흐름.
  *
- * 두 단계만 거침:
- *   1) ShareTutorial — 인터랙티브 공유 플로우 학습 (4 phase)
- *   2) CompletionStep — 토리 환영 + 인기 레시피 카드
+ * 1) Welcome — 토리 인사 + 가치 제안 + "시작하기" CTA (context 설정)
+ * 2) ShareTutorial — 4-phase 인터랙티브 공유 튜토리얼
+ * 3) Completion — 완료 환영 + 인기 레시피 카드
  *
- * 이전엔 step1(공유 슬라이드)/step2(쿠킹 모드 슬라이드)/step3(완료) 구조였으나,
- * just-in-time contextual onboarding 전략으로 전환:
- *   - 공유만 첫 진입에 가르침 (활성화 critical path)
- *   - 쿠킹 모드, 레시피 detail 등은 해당 페이지 첫 진입 시 별도로 가르침
+ * 쿠킹 모드/디테일 페이지 등 나머지 학습은 해당 페이지 첫 진입 시
+ * contextual onboarding으로 분리 (just-in-time 전략).
  */
 export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
-  const [phase, setPhase] = useState<Phase>('share');
+  const [phase, setPhase] = useState<Phase>('welcome');
   const [startedAt] = useState(() => Date.now());
 
-  // 온보딩 시작 트래킹
   useEffect(() => {
     trackNative(AmplitudeEvent.ONBOARDING_START);
   }, []);
@@ -59,6 +55,15 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
     onComplete();
   }, [onComplete, phase, startedAt]);
 
+  if (phase === 'welcome') {
+    return (
+      <WelcomeStep
+        onStart={() => setPhase('share')}
+        onSkip={handleSkip}
+      />
+    );
+  }
+
   if (phase === 'share') {
     return (
       <ShareTutorial
@@ -69,6 +74,123 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   }
 
   return <CompletionStep onComplete={onComplete} startedAt={startedAt} />;
+}
+
+// ─── Welcome 화면 ───
+function WelcomeStep({ onStart, onSkip }: { onStart: () => void; onSkip: () => void }) {
+  const insets = useSafeAreaInsets();
+  const market = useMarketStore(s => s.market);
+  const t = TEXTS[market ?? 'KOREA'];
+
+  const handleStart = useCallback(() => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    onStart();
+  }, [onStart]);
+
+  return (
+    <View style={{ flex: 1, backgroundColor: BG, paddingTop: insets.top }}>
+      {/* 우상단 "다음에" — 헤더와 동일 스타일이지만 cream bg에 맞게 dark variant */}
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          paddingHorizontal: spacing.xl,
+          paddingVertical: spacing.md,
+        }}
+      >
+        <Pressable
+          onPress={onSkip}
+          hitSlop={8}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 3,
+            paddingHorizontal: 14,
+            paddingVertical: 8,
+            borderRadius: 18,
+            backgroundColor: 'rgba(0,0,0,0.06)',
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: typography.body.fontFamily,
+              fontSize: 13,
+              fontWeight: '700',
+              color: '#606060',
+            }}
+          >
+            {t.skip}
+          </Text>
+          <Ionicons name="chevron-forward" size={14} color="#606060" />
+        </Pressable>
+      </View>
+
+      {/* 메인 콘텐츠 */}
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingHorizontal: spacing.xl,
+          gap: spacing.xl,
+        }}
+      >
+        <StaticTory />
+
+        <View style={{ alignItems: 'center', gap: spacing.sm }}>
+          <Text
+            style={{
+              fontFamily: typography.heading.fontFamily,
+              fontSize: 26,
+              fontWeight: '700',
+              color: colors.text.primary,
+              textAlign: 'center',
+              lineHeight: 34,
+            }}
+          >
+            {t.welcomeTitle}
+          </Text>
+          <Text
+            style={{
+              fontFamily: typography.body.fontFamily,
+              fontSize: 14,
+              color: colors.text.secondary,
+              textAlign: 'center',
+              lineHeight: 20,
+              marginTop: spacing.xs,
+            }}
+          >
+            {t.welcomeSubtitle}
+          </Text>
+        </View>
+      </View>
+
+      {/* 하단 CTA */}
+      <View style={{ paddingHorizontal: spacing.xl, paddingBottom: insets.bottom + spacing.lg }}>
+        <Pressable
+          onPress={handleStart}
+          style={{
+            paddingVertical: spacing.lg,
+            borderRadius: radius.lg,
+            borderCurve: 'continuous',
+            backgroundColor: colors.primary,
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: typography.heading.fontFamily,
+              fontSize: 17,
+              fontWeight: '700',
+              color: colors.text.inverse,
+            }}
+          >
+            {t.welcomeStart}
+          </Text>
+        </Pressable>
+      </View>
+    </View>
+  );
 }
 
 // ─── 완료 화면 ───
@@ -129,10 +251,9 @@ function CompletionStep({
         }}
         showsVerticalScrollIndicator={false}
       >
-        {/* 토리 캐릭터 — 떠다니는 애니메이션 */}
-        <FloatingTory />
+        {/* 토리 (정적, 한 번만 entrance scale) */}
+        <StaticTory />
 
-        {/* 제목 */}
         <Text
           style={{
             fontFamily: typography.heading.fontFamily,
@@ -156,7 +277,6 @@ function CompletionStep({
           {t.completionSubtitle}
         </Text>
 
-        {/* 메인 CTA */}
         <Pressable
           onPress={handleStartCooking}
           style={{
@@ -182,7 +302,6 @@ function CompletionStep({
           </Text>
         </Pressable>
 
-        {/* 디바이더 */}
         <View
           style={{
             flexDirection: 'row',
@@ -199,7 +318,6 @@ function CompletionStep({
           <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
         </View>
 
-        {/* 인기 레시피 그리드 */}
         <View style={{ flexDirection: 'row', gap: spacing.sm, width: '100%', justifyContent: 'space-between' }}>
           {(recipes.length > 0
             ? recipes
@@ -241,38 +359,19 @@ function CompletionStep({
   );
 }
 
-function FloatingTory() {
-  const translateY = useSharedValue(0);
-  const rotate = useSharedValue(0);
+/**
+ * 정적 토리 캐릭터 — 한 번만 entrance scale (0.6 → 1.0).
+ * 떠다니거나 회전하는 perpetual 애니메이션 없음 (피로감 ↓, 차분함).
+ */
+function StaticTory() {
   const scale = useSharedValue(0.6);
 
   useEffect(() => {
     scale.value = withTiming(1, { duration: 600, easing: Easing.out(Easing.back(1.5)) });
-
-    translateY.value = withRepeat(
-      withSequence(
-        withTiming(-12, { duration: 1500, easing: Easing.inOut(Easing.cubic) }),
-        withTiming(0, { duration: 1500, easing: Easing.inOut(Easing.cubic) }),
-      ),
-      -1,
-      false,
-    );
-    rotate.value = withRepeat(
-      withSequence(
-        withTiming(3, { duration: 2000, easing: Easing.inOut(Easing.cubic) }),
-        withTiming(-3, { duration: 2000, easing: Easing.inOut(Easing.cubic) }),
-      ),
-      -1,
-      true,
-    );
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateY: translateY.value },
-      { rotate: `${rotate.value}deg` },
-      { scale: scale.value },
-    ],
+    transform: [{ scale: scale.value }],
   }));
 
   return (
@@ -284,12 +383,20 @@ function FloatingTory() {
 
 const TEXTS = {
   KOREA: {
+    skip: '다음에',
+    welcomeTitle: '안녕하세요!\n쉐프토리에 오신 걸 환영해요',
+    welcomeSubtitle: '유튜브에서 본 레시피를\n쉐프토리로 가져오는 법을 알려드릴게요',
+    welcomeStart: '시작하기',
     completionTitle: '준비 완료!',
     completionSubtitle: '이제 토리와 함께 요리를 시작해볼까요?',
     startCooking: '쉐프토리 시작하기',
     orBrowsePopular: '또는 인기 레시피 둘러보기',
   },
   GLOBAL: {
+    skip: 'Later',
+    welcomeTitle: 'Hello!\nWelcome to ChefTory',
+    welcomeSubtitle: 'Let me show you how to bring\nYouTube recipes into ChefTory',
+    welcomeStart: 'Get Started',
     completionTitle: 'You\'re all set!',
     completionSubtitle: 'Ready to start cooking with Tory?',
     startCooking: 'Start Cheftory',
