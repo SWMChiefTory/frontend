@@ -8,7 +8,7 @@ import { PulseScale } from '@/src/shared/onboarding/pulse-scale';
 import { ToryPawHint } from '@/src/shared/onboarding/tory-paw-hint';
 import { TargetCaption } from '@/src/shared/onboarding/target-caption';
 
-const APP_SHARE_1 = require('@/assets/images/onboarding/app-share_1.png');
+const VIDEO_THUMB = require('@/assets/images/onboarding/share-tutorial-video.png');
 
 // YouTube 모바일 라이트 모드 색상
 const YT_BODY_BG = '#FFFFFF';
@@ -81,16 +81,27 @@ export function MockYouTubeScreen({ isInteractive, onSharePress }: MockYouTubeSc
       {/* 1) Top safe area + TutorialHeader 영역 (검은색) */}
       <View style={{ height: insets.top + 50 }} />
 
-      {/* 2) 영상 플레이어 (검은색, 16:9) */}
+      {/* 2) 영상 플레이어
+            외부 frame은 16:9 (기존 레이아웃 유지) + 검은 배경.
+            내부에 9:16 portrait strip으로 이미지 표시 (YouTube 웹의 Shorts-in-landscape-player 패턴).
+            양 옆은 자동 letterbox (검은 바).
+       */}
       <View
         style={{
           width: '100%',
           aspectRatio: 16 / 9,
           backgroundColor: '#000',
+          alignItems: 'center',
+          justifyContent: 'center',
           opacity: isInteractive ? CONTEXT_OPACITY : 1,
         }}
       >
-        <Image source={APP_SHARE_1} style={{ width: '100%', height: '100%' }} contentFit="cover" />
+        {/* 9:16 portrait strip — 부모 height 채우고 width는 비율로 자동 (좁은 세로 영상 느낌) */}
+        <View style={{ height: '100%', aspectRatio: 9 / 16 }}>
+          <Image source={VIDEO_THUMB} style={{ width: '100%', height: '100%' }} contentFit="cover" />
+        </View>
+
+        {/* 영상 컨트롤 오버레이 (16:9 frame 전체 위에 떠 있음) */}
         <View
           style={{
             position: 'absolute',
@@ -110,6 +121,8 @@ export function MockYouTubeScreen({ isInteractive, onSharePress }: MockYouTubeSc
           <Ionicons name="play" size={44} color="rgba(255,255,255,0.75)" />
           <Ionicons name="play-skip-forward" size={28} color="rgba(255,255,255,0.65)" />
         </View>
+
+        {/* 타임스탬프 */}
         <View
           style={{
             position: 'absolute',
@@ -142,7 +155,7 @@ export function MockYouTubeScreen({ isInteractive, onSharePress }: MockYouTubeSc
             🔥 요즘 sns에서 핫한 상하이 버터떡 만들기 + 쫀…
           </Text>
           <Text style={{ color: YT_TEXT_DIM, fontSize: 12, marginTop: 6 }}>
-            @jinyeong6425  ·  조회수 28만회  ·  1개월 전
+            @toryjoa  ·  조회수 28만회  ·  1개월 전
           </Text>
         </View>
 
